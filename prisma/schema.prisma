@@ -1,0 +1,335 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(ADMIN)
+}
+
+enum Role {
+  ADMIN
+  SUB_ADMIN
+}
+
+model SliderImage {
+  id        Int      @id @default(autoincrement())
+  image     Json
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+model Activity {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  type        MediaType
+  image       Json?
+  videoUrl    String?
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String
+  position  String
+  location  String?
+  type      TeamType @default(MEMBER)
+  image     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum TeamType {
+  MEMBER
+  MANAGMENT
+}
+
+model Gallery {
+  id        Int             @id @default(autoincrement())
+  image     Json?
+  videoUrl  String?
+  type      GalleryType     @default(IMAGE)
+  category  GalleryCategory @default(ACTIVITIES)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+enum GalleryCategory {
+  ACTIVITIES
+  PRESS
+}
+
+enum GalleryType {
+  IMAGE
+  VIDEO
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  position  String
+  message   String
+  image     Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  title     String
+  description String
+  image     Json?
+  videoUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WebSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MemberShipPlan {
+  id           Int              @id @default(autoincrement())
+  name         String
+  amount       Int
+  // durution in month
+  duration     Int
+  durationType PlanDurationType
+  description  String
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberShips MemberShip[]
+}
+
+enum PlanDurationType {
+  MONTH
+  YEAR
+  LIFETIME
+}
+
+model Payment {
+  id    Int  @id @default(autoincrement())
+  image Json
+
+  bankName          String
+  accountNumber     String @unique
+  ifscCode          String
+  accountHolderName String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MemberShip {
+  id          Int         @id @default(autoincrement())
+  name        String
+  gender      Gender      @default(MALE)
+  dob         DateTime
+  gurdianType GurdianType @default(FATHER)
+  gurdianName String
+  profession  String
+  bloodGroup  String
+  state       String
+  district    String
+  mobile      String
+  aadhaar     String
+  address     String
+  pinCode     String
+  email       String
+
+  memberShipNumber String @unique
+
+  profilePicture Json
+  documentsType  DocumentType @default(AADHAAR)
+  documents      Json
+  otherDocuments Json?
+
+  paymentMode PaymentMode @default(BANK_TRANSFER)
+  payment     Json
+
+  planId Int
+  plan   MemberShipPlan @relation(fields: [planId], references: [id])
+
+  status MemberShipStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  eventBookings EventBooking[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum GurdianType {
+  FATHER
+  MOTHER
+  WIFE
+  HUSBAND
+}
+
+enum DocumentType {
+  AADHAAR
+  PAN
+  VOTER_ID
+  DRIVING_LICENSE
+  RASHAN_CARD
+  CLASS_10_CERTIFICATE
+  CLASS_12_CERTIFICATE
+}
+
+enum PaymentMode {
+  BANK_TRANSFER
+  PAYTM
+  GOOGLE_PAY
+  PHONE_PE
+  AMAZON_PAY
+  CHEQUE
+  CASH
+  OTHER
+}
+
+enum MemberShipStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  INACTIVE
+  CANCELLED
+  REJECTED
+}
+
+model Donar {
+  id        Int    @id @default(autoincrement())
+  name      String
+  mobile    String
+  email     String
+  panNumber String
+  address   String
+  amount    Int
+
+  donorImage  Json?
+  paymentMode PaymentMode @default(BANK_TRANSFER)
+  payment     Json
+
+  status DonarStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DonarStatus {
+  PENDING
+  VERIFIED
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  type        String
+  location    String
+  image       Json?
+  videoUrl    String?
+  date        DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  eventBookings EventBooking[]
+}
+
+model EventBooking {
+  id      Int    @id @default(autoincrement())
+  eventId Int
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name    String
+  mobile  String
+  email   String
+  city    String
+
+  isTeamMember Boolean @default(false)
+
+  memberShipNumber String? @unique
+  memberShip MemberShip? @relation(fields: [memberShipNumber], references: [memberShipNumber], onDelete: Cascade)
+
+  status BookingStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+
+model RegisterComplaint {
+  id        Int    @id @default(autoincrement())
+  name      String
+  mobile    String
+  city    String
+  
+  message String
+  description String
+  videoUrl String
+
+  document1 Json?
+  document2 Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ComplaintStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model Enquiry {
+  id        Int    @id @default(autoincrement())
+  name      String
+  mobile    String
+  email     String
+  topic     String
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

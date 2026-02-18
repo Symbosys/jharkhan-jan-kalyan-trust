@@ -1,0 +1,123 @@
+"use client";
+
+import React, { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+
+interface SliderImage {
+    id: number;
+    src: string;
+    alt: string;
+}
+
+const images: SliderImage[] = [
+    {
+        id: 1,
+        src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1600&auto=format&fit=crop",
+        alt: "Children smiling",
+    },
+    {
+        id: 2,
+        src: "https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=1600&auto=format&fit=crop",
+        alt: "Volunteers working",
+    },
+    {
+        id: 3,
+        src: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1600&auto=format&fit=crop",
+        alt: "Community gathering",
+    },
+    {
+        id: 4,
+        src: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=1600&auto=format&fit=crop",
+        alt: "Helping hands",
+    },
+];
+
+export function HeroSlider() {
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+        Autoplay({ delay: 5000, stopOnInteraction: false }),
+    ]);
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    const scrollPrev = useCallback(() => {
+        if (emblaApi) emblaApi.scrollPrev();
+    }, [emblaApi]);
+
+    const scrollNext = useCallback(() => {
+        if (emblaApi) emblaApi.scrollNext();
+    }, [emblaApi]);
+
+    const onSelect = useCallback(() => {
+        if (!emblaApi) return;
+        setSelectedIndex(emblaApi.selectedScrollSnap());
+    }, [emblaApi]);
+
+    useEffect(() => {
+        if (!emblaApi) return;
+        onSelect();
+        emblaApi.on("select", onSelect);
+        emblaApi.on("reInit", onSelect);
+    }, [emblaApi, onSelect]);
+
+    return (
+        <div className="relative w-full overflow-hidden bg-background">
+            {/* Carousel Container */}
+            <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex touch-pan-y">
+                    {images.map((image) => (
+                        <div
+                            key={image.id}
+                            className="relative flex-[0_0_100%] min-w-0"
+                        >
+                            <div className="relative aspect-video md:aspect-21/9 w-full max-h-[600px]">
+                                <Image
+                                    src={image.src}
+                                    alt={image.alt}
+                                    fill
+                                    className="object-cover"
+                                    priority={image.id === 1}
+                                    sizes="100vw"
+                                />
+                                {/* Optional Overlay for better text contrast if needed later */}
+                                <div className="absolute inset-0 bg-black/20" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <button
+                onClick={scrollPrev}
+                className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-all hover:bg-white/30 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+                aria-label="Previous slide"
+            >
+                <ChevronLeft className="h-6 w-6 md:h-8 md:w-8" />
+            </button>
+            <button
+                onClick={scrollNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-all hover:bg-white/30 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+                aria-label="Next slide"
+            >
+                <ChevronRight className="h-6 w-6 md:h-8 md:w-8" />
+            </button>
+
+            {/* Pagination Dots */}
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+                {images.map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => emblaApi && emblaApi.scrollTo(index)}
+                        className={`h-2.5 w-2.5 rounded-full transition-all ${index === selectedIndex
+                                ? "bg-white w-8"
+                                : "bg-white/50 hover:bg-white/80"
+                            }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
