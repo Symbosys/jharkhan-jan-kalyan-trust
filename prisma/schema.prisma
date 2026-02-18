@@ -98,13 +98,13 @@ model Testimonial {
 }
 
 model News {
-  id        Int      @id @default(autoincrement())
-  title     String
+  id          Int      @id @default(autoincrement())
+  title       String
   description String
-  image     Json?
-  videoUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  image       Json?
+  videoUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model WebSetting {
@@ -283,8 +283,8 @@ model EventBooking {
 
   isTeamMember Boolean @default(false)
 
-  memberShipNumber String? @unique
-  memberShip MemberShip? @relation(fields: [memberShipNumber], references: [memberShipNumber], onDelete: Cascade)
+  memberShipNumber String?     @unique
+  memberShip       MemberShip? @relation(fields: [memberShipNumber], references: [memberShipNumber], onDelete: Cascade)
 
   status BookingStatus @default(PENDING)
 
@@ -298,16 +298,15 @@ enum BookingStatus {
   CANCELLED
 }
 
-
 model RegisterComplaint {
-  id        Int    @id @default(autoincrement())
-  name      String
-  mobile    String
-  city    String
-  
-  message String
+  id     Int    @id @default(autoincrement())
+  name   String
+  mobile String
+  city   String
+
+  message     String
   description String
-  videoUrl String
+  videoUrl    String
 
   document1 Json?
   document2 Json?
@@ -323,11 +322,11 @@ enum ComplaintStatus {
 }
 
 model Enquiry {
-  id        Int    @id @default(autoincrement())
-  name      String
-  mobile    String
-  email     String
-  topic     String
+  id          Int    @id @default(autoincrement())
+  name        String
+  mobile      String
+  email       String
+  topic       String
   description String
 
   createdAt DateTime @default(now())
