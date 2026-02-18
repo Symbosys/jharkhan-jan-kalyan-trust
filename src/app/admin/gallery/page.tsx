@@ -365,12 +365,12 @@ export default function GalleryPage() {
                                 </div>
 
                                 {/* Actions Overlay */}
-                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 invisible group-hover:visible">
+                                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-3">
                                     <div className="flex gap-2">
                                         <Button
                                             variant="secondary"
                                             size="icon"
-                                            className="h-10 w-10 rounded-full bg-white hover:bg-white/90 text-slate-900 border-none shadow-xl scale-90 group-hover:scale-100 transition-all"
+                                            className="h-10 w-10 rounded-full bg-white hover:bg-white/90 text-slate-900 border-none shadow-xl transition-all"
                                             onClick={() => handleEdit(item)}
                                         >
                                             <Pencil className="h-4 w-4" />
@@ -378,7 +378,7 @@ export default function GalleryPage() {
                                         <Button
                                             variant="destructive"
                                             size="icon"
-                                            className="h-10 w-10 rounded-full shadow-xl scale-90 group-hover:scale-100 transition-all"
+                                            className="h-10 w-10 rounded-full shadow-xl transition-all"
                                             onClick={() => handleDelete(item.id)}
                                         >
                                             <Trash2 className="h-4 w-4" />

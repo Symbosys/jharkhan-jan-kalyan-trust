@@ -69,7 +69,7 @@ export async function createAdmin(data: {
         return { success: true, data: admin };
     } catch (error: any) {
         console.error("Error creating admin:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message || "Failed to create admin" };
     }
 }
 
@@ -86,9 +86,21 @@ export async function updateAdmin(
     }
 ) {
     try {
-        const updateData: any = { ...data };
+        const existing = await prisma.admin.findUnique({
+            where: { id },
+        });
 
-        if (data.password) {
+        if (!existing) {
+            return { success: false, error: "Admin not found" };
+        }
+
+        // Prepare update data
+        const updateData: any = {};
+        if (data.name) updateData.name = data.name;
+        if (data.email) updateData.email = data.email;
+        if (data.role) updateData.role = data.role;
+        
+        if (data.password && data.password.trim() !== "") {
             updateData.password = await bcrypt.hash(data.password, 10);
         }
 
@@ -107,7 +119,7 @@ export async function updateAdmin(
         return { success: true, data: updated };
     } catch (error: any) {
         console.error("Error updating admin:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message || "Failed to update admin" };
     }
 }
 
@@ -116,6 +128,21 @@ export async function updateAdmin(
  */
 export async function deleteAdmin(id: number) {
     try {
+        const existing = await prisma.admin.findUnique({
+            where: { id },
+        });
+
+        if (!existing) {
+            return { success: false, error: "Admin not found" };
+        }
+
+        // Count admins to prevent deleting the last one? 
+        // Maybe too much for now, but good practice.
+        const adminCount = await prisma.admin.count();
+        if (adminCount <= 1) {
+            return { success: false, error: "Cannot delete the last admin account" };
+        }
+
         await prisma.admin.delete({
             where: { id },
         });
@@ -124,6 +151,6 @@ export async function deleteAdmin(id: number) {
         return { success: true };
     } catch (error: any) {
         console.error("Error deleting admin:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message || "Failed to delete admin" };
     }
 }

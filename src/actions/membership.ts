@@ -226,3 +226,26 @@ export async function deleteMembership(id: number) {
         return { success: false, error: error.message };
     }
 }
+/**
+ * Update Membership Status (Verify/Reject/etc.)
+ */
+export async function updateMembershipStatus(id: number, status: MemberShipStatus) {
+    try {
+        const existing = await prisma.memberShip.findUnique({ where: { id } });
+        if (!existing) throw new Error("Membership not found");
+
+        const updated = await prisma.memberShip.update({
+            where: { id },
+            data: { status },
+            include: { plan: true }
+        });
+
+        updateTag("memberships");
+        updateTag(`membership-${id}`);
+
+        return { success: true, data: updated };
+    } catch (error: any) {
+        console.error("Error updating membership status:", error);
+        return { success: false, error: error.message };
+    }
+}

@@ -152,6 +152,66 @@ export async function updateDonarStatus(id: number, status: DonarStatus) {
 }
 
 /**
+ * Update general Donar details
+ */
+export async function updateDonar(
+    id: number,
+    data: {
+        name?: string;
+        mobile?: string;
+        email?: string;
+        panNumber?: string;
+        address?: string;
+        amount?: number;
+        donorImage?: string; // base64
+        paymentMode?: PaymentMode;
+        payment?: string; // base64
+    }
+) {
+    try {
+        const existing = await prisma.donar.findUnique({ where: { id } });
+        if (!existing) throw new Error("Donor not found");
+
+        const updateData: any = { ...data };
+
+        // Handle Image Updates
+        if (data.donorImage && data.donorImage.startsWith('data:')) {
+            const existingImage = existing.donorImage as any;
+            if (existingImage?.public_id) {
+                await deleteFromCloudinary(existingImage.public_id);
+            }
+            const uploadRes = await uploadToCloudinary(data.donorImage, "donars");
+            updateData.donorImage = { url: uploadRes.url, public_id: uploadRes.public_id };
+        } else {
+            delete updateData.donorImage;
+        }
+
+        if (data.payment && data.payment.startsWith('data:')) {
+            const existingPayment = existing.payment as any;
+            if (existingPayment?.public_id) {
+                await deleteFromCloudinary(existingPayment.public_id);
+            }
+            const uploadRes = await uploadToCloudinary(data.payment, "donars");
+            updateData.payment = { url: uploadRes.url, public_id: uploadRes.public_id };
+        } else {
+            delete updateData.payment;
+        }
+
+        const updated = await prisma.donar.update({
+            where: { id },
+            data: updateData
+        });
+
+        updateTag("donars");
+        updateTag(`donar-${id}`);
+        return { success: true, data: updated };
+    } catch (error: any) {
+        console.error("Error updating donor:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
  * Delete Donor with Cloudinary Cleanup
  */
 export async function deleteDonar(id: number) {

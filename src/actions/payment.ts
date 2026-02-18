@@ -3,7 +3,6 @@
 import { prisma } from "@/config/prisma";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cacheTag, updateTag } from "next/cache";
-import { Prisma } from "../../generated/prisma/client";
 
 /**
  * Get NGO payment details (singleton record)
@@ -39,7 +38,7 @@ export async function upsertPaymentDetails(data: {
         let imageData = existingPayment?.image || {};
 
         // 2. Handle image upload if a new one is provided
-        if (data.image) {
+        if (data.image && data.image.startsWith('data:')) {
             // Delete old image from Cloudinary if it exists
             const existingImageData = existingPayment?.image as any;
             if (existingImageData?.public_id) {
@@ -47,7 +46,7 @@ export async function upsertPaymentDetails(data: {
             }
 
             // Upload new image
-            const uploadResult = await uploadToCloudinary(data.image);
+            const uploadResult = await uploadToCloudinary(data.image, "payments");
             imageData = {
                 url: uploadResult.url,
                 public_id: uploadResult.public_id,

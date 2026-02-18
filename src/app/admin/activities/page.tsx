@@ -12,7 +12,11 @@ import {
     Calendar,
     ChevronLeft,
     ChevronRight,
-    AlertCircle
+    AlertCircle,
+    Video,
+    LayoutDashboard,
+    MoveUp,
+    MoveDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,20 +40,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-    getAllNews,
-    createNews,
-    updateNews,
-    deleteNews
-} from "@/actions/news";
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    getAllActivities,
+    createActivity,
+    updateActivity,
+    deleteActivity
+} from "@/actions/activity";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { newsSchema, NewsInput } from "@/validators/news";
+import { activitySchema, ActivityInput } from "@/validators/activity";
 
-export default function NewsPage() {
-    const [newsItems, setNewsItems] = useState<any[]>([]);
+export default function ActivitiesPage() {
+    const [activities, setActivities] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -69,36 +80,41 @@ export default function NewsPage() {
         handleSubmit,
         reset,
         setValue,
+        watch,
         formState: { errors }
-    } = useForm<NewsInput>({
-        resolver: zodResolver(newsSchema),
+    } = useForm<ActivityInput>({
+        resolver: zodResolver(activitySchema),
         defaultValues: {
             title: "",
             description: "",
+            type: "IMAGE",
             image: "",
-            videoUrl: ""
+            videoUrl: "",
+            order: 0
         }
     });
 
-    const fetchNews = async () => {
+    const selectedType = watch("type");
+
+    const fetchActivities = async () => {
         try {
             setIsLoading(true);
-            const data = await getAllNews({
+            const data = await getAllActivities({
                 page: currentPage,
                 limit: 9,
                 search: searchQuery
             });
-            setNewsItems(data.news);
+            setActivities(data.activities);
             setTotalPages(data.pagination.totalPages);
         } catch (error) {
-            console.error("Failed to fetch news", error);
+            console.error("Failed to fetch activities", error);
         } finally {
             setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchNews();
+        fetchActivities();
     }, [currentPage, searchQuery]);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,20 +130,20 @@ export default function NewsPage() {
         }
     };
 
-    const onSubmit = async (data: NewsInput) => {
+    const onSubmit = async (data: ActivityInput) => {
         try {
             setIsSubmitting(true);
             let res;
             if (editingItem) {
-                res = await updateNews(editingItem.id, data);
+                res = await updateActivity(editingItem.id, data);
             } else {
-                res = await createNews(data);
+                res = await createActivity(data);
             }
 
             if (res.success) {
                 setIsDialogOpen(false);
                 handleResetForm();
-                fetchNews();
+                fetchActivities();
             } else {
                 alert(res.error || "Something went wrong");
             }
@@ -139,14 +155,14 @@ export default function NewsPage() {
     };
 
     const handleDelete = async (id: number) => {
-        if (!confirm("Are you sure you want to delete this news post?")) return;
+        if (!confirm("Are you sure you want to delete this activity?")) return;
 
         try {
-            const res = await deleteNews(id);
+            const res = await deleteActivity(id);
             if (res.success) {
-                fetchNews();
+                fetchActivities();
             } else {
-                alert(res.error || "Failed to delete news");
+                alert(res.error || "Failed to delete activity");
             }
         } catch (error) {
             alert("An error occurred");
@@ -158,8 +174,10 @@ export default function NewsPage() {
         reset({
             title: item.title,
             description: item.description,
+            type: item.type,
             image: "",
-            videoUrl: item.videoUrl || ""
+            videoUrl: item.videoUrl || "",
+            order: item.order || 0
         });
         setPreview(item.image?.url || "");
         setIsDialogOpen(true);
@@ -169,8 +187,10 @@ export default function NewsPage() {
         reset({
             title: "",
             description: "",
+            type: "IMAGE",
             image: "",
-            videoUrl: ""
+            videoUrl: "",
+            order: 0
         });
         setPreview("");
         setEditingItem(null);
@@ -180,14 +200,14 @@ export default function NewsPage() {
         <div className="p-6 space-y-6 max-w-[1400px] mx-auto">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight">News Management</h1>
-                    <p className="text-muted-foreground text-sm">Publish and manage news articles for the NGO.</p>
+                    <h1 className="text-2xl font-bold tracking-tight">Activity Management</h1>
+                    <p className="text-muted-foreground text-sm">Manage NGO activities, events and achievements.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="relative w-full md:w-64">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
                         <Input
-                            placeholder="Search news..."
+                            placeholder="Search activities..."
                             className="pl-9 bg-white"
                             value={searchQuery}
                             onChange={(e) => {
@@ -203,15 +223,15 @@ export default function NewsPage() {
                         <DialogTrigger asChild>
                             <Button className="bg-primary hover:bg-primary/90 shadow-sm shadow-primary/20">
                                 <Plus className="h-4 w-4 mr-2" />
-                                Post News
+                                Create Activity
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                                 <DialogHeader>
-                                    <DialogTitle>{editingItem ? "Edit News Post" : "Create New Post"}</DialogTitle>
+                                    <DialogTitle>{editingItem ? "Edit Activity" : "Create New Activity"}</DialogTitle>
                                     <DialogDescription>
-                                        Fill in the details below to publish a news update.
+                                        Fill in the details below to showcase a new activity.
                                     </DialogDescription>
                                 </DialogHeader>
 
@@ -228,7 +248,7 @@ export default function NewsPage() {
                                         <Input
                                             id="title"
                                             {...register("title")}
-                                            placeholder="Enter headline..."
+                                            placeholder="Enter activity title..."
                                             className={cn(errors.title && "border-destructive focus-visible:ring-destructive")}
                                         />
                                     </div>
@@ -245,9 +265,9 @@ export default function NewsPage() {
                                         <Textarea
                                             id="description"
                                             {...register("description")}
-                                            placeholder="Detailed news content..."
+                                            placeholder="Detailed description of the activity..."
                                             className={cn(
-                                                "min-h-[120px] resize-none",
+                                                "min-h-[100px] resize-none",
                                                 errors.description && "border-destructive focus-visible:ring-destructive"
                                             )}
                                         />
@@ -255,7 +275,35 @@ export default function NewsPage() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label>Cover Image</Label>
+                                            <Label htmlFor="type">Media Type</Label>
+                                            <Select
+                                                onValueChange={(value) => setValue("type", value as "IMAGE" | "VIDEO")}
+                                                defaultValue={selectedType}
+                                            >
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select type" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="IMAGE">Image</SelectItem>
+                                                    <SelectItem value="VIDEO">Video</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <Label htmlFor="order">Display Order</Label>
+                                            <Input
+                                                id="order"
+                                                type="number"
+                                                {...register("order", { valueAsNumber: true })}
+                                                placeholder="0"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <Label>Activity Image {selectedType === "VIDEO" && "(Optional Thumbnail)"}</Label>
                                             <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-3 bg-slate-50/50 hover:bg-slate-50 transition-colors h-[120px]">
                                                 {preview ? (
                                                     <div className="relative w-full h-full rounded-lg overflow-hidden group">
@@ -278,7 +326,7 @@ export default function NewsPage() {
 
                                         <div className="space-y-2">
                                             <div className="flex justify-between items-center">
-                                                <Label htmlFor="videoUrl">Video URL (Optional)</Label>
+                                                <Label htmlFor="videoUrl">Video URL (Required for Video type)</Label>
                                                 {errors.videoUrl && (
                                                     <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
                                                         <AlertCircle className="h-2.5 w-2.5" /> {errors.videoUrl.message}
@@ -290,8 +338,9 @@ export default function NewsPage() {
                                                 {...register("videoUrl")}
                                                 placeholder="YouTube / Vimeo link"
                                                 className={cn(errors.videoUrl && "border-destructive focus-visible:ring-destructive")}
+                                                disabled={selectedType === "IMAGE"}
                                             />
-                                            <p className="text-[10px] text-slate-400">Add a link to embed video content.</p>
+                                            <p className="text-[10px] text-slate-400">Embed link for video content.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +349,7 @@ export default function NewsPage() {
                                     <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
                                     <Button type="submit" disabled={isSubmitting}>
                                         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        {editingItem ? "Update Post" : "Publish News"}
+                                        {editingItem ? "Update Activity" : "Create Activity"}
                                     </Button>
                                 </DialogFooter>
                             </form>
@@ -312,14 +361,14 @@ export default function NewsPage() {
             {isLoading ? (
                 <div className="flex flex-col items-center justify-center min-h-[400px]">
                     <Loader2 className="h-8 w-8 animate-spin text-primary opacity-50" />
-                    <p className="text-sm text-muted-foreground mt-4 font-medium">Fetching the latest news...</p>
+                    <p className="text-sm text-muted-foreground mt-4 font-medium">Fetching activities...</p>
                 </div>
-            ) : newsItems.length > 0 ? (
+            ) : activities.length > 0 ? (
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {newsItems.map((item) => (
+                        {activities.map((item) => (
                             <Card key={item.id} className="group relative overflow-hidden border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
-                                <div className="relative aspect-video overflow-hidden">
+                                <div className="relative aspect-video overflow-hidden bg-slate-100">
                                     {item.image?.url ? (
                                         <Image
                                             src={item.image.url}
@@ -327,12 +376,17 @@ export default function NewsPage() {
                                             fill
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
+                                    ) : item.type === "VIDEO" ? (
+                                        <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-white">
+                                            <Video className="h-10 w-10 opacity-50 mb-2" />
+                                            <span className="text-xs opacity-50 uppercase tracking-widest">Video Content</span>
+                                        </div>
                                     ) : (
-                                        <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                                        <div className="w-full h-full flex items-center justify-center">
                                             <ImageIcon className="h-10 w-10 text-slate-300" />
                                         </div>
                                     )}
-                                    <div className="absolute top-2 right-2 flex gap-1.5">
+                                    <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Button
                                             variant="secondary"
                                             size="icon"
@@ -350,13 +404,17 @@ export default function NewsPage() {
                                             <Trash2 className="h-3.5 w-3.5" />
                                         </Button>
                                     </div>
-                                    {item.videoUrl && (
-                                        <div className="absolute bottom-2 left-2">
-                                            <Badge variant="secondary" className="bg-black/60 text-white border-none py-0.5 pointer-events-none">
-                                                Video
-                                            </Badge>
-                                        </div>
-                                    )}
+                                    <div className="absolute top-2 left-2 flex gap-1.5">
+                                        <Badge className={cn(
+                                            "shadow-sm border-none py-0.5",
+                                            item.type === "IMAGE" ? "bg-blue-500" : "bg-red-500"
+                                        )}>
+                                            {item.type}
+                                        </Badge>
+                                        <Badge variant="outline" className="bg-white/90 backdrop-blur-sm border-slate-200 py-0.5 text-slate-700 font-bold">
+                                            #{item.order}
+                                        </Badge>
+                                    </div>
                                 </div>
 
                                 <CardHeader className="p-4 space-y-1">
@@ -364,22 +422,22 @@ export default function NewsPage() {
                                         <Calendar className="h-3 w-3" />
                                         {new Date(item.createdAt).toLocaleDateString()}
                                     </div>
-                                    <CardTitle className="text-lg font-bold leading-tight line-clamp-2 min-h-[50px]">
+                                    <CardTitle className="text-lg font-bold leading-tight line-clamp-1">
                                         {item.title}
                                     </CardTitle>
                                 </CardHeader>
 
                                 <CardContent className="p-4 pt-0 grow">
-                                    <CardDescription className="line-clamp-3 text-slate-600">
+                                    <CardDescription className="line-clamp-3 text-slate-600 text-sm">
                                         {item.description}
                                     </CardDescription>
                                 </CardContent>
 
-                                <CardFooter className="p-4 border-t border-slate-50 flex items-center justify-between">
-                                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">News ID: #{item.id}</span>
+                                <CardFooter className="p-4 border-t border-slate-50 flex items-center justify-between bg-slate-50/30">
+                                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">ID: #{item.id}</span>
                                     {item.videoUrl && (
                                         <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-xs font-semibold">
-                                            Watch <ExternalLink className="h-3 w-3 ml-1" />
+                                            View Video <ExternalLink className="h-3 w-3 ml-1" />
                                         </a>
                                     )}
                                 </CardFooter>
@@ -399,7 +457,7 @@ export default function NewsPage() {
                             >
                                 <ChevronLeft className="h-4 w-4" />
                             </Button>
-                            <div className="text-sm font-medium px-4">
+                            <div className="text-sm font-medium px-4 bg-white border rounded-md h-9 flex items-center">
                                 Page {currentPage} of {totalPages}
                             </div>
                             <Button
@@ -415,13 +473,13 @@ export default function NewsPage() {
                     )}
                 </>
             ) : (
-                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 rounded-3xl bg-slate-50/50">
+                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50">
                     <div className="p-4 rounded-full bg-white shadow-sm mb-4">
-                        <Search className="h-10 w-10 text-slate-300" />
+                        <LayoutDashboard className="h-10 w-10 text-slate-300" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900">No news posts found</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">No activities found</h3>
                     <p className="text-slate-500 text-sm mt-1 max-w-[280px] text-center">
-                        {searchQuery ? "Try adjusting your search terms." : "You haven't published any news yet. Click the button above to post your first update."}
+                        {searchQuery ? "Try adjusting your search terms." : "You haven't added any activities yet. Click the button above to showcase your work."}
                     </p>
                     {searchQuery && (
                         <Button variant="link" className="mt-2 text-primary" onClick={() => setSearchQuery("")}>Clear search</Button>

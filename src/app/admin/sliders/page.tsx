@@ -210,7 +210,7 @@ export default function SlidersPage() {
                                 <div className="absolute top-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-white text-[10px] font-bold uppercase tracking-wider">
                                     Order: {slider.order}
                                 </div>
-                                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="absolute top-2 right-2 flex gap-1.5">
                                     <Button
                                         variant="destructive"
                                         size="icon"

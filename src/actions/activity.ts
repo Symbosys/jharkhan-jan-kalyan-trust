@@ -5,24 +5,43 @@ import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cacheTag, updateTag } from "next/cache";
 
 /**
- * Get activities with pagination
+ * Get activities with pagination and search
  */
-export async function getAllActivities(page: number = 1, limit: number = 10) {
+export async function getAllActivities({
+    page = 1,
+    limit = 10,
+    search = "",
+}: {
+    page?: number;
+    limit?: number;
+    search?: string;
+} = {}) {
     "use cache";
     cacheTag("activity");
     const skip = (page - 1) * limit;
+
     try {
+        const where = search
+            ? {
+                OR: [
+                    { title: { contains: search } },
+                    { description: { contains: search } },
+                ],
+            }
+            : {};
+
         const [activities, total] = await Promise.all([
             prisma.activity.findMany({
+                where,
                 skip,
                 take: limit,
                 orderBy: {
                     order: "asc",
                 },
             }),
-            prisma.activity.count(),
+            prisma.activity.count({ where }),
         ]);
-        
+
         return {
             activities,
             pagination: {
@@ -34,7 +53,7 @@ export async function getAllActivities(page: number = 1, limit: number = 10) {
         };
     } catch (error: any) {
         console.error("Error fetching activities:", error);
-        throw new Error(error.message);
+        throw new Error(error.message || "Failed to fetch activities");
     }
 }
 
@@ -45,15 +64,14 @@ export async function createActivity(data: {
     title: string;
     description: string;
     type: "IMAGE" | "VIDEO";
-    image?: string; // base64 or path
+    image?: string;
     videoUrl?: string;
     order?: number;
 }) {
     try {
         let imageData = null;
 
-        // Upload image if provided and type is IMAGE
-        if (data.image) {
+        if (data.image && data.type === "IMAGE") {
             const uploadResult = await uploadToCloudinary(data.image, "activities");
             imageData = {
                 url: uploadResult.url,
@@ -76,7 +94,7 @@ export async function createActivity(data: {
         return { success: true, data: activity };
     } catch (error: any) {
         console.error("Error creating activity:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message || "Something went wrong" };
     }
 }
 
@@ -99,11 +117,11 @@ export async function updateActivity(
             where: { id },
         });
 
-        if (!existing) throw new Error("Activity not found");
+        if (!existing) return { success: false, error: "Activity not found" };
 
         let imageData = existing.image;
 
-        if (data.image) {
+        if (data.image && data.type === "IMAGE") {
             // Delete old image if exists
             const existingImageData = existing.image as any;
             if (existingImageData?.public_id) {
@@ -111,7 +129,7 @@ export async function updateActivity(
             }
 
             // Upload new
-            const uploadResult = await uploadToCloudinary(data.image);
+            const uploadResult = await uploadToCloudinary(data.image, "activities");
             imageData = {
                 url: uploadResult.url,
                 public_id: uploadResult.public_id,
@@ -134,7 +152,7 @@ export async function updateActivity(
         return { success: true, data: updated };
     } catch (error: any) {
         console.error("Error updating activity:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message || "Something went wrong" };
     }
 }
 
@@ -147,7 +165,7 @@ export async function deleteActivity(id: number) {
             where: { id },
         });
 
-        if (!existing) throw new Error("Activity not found");
+        if (!existing) return { success: false, error: "Activity not found" };
 
         // Delete image from Cloudinary
         const imageData = existing.image as any;
@@ -163,6 +181,7 @@ export async function deleteActivity(id: number) {
         return { success: true };
     } catch (error: any) {
         console.error("Error deleting activity:", error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message || "Something went wrong" };
     }
 }
+

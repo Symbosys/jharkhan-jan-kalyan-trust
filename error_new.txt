@@ -1,0 +1,183 @@
+﻿node_modules/react-hook-form/dist/form.d.ts(1,8): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/react-hook-form/dist/types/controller.d.ts(1,13): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/react-hook-form/dist/types/form.d.ts(1,13): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/react-hook-form/dist/useFormContext.d.ts(1,8): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/sonner/dist/index.d.ts(1,8): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v3/errors.d.cts(2,8): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v3/locales/en"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(1,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ar"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(2,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/az"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(3,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/be"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(4,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/bg"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(5,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ca"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(6,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/cs"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(7,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/da"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(8,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/de"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(9,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/en"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(10,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/eo"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(11,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/es"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(12,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/fa"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(13,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/fi"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(14,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/fr"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(15,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/fr-CA"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(16,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/he"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(17,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/hu"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(18,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/hy"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(19,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/id"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(20,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/is"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(21,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/it"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(22,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ja"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(23,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ka"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(24,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/kh"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(25,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/km"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(26,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ko"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(27,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/lt"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(28,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/mk"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(29,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ms"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(30,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/nl"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(31,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/no"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(32,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ota"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(33,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ps"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(34,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/pl"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(35,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/pt"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(36,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ru"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(37,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/sl"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(38,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/sv"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(39,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ta"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(40,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/th"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(41,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/tr"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(42,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ua"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(43,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/uk"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(44,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/ur"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(45,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/uz"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(46,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/vi"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(47,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/zh-CN"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(48,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/zh-TW"' can only be default-imported using the 'esModuleInterop' flag
+node_modules/zod/v4/locales/index.d.cts(49,21): error TS1259: Module '"C:/Users/Lenovo/Desktop/symbosys/jan-kalyan-ngo/node_modules/zod/v4/locales/yo"' can only be default-imported using the 'esModuleInterop' flag
+src/app/admin/plans/page.tsx(9,8): error TS2307: Cannot find module '@/actions/membershipPlan' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(16,8): error TS2307: Cannot find module '@/components/ui/card' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(17,24): error TS2307: Cannot find module '@/components/ui/button' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(31,23): error TS2307: Cannot find module '@/components/ui/input' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(40,8): error TS2307: Cannot find module '@/components/ui/dialog' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(48,8): error TS2307: Cannot find module '@/components/ui/form' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(55,8): error TS2307: Cannot find module '@/components/ui/select' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(56,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(57,24): error TS2307: Cannot find module '@/components/ui/switch' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(62,23): error TS2307: Cannot find module '@/components/ui/badge' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(63,20): error TS2307: Cannot find module '@/lib/utils' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(70,8): error TS2307: Cannot find module '@/components/ui/dropdown-menu' or its corresponding type declarations.
+src/app/admin/plans/page.tsx(103,9): error TS2322: Type 'Resolver<{ name: string; amount: unknown; duration: unknown; durationType: "MONTH" | "YEAR" | "LIFETIME"; description: string; isActive?: boolean; }, any, { name: string; amount: number; duration: number; durationType: "MONTH" | ... 1 more ... | "LIFETIME"; description: string; isActive: boolean; }>' is not assignable to type 'Resolver<{ name: string; amount: number; duration: number; durationType: "MONTH" | "YEAR" | "LIFETIME"; description: string; isActive: boolean; }, any, { name: string; amount: number; duration: number; durationType: "MONTH" | ... 1 more ... | "LIFETIME"; description: string; isActive: boolean; }>'.
+  Types of parameters 'options' and 'options' are incompatible.
+    Type 'ResolverOptions<{ name: string; amount: number; duration: number; durationType: "MONTH" | "YEAR" | "LIFETIME"; description: string; isActive: boolean; }>' is not assignable to type 'ResolverOptions<{ name: string; amount: unknown; duration: unknown; durationType: "MONTH" | "YEAR" | "LIFETIME"; description: string; isActive?: boolean; }>'.
+      Type 'unknown' is not assignable to type 'number'.
+src/app/admin/plans/page.tsx(191,9): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(192,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(193,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(194,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(195,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(197,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(204,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(205,25): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(206,29): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(210,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(211,25): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(212,29): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(213,29): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(217,25): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(218,29): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(218,63): error TS2345: Argument of type '(values: PlanFormValues) => Promise<void>' is not assignable to parameter of type 'SubmitHandler<TFieldValues>'.
+  Types of parameters 'values' and 'data' are incompatible.
+    Type 'TFieldValues' is not assignable to type '{ name: string; amount: number; duration: number; durationType: "MONTH" | "YEAR" | "LIFETIME"; description: string; isActive: boolean; }'.
+      Type 'FieldValues' is missing the following properties from type '{ name: string; amount: number; duration: number; durationType: "MONTH" | "YEAR" | "LIFETIME"; description: string; isActive: boolean; }': name, amount, duration, durationType, and 2 more.
+src/app/admin/plans/page.tsx(219,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(223,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(224,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(225,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(226,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(228,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(232,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(233,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(237,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(238,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(239,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(240,53): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(242,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(246,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(250,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(251,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(252,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(253,53): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(254,57): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(258,57): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(263,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(268,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(269,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(273,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(274,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(275,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(276,53): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(278,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(282,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(286,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(287,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(288,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(289,53): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(290,57): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(291,61): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(294,53): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(295,57): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(296,57): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(297,57): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(300,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(305,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(309,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(310,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(311,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(312,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(318,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(322,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(323,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(333,13): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(334,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(335,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(344,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(345,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(348,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(349,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(350,25): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(352,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(353,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(356,21): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(361,25): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(365,17): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(367,25): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(375,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(376,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(381,29): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(382,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(383,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(384,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(386,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(387,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(388,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(389,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(392,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(393,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(394,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(396,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(397,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(401,49): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(406,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(407,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(409,29): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(410,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(411,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(412,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(417,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(418,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(419,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(420,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(422,37): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(424,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(426,45): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(428,41): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
+src/app/admin/plans/page.tsx(432,33): error TS17004: Cannot use JSX unless the '--jsx' flag is provided.
