@@ -14,5 +14,5 @@ export function DashboardDate() {
         }));
     }, []);
 
-    return <span className="text-slate-500">{date}</span>;
+    return <span className="text-slate-500 dark:text-slate-400">{date}</span>;
 }

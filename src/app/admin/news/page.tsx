@@ -54,6 +54,7 @@ export default function NewsPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<any>(null);
+    const [mediaType, setMediaType] = useState<"image" | "video">("image");
 
     // Search and Pagination
     const [searchQuery, setSearchQuery] = useState("");
@@ -109,6 +110,7 @@ export default function NewsPage() {
                 const base64 = reader.result as string;
                 setValue("image", base64);
                 setPreview(base64);
+                setValue("videoUrl", ""); // Clear video URL when image is added
             };
             reader.readAsDataURL(file);
         }
@@ -155,6 +157,8 @@ export default function NewsPage() {
 
     const handleEdit = (item: any) => {
         setEditingItem(item);
+        const type = item.videoUrl ? "video" : "image";
+        setMediaType(type);
         reset({
             title: item.title,
             description: item.description,
@@ -165,6 +169,13 @@ export default function NewsPage() {
         setIsDialogOpen(true);
     };
 
+    const getYoutubeId = (url: string) => {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
     const handleResetForm = () => {
         reset({
             title: "",
@@ -173,6 +184,7 @@ export default function NewsPage() {
             videoUrl: ""
         });
         setPreview("");
+        setMediaType("image");
         setEditingItem(null);
     };
 
@@ -180,15 +192,15 @@ export default function NewsPage() {
         <div className="p-6 space-y-6 max-w-[1400px] mx-auto">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight">News Management</h1>
-                    <p className="text-muted-foreground text-sm">Publish and manage news articles for the NGO.</p>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">News Management</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Publish and manage news articles for the NGO.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="relative w-full md:w-64">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                         <Input
                             placeholder="Search news..."
-                            className="pl-9 bg-white"
+                            className="pl-9 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
@@ -253,24 +265,75 @@ export default function NewsPage() {
                                         />
                                     </div>
 
+                                    <div className="space-y-3">
+                                        <Label className="text-base font-semibold">Media Type</Label>
+                                        <div className="flex items-center gap-6">
+                                            <div className="flex items-center space-x-2">
+                                                <input
+                                                    type="radio"
+                                                    id="media-image"
+                                                    name="mediaType"
+                                                    value="image"
+                                                    checked={mediaType === "image"}
+                                                    onChange={() => {
+                                                        setMediaType("image");
+                                                        setValue("videoUrl", "");
+                                                    }}
+                                                    className="accent-primary h-4 w-4 cursor-pointer"
+                                                />
+                                                <Label htmlFor="media-image" className="cursor-pointer font-normal">Upload Image</Label>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <input
+                                                    type="radio"
+                                                    id="media-video"
+                                                    name="mediaType"
+                                                    value="video"
+                                                    checked={mediaType === "video"}
+                                                    onChange={() => {
+                                                        setMediaType("video");
+                                                        setValue("image", "");
+                                                        setPreview("");
+                                                    }}
+                                                    className="accent-primary h-4 w-4 cursor-pointer"
+                                                />
+                                                <Label htmlFor="media-video" className="cursor-pointer font-normal">Video URL</Label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
                                             <Label>Cover Image</Label>
-                                            <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-3 bg-slate-50/50 hover:bg-slate-50 transition-colors h-[120px]">
+                                            <div className={cn(
+                                                "flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-3 transition-colors h-[120px]",
+                                                mediaType === "video"
+                                                    ? "bg-slate-100 border-slate-200 opacity-50 cursor-not-allowed dark:bg-slate-800 dark:border-slate-700"
+                                                    : "border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900"
+                                            )}>
                                                 {preview ? (
                                                     <div className="relative w-full h-full rounded-lg overflow-hidden group">
                                                         <Image src={preview} alt="Preview" fill className="object-cover" />
-                                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                            <Button type="button" variant="ghost" size="sm" className="text-white h-8" onClick={() => { setPreview(""); setValue("image", ""); }}>
-                                                                Change
-                                                            </Button>
-                                                        </div>
+                                                        {mediaType === "image" && (
+                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                                <Button type="button" variant="ghost" size="sm" className="text-white h-8" onClick={() => { setPreview(""); setValue("image", ""); }}>
+                                                                    Remove
+                                                                </Button>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 ) : (
-                                                    <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center w-full">
+                                                    <label htmlFor="image-upload" className={cn("flex flex-col items-center w-full", mediaType === "video" ? "cursor-not-allowed pointer-events-none" : "cursor-pointer")}>
                                                         <ImageIcon className="h-6 w-6 text-slate-300 mb-1" />
                                                         <span className="text-xs text-slate-500 font-medium text-center px-2">Click to upload</span>
-                                                        <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                                                        <input
+                                                            id="image-upload"
+                                                            type="file"
+                                                            className="hidden"
+                                                            accept="image/*"
+                                                            onChange={handleImageChange}
+                                                            disabled={mediaType === "video"}
+                                                        />
                                                     </label>
                                                 )}
                                             </div>
@@ -278,7 +341,7 @@ export default function NewsPage() {
 
                                         <div className="space-y-2">
                                             <div className="flex justify-between items-center">
-                                                <Label htmlFor="videoUrl">Video URL (Optional)</Label>
+                                                <Label htmlFor="videoUrl">Video URL</Label>
                                                 {errors.videoUrl && (
                                                     <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
                                                         <AlertCircle className="h-2.5 w-2.5" /> {errors.videoUrl.message}
@@ -290,6 +353,7 @@ export default function NewsPage() {
                                                 {...register("videoUrl")}
                                                 placeholder="YouTube / Vimeo link"
                                                 className={cn(errors.videoUrl && "border-destructive focus-visible:ring-destructive")}
+                                                disabled={mediaType === "image"}
                                             />
                                             <p className="text-[10px] text-slate-400">Add a link to embed video content.</p>
                                         </div>
@@ -318,9 +382,22 @@ export default function NewsPage() {
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {newsItems.map((item) => (
-                            <Card key={item.id} className="group relative overflow-hidden border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
+                            <Card key={item.id} className="group relative overflow-hidden border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full bg-white dark:bg-slate-900">
                                 <div className="relative aspect-video overflow-hidden">
-                                    {item.image?.url ? (
+                                    {item.videoUrl && getYoutubeId(item.videoUrl) ? (
+                                        <div className="w-full h-full">
+                                            <iframe
+                                                width="100%"
+                                                height="100%"
+                                                src={`https://www.youtube.com/embed/${getYoutubeId(item.videoUrl)}`}
+                                                title={item.title}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                                className="absolute inset-0"
+                                            ></iframe>
+                                        </div>
+                                    ) : item.image?.url ? (
                                         <Image
                                             src={item.image.url}
                                             alt={item.title}
@@ -328,15 +405,15 @@ export default function NewsPage() {
                                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
                                     ) : (
-                                        <div className="w-full h-full bg-slate-100 flex items-center justify-center">
-                                            <ImageIcon className="h-10 w-10 text-slate-300" />
+                                        <div className="w-full h-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                            <ImageIcon className="h-10 w-10 text-slate-300 dark:text-slate-600" />
                                         </div>
                                     )}
-                                    <div className="absolute top-2 right-2 flex gap-1.5">
+                                    <div className="absolute top-2 right-2 flex gap-1.5 z-10">
                                         <Button
                                             variant="secondary"
                                             size="icon"
-                                            className="h-8 w-8 shadow-md bg-white/90 backdrop-blur-sm"
+                                            className="h-8 w-8 shadow-md bg-white/90 backdrop-blur-sm text-slate-900 hover:bg-white"
                                             onClick={() => handleEdit(item)}
                                         >
                                             <Pencil className="h-3.5 w-3.5" />
@@ -350,13 +427,6 @@ export default function NewsPage() {
                                             <Trash2 className="h-3.5 w-3.5" />
                                         </Button>
                                     </div>
-                                    {item.videoUrl && (
-                                        <div className="absolute bottom-2 left-2">
-                                            <Badge variant="secondary" className="bg-black/60 text-white border-none py-0.5 pointer-events-none">
-                                                Video
-                                            </Badge>
-                                        </div>
-                                    )}
                                 </div>
 
                                 <CardHeader className="p-4 space-y-1">
@@ -364,19 +434,19 @@ export default function NewsPage() {
                                         <Calendar className="h-3 w-3" />
                                         {new Date(item.createdAt).toLocaleDateString()}
                                     </div>
-                                    <CardTitle className="text-lg font-bold leading-tight line-clamp-2 min-h-[50px]">
+                                    <CardTitle className="text-lg font-bold leading-tight line-clamp-2 min-h-[50px] text-slate-900 dark:text-slate-100">
                                         {item.title}
                                     </CardTitle>
                                 </CardHeader>
 
                                 <CardContent className="p-4 pt-0 grow">
-                                    <CardDescription className="line-clamp-3 text-slate-600">
+                                    <CardDescription className="line-clamp-3 text-slate-600 dark:text-slate-400">
                                         {item.description}
                                     </CardDescription>
                                 </CardContent>
 
-                                <CardFooter className="p-4 border-t border-slate-50 flex items-center justify-between">
-                                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">News ID: #{item.id}</span>
+                                <CardFooter className="p-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
+                                    <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">News ID: #{item.id}</span>
                                     {item.videoUrl && (
                                         <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-xs font-semibold">
                                             Watch <ExternalLink className="h-3 w-3 ml-1" />
@@ -415,12 +485,12 @@ export default function NewsPage() {
                     )}
                 </>
             ) : (
-                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 rounded-3xl bg-slate-50/50">
-                    <div className="p-4 rounded-full bg-white shadow-sm mb-4">
-                        <Search className="h-10 w-10 text-slate-300" />
+                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl bg-slate-50/50 dark:bg-slate-900/50">
+                    <div className="p-4 rounded-full bg-white dark:bg-slate-800 shadow-sm mb-4">
+                        <Search className="h-10 w-10 text-slate-300 dark:text-slate-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900">No news posts found</h3>
-                    <p className="text-slate-500 text-sm mt-1 max-w-[280px] text-center">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">No news posts found</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 max-w-[280px] text-center">
                         {searchQuery ? "Try adjusting your search terms." : "You haven't published any news yet. Click the button above to post your first update."}
                     </p>
                     {searchQuery && (

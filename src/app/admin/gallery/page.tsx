@@ -197,8 +197,8 @@ export default function GalleryPage() {
         <div className="p-6 space-y-6 max-w-[1400px] mx-auto">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 font-outfit">Media Gallery</h1>
-                    <p className="text-slate-500 text-sm font-medium">Manage activities and press highlights media.</p>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 font-outfit">Media Gallery</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Manage activities and press highlights media.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Dialog open={isDialogOpen} onOpenChange={(open) => {
@@ -229,7 +229,7 @@ export default function GalleryPage() {
                                                 control={control}
                                                 render={({ field }) => (
                                                     <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
-                                                        <SelectTrigger className="bg-slate-50 border-slate-100 rounded-xl">
+                                                        <SelectTrigger className="bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-xl">
                                                             <SelectValue placeholder="Select type" />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -247,7 +247,7 @@ export default function GalleryPage() {
                                                 control={control}
                                                 render={({ field }) => (
                                                     <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
-                                                        <SelectTrigger className="bg-slate-50 border-slate-100 rounded-xl">
+                                                        <SelectTrigger className="bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 rounded-xl">
                                                             <SelectValue placeholder="Select category" />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -264,8 +264,8 @@ export default function GalleryPage() {
                                         <div className="space-y-2">
                                             <Label>Image Content</Label>
                                             <div className={cn(
-                                                "flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-4 bg-slate-50/50 hover:bg-slate-50 transition-all h-[200px] relative overflow-hidden",
-                                                errors.image ? "border-destructive/50" : "border-slate-200"
+                                                "flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all h-[200px] relative overflow-hidden",
+                                                errors.image ? "border-destructive/50" : "border-slate-200 dark:border-slate-800"
                                             )}>
                                                 {preview ? (
                                                     <>
@@ -278,10 +278,10 @@ export default function GalleryPage() {
                                                     </>
                                                 ) : (
                                                     <label htmlFor="gallery-upload" className="cursor-pointer flex flex-col items-center gap-2 group">
-                                                        <div className="p-3 rounded-full bg-white shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
+                                                        <div className="p-3 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-800 group-hover:scale-110 transition-transform">
                                                             <ImageIcon className="h-6 w-6 text-primary" />
                                                         </div>
-                                                        <span className="text-sm text-slate-500 font-medium">Click to upload photo</span>
+                                                        <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">Click to upload photo</span>
                                                         <input id="gallery-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                                     </label>
                                                 )}
@@ -299,7 +299,7 @@ export default function GalleryPage() {
                                                 id="videoUrl"
                                                 {...register("videoUrl")}
                                                 placeholder="YouTube or Vimeo link..."
-                                                className={cn("rounded-xl bg-slate-50 border-slate-100", errors.videoUrl && "border-destructive")}
+                                                className={cn("rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800", errors.videoUrl && "border-destructive")}
                                             />
                                             {errors.videoUrl && (
                                                 <p className="text-[10px] text-destructive font-semibold flex items-center gap-1">
@@ -325,10 +325,10 @@ export default function GalleryPage() {
 
             <Tabs defaultValue="ALL" onValueChange={setActiveTab} className="w-full">
                 <div className="flex items-center justify-between mb-6">
-                    <TabsList className="bg-slate-100 p-1 rounded-xl h-11">
-                        <TabsTrigger value="ALL" className="rounded-lg px-6 data-[state=active]:bg-white data-[state=active]:shadow-sm">All Media</TabsTrigger>
-                        <TabsTrigger value="ACTIVITIES" className="rounded-lg px-6 data-[state=active]:bg-white data-[state=active]:shadow-sm">Activities</TabsTrigger>
-                        <TabsTrigger value="PRESS" className="rounded-lg px-6 data-[state=active]:bg-white data-[state=active]:shadow-sm">Press Coverage</TabsTrigger>
+                    <TabsList className="bg-slate-100 dark:bg-slate-900 p-1 rounded-xl h-11">
+                        <TabsTrigger value="ALL" className="rounded-lg px-6 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm data-[state=active]:text-slate-900 dark:data-[state=active]:text-slate-100 text-slate-500 dark:text-slate-400">All Media</TabsTrigger>
+                        <TabsTrigger value="ACTIVITIES" className="rounded-lg px-6 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm data-[state=active]:text-slate-900 dark:data-[state=active]:text-slate-100 text-slate-500 dark:text-slate-400">Activities</TabsTrigger>
+                        <TabsTrigger value="PRESS" className="rounded-lg px-6 data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm data-[state=active]:text-slate-900 dark:data-[state=active]:text-slate-100 text-slate-500 dark:text-slate-400">Press Coverage</TabsTrigger>
                     </TabsList>
                 </div>
 
@@ -340,7 +340,7 @@ export default function GalleryPage() {
                 ) : items.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                         {items.map((item) => (
-                            <div key={item.id} className="group relative aspect-square rounded-3xl overflow-hidden border border-slate-100 shadow-sm bg-slate-50">
+                            <div key={item.id} className="group relative aspect-square rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-50 dark:bg-slate-900">
                                 {item.type === "IMAGE" && item.image?.url ? (
                                     <Image
                                         src={item.image.url}
@@ -359,7 +359,7 @@ export default function GalleryPage() {
 
                                 {/* Overlay Badges */}
                                 <div className="absolute top-3 left-3 flex gap-2">
-                                    <Badge className="bg-white/90 backdrop-blur-sm text-slate-900 border-none text-[10px] font-bold shadow-sm rounded-full">
+                                    <Badge className="bg-white/90 dark:bg-black/60 backdrop-blur-sm text-slate-900 dark:text-white border-none text-[10px] font-bold shadow-sm rounded-full">
                                         {item.category}
                                     </Badge>
                                 </div>
@@ -390,12 +390,12 @@ export default function GalleryPage() {
                         ))}
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 rounded-[40px] bg-slate-50/50">
-                        <div className="p-6 rounded-full bg-white shadow-sm mb-6 border border-slate-100">
-                            <ImageIcon className="h-12 w-12 text-slate-200" />
+                    <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-[40px] bg-slate-50/50 dark:bg-slate-900/50">
+                        <div className="p-6 rounded-full bg-white dark:bg-slate-800 shadow-sm mb-6 border border-slate-100 dark:border-slate-800">
+                            <ImageIcon className="h-12 w-12 text-slate-200 dark:text-slate-600" />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900">Gallery is empty</h3>
-                        <p className="text-slate-500 text-sm mt-2 font-medium">Start building your NGO's visual history.</p>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">Gallery is empty</h3>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 font-medium">Start building your NGO's visual history.</p>
                         <Button className="mt-6 rounded-xl px-8" onClick={() => setIsDialogOpen(true)}>
                             Upload First Media
                         </Button>
@@ -410,11 +410,11 @@ export default function GalleryPage() {
                             size="icon"
                             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                             disabled={currentPage === 1}
-                            className="h-11 w-11 rounded-xl border-slate-200 hover:bg-slate-50"
+                            className="h-11 w-11 rounded-xl border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
                         >
                             <ChevronLeft className="h-5 w-5" />
                         </Button>
-                        <div className="text-sm font-bold bg-slate-100 px-6 py-2.5 rounded-xl border border-slate-100 shadow-inner">
+                        <div className="text-sm font-bold bg-slate-100 dark:bg-slate-800 px-6 py-2.5 rounded-xl border border-slate-100 dark:border-slate-700 shadow-inner dark:text-slate-200">
                             {currentPage} <span className="text-slate-400 mx-1">/</span> {totalPages}
                         </div>
                         <Button
@@ -422,7 +422,7 @@ export default function GalleryPage() {
                             size="icon"
                             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                             disabled={currentPage === totalPages}
-                            className="h-11 w-11 rounded-xl border-slate-200 hover:bg-slate-50"
+                            className="h-11 w-11 rounded-xl border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
                         >
                             <ChevronRight className="h-5 w-5" />
                         </Button>

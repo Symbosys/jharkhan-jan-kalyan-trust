@@ -5,19 +5,14 @@ import { cacheTag, updateTag } from "next/cache";
 import { Prisma } from "../../generated/prisma/client";
 
 /**
- * Get all Web Settings with pagination and search
+ * Get all Web Settings with optional search filtering
  */
 export async function getAllWebSettings(options?: {
-    page?: number;
-    limit?: number;
     search?: string;
 }) {
+    // @ts-ignore
     "use cache";
     cacheTag("websettings");
-    
-    const page = options?.page || 1;
-    const limit = options?.limit || 10;
-    const skip = (page - 1) * limit;
 
     const where: Prisma.WebSettingWhereInput = {};
     if (options?.search) {
@@ -28,24 +23,14 @@ export async function getAllWebSettings(options?: {
     }
 
     try {
-        const [settings, total] = await Promise.all([
-            prisma.webSetting.findMany({
-                where,
-                skip,
-                take: limit,
-                orderBy: { key: "asc" },
-            }),
-            prisma.webSetting.count({ where }),
-        ]);
+        const settings = await prisma.webSetting.findMany({
+            where,
+            orderBy: { key: "asc" },
+        });
 
         return {
             settings,
-            pagination: {
-                total,
-                totalPages: Math.ceil(total / limit),
-                currentPage: page,
-                limit
-            }
+            total: settings.length
         };
     } catch (error: any) {
         console.error("Error fetching web settings:", error);
@@ -57,6 +42,7 @@ export async function getAllWebSettings(options?: {
  * Get all Web Settings as a key-value object
  */
 export async function getWebSettings() {
+    // @ts-ignore
     "use cache";
     cacheTag("websettings");
     try {
@@ -75,6 +61,7 @@ export async function getWebSettings() {
  * Get a specific Web Setting by key
  */
 export async function getWebSettingByKey(key: string) {
+    // @ts-ignore
     "use cache";
     cacheTag(`websetting-${key}`, "websettings");
     try {
@@ -99,13 +86,37 @@ export async function updateWebSetting(key: string, value: string) {
             create: { key, value },
         });
 
-        // Update tags
         updateTag("websettings");
         updateTag(`websetting-${key}`);
         
         return { success: true, data: setting };
     } catch (error: any) {
         console.error("Error updating web setting:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Batch Update Web Settings
+ */
+export async function updateWebSettings(settings: Record<string, string>) {
+    try {
+        const operations = Object.entries(settings).map(([key, value]) => 
+            prisma.webSetting.upsert({
+                where: { key },
+                update: { value },
+                create: { key, value },
+            })
+        );
+
+        await Promise.all(operations);
+
+        updateTag("websettings");
+        Object.keys(settings).forEach(key => updateTag(`websetting-${key}`));
+        
+        return { success: true };
+    } catch (error: any) {
+        console.error("Error batch updating web settings:", error);
         return { success: false, error: error.message };
     }
 }

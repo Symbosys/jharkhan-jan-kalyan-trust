@@ -117,14 +117,14 @@ export default function PaymentPage() {
         <div className="p-6 max-w-4xl mx-auto space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 font-outfit">Payment Settings</h1>
-                    <p className="text-slate-500 mt-1">Manage NGO bank details and donation QR code.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground font-outfit">Payment Settings</h1>
+                    <p className="text-muted-foreground mt-1">Manage NGO bank details and donation QR code.</p>
                 </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="md:col-span-2 border-slate-200 shadow-sm overflow-hidden">
-                    <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+                <Card className="md:col-span-2 border-border shadow-sm overflow-hidden bg-card">
+                    <CardHeader className="bg-muted/50 border-b border-border">
                         <CardTitle className="flex items-center gap-2">
                             <Landmark className="h-5 w-5 text-primary" />
                             Bank Information
@@ -140,11 +140,11 @@ export default function PaymentPage() {
                                         name="bankName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-slate-700 font-medium">Bank Name</FormLabel>
+                                                <FormLabel className="text-foreground font-medium">Bank Name</FormLabel>
                                                 <FormControl>
                                                     <div className="relative">
-                                                        <Landmark className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                                                        <Input placeholder="e.g. HDFC Bank" className="pl-9 h-11 border-slate-200 focus:ring-primary/20" {...field} />
+                                                        <Landmark className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                        <Input placeholder="e.g. HDFC Bank" className="pl-9 h-11 border-input focus:ring-primary/20 bg-background" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage />
@@ -156,11 +156,11 @@ export default function PaymentPage() {
                                         name="accountHolderName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-slate-700 font-medium">Account Holder Name</FormLabel>
+                                                <FormLabel className="text-foreground font-medium">Account Holder Name</FormLabel>
                                                 <FormControl>
                                                     <div className="relative">
-                                                        <User className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                                                        <Input placeholder="NGO Name" className="pl-9 h-11 border-slate-200 focus:ring-primary/20" {...field} />
+                                                        <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                        <Input placeholder="NGO Name" className="pl-9 h-11 border-input focus:ring-primary/20 bg-background" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage />
@@ -175,11 +175,11 @@ export default function PaymentPage() {
                                         name="accountNumber"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-slate-700 font-medium">Account Number</FormLabel>
+                                                <FormLabel className="text-foreground font-medium">Account Number</FormLabel>
                                                 <FormControl>
                                                     <div className="relative">
-                                                        <CreditCard className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                                                        <Input placeholder="1234567890" className="pl-9 h-11 border-slate-200 focus:ring-primary/20" {...field} />
+                                                        <CreditCard className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                        <Input placeholder="1234567890" className="pl-9 h-11 border-input focus:ring-primary/20 bg-background" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage />
@@ -191,11 +191,11 @@ export default function PaymentPage() {
                                         name="ifscCode"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="text-slate-700 font-medium">IFSC Code</FormLabel>
+                                                <FormLabel className="text-foreground font-medium">IFSC Code</FormLabel>
                                                 <FormControl>
                                                     <div className="relative">
-                                                        <QrCode className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                                                        <Input placeholder="HDFC0001234" className="pl-9 h-11 border-slate-200 focus:ring-primary/20" {...field} />
+                                                        <QrCode className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                        <Input placeholder="HDFC0001234" className="pl-9 h-11 border-input focus:ring-primary/20 bg-background" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage />
@@ -224,15 +224,15 @@ export default function PaymentPage() {
                 </Card>
 
                 <div className="space-y-6">
-                    <Card className="border-slate-200 shadow-sm overflow-hidden">
-                        <CardHeader className="bg-slate-50/50 border-b border-slate-100">
+                    <Card className="border-border shadow-sm overflow-hidden bg-card">
+                        <CardHeader className="bg-muted/50 border-b border-border">
                             <CardTitle className="text-base flex items-center gap-2">
                                 <QrCode className="h-4 w-4 text-primary" />
                                 QR Code / Logo
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="p-6 flex flex-col items-center">
-                            <div className="relative w-full aspect-square max-w-[200px] border-2 border-dashed border-slate-200 rounded-2xl flex items-center justify-center bg-slate-50 overflow-hidden group">
+                            <div className="relative w-full aspect-square max-w-[200px] border-2 border-dashed border-border rounded-2xl flex items-center justify-center bg-muted/20 overflow-hidden group hover:border-primary/50 transition-colors">
                                 {preview ? (
                                     <Image
                                         src={preview}
@@ -241,7 +241,7 @@ export default function PaymentPage() {
                                         className="object-contain p-2"
                                     />
                                 ) : (
-                                    <div className="flex flex-col items-center text-slate-400 group-hover:text-primary transition-colors">
+                                    <div className="flex flex-col items-center text-muted-foreground group-hover:text-primary transition-colors">
                                         <Upload className="h-8 w-8 mb-2" />
                                         <span className="text-xs font-medium">Upload QR Code</span>
                                     </div>
@@ -253,7 +253,7 @@ export default function PaymentPage() {
                                     className="absolute inset-0 opacity-0 cursor-pointer"
                                 />
                             </div>
-                            <p className="text-[11px] text-slate-500 mt-4 text-center">
+                            <p className="text-[11px] text-muted-foreground mt-4 text-center">
                                 Recommended size: 500x500px. <br />Supports JPG, PNG or WEBP.
                             </p>
                         </CardContent>
@@ -266,7 +266,7 @@ export default function PaymentPage() {
                             </div>
                             <div>
                                 <h4 className="text-sm font-semibold text-primary">Public Information</h4>
-                                <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
+                                <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                                     These details will be shown to users on the donation and membership pages.
                                 </p>
                             </div>

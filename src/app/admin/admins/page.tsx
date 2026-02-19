@@ -164,15 +164,15 @@ export default function AdminsPage() {
         <div className="p-6 space-y-6 max-w-[1400px] mx-auto">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 font-outfit">Admin Management</h1>
-                    <p className="text-slate-500 text-sm font-medium">Control access and manage system administrators.</p>
+                    <h1 className="text-2xl font-bold tracking-tight text-foreground font-outfit">Admin Management</h1>
+                    <p className="text-muted-foreground text-sm font-medium">Control access and manage system administrators.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="relative w-full md:w-64">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
                             placeholder="Search admins..."
-                            className="pl-10 bg-white border-slate-200 rounded-xl focus-visible:ring-primary/20"
+                            className="pl-10 bg-background border-input rounded-xl focus-visible:ring-primary/20"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -182,30 +182,30 @@ export default function AdminsPage() {
                         if (!open) handleResetForm();
                     }}>
                         <DialogTrigger asChild>
-                            <Button className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all rounded-xl">
+                            <Button className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all rounded-xl text-primary-foreground">
                                 <UserPlus className="h-4 w-4 mr-2" />
                                 Add Admin
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[450px] rounded-3xl">
+                        <DialogContent className="sm:max-w-[450px] rounded-3xl bg-background border-border">
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                 <DialogHeader>
-                                    <DialogTitle className="text-xl font-bold">{editingItem ? "Edit Admin Account" : "Create Admin Account"}</DialogTitle>
-                                    <DialogDescription className="text-slate-500">
+                                    <DialogTitle className="text-xl font-bold text-foreground">{editingItem ? "Edit Admin Account" : "Create Admin Account"}</DialogTitle>
+                                    <DialogDescription className="text-muted-foreground">
                                         Fill in the details to {editingItem ? "update" : "grant"} administrative access.
                                     </DialogDescription>
                                 </DialogHeader>
 
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <Label htmlFor="name" className="text-slate-700 font-semibold">Full Name</Label>
+                                        <Label htmlFor="name" className="text-foreground font-semibold">Full Name</Label>
                                         <div className="relative">
-                                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                             <Input
                                                 id="name"
                                                 {...register("name")}
                                                 placeholder="Admin Name"
-                                                className={cn("pl-10 rounded-xl bg-slate-50 border-slate-100", errors.name && "border-destructive")}
+                                                className={cn("pl-10 rounded-xl bg-muted/30 border-input", errors.name && "border-destructive")}
                                             />
                                         </div>
                                         {errors.name && (
@@ -216,14 +216,14 @@ export default function AdminsPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="email" className="text-slate-700 font-semibold">Email Address</Label>
+                                        <Label htmlFor="email" className="text-foreground font-semibold">Email Address</Label>
                                         <div className="relative">
-                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                             <Input
                                                 id="email"
                                                 {...register("email")}
                                                 placeholder="admin@jankalyan.org"
-                                                className={cn("pl-10 rounded-xl bg-slate-50 border-slate-100", errors.email && "border-destructive")}
+                                                className={cn("pl-10 rounded-xl bg-muted/30 border-input", errors.email && "border-destructive")}
                                             />
                                         </div>
                                         {errors.email && (
@@ -234,17 +234,17 @@ export default function AdminsPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <Label htmlFor="password" className="text-slate-700 font-semibold">
+                                        <Label htmlFor="password" className="text-foreground font-semibold">
                                             {editingItem ? "New Password (Optional)" : "Password"}
                                         </Label>
                                         <div className="relative">
-                                            <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                            <Key className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                             <Input
                                                 id="password"
                                                 type="password"
                                                 {...register("password")}
                                                 placeholder={editingItem ? "Leave blank to keep current" : "Min. 6 characters"}
-                                                className={cn("pl-10 rounded-xl bg-slate-50 border-slate-100", errors.password && "border-destructive")}
+                                                className={cn("pl-10 rounded-xl bg-muted/30 border-input", errors.password && "border-destructive")}
                                             />
                                         </div>
                                         {errors.password && (
@@ -256,7 +256,7 @@ export default function AdminsPage() {
                                 </div>
 
                                 <DialogFooter>
-                                    <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="rounded-xl">Cancel</Button>
+                                    <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="rounded-xl text-muted-foreground hover:text-foreground">Cancel</Button>
                                     <Button type="submit" disabled={isSubmitting} className="rounded-xl px-8 shadow-md">
                                         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                         {editingItem ? "Update Access" : "Create Account"}
@@ -271,41 +271,41 @@ export default function AdminsPage() {
             {isLoading ? (
                 <div className="flex flex-col items-center justify-center min-h-[400px]">
                     <Loader2 className="h-10 w-10 animate-spin text-primary/30" />
-                    <p className="text-sm text-slate-500 mt-4 font-medium italic">Fetching authorized users...</p>
+                    <p className="text-sm text-muted-foreground mt-4 font-medium italic">Fetching authorized users...</p>
                 </div>
             ) : filteredAdmins.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredAdmins.map((item) => (
-                        <Card key={item.id} className="group overflow-hidden border-slate-100 shadow-sm hover:shadow-md transition-all rounded-3xl">
+                        <Card key={item.id} className="group overflow-hidden border-border bg-card shadow-sm hover:shadow-md transition-all rounded-3xl">
                             <CardHeader className="p-6 pb-4 flex flex-row items-center gap-4 space-y-0">
                                 <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/10">
                                     <ShieldCheck className="h-6 w-6" />
                                 </div>
                                 <div className="flex-1 overflow-hidden">
-                                    <CardTitle className="text-base font-bold text-slate-900 truncate">{item.name}</CardTitle>
-                                    <CardDescription className="text-xs font-medium text-slate-500 truncate">{item.email}</CardDescription>
+                                    <CardTitle className="text-base font-bold text-foreground truncate">{item.name}</CardTitle>
+                                    <CardDescription className="text-xs font-medium text-muted-foreground truncate">{item.email}</CardDescription>
                                 </div>
-                                <Badge className="bg-emerald-50 text-emerald-600 border-none px-2 rounded-lg text-[10px] font-bold">
+                                <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-none px-2 rounded-lg text-[10px] font-bold">
                                     ACTIVE
                                 </Badge>
                             </CardHeader>
 
-                            <CardContent className="px-6 py-4 border-y border-slate-50 bg-slate-50/30">
+                            <CardContent className="px-6 py-4 border-y border-border bg-muted/30">
                                 <div className="flex items-center gap-4">
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Access Level</span>
-                                        <span className="text-xs font-bold text-slate-700">{item.role}</span>
+                                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Access Level</span>
+                                        <span className="text-xs font-bold text-foreground">{item.role}</span>
                                     </div>
                                 </div>
                             </CardContent>
 
                             <CardFooter className="p-4 flex items-center justify-between">
-                                <span className="text-[10px] font-bold text-slate-400 tracking-wider font-mono">UID: #{item.id}</span>
+                                <span className="text-[10px] font-bold text-muted-foreground tracking-wider font-mono">UID: #{item.id}</span>
                                 <div className="flex gap-2">
                                     <Button
                                         variant="secondary"
                                         size="icon"
-                                        className="h-8 w-8 rounded-xl bg-white hover:bg-primary hover:text-white transition-all border border-slate-200 shadow-sm text-slate-600"
+                                        className="h-8 w-8 rounded-xl bg-background hover:bg-primary hover:text-primary-foreground transition-all border border-input shadow-sm text-muted-foreground"
                                         onClick={() => handleEdit(item)}
                                     >
                                         <Pencil className="h-4 w-4" />
@@ -313,7 +313,7 @@ export default function AdminsPage() {
                                     <Button
                                         variant="secondary"
                                         size="icon"
-                                        className="h-8 w-8 rounded-xl bg-white hover:bg-destructive hover:text-white transition-all border border-slate-200 shadow-sm text-slate-600"
+                                        className="h-8 w-8 rounded-xl bg-background hover:bg-destructive hover:text-destructive-foreground transition-all border border-input shadow-sm text-muted-foreground"
                                         onClick={() => handleDelete(item.id)}
                                     >
                                         <Trash2 className="h-4 w-4" />
@@ -324,12 +324,12 @@ export default function AdminsPage() {
                     ))}
                 </div>
             ) : (
-                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 rounded-[32px] bg-slate-50/50">
-                    <div className="p-6 rounded-full bg-white shadow-sm mb-6 border border-slate-50">
-                        <ShieldCheck className="h-10 w-10 text-slate-200" />
+                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-border rounded-[32px] bg-muted/20">
+                    <div className="p-6 rounded-full bg-card shadow-sm mb-6 border border-border">
+                        <ShieldCheck className="h-10 w-10 text-muted-foreground/50" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900">No admins found</h3>
-                    <p className="text-slate-500 text-sm mt-2 font-medium max-w-[300px] text-center">
+                    <h3 className="text-xl font-bold text-foreground">No admins found</h3>
+                    <p className="text-muted-foreground text-sm mt-2 font-medium max-w-[300px] text-center">
                         {searchQuery ? "No accounts match your search query." : "Register authorized users to manage the platform."}
                     </p>
                     <Button className="mt-6 rounded-xl px-10" onClick={() => setIsDialogOpen(true)}>

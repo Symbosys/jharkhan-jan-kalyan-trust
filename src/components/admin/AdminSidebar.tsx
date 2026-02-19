@@ -171,22 +171,22 @@ export function AdminSidebar() {
     const pathname = usePathname();
 
     return (
-        <Sidebar collapsible="icon" className="border-r border-slate-100 bg-white">
+        <Sidebar collapsible="icon" className="border-r border-border bg-card">
             <SidebarHeader className="h-14 flex items-center px-4">
                 <div className="flex items-center gap-3 overflow-hidden">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold">
                         JK
                     </div>
                     <div className="flex flex-col overflow-hidden transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0">
-                        <span className="font-semibold text-sm text-slate-900 truncate">Jan Kalyan NGO</span>
-                        <span className="text-xs text-slate-500 truncate">Administration</span>
+                        <span className="font-semibold text-sm text-foreground truncate">Jan Kalyan NGO</span>
+                        <span className="text-xs text-muted-foreground truncate">Administration</span>
                     </div>
                 </div>
             </SidebarHeader>
             <SidebarContent className="px-2 py-2">
                 {data.navMain.map((group) => (
                     <SidebarGroup key={group.title} className="mb-1">
-                        <SidebarGroupLabel className="px-2 text-xs font-medium text-slate-400/80 uppercase tracking-wider mb-1 group-data-[collapsible=icon]:hidden">
+                        <SidebarGroupLabel className="px-2 text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1 group-data-[collapsible=icon]:hidden">
                             {group.title}
                         </SidebarGroupLabel>
                         <SidebarGroupContent>
@@ -203,11 +203,11 @@ export function AdminSidebar() {
                                                     "h-9 px-2.5 rounded-md transition-all duration-200",
                                                     active
                                                         ? "bg-primary/5 text-primary"
-                                                        : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                                                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                                                 )}
                                             >
                                                 <Link href={item.url} className="flex items-center gap-3">
-                                                    <item.icon className={cn("size-4 shrink-0", active ? "text-primary" : "text-slate-400 group-hover:text-slate-600")} />
+                                                    <item.icon className={cn("size-4 shrink-0", active ? "text-primary" : "text-muted-foreground group-hover:text-foreground")} />
                                                     <span className={cn("text-sm", active ? "font-medium" : "font-normal")}>
                                                         {item.title}
                                                     </span>
@@ -222,17 +222,17 @@ export function AdminSidebar() {
                     </SidebarGroup>
                 ))}
             </SidebarContent>
-            <SidebarFooter className="p-3 border-t border-slate-100">
+            <SidebarFooter className="p-3 border-t border-border">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <button className="flex items-center w-full gap-3 p-1.5 rounded-lg hover:bg-slate-50 transition-colors group">
-                            <Avatar className="h-8 w-8 border border-slate-100">
+                        <button className="flex items-center w-full gap-3 p-1.5 rounded-lg hover:bg-accent transition-colors group">
+                            <Avatar className="h-8 w-8 border border-border">
                                 <AvatarImage src="" />
-                                <AvatarFallback className="bg-slate-100 text-slate-600 text-xs font-medium">AD</AvatarFallback>
+                                <AvatarFallback className="bg-muted text-muted-foreground text-xs font-medium">AD</AvatarFallback>
                             </Avatar>
                             <div className="flex flex-col items-start overflow-hidden transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0">
-                                <span className="text-sm font-medium text-slate-700 truncate">Admin User</span>
-                                <span className="text-xs text-slate-400 truncate">admin@jankalyan.org</span>
+                                <span className="text-sm font-medium text-foreground truncate">Admin User</span>
+                                <span className="text-xs text-muted-foreground truncate">admin@jankalyan.org</span>
                             </div>
                         </button>
                     </DropdownMenuTrigger>
@@ -246,7 +246,7 @@ export function AdminSidebar() {
                             <span>Settings</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600 focus:text-red-600 focus:bg-red-50 cursor-pointer">
+                        <DropdownMenuItem className="text-red-500 focus:text-red-500 focus:bg-red-50/50 cursor-pointer">
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Log out</span>
                         </DropdownMenuItem>

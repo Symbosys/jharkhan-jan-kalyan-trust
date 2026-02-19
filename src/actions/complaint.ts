@@ -15,17 +15,15 @@ export async function registerComplaint(data: {
     message: string;
     description: string;
     videoUrl: string;
-    document1?: string; // base64/path
-    document2?: string; // base64/path
+    document1?: string; 
+    document2?: string; 
 }) {
     try {
-        // 1. Upload documents to Cloudinary if provided
         const [doc1Res, doc2Res] = await Promise.all([
             data.document1 ? uploadToCloudinary(data.document1, "complaints") : Promise.resolve(null),
             data.document2 ? uploadToCloudinary(data.document2, "complaints") : Promise.resolve(null)
         ]);
 
-        // 2. Create record
         const complaint = await prisma.registerComplaint.create({
             data: {
                 name: data.name,
@@ -34,12 +32,11 @@ export async function registerComplaint(data: {
                 message: data.message,
                 description: data.description,
                 videoUrl: data.videoUrl,
-                document1: doc1Res ? { url: doc1Res.url, public_id: doc1Res.public_id } : {},
-                document2: doc2Res ? { url: doc2Res.url, public_id: doc2Res.public_id } : {},
+                document1: doc1Res ? { url: doc1Res.url, public_id: doc1Res.public_id } : Prisma.JsonNull,
+                document2: doc2Res ? { url: doc2Res.url, public_id: doc2Res.public_id } : Prisma.JsonNull,
             },
         });
 
-        // 3. Clear cache
         updateTag("complaints");
         return { success: true, data: complaint };
     } catch (error: any) {
@@ -58,6 +55,7 @@ export async function getAllComplaints(options?: {
     endDate?: Date;
     search?: string;
 }) {
+    // @ts-ignore
     "use cache";
     cacheTag("complaints");
 
@@ -67,20 +65,18 @@ export async function getAllComplaints(options?: {
 
     const where: Prisma.RegisterComplaintWhereInput = {};
 
-    // Date Filtering
     if (options?.startDate || options?.endDate) {
         where.createdAt = {};
         if (options.startDate) where.createdAt.gte = new Date(options.startDate);
         if (options.endDate) where.createdAt.lte = new Date(options.endDate);
     }
 
-    // Search Filtering
     if (options?.search) {
         where.OR = [
-            {name: {contains: options.search}},
-            {mobile: {contains: options.search}},
-            {city: {contains: options.search}},
-            {message: {contains: options.search}},
+            { name: { contains: options.search } },
+            { mobile: { contains: options.search } },
+            { city: { contains: options.search } },
+            { message: { contains: options.search } },
         ]
     }
 
@@ -118,13 +114,14 @@ export async function deleteComplaint(id: number) {
         const existing = await prisma.registerComplaint.findUnique({ where: { id } });
         if (!existing) throw new Error("Complaint not found");
 
-        // Cleanup files in Cloudinary
         const filesToDelete = [
             (existing.document1 as any)?.public_id,
             (existing.document2 as any)?.public_id,
         ].filter(Boolean);
 
-        await Promise.all(filesToDelete.map(pid => deleteFromCloudinary(pid)));
+        if (filesToDelete.length > 0) {
+            await Promise.all(filesToDelete.map(pid => deleteFromCloudinary(pid)));
+        }
 
         await prisma.registerComplaint.delete({ where: { id } });
 

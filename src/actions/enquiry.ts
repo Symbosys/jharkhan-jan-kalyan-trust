@@ -43,6 +43,7 @@ export async function getAllEnquiries(options?: {
   endDate?: Date;
   search?: string;
 }) {
+  // @ts-ignore
   "use cache";
   cacheTag("enquiries");
 
@@ -52,19 +53,18 @@ export async function getAllEnquiries(options?: {
 
   const where: Prisma.EnquiryWhereInput = {};
 
-  // Date Filtering
   if (options?.startDate || options?.endDate) {
     where.createdAt = {};
     if (options.startDate) where.createdAt.gte = new Date(options.startDate);
     if (options.endDate) where.createdAt.lte = new Date(options.endDate);
   }
 
-  // Search Filtering
   if (options?.search) {
     where.OR = [
       { name: { contains: options.search } },
       { mobile: { contains: options.search } },
       { email: { contains: options.search } },
+      { topic: { contains: options.search } },
     ];
   }
 

@@ -193,10 +193,10 @@ export default function MembershipPlansPage() {
     <div className="p-6 max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 font-outfit">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground font-outfit">
             Membership Plans
           </h1>
-          <p className="text-slate-500 mt-1">
+          <p className="text-muted-foreground mt-1">
             Design and manage subscription tiers for your members.
           </p>
         </div>
@@ -269,7 +269,7 @@ export default function MembershipPlansPage() {
                               checked={field.value}
                               onCheckedChange={field.onChange}
                             />
-                            <span className="text-sm text-slate-500">
+                            <span className="text-sm text-muted-foreground">
                               {field.value ? "Active" : "Inactive"}
                             </span>
                           </div>
@@ -348,10 +348,10 @@ export default function MembershipPlansPage() {
       </div>
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search plans..."
-          className="pl-9 bg-white border-slate-200"
+          className="pl-9 bg-background border-border"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -362,14 +362,14 @@ export default function MembershipPlansPage() {
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : plans.length === 0 ? (
-        <Card className="border-dashed border-2 flex flex-col items-center justify-center p-12 text-center bg-slate-50/50">
-          <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
-            <AlertCircle className="h-6 w-6 text-slate-400" />
+        <Card className="border-dashed border-2 flex flex-col items-center justify-center p-12 text-center bg-muted/20 border-border">
+          <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
+            <AlertCircle className="h-6 w-6 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold text-slate-900">
+          <h3 className="text-lg font-semibold text-foreground">
             No plans found
           </h3>
-          <p className="text-sm text-slate-500 max-w-sm mt-1">
+          <p className="text-sm text-muted-foreground max-w-sm mt-1">
             Start by creating a new membership plan to offer subscription
             options to your users.
           </p>
@@ -387,7 +387,7 @@ export default function MembershipPlansPage() {
             <Card
               key={plan.id}
               className={cn(
-                "group border-slate-200 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden",
+                "group border-border bg-card transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden",
                 !plan.isActive && "opacity-75 grayscale-[0.5]",
               )}
             >
@@ -395,7 +395,7 @@ export default function MembershipPlansPage() {
                 <div className="absolute top-3 right-3 z-10">
                   <Badge
                     variant="secondary"
-                    className="bg-slate-100 text-slate-500 border-none"
+                    className="bg-muted text-muted-foreground border-none"
                   >
                     Inactive
                   </Badge>
@@ -411,7 +411,7 @@ export default function MembershipPlansPage() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-slate-400"
+                        className="h-8 w-8 text-muted-foreground"
                       >
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
@@ -422,7 +422,7 @@ export default function MembershipPlansPage() {
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
-                        className="text-red-600 focus:text-red-700 focus:bg-red-50"
+                        className="text-red-600 focus:text-red-700 focus:bg-red-50 dark:focus:bg-red-900/20"
                         onClick={() => handleDelete(plan.id)}
                       >
                         <Trash2 className="mr-2 h-4 w-4" /> Delete
@@ -430,33 +430,33 @@ export default function MembershipPlansPage() {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-                <CardTitle className="text-xl font-bold font-outfit text-slate-900">
+                <CardTitle className="text-xl font-bold font-outfit text-foreground">
                   {plan.name}
                 </CardTitle>
-                <CardDescription className="line-clamp-2 mt-1.5">
+                <CardDescription className="line-clamp-2 mt-1.5 text-muted-foreground">
                   {plan.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-slate-900 font-outfit">
+                  <span className="text-3xl font-bold text-foreground font-outfit">
                     ₹{plan.amount}
                   </span>
-                  <span className="text-sm text-slate-500 font-medium">
+                  <span className="text-sm text-muted-foreground font-medium">
                     / {plan.duration}{" "}
                     {formatDurationType(plan.durationType, plan.duration)}
                   </span>
                 </div>
 
-                <div className="space-y-3 pt-4 border-t border-slate-100">
-                  <div className="flex items-center gap-3 text-sm text-slate-600">
+                <div className="space-y-3 pt-4 border-t border-border">
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
                     <Clock className="h-4 w-4 text-primary/60" />
                     <span>
                       Validity: {plan.duration}{" "}
                       {formatDurationType(plan.durationType, plan.duration)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-slate-600">
+                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
                     {plan.isActive ? (
                       <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                     ) : (
@@ -468,7 +468,7 @@ export default function MembershipPlansPage() {
 
                 <Button
                   variant="outline"
-                  className="w-full border-slate-200 text-slate-600 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all font-semibold"
+                  className="w-full border-border text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all font-semibold"
                   onClick={() => handleEdit(plan)}
                 >
                   Modify Plan

@@ -180,15 +180,15 @@ export default function TestimonialPage() {
         <div className="p-6 space-y-6 max-w-[1400px] mx-auto">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 font-outfit">Testimonials</h1>
-                    <p className="text-slate-500 text-sm font-medium">Manage and display feedback from donors and members.</p>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 font-outfit">Testimonials</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Manage and display feedback from donors and members.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="relative w-full md:w-64">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
                         <Input
                             placeholder="Search by name..."
-                            className="pl-10 bg-white border-slate-200 rounded-xl"
+                            className="pl-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-xl"
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
@@ -223,7 +223,7 @@ export default function TestimonialPage() {
                                                 id="name"
                                                 {...register("name")}
                                                 placeholder="John Doe"
-                                                className={cn("rounded-xl bg-slate-50", errors.name && "border-destructive")}
+                                                className={cn("rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800", errors.name && "border-destructive")}
                                             />
                                             {errors.name && (
                                                 <p className="text-[10px] text-destructive font-semibold flex items-center gap-1 mt-1">
@@ -237,7 +237,7 @@ export default function TestimonialPage() {
                                                 id="position"
                                                 {...register("position")}
                                                 placeholder="Donor / Volunteer"
-                                                className={cn("rounded-xl bg-slate-50", errors.position && "border-destructive")}
+                                                className={cn("rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800", errors.position && "border-destructive")}
                                             />
                                             {errors.position && (
                                                 <p className="text-[10px] text-destructive font-semibold flex items-center gap-1 mt-1">
@@ -253,7 +253,7 @@ export default function TestimonialPage() {
                                             id="message"
                                             {...register("message")}
                                             placeholder="Write the feedback here..."
-                                            className={cn("rounded-xl bg-slate-50 min-h-[100px] resize-none", errors.message && "border-destructive")}
+                                            className={cn("rounded-xl bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 min-h-[100px] resize-none", errors.message && "border-destructive")}
                                         />
                                         {errors.message && (
                                             <p className="text-[10px] text-destructive font-semibold flex items-center gap-1 mt-1">
@@ -265,8 +265,8 @@ export default function TestimonialPage() {
                                     <div className="space-y-2">
                                         <Label>Display Photo</Label>
                                         <div className={cn(
-                                            "flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-4 bg-slate-50/50 hover:bg-slate-50 transition-all h-[120px] relative overflow-hidden",
-                                            errors.image ? "border-destructive/50" : "border-slate-200"
+                                            "flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-4 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all h-[120px] relative overflow-hidden",
+                                            errors.image ? "border-destructive/50" : "border-slate-200 dark:border-slate-800"
                                         )}>
                                             {preview ? (
                                                 <>
@@ -279,10 +279,10 @@ export default function TestimonialPage() {
                                                 </>
                                             ) : (
                                                 <label htmlFor="testimonial-upload" className="cursor-pointer flex flex-col items-center gap-2 group">
-                                                    <div className="p-2 rounded-full bg-white shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
+                                                    <div className="p-2 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-800 group-hover:scale-110 transition-transform">
                                                         <UserCircle className="h-6 w-6 text-primary" />
                                                     </div>
-                                                    <span className="text-xs text-slate-500 font-medium">Click to upload photo</span>
+                                                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Click to upload photo</span>
                                                     <input id="testimonial-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
                                                 </label>
                                             )}
@@ -312,20 +312,20 @@ export default function TestimonialPage() {
                 <>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {testimonials.map((item) => (
-                            <Card key={item.id} className="group relative overflow-hidden border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col h-full rounded-2xl">
+                            <Card key={item.id} className="group relative overflow-hidden border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full rounded-2xl bg-white dark:bg-slate-900">
                                 <div className="p-6 pb-0 flex items-start justify-between">
                                     <div className="flex items-center gap-4">
-                                        <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-slate-50 shadow-sm transition-transform group-hover:scale-105">
+                                        <div className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-slate-50 dark:border-slate-800 shadow-sm transition-transform group-hover:scale-105">
                                             {item.image?.url ? (
                                                 <Image src={item.image.url} alt={item.name} fill className="object-cover" />
                                             ) : (
-                                                <div className="w-full h-full bg-slate-100 flex items-center justify-center">
-                                                    <UserCircle className="h-6 w-6 text-slate-300" />
+                                                <div className="w-full h-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                                    <UserCircle className="h-6 w-6 text-slate-300 dark:text-slate-600" />
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-slate-900 leading-none mb-1">{item.name}</h3>
+                                            <h3 className="font-bold text-slate-900 dark:text-slate-100 leading-none mb-1">{item.name}</h3>
                                             <p className="text-xs text-primary font-semibold">{item.position}</p>
                                         </div>
                                     </div>
@@ -338,18 +338,18 @@ export default function TestimonialPage() {
                                             <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" />
                                         ))}
                                     </div>
-                                    <CardDescription className="text-slate-600 line-clamp-4 leading-relaxed font-medium italic">
+                                    <CardDescription className="text-slate-600 dark:text-slate-400 line-clamp-4 leading-relaxed font-medium italic">
                                         "{item.message}"
                                     </CardDescription>
                                 </CardHeader>
 
-                                <CardFooter className="p-4 bg-slate-50/50 border-t border-slate-50 flex items-center justify-between">
-                                    <span className="text-[10px] font-bold text-slate-400 tracking-wider">REF: #{item.id}</span>
+                                <CardFooter className="p-4 bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
+                                    <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 tracking-wider">REF: #{item.id}</span>
                                     <div className="flex gap-2">
                                         <Button
                                             variant="secondary"
                                             size="icon"
-                                            className="h-8 w-8 rounded-full bg-white hover:bg-primary hover:text-white transition-colors border border-slate-100 shadow-sm"
+                                            className="h-8 w-8 rounded-full bg-white dark:bg-slate-800 hover:bg-primary hover:text-white transition-colors border border-slate-100 dark:border-slate-800 shadow-sm"
                                             onClick={() => handleEdit(item)}
                                         >
                                             <Pencil className="h-3.5 w-3.5" />
@@ -357,7 +357,7 @@ export default function TestimonialPage() {
                                         <Button
                                             variant="secondary"
                                             size="icon"
-                                            className="h-8 w-8 rounded-full bg-white hover:bg-destructive hover:text-white transition-colors border border-slate-100 shadow-sm"
+                                            className="h-8 w-8 rounded-full bg-white dark:bg-slate-800 hover:bg-destructive hover:text-white transition-colors border border-slate-100 dark:border-slate-800 shadow-sm"
                                             onClick={() => handleDelete(item.id)}
                                         >
                                             <Trash2 className="h-3.5 w-3.5" />
@@ -376,19 +376,19 @@ export default function TestimonialPage() {
                                 size="icon"
                                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                 disabled={currentPage === 1}
-                                className="h-10 w-10 rounded-xl border-slate-200"
+                                className="h-10 w-10 rounded-xl border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
                             >
                                 <ChevronLeft className="h-4 w-4" />
                             </Button>
-                            <div className="text-xs font-bold bg-white px-5 py-2.5 rounded-xl border border-slate-200 shadow-sm">
-                                {currentPage} <span className="text-slate-300 mx-1">/</span> {totalPages}
+                            <div className="text-xs font-bold bg-white dark:bg-slate-900 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm dark:text-slate-200">
+                                {currentPage} <span className="text-slate-300 dark:text-slate-600 mx-1">/</span> {totalPages}
                             </div>
                             <Button
                                 variant="outline"
                                 size="icon"
                                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                 disabled={currentPage === totalPages}
-                                className="h-10 w-10 rounded-xl border-slate-200"
+                                className="h-10 w-10 rounded-xl border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
                             >
                                 <ChevronRight className="h-4 w-4" />
                             </Button>
@@ -396,12 +396,12 @@ export default function TestimonialPage() {
                     )}
                 </>
             ) : (
-                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 rounded-[32px] bg-slate-50/50">
-                    <div className="p-6 rounded-full bg-white shadow-sm mb-6 border border-slate-50">
-                        <Quote className="h-10 w-10 text-slate-200" />
+                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-[32px] bg-slate-50/50 dark:bg-slate-900/50">
+                    <div className="p-6 rounded-full bg-white dark:bg-slate-800 shadow-sm mb-6 border border-slate-50 dark:border-slate-800">
+                        <Quote className="h-10 w-10 text-slate-200 dark:text-slate-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900">No testimonials yet</h3>
-                    <p className="text-slate-500 text-sm mt-2 font-medium max-w-[300px] text-center">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">No testimonials yet</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 font-medium max-w-[300px] text-center">
                         {searchQuery ? "No results found for your search." : "Share what your donors and members are saying about your NGO."}
                     </p>
                     <Button className="mt-6 rounded-xl px-10" onClick={() => setIsDialogOpen(true)}>

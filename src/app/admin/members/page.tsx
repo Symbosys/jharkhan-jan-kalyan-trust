@@ -170,15 +170,15 @@ export default function MembersPage() {
     const getStatusBadge = (status: string) => {
         switch (status) {
             case "ACTIVE":
-                return <Badge className="bg-emerald-50 text-emerald-600 hover:bg-emerald-50 border-none px-2 rounded-lg text-[10px] font-bold">ACTIVE</Badge>;
+                return <Badge className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 border-none px-2 rounded-lg text-[10px] font-bold">ACTIVE</Badge>;
             case "PENDING":
-                return <Badge className="bg-amber-50 text-amber-600 hover:bg-amber-50 border-none px-2 rounded-lg text-[10px] font-bold">PENDING</Badge>;
+                return <Badge className="bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/30 border-none px-2 rounded-lg text-[10px] font-bold">PENDING</Badge>;
             case "REJECTED":
-                return <Badge className="bg-rose-50 text-rose-600 hover:bg-rose-50 border-none px-2 rounded-lg text-[10px] font-bold">REJECTED</Badge>;
+                return <Badge className="bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-900/30 border-none px-2 rounded-lg text-[10px] font-bold">REJECTED</Badge>;
             case "EXPIRED":
-                return <Badge className="bg-slate-100 text-slate-500 hover:bg-slate-100 border-none px-2 rounded-lg text-[10px] font-bold">EXPIRED</Badge>;
+                return <Badge className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-none px-2 rounded-lg text-[10px] font-bold">EXPIRED</Badge>;
             default:
-                return <Badge className="bg-slate-100 text-slate-500 hover:bg-slate-100 border-none px-2 rounded-lg text-[10px] font-bold">{status}</Badge>;
+                return <Badge className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-none px-2 rounded-lg text-[10px] font-bold">{status}</Badge>;
         }
     };
 
@@ -187,43 +187,43 @@ export default function MembersPage() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 font-outfit">Membership Requests</h1>
-                    <p className="text-slate-500 text-sm font-medium">Verify and manage NGO memberships and renewals.</p>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 font-outfit">Membership Requests</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Verify and manage NGO memberships and renewals.</p>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:w-auto">
-                    <Card className="p-3 border-slate-100 shadow-sm col-span-1">
+                    <Card className="p-3 border-slate-100 dark:border-slate-800 shadow-sm col-span-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-50 rounded-lg"><Clock className="h-4 w-4 text-blue-600" /></div>
+                            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg"><Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" /></div>
                             <div>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none">Pending</p>
-                                <p className="text-sm font-bold text-slate-900 mt-1">{memberships.filter(m => m.status === 'PENDING').length || 0}</p>
+                                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-none">Pending</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">{memberships.filter(m => m.status === 'PENDING').length || 0}</p>
                             </div>
                         </div>
                     </Card>
-                    <Card className="p-3 border-slate-100 shadow-sm col-span-1">
+                    <Card className="p-3 border-slate-100 dark:border-slate-800 shadow-sm col-span-1">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-emerald-50 rounded-lg"><UserCheck className="h-4 w-4 text-emerald-600" /></div>
                             <div>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none">Verified</p>
-                                <p className="text-sm font-bold text-slate-900 mt-1">{memberships.filter(m => m.status === 'ACTIVE').length || 0}</p>
+                                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-none">Verified</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">{memberships.filter(m => m.status === 'ACTIVE').length || 0}</p>
                             </div>
                         </div>
                     </Card>
-                    <Card className="p-3 border-slate-100 shadow-sm col-span-1">
+                    <Card className="p-3 border-slate-100 dark:border-slate-800 shadow-sm col-span-1">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-slate-50 rounded-lg"><User className="h-4 w-4 text-slate-600" /></div>
+                            <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg"><User className="h-4 w-4 text-slate-600 dark:text-slate-300" /></div>
                             <div>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none">Total</p>
-                                <p className="text-sm font-bold text-slate-900 mt-1">{totalItems}</p>
+                                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-none">Total</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">{totalItems}</p>
                             </div>
                         </div>
                     </Card>
-                    <Card className="p-3 border-slate-100 shadow-sm col-span-1">
+                    <Card className="p-3 border-slate-100 dark:border-slate-800 shadow-sm col-span-1">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-rose-50 rounded-lg"><UserX className="h-4 w-4 text-rose-600" /></div>
                             <div>
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none">Rejected</p>
-                                <p className="text-sm font-bold text-slate-900 mt-1">{memberships.filter(m => m.status === 'REJECTED').length || 0}</p>
+                                <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-none">Rejected</p>
+                                <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">{memberships.filter(m => m.status === 'REJECTED').length || 0}</p>
                             </div>
                         </div>
                     </Card>
@@ -231,13 +231,13 @@ export default function MembersPage() {
             </div>
 
             {/* Filter Bar */}
-            <Card className="border-slate-100 shadow-sm rounded-2xl overflow-hidden">
+            <Card className="border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden">
                 <CardContent className="p-4 flex flex-col md:flex-row gap-4">
                     <div className="relative flex-1 group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary transition-colors" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500 group-focus-within:text-primary transition-colors" />
                         <Input
                             placeholder="Search by name, email, mobile or membership #..."
-                            className="pl-12 h-11 bg-slate-50 border-slate-200 focus-visible:bg-white focus-visible:ring-primary/20 rounded-xl transition-all shadow-none"
+                            className="pl-12 h-11 bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-700 focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all shadow-none"
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
@@ -247,7 +247,7 @@ export default function MembersPage() {
                     </div>
                     <div className="flex flex-wrap items-center gap-3">
                         <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setCurrentPage(1); }}>
-                            <SelectTrigger className="w-[140px] h-11 rounded-xl bg-slate-50 border-transparent">
+                            <SelectTrigger className="w-[140px] h-11 rounded-xl bg-slate-50 dark:bg-slate-950 border-transparent">
                                 <SelectValue placeholder="Status" />
                             </SelectTrigger>
                             <SelectContent>
@@ -261,7 +261,7 @@ export default function MembersPage() {
                         </Select>
 
                         <Select value={planFilter} onValueChange={(v) => { setPlanFilter(v); setCurrentPage(1); }}>
-                            <SelectTrigger className="w-[160px] h-11 rounded-xl bg-slate-50 border-transparent">
+                            <SelectTrigger className="w-[160px] h-11 rounded-xl bg-slate-50 dark:bg-slate-950 border-transparent">
                                 <SelectValue placeholder="Plan" />
                             </SelectTrigger>
                             <SelectContent>
@@ -273,7 +273,7 @@ export default function MembersPage() {
                         </Select>
 
                         <Select value={paymentFilter} onValueChange={(v) => { setPaymentFilter(v); setCurrentPage(1); }}>
-                            <SelectTrigger className="w-[140px] h-11 rounded-xl bg-slate-50 border-transparent">
+                            <SelectTrigger className="w-[140px] h-11 rounded-xl bg-slate-50 dark:bg-slate-950 border-transparent">
                                 <SelectValue placeholder="Payment" />
                             </SelectTrigger>
                             <SelectContent>
@@ -287,7 +287,7 @@ export default function MembersPage() {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="h-11 w-11 rounded-xl bg-slate-50 hover:bg-slate-100"
+                            className="h-11 w-11 rounded-xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100"
                             onClick={() => {
                                 setSearchQuery("");
                                 setStatusFilter("ALL");
@@ -296,17 +296,17 @@ export default function MembersPage() {
                                 setCurrentPage(1);
                             }}
                         >
-                            <XCircle className="h-4 w-4 text-slate-400" />
+                            <XCircle className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                         </Button>
                     </div>
                 </CardContent>
             </Card>
 
             {/* Members Table */}
-            <Card className="border-slate-100 shadow-sm rounded-2xl overflow-hidden bg-white">
+            <Card className="border-slate-100 dark:border-slate-800 shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
                 <Table>
-                    <TableHeader className="bg-slate-50/50">
-                        <TableRow className="hover:bg-transparent border-slate-100">
+                    <TableHeader className="bg-slate-50 dark:bg-slate-950/50">
+                        <TableRow className="hover:bg-transparent border-slate-100 dark:border-slate-800">
                             <TableHead className="w-[80px]">Photo</TableHead>
                             <TableHead>Member Details</TableHead>
                             <TableHead>Membership #</TableHead>
@@ -322,15 +322,15 @@ export default function MembersPage() {
                                 <TableCell colSpan={7} className="h-[400px] text-center">
                                     <div className="flex flex-col items-center justify-center gap-3">
                                         <Loader2 className="h-8 w-8 animate-spin text-primary/30" />
-                                        <p className="text-sm text-slate-500 font-medium italic">Scanning database...</p>
+                                        <p className="text-sm text-slate-500 dark:text-slate-400 font-medium italic">Scanning database...</p>
                                     </div>
                                 </TableCell>
                             </TableRow>
                         ) : memberships.length > 0 ? (
                             memberships.map((item) => (
-                                <TableRow key={item.id} className="group border-slate-100 hover:bg-slate-50/50 transition-colors">
+                                <TableRow key={item.id} className="group border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:bg-slate-950/50 transition-colors">
                                     <TableCell>
-                                        <div className="relative h-12 w-12 rounded-xl overflow-hidden border border-slate-100 shadow-sm bg-slate-100">
+                                        <div className="relative h-12 w-12 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-100">
                                             {item.profilePicture?.url ? (
                                                 <Image
                                                     src={item.profilePicture.url}
@@ -340,35 +340,35 @@ export default function MembersPage() {
                                                 />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center">
-                                                    <User className="h-6 w-6 text-slate-300" />
+                                                    <User className="h-6 w-6 text-slate-300 dark:text-slate-600" />
                                                 </div>
                                             )}
                                         </div>
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex flex-col gap-0.5">
-                                            <span className="font-bold text-slate-900">{item.name}</span>
-                                            <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
+                                            <span className="font-bold text-slate-900 dark:text-slate-100">{item.name}</span>
+                                            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
                                                 <Phone className="h-3 w-3" /> {item.mobile}
                                             </span>
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <Badge variant="outline" className="font-mono text-[10px] border-slate-200 text-slate-600 bg-slate-50 rounded-lg">
+                                        <Badge variant="outline" className="font-mono text-[10px] border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-950 rounded-lg">
                                             {item.memberShipNumber}
                                         </Badge>
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex flex-col gap-0.5">
                                             <span className="text-xs font-bold text-primary">{item.plan?.name}</span>
-                                            <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1 uppercase tracking-tight">
+                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 flex items-center gap-1 uppercase tracking-tight">
                                                 <CreditCard className="h-3 w-3" /> {item.paymentMode.replace(/_/g, " ")}
                                             </span>
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <span className="text-xs font-medium text-slate-500 flex items-center gap-1.5">
-                                            <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                                        <span className="text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                                            <Calendar className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                                             {new Date(item.createdAt).toLocaleDateString()}
                                         </span>
                                     </TableCell>
@@ -380,7 +380,7 @@ export default function MembersPage() {
                                             <Button
                                                 variant="secondary"
                                                 size="icon"
-                                                className="h-8 w-8 rounded-xl bg-white border border-slate-200 hover:bg-primary hover:text-white transition-all text-slate-600 shadow-sm"
+                                                className="h-8 w-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-primary hover:text-white transition-all text-slate-600 dark:text-slate-300 shadow-sm"
                                                 onClick={() => { setSelectedMember(item); setIsDetailsOpen(true); }}
                                             >
                                                 <Eye className="h-4 w-4" />
@@ -391,7 +391,7 @@ export default function MembersPage() {
                                                     <Button
                                                         variant="secondary"
                                                         size="icon"
-                                                        className="h-8 w-8 rounded-xl bg-white border border-slate-200 hover:bg-emerald-500 hover:text-white transition-all text-slate-600 shadow-sm"
+                                                        className="h-8 w-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-emerald-500 hover:text-white transition-all text-slate-600 dark:text-slate-300 shadow-sm"
                                                         onClick={() => handleUpdateStatus(item.id, 'ACTIVE')}
                                                         disabled={isActionLoading === item.id}
                                                     >
@@ -400,7 +400,7 @@ export default function MembersPage() {
                                                     <Button
                                                         variant="secondary"
                                                         size="icon"
-                                                        className="h-8 w-8 rounded-xl bg-white border border-slate-200 hover:bg-rose-500 hover:text-white transition-all text-slate-600 shadow-sm"
+                                                        className="h-8 w-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-rose-500 hover:text-white transition-all text-slate-600 dark:text-slate-300 shadow-sm"
                                                         onClick={() => handleUpdateStatus(item.id, 'REJECTED')}
                                                         disabled={isActionLoading === item.id}
                                                     >
@@ -412,7 +412,7 @@ export default function MembersPage() {
                                             <Button
                                                 variant="secondary"
                                                 size="icon"
-                                                className="h-8 w-8 rounded-xl bg-white border border-slate-200 hover:bg-destructive hover:text-white transition-all text-slate-600 shadow-sm"
+                                                className="h-8 w-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:bg-destructive hover:text-white transition-all text-slate-600 dark:text-slate-300 shadow-sm"
                                                 onClick={() => handleDelete(item.id)}
                                                 disabled={isActionLoading === item.id}
                                             >
@@ -426,12 +426,12 @@ export default function MembersPage() {
                             <TableRow>
                                 <TableCell colSpan={7} className="h-[400px] text-center">
                                     <div className="flex flex-col items-center justify-center gap-4">
-                                        <div className="p-5 rounded-full bg-slate-50 border border-slate-100">
-                                            <Shield className="h-10 w-10 text-slate-200" />
+                                        <div className="p-5 rounded-full bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800">
+                                            <Shield className="h-10 w-10 text-slate-200 dark:text-slate-700" />
                                         </div>
                                         <div className="space-y-1">
-                                            <h3 className="text-xl font-bold text-slate-900">No verification requests</h3>
-                                            <p className="text-slate-500 text-sm font-medium">Clear your filters or check back later for new applications.</p>
+                                            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">No verification requests</h3>
+                                            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Clear your filters or check back later for new applications.</p>
                                         </div>
                                     </div>
                                 </TableCell>
@@ -442,8 +442,8 @@ export default function MembersPage() {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                    <div className="p-4 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <div className="p-4 bg-slate-50 dark:bg-slate-950/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                        <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                             Showing page {currentPage} of {totalPages}
                         </p>
                         <div className="flex items-center gap-2">
@@ -452,7 +452,7 @@ export default function MembersPage() {
                                 size="sm"
                                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                 disabled={currentPage === 1 || isLoading}
-                                className="h-9 px-4 rounded-xl border-slate-200 bg-white"
+                                className="h-9 px-4 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
                             >
                                 <ChevronLeft className="h-4 w-4 mr-1" /> Previous
                             </Button>
@@ -461,7 +461,7 @@ export default function MembersPage() {
                                 size="sm"
                                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                 disabled={currentPage === totalPages || isLoading}
-                                className="h-9 px-4 rounded-xl border-slate-200 bg-white"
+                                className="h-9 px-4 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
                             >
                                 Next <ChevronRight className="h-4 w-4 ml-1" />
                             </Button>
@@ -472,7 +472,7 @@ export default function MembersPage() {
 
             {/* Verification & Details Dialog */}
             <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-                <DialogContent className="sm:max-w-4xl p-0 border-none rounded-[32px] shadow-2xl max-h-[90vh] overflow-hidden flex flex-col bg-white">
+                <DialogContent className="sm:max-w-4xl p-0 border-none rounded-[32px] shadow-2xl max-h-[90vh] overflow-hidden flex flex-col bg-white dark:bg-slate-900">
                     {selectedMember && (
                         <>
                             {/* Sticky Header */}
@@ -482,7 +482,7 @@ export default function MembersPage() {
                                         <Image src={selectedMember.profilePicture.url} alt={selectedMember.name} fill className="object-cover" />
                                     ) : (
                                         <div className="w-full h-full bg-slate-800 flex items-center justify-center">
-                                            <User className="h-12 w-12 text-slate-600" />
+                                            <User className="h-12 w-12 text-slate-600 dark:text-slate-300" />
                                         </div>
                                     )}
                                 </div>
@@ -493,7 +493,7 @@ export default function MembersPage() {
                                     </div>
                                     <div>
                                         <h2 className="text-3xl font-extrabold tracking-tight font-outfit">{selectedMember.name}</h2>
-                                        <p className="text-slate-400 font-medium flex items-center gap-2 mt-1">
+                                        <p className="text-slate-400 dark:text-slate-500 font-medium flex items-center gap-2 mt-1">
                                             {selectedMember.memberShipNumber} • Joined {new Date(selectedMember.createdAt).toLocaleDateString()}
                                         </p>
                                     </div>
@@ -502,56 +502,56 @@ export default function MembersPage() {
                             </div>
 
                             {/* Scrollable Content */}
-                            <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-slate-50/50">
+                            <div className="flex-1 overflow-y-auto p-8 space-y-8 bg-slate-50 dark:bg-slate-950/50">
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <Card className="border-none shadow-sm p-4 rounded-3xl bg-white">
-                                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Contact Information</h4>
+                                    <Card className="border-none shadow-sm p-4 rounded-3xl bg-white dark:bg-slate-900">
+                                        <h4 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Contact Information</h4>
                                         <div className="space-y-3">
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Mobile</span><span className="text-sm font-bold text-slate-900">{selectedMember.mobile}</span></div>
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Email</span><span className="text-sm font-bold text-slate-900">{selectedMember.email}</span></div>
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Address</span><span className="text-xs font-medium text-slate-600 leading-relaxed">{selectedMember.address}, {selectedMember.district}, {selectedMember.state} - {selectedMember.pinCode}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Mobile</span><span className="text-sm font-bold text-slate-900 dark:text-slate-100">{selectedMember.mobile}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Email</span><span className="text-sm font-bold text-slate-900 dark:text-slate-100">{selectedMember.email}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Address</span><span className="text-xs font-medium text-slate-600 dark:text-slate-300 leading-relaxed">{selectedMember.address}, {selectedMember.district}, {selectedMember.state} - {selectedMember.pinCode}</span></div>
                                         </div>
                                     </Card>
 
-                                    <Card className="border-none shadow-sm p-4 rounded-3xl bg-white">
-                                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Personal Details</h4>
+                                    <Card className="border-none shadow-sm p-4 rounded-3xl bg-white dark:bg-slate-900">
+                                        <h4 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Personal Details</h4>
                                         <div className="space-y-3">
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Guardian ({selectedMember.gurdianType})</span><span className="text-sm font-bold text-slate-900">{selectedMember.gurdianName}</span></div>
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">DOB & Gender</span><span className="text-sm font-bold text-slate-900">{new Date(selectedMember.dob).toLocaleDateString()} • {selectedMember.gender}</span></div>
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Profession</span><span className="text-sm font-bold text-slate-900">{selectedMember.profession}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Guardian ({selectedMember.gurdianType})</span><span className="text-sm font-bold text-slate-900 dark:text-slate-100">{selectedMember.gurdianName}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">DOB & Gender</span><span className="text-sm font-bold text-slate-900 dark:text-slate-100">{new Date(selectedMember.dob).toLocaleDateString()} • {selectedMember.gender}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Profession</span><span className="text-sm font-bold text-slate-900 dark:text-slate-100">{selectedMember.profession}</span></div>
                                         </div>
                                     </Card>
 
-                                    <Card className="border-none shadow-sm p-4 rounded-3xl bg-white">
-                                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Plan & verification</h4>
+                                    <Card className="border-none shadow-sm p-4 rounded-3xl bg-white dark:bg-slate-900">
+                                        <h4 className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3">Plan & verification</h4>
                                         <div className="space-y-3">
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Selected Plan</span><span className="text-sm font-bold text-primary underline">{selectedMember.plan?.name}</span></div>
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Aadhaar / ID</span><span className="text-sm font-bold text-slate-900">{selectedMember.aadhaar}</span></div>
-                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 font-bold uppercase">Blood Group</span><Badge className="w-fit bg-rose-50 text-rose-600 border-none rounded-md font-bold text-[10px] mt-1">{selectedMember.bloodGroup}</Badge></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Selected Plan</span><span className="text-sm font-bold text-primary underline">{selectedMember.plan?.name}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Aadhaar / ID</span><span className="text-sm font-bold text-slate-900 dark:text-slate-100">{selectedMember.aadhaar}</span></div>
+                                            <div className="flex flex-col"><span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase">Blood Group</span><Badge className="w-fit bg-rose-50 text-rose-600 border-none rounded-md font-bold text-[10px] mt-1">{selectedMember.bloodGroup}</Badge></div>
                                         </div>
                                     </Card>
                                 </div>
 
                                 <div className="space-y-4">
-                                    <h4 className="text-sm font-bold text-slate-900 font-outfit px-2">Verification Documents</h4>
+                                    <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 font-outfit px-2">Verification Documents</h4>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Identity Proof ({selectedMember.documentsType})</span>
-                                            <div className="relative aspect-4/3 rounded-3xl overflow-hidden border-2 border-slate-200 group cursor-zoom-in bg-white shadow-sm">
+                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2">Identity Proof ({selectedMember.documentsType})</span>
+                                            <div className="relative aspect-4/3 rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-700 group cursor-zoom-in bg-white dark:bg-slate-900 shadow-sm">
                                                 {selectedMember.documents?.url ? (
                                                     <Image src={selectedMember.documents.url} alt="ID Proof" fill className="object-contain p-4 transition-transform group-hover:scale-110" />
                                                 ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-slate-300 font-medium italic">Document not found</div>
+                                                    <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600 font-medium italic">Document not found</div>
                                                 )}
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Payment Receipt ({selectedMember.paymentMode.replace(/_/g, " ")})</span>
-                                            <div className="relative aspect-4/3 rounded-3xl overflow-hidden border-2 border-slate-200 group cursor-zoom-in bg-white shadow-sm">
+                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2">Payment Receipt ({selectedMember.paymentMode.replace(/_/g, " ")})</span>
+                                            <div className="relative aspect-4/3 rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-700 group cursor-zoom-in bg-white dark:bg-slate-900 shadow-sm">
                                                 {selectedMember.payment?.url ? (
                                                     <Image src={selectedMember.payment.url} alt="Receipt" fill className="object-contain p-4 transition-transform group-hover:scale-110" />
                                                 ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-slate-300 font-medium italic">No receipt provided</div>
+                                                    <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600 font-medium italic">No receipt provided</div>
                                                 )}
                                             </div>
                                         </div>
@@ -560,10 +560,10 @@ export default function MembersPage() {
                             </div>
 
                             {/* Sticky Footer */}
-                            <div className="border-t border-slate-100 bg-white p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div className="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <div className="flex items-center gap-2">
                                     <AlertCircle className="h-4 w-4 text-amber-500" />
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Please review all documents carefully before verification.</p>
+                                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tighter">Please review all documents carefully before verification.</p>
                                 </div>
                                 <div className="flex items-center gap-3 w-full sm:w-auto">
                                     <Button variant="ghost" className="rounded-2xl h-11 px-8" onClick={() => setIsDetailsOpen(false)}>Close Review</Button>
@@ -571,7 +571,7 @@ export default function MembersPage() {
                                         <>
                                             <Button
                                                 variant="secondary"
-                                                className="bg-rose-50 text-rose-600 hover:bg-rose-100 border-none rounded-2xl h-11 px-8 font-bold"
+                                                className="bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 border-none rounded-2xl h-11 px-8 font-bold"
                                                 onClick={() => handleUpdateStatus(selectedMember.id, 'REJECTED')}
                                                 disabled={isActionLoading === selectedMember.id}
                                             >
@@ -579,7 +579,7 @@ export default function MembersPage() {
                                                 Reject Application
                                             </Button>
                                             <Button
-                                                className="bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-200 rounded-2xl h-11 px-10 font-bold"
+                                                className="bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-200 dark:shadow-none rounded-2xl h-11 px-10 font-bold"
                                                 onClick={() => handleUpdateStatus(selectedMember.id, 'ACTIVE')}
                                                 disabled={isActionLoading === selectedMember.id}
                                             >

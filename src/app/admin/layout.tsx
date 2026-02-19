@@ -10,6 +10,8 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
+import { ModeToggle } from "@/components/ModeToggle";
+
 export default function AdminLayout({
     children,
 }: {
@@ -17,27 +19,30 @@ export default function AdminLayout({
 }) {
     return (
         <SidebarProvider>
-            <div className="flex h-screen overflow-hidden w-full">
+            <div className="flex h-screen overflow-hidden w-full bg-background text-foreground">
                 <AdminSidebar />
                 <SidebarInset className="flex flex-col flex-1 overflow-hidden">
-                    <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-                        <SidebarTrigger className="-ml-1" />
-                        <Separator orientation="vertical" className="mr-2 h-4" />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block">
-                                    <BreadcrumbLink href="/admin">
-                                        Dashboard
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator className="hidden md:block" />
-                                <BreadcrumbItem>
-                                    <BreadcrumbPage>Management</BreadcrumbPage>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
+                    <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4">
+                        <div className="flex items-center gap-2">
+                            <SidebarTrigger className="-ml-1" />
+                            <Separator orientation="vertical" className="mr-2 h-4" />
+                            <Breadcrumb>
+                                <BreadcrumbList>
+                                    <BreadcrumbItem className="hidden md:block">
+                                        <BreadcrumbLink href="/admin">
+                                            Dashboard
+                                        </BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator className="hidden md:block" />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage>Management</BreadcrumbPage>
+                                    </BreadcrumbItem>
+                                </BreadcrumbList>
+                            </Breadcrumb>
+                        </div>
+                        <ModeToggle />
                     </header>
-                    <main className="flex-1 overflow-y-auto p-6 bg-slate-50/50">
+                    <main className="flex-1 overflow-y-auto p-6 bg-slate-50/50 dark:bg-slate-950/50">
                         {children}
                     </main>
                 </SidebarInset>

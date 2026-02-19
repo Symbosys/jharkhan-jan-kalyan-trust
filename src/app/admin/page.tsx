@@ -38,9 +38,8 @@ export default function AdminDashboard() {
             trend: "up",
             period: "last 30 days",
             icon: Users,
-            color: "text-blue-600",
-            bg: "bg-blue-50",
-            borderColor: "border-blue-100"
+            color: "text-blue-600 dark:text-blue-400",
+            bg: "bg-blue-50 dark:bg-blue-900/20",
         },
         {
             title: "Total Revenue",
@@ -49,9 +48,8 @@ export default function AdminDashboard() {
             trend: "up",
             period: "last 30 days",
             icon: DollarSign,
-            color: "text-emerald-600",
-            bg: "bg-emerald-50",
-            borderColor: "border-emerald-100"
+            color: "text-emerald-600 dark:text-emerald-400",
+            bg: "bg-emerald-50 dark:bg-emerald-900/20",
         },
         {
             title: "Active Events",
@@ -60,9 +58,8 @@ export default function AdminDashboard() {
             trend: "neutral",
             period: "current",
             icon: Calendar,
-            color: "text-violet-600",
-            bg: "bg-violet-50",
-            borderColor: "border-violet-100"
+            color: "text-violet-600 dark:text-violet-400",
+            bg: "bg-violet-50 dark:bg-violet-900/20",
         },
         {
             title: "Pending Enquiries",
@@ -71,9 +68,8 @@ export default function AdminDashboard() {
             trend: "up",
             period: "since yesterday",
             icon: FileText,
-            color: "text-amber-600",
-            bg: "bg-amber-50",
-            borderColor: "border-amber-100"
+            color: "text-amber-600 dark:text-amber-400",
+            bg: "bg-amber-50 dark:bg-amber-900/20",
         },
     ];
 
@@ -84,7 +80,7 @@ export default function AdminDashboard() {
             time: "2 hours ago",
             user: "RS",
             type: "Membership",
-            color: "bg-blue-100 text-blue-700"
+            className: "bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300"
         },
         {
             title: "Donation Received",
@@ -92,7 +88,7 @@ export default function AdminDashboard() {
             time: "5 hours ago",
             user: "AD",
             type: "Finance",
-            color: "bg-emerald-100 text-emerald-700"
+            className: "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300"
         },
         {
             title: "New Event Booking",
@@ -100,7 +96,7 @@ export default function AdminDashboard() {
             time: "1 day ago",
             user: "VK",
             type: "Event",
-            color: "bg-violet-100 text-violet-700"
+            className: "bg-violet-50 text-violet-700 dark:bg-violet-900/20 dark:text-violet-300"
         },
         {
             title: "Volunteer Enquiry",
@@ -108,32 +104,32 @@ export default function AdminDashboard() {
             time: "1 day ago",
             user: "SP",
             type: "Support",
-            color: "bg-amber-100 text-amber-700"
+            className: "bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-300"
         }
     ]
 
     return (
-        <div className="min-h-screen bg-slate-50/50 p-6 space-y-8 max-w-[1600px] mx-auto pb-20">
+        <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 p-6 space-y-8 max-w-[1600px] mx-auto pb-20">
             {/* Header Section */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">Dashboard Overview</h1>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Dashboard Overview</h1>
                     <DashboardDate />
                 </div>
 
                 <div className="flex items-center gap-2">
                     <div className="relative md:w-64 hidden md:block">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                         <Input
                             type="search"
                             placeholder="Search anything..."
-                            className="pl-9 bg-white border-slate-200 focus-visible:ring-primary"
+                            className="pl-9 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 focus-visible:ring-primary"
                         />
                     </div>
-                    <Button variant="outline" size="icon" className="shrink-0 bg-white border-slate-200">
-                        <Bell className="h-4 w-4 text-slate-600" />
+                    <Button variant="outline" size="icon" className="shrink-0 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+                        <Bell className="h-4 w-4 text-slate-600 dark:text-slate-400" />
                     </Button>
-                    <Button className="shrink-0 bg-slate-900 hover:bg-slate-800 text-white font-medium shadow-lg shadow-slate-900/20">
+                    <Button className="shrink-0 bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200 font-medium shadow-lg shadow-slate-900/20">
                         <UserPlus className="h-4 w-4 mr-2" />
                         Add Member
                     </Button>
@@ -143,9 +139,9 @@ export default function AdminDashboard() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {stats.map((stat, i) => (
-                    <Card key={i} className="border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+                    <Card key={i} className="border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1 bg-white dark:bg-slate-900">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium text-slate-500">
+                            <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">
                                 {stat.title}
                             </CardTitle>
                             <div className={cn("p-2 rounded-lg", stat.bg)}>
@@ -153,16 +149,16 @@ export default function AdminDashboard() {
                             </div>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
+                            <div className="text-2xl font-bold text-slate-900 dark:text-slate-100">{stat.value}</div>
                             <div className="flex items-center text-xs mt-1">
                                 <span className={cn(
                                     "font-medium flex items-center px-1.5 py-0.5 rounded",
-                                    stat.trend === "up" ? "text-emerald-700 bg-emerald-50" : "text-slate-600 bg-slate-100"
+                                    stat.trend === "up" ? "text-emerald-700 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400" : "text-slate-600 bg-slate-100 dark:bg-slate-800 dark:text-slate-400"
                                 )}>
                                     {stat.change}
                                     {stat.trend === "up" && <TrendingUp className="h-3 w-3 ml-1" />}
                                 </span>
-                                <span className="text-slate-400 ml-2">{stat.period}</span>
+                                <span className="text-slate-400 dark:text-slate-500 ml-2">{stat.period}</span>
                             </div>
                         </CardContent>
                     </Card>
@@ -175,7 +171,7 @@ export default function AdminDashboard() {
                 {/* Left Column: Chart & Activity */}
                 <div className="lg:col-span-2 space-y-6">
                     {/* Visual Chart Section (CSS Based) */}
-                    <Card className="border-slate-100 shadow-sm">
+                    <Card className="border-slate-100 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900">
                         <CardHeader>
                             <div className="flex items-center justify-between">
                                 <div>
@@ -192,7 +188,7 @@ export default function AdminDashboard() {
                                 {activityData.map((height, i) => (
                                     <div key={i} className="w-full h-full flex flex-col justify-end group cursor-pointer">
                                         <div
-                                            className="w-full bg-slate-900/5 rounded-t-sm group-hover:bg-primary/20 transition-all relative"
+                                            className="w-full bg-slate-900/5 dark:bg-slate-100/10 rounded-t-sm group-hover:bg-primary/20 transition-all relative"
                                             style={{ height: `${height}%` }}
                                         >
                                             <div className="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded transition-opacity pointer-events-none">
@@ -210,7 +206,7 @@ export default function AdminDashboard() {
                     </Card>
 
                     {/* Recent Transactions / Data Table */}
-                    <Card className="border-slate-100 shadow-sm">
+                    <Card className="border-slate-100 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900">
                         <CardHeader className="pb-3">
                             <CardTitle>Recent Activity</CardTitle>
                             <CardDescription>Latest actions performed across the platform</CardDescription>
@@ -220,27 +216,27 @@ export default function AdminDashboard() {
                                 {recentActions.map((action, i) => (
                                     <div key={i} className="flex gap-4 group">
                                         <div className="relative mt-1">
-                                            <Avatar className="h-9 w-9 border border-slate-200">
+                                            <Avatar className="h-9 w-9 border border-slate-200 dark:border-slate-700">
                                                 <AvatarImage src="" />
-                                                <AvatarFallback className={cn("text-xs font-semibold", action.color.split(" ")[1], action.color.split(" ")[0].replace("100", "50"))}>
+                                                <AvatarFallback className={cn("text-xs font-semibold", action.className)}>
                                                     {action.user}
                                                 </AvatarFallback>
                                             </Avatar>
                                             {i !== recentActions.length - 1 && (
-                                                <div className="absolute left-1/2 top-10 bottom-[-20px] w-px bg-slate-100 -translate-x-1/2" />
+                                                <div className="absolute left-1/2 top-10 bottom-[-20px] w-px bg-slate-100 dark:bg-slate-800 -translate-x-1/2" />
                                             )}
                                         </div>
                                         <div className="flex-1 pb-1">
                                             <div className="flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-slate-900">{action.title}</h4>
-                                                <span className="text-[11px] text-slate-400">{action.time}</span>
+                                                <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{action.title}</h4>
+                                                <span className="text-[11px] text-slate-400 dark:text-slate-500">{action.time}</span>
                                             </div>
-                                            <p className="text-xs text-slate-500 mt-1">{action.description}</p>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{action.description}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            <Button variant="ghost" className="w-full mt-4 text-xs font-medium text-slate-500 hover:text-slate-900">
+                            <Button variant="ghost" className="w-full mt-4 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">
                                 View Full History
                             </Button>
                         </CardContent>
@@ -250,7 +246,7 @@ export default function AdminDashboard() {
                 {/* Right Column: Quick Stats & Actions */}
                 <div className="space-y-6">
                     {/* Quick Actions Card */}
-                    <Card className="bg-slate-900 text-white border-none shadow-xl shadow-slate-900/10">
+                    <Card className="bg-slate-900 dark:bg-slate-800 text-white border-none shadow-xl shadow-slate-900/10">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
                                 <Activity className="h-5 w-5 text-indigo-400" />
@@ -278,62 +274,62 @@ export default function AdminDashboard() {
                     </Card>
 
                     {/* System Status */}
-                    <Card className="border-slate-100 shadow-sm">
+                    <Card className="border-slate-100 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900">
                         <CardHeader>
                             <CardTitle className="text-sm font-medium">System Health</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-500">Server Load</span>
+                                    <span className="text-slate-500 dark:text-slate-400">Server Load</span>
                                     <span className="text-emerald-600 font-medium">Optimal</span>
                                 </div>
-                                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                                     <div className="h-full bg-emerald-500 w-[35%]" />
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-500">Database Storage</span>
-                                    <span className="text-slate-600 font-medium">64%</span>
+                                    <span className="text-slate-500 dark:text-slate-400">Database Storage</span>
+                                    <span className="text-slate-600 dark:text-slate-300 font-medium">64%</span>
                                 </div>
-                                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                                     <div className="h-full bg-blue-500 w-[64%]" />
                                 </div>
                             </div>
-                            <div className="pt-4 border-t border-slate-100">
+                            <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
                                 <div className="flex items-center gap-2">
                                     <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                                    <span className="text-xs font-medium text-slate-600">All services operational</span>
+                                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">All services operational</span>
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
 
                     {/* Upcoming Events Mini List */}
-                    <Card className="border-slate-100 shadow-sm">
+                    <Card className="border-slate-100 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900">
                         <CardHeader>
                             <CardTitle className="text-sm font-medium">Upcoming Events</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="flex items-start gap-3">
-                                <div className="flex flex-col items-center justify-center h-10 w-10 rounded-md bg-slate-100 text-slate-600 shrink-0">
+                                <div className="flex flex-col items-center justify-center h-10 w-10 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
                                     <span className="text-[10px] font-bold uppercase">Feb</span>
                                     <span className="text-sm font-bold">24</span>
                                 </div>
                                 <div>
-                                    <h5 className="text-sm font-medium text-slate-900">Charity Gala</h5>
-                                    <p className="text-xs text-slate-500">6:00 PM • Main Hall</p>
+                                    <h5 className="text-sm font-medium text-slate-900 dark:text-slate-100">Charity Gala</h5>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400">6:00 PM • Main Hall</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
-                                <div className="flex flex-col items-center justify-center h-10 w-10 rounded-md bg-slate-100 text-slate-600 shrink-0">
+                                <div className="flex flex-col items-center justify-center h-10 w-10 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">
                                     <span className="text-[10px] font-bold uppercase">Mar</span>
                                     <span className="text-sm font-bold">02</span>
                                 </div>
                                 <div>
-                                    <h5 className="text-sm font-medium text-slate-900">Health Camp</h5>
-                                    <p className="text-xs text-slate-500">9:00 AM • Sector 4</p>
+                                    <h5 className="text-sm font-medium text-slate-900 dark:text-slate-100">Health Camp</h5>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400">9:00 AM • Sector 4</p>
                                 </div>
                             </div>
                         </CardContent>
