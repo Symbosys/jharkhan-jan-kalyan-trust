@@ -1,41 +1,25 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 
 interface SliderImage {
     id: number;
-    src: string;
-    alt: string;
+    image: {
+        url: string;
+        public_id: string;
+    };
+    order: number;
 }
 
-const images: SliderImage[] = [
-    {
-        id: 1,
-        src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1600&auto=format&fit=crop",
-        alt: "Children smiling",
-    },
-    {
-        id: 2,
-        src: "https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=1600&auto=format&fit=crop",
-        alt: "Volunteers working",
-    },
-    {
-        id: 3,
-        src: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1600&auto=format&fit=crop",
-        alt: "Community gathering",
-    },
-    {
-        id: 4,
-        src: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?q=80&w=1600&auto=format&fit=crop",
-        alt: "Helping hands",
-    },
-];
+interface HeroSliderProps {
+    sliders: any[];
+}
 
-export function HeroSlider() {
+export function HeroSlider({ sliders = [] }: HeroSliderProps) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
         Autoplay({ delay: 5000, stopOnInteraction: false }),
     ]);
@@ -66,18 +50,18 @@ export function HeroSlider() {
             {/* Carousel Container */}
             <div className="overflow-hidden" ref={emblaRef}>
                 <div className="flex touch-pan-y">
-                    {images.map((image) => (
+                    {sliders.map((image, index) => (
                         <div
                             key={image.id}
                             className="relative flex-[0_0_100%] min-w-0"
                         >
                             <div className="relative aspect-video md:aspect-21/9 w-full max-h-[600px]">
                                 <Image
-                                    src={image.src}
-                                    alt={image.alt}
+                                    src={image.image.url}
+                                    alt={`Slide ${index + 1}`}
                                     fill
                                     className="object-cover"
-                                    priority={image.id === 1}
+                                    priority={index === 0}
                                     sizes="100vw"
                                 />
                                 {/* Optional Overlay for better text contrast if needed later */}
@@ -106,13 +90,13 @@ export function HeroSlider() {
 
             {/* Pagination Dots */}
             <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-                {images.map((_, index) => (
+                {sliders.map((_, index: number) => (
                     <button
                         key={index}
                         onClick={() => emblaApi && emblaApi.scrollTo(index)}
                         className={`h-2.5 w-2.5 rounded-full transition-all ${index === selectedIndex
-                                ? "bg-white w-8"
-                                : "bg-white/50 hover:bg-white/80"
+                            ? "bg-white w-8"
+                            : "bg-white/50 hover:bg-white/80"
                             }`}
                         aria-label={`Go to slide ${index + 1}`}
                     />

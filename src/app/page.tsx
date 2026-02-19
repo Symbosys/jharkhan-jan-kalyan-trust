@@ -1,16 +1,40 @@
-import { Header } from "@/components/layout/Header";
-// import { Hero } from "@/components/Hero";
-import { HeroSlider } from "@/components/HeroSlider";
-import { Features } from "@/components/Features";
-import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/client/Header";
+import { HeroSlider } from "@/components/client/home/HeroSlider";
+import { AboutSection } from "@/components/server/home/AboutSection";
+import { ActivitySection } from "@/components/server/home/ActivitySection";
+import { BenefitsSection } from "@/components/server/home/BenefitsSection";
+import { NewsSection } from "@/components/server/home/NewsSection";
+import { Features } from "@/components/server/home/Features";
+import { TeamSection } from "@/components/server/home/TeamSection";
+import { DonateSection } from "@/components/server/home/DonateSection";
+import { GallerySection } from "@/components/server/home/GallerySection";
+import { MembershipSection } from "@/components/server/home/MembershipSection";
+import { TestimonialSection } from "@/components/server/home/TestimonialSection";
+import { DonorsSection } from "@/components/server/home/DonorsSection";
+import { MapSection } from "@/components/server/home/MapSection";
+import { Footer } from "@/components/server/Footer";
+import { getAllSliders } from "@/actions/slider";
 
-export default function Home() {
+export default async function Home() {
+  const { sliders } = await getAllSliders(1, 20);
+
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground font-sans selection:bg-secondary/20 selection:text-secondary">
       <Header />
       <main className="flex-1">
-        <HeroSlider />
+        <HeroSlider sliders={sliders} />
+        <AboutSection />
+        <ActivitySection />
+        <BenefitsSection />
+        <NewsSection />
         <Features />
+        <TeamSection />
+        <DonateSection />
+        <GallerySection />
+        <MembershipSection />
+        <TestimonialSection />
+        <DonorsSection />
+        <MapSection />
       </main>
       <Footer />
     </div>

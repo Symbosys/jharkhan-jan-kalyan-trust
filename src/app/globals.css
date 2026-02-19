@@ -67,7 +67,7 @@
   --secondary-foreground: oklch(0.985 0 0);
 
   /* Tertiary - Yellow (Darker for text visibility) */
-  --tertiary: oklch(0.65 0.18 85); 
+  --tertiary: oklch(0.65 0.18 85);
   --tertiary-foreground: oklch(0.985 0 0);
 
   --muted: oklch(0.97 0 0);
@@ -102,7 +102,7 @@
   --popover-foreground: oklch(0.985 0 0);
 
   /* Primary - Green (Dark Mode) */
-  --primary: oklch(0.627 0.194 149.214); 
+  --primary: oklch(0.627 0.194 149.214);
   --primary-foreground: oklch(0.985 0 0);
 
   /* Secondary - Blue (Dark Mode) */
@@ -140,7 +140,30 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@keyframes vertical-news-scroll {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-vertical-news {
+  animation: vertical-news-scroll 5s linear infinite;
+}
+
+.pause-on-hover:hover {
+  animation-play-state: paused;
+}
+
+.news-ticker-container {
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
 }

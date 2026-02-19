@@ -10,7 +10,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import { ModeToggle } from "@/components/ModeToggle";
+import { ModeToggle } from "@/components/client/ModeToggle";
 
 export default function AdminLayout({
     children,
