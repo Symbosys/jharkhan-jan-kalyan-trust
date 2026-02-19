@@ -16,7 +16,13 @@ import {
     Video,
     LayoutDashboard,
     MoveUp,
-    MoveDown
+    MoveDown,
+    MapPin,
+    Clock,
+    LayoutGrid,
+    CheckCircle2,
+    XCircle,
+    X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -197,18 +203,18 @@ export default function ActivitiesPage() {
     };
 
     return (
-        <div className="p-6 space-y-6 max-w-[1400px] mx-auto">
+        <div className="p-6 space-y-6 max-w-[1400px] mx-auto pb-20">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Activity Management</h1>
-                    <p className="text-muted-foreground text-sm">Manage NGO activities, events and achievements.</p>
+                <div className="space-y-1">
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 font-outfit">Activity Management</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Manage NGO activities, events and achievements.</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <div className="relative w-full md:w-64">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+                    <div className="relative w-full md:w-72 group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500 group-focus-within:text-primary transition-colors" />
                         <Input
                             placeholder="Search activities..."
-                            className="pl-9 bg-white"
+                            className="pl-10 h-11 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 focus-visible:ring-primary/20 rounded-2xl transition-all shadow-none"
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
@@ -221,26 +227,28 @@ export default function ActivitiesPage() {
                         if (!open) handleResetForm();
                     }}>
                         <DialogTrigger asChild>
-                            <Button className="bg-primary hover:bg-primary/90 shadow-sm shadow-primary/20">
+                            <Button className="bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 h-11 px-6 rounded-2xl">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Create Activity
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                                <DialogHeader>
-                                    <DialogTitle>{editingItem ? "Edit Activity" : "Create New Activity"}</DialogTitle>
-                                    <DialogDescription>
-                                        Fill in the details below to showcase a new activity.
+                        <DialogContent className="sm:max-w-[500px] max-h-[90vh] p-0 overflow-hidden border-none rounded-[32px] shadow-2xl flex flex-col">
+                            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full overflow-hidden">
+                                <div className="bg-slate-900 text-white p-5 shrink-0">
+                                    <DialogTitle className="text-xl font-bold font-outfit uppercase tracking-tight">
+                                        {editingItem ? "Edit Activity" : "New Activity Record"}
+                                    </DialogTitle>
+                                    <DialogDescription className="text-slate-400 mt-0.5 text-[10px] font-medium uppercase tracking-wider">
+                                        Showcase a new achievement or event in the system.
                                     </DialogDescription>
-                                </DialogHeader>
+                                </div>
 
-                                <div className="space-y-4 py-2">
+                                <div className="p-5 space-y-5 bg-white dark:bg-slate-900 flex-1 overflow-y-auto min-h-0">
                                     <div className="space-y-2">
-                                        <div className="flex justify-between items-center">
-                                            <Label htmlFor="title">Title</Label>
+                                        <div className="flex justify-between items-center px-1">
+                                            <Label htmlFor="title" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Activity Title</Label>
                                             {errors.title && (
-                                                <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
+                                                <span className="text-[10px] text-destructive font-bold flex items-center gap-1 animate-pulse">
                                                     <AlertCircle className="h-2.5 w-2.5" /> {errors.title.message}
                                                 </span>
                                             )}
@@ -249,15 +257,15 @@ export default function ActivitiesPage() {
                                             id="title"
                                             {...register("title")}
                                             placeholder="Enter activity title..."
-                                            className={cn(errors.title && "border-destructive focus-visible:ring-destructive")}
+                                            className={cn("h-11 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all", errors.title && "border-destructive focus-visible:ring-destructive")}
                                         />
                                     </div>
 
                                     <div className="space-y-2">
-                                        <div className="flex justify-between items-center">
-                                            <Label htmlFor="description">Description</Label>
+                                        <div className="flex justify-between items-center px-1">
+                                            <Label htmlFor="description" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Detailed Description</Label>
                                             {errors.description && (
-                                                <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
+                                                <span className="text-[10px] text-destructive font-bold flex items-center gap-1 animate-pulse">
                                                     <AlertCircle className="h-2.5 w-2.5" /> {errors.description.message}
                                                 </span>
                                             )}
@@ -265,9 +273,9 @@ export default function ActivitiesPage() {
                                         <Textarea
                                             id="description"
                                             {...register("description")}
-                                            placeholder="Detailed description of the activity..."
+                                            placeholder="Tell the story behind this activity..."
                                             className={cn(
-                                                "min-h-[100px] resize-none",
+                                                "min-h-[90px] bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all resize-none text-sm leading-relaxed",
                                                 errors.description && "border-destructive focus-visible:ring-destructive"
                                             )}
                                         />
@@ -275,81 +283,96 @@ export default function ActivitiesPage() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="type">Media Type</Label>
+                                            <Label htmlFor="type" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] px-1">Media Format</Label>
                                             <Select
-                                                onValueChange={(value) => setValue("type", value as "IMAGE" | "VIDEO")}
+                                                onValueChange={(value: "IMAGE" | "VIDEO") => {
+                                                    setValue("type", value);
+                                                    if (value === "IMAGE") setValue("videoUrl", "");
+                                                    else setValue("image", "");
+                                                }}
                                                 defaultValue={selectedType}
                                             >
-                                                <SelectTrigger>
+                                                <SelectTrigger className="h-11 bg-slate-50 dark:bg-slate-950 border-transparent focus:ring-primary/20 rounded-xl">
                                                     <SelectValue placeholder="Select type" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value="IMAGE">Image</SelectItem>
-                                                    <SelectItem value="VIDEO">Video</SelectItem>
+                                                    <SelectItem value="IMAGE">Still Image</SelectItem>
+                                                    <SelectItem value="VIDEO">Dynamic Video</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="order">Display Order</Label>
+                                            <Label htmlFor="order" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] px-1">Display Index</Label>
                                             <Input
                                                 id="order"
                                                 type="number"
                                                 {...register("order", { valueAsNumber: true })}
                                                 placeholder="0"
+                                                className="h-11 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all"
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label>Activity Image {selectedType === "VIDEO" && "(Optional Thumbnail)"}</Label>
-                                            <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-3 bg-slate-50/50 hover:bg-slate-50 transition-colors h-[120px]">
-                                                {preview ? (
-                                                    <div className="relative w-full h-full rounded-lg overflow-hidden group">
-                                                        <Image src={preview} alt="Preview" fill className="object-cover" />
-                                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                            <Button type="button" variant="ghost" size="sm" className="text-white h-8" onClick={() => { setPreview(""); setValue("image", ""); }}>
-                                                                Change
-                                                            </Button>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center w-full">
-                                                        <ImageIcon className="h-6 w-6 text-slate-300 mb-1" />
-                                                        <span className="text-xs text-slate-500 font-medium text-center px-2">Click to upload</span>
-                                                        <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
-                                                    </label>
-                                                )}
+                                    <div className="pt-2 border-t border-slate-50 dark:border-slate-800/50">
+                                        {selectedType === "IMAGE" ? (
+                                            <div className="space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                                                <Label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] px-1">Upload Activity Photo</Label>
+                                                <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-2xl p-3 bg-slate-50/50 dark:bg-slate-950/50 hover:bg-slate-50 dark:hover:bg-slate-950 transition-all group overflow-hidden relative h-[140px] shadow-inner">
+                                                    {preview ? (
+                                                        <>
+                                                            <Image src={preview} alt="Preview" fill className="object-cover" />
+                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
+                                                                <Button type="button" variant="secondary" size="sm" className="h-9 rounded-xl font-bold uppercase text-[10px]" onClick={() => { setPreview(""); setValue("image", ""); }}>
+                                                                    Replace Image
+                                                                </Button>
+                                                            </div>
+                                                        </>
+                                                    ) : (
+                                                        <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center w-full gap-2">
+                                                            <div className="p-3 bg-white dark:bg-slate-900 rounded-full shadow-sm">
+                                                                <ImageIcon className="h-6 w-6 text-slate-400 dark:text-slate-500" />
+                                                            </div>
+                                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Click to browse file</span>
+                                                            <input id="image-upload" type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                                                        </label>
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <div className="flex justify-between items-center">
-                                                <Label htmlFor="videoUrl">Video URL (Required for Video type)</Label>
-                                                {errors.videoUrl && (
-                                                    <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
-                                                        <AlertCircle className="h-2.5 w-2.5" /> {errors.videoUrl.message}
-                                                    </span>
-                                                )}
+                                        ) : (
+                                            <div className="space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                                                <div className="flex justify-between items-center px-1">
+                                                    <Label htmlFor="videoUrl" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">YouTube Content Link</Label>
+                                                    {errors.videoUrl && (
+                                                        <span className="text-[10px] text-destructive font-bold flex items-center gap-1 animate-pulse">
+                                                            <AlertCircle className="h-2.5 w-2.5" /> {errors.videoUrl.message}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className="relative">
+                                                    <Video className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
+                                                    <Input
+                                                        id="videoUrl"
+                                                        {...register("videoUrl")}
+                                                        placeholder="https://www.youtube.com/watch?v=..."
+                                                        className={cn("h-11 pl-11 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all", errors.videoUrl && "border-destructive focus-visible:ring-destructive")}
+                                                    />
+                                                </div>
+                                                <p className="text-[9px] text-slate-400 dark:text-slate-500 font-medium px-1 flex items-center gap-1.5">
+                                                    <XCircle className="h-3 w-3" /> Image upload is disabled for video content.
+                                                </p>
                                             </div>
-                                            <Input
-                                                id="videoUrl"
-                                                {...register("videoUrl")}
-                                                placeholder="YouTube / Vimeo link"
-                                                className={cn(errors.videoUrl && "border-destructive focus-visible:ring-destructive")}
-                                                disabled={selectedType === "IMAGE"}
-                                            />
-                                            <p className="text-[10px] text-slate-400">Embed link for video content.</p>
-                                        </div>
+                                        )}
                                     </div>
                                 </div>
 
-                                <DialogFooter>
-                                    <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-                                    <Button type="submit" disabled={isSubmitting}>
+                                <DialogFooter className="bg-slate-50 dark:bg-slate-950 p-4 shrink-0 flex flex-row items-center justify-between gap-4 border-t border-slate-100 dark:border-slate-800">
+                                    <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="rounded-xl h-10 px-6 font-bold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors">
+                                        Cancel
+                                    </Button>
+                                    <Button type="submit" disabled={isSubmitting} className="bg-slate-900 dark:bg-slate-100 dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-200 text-white font-bold h-10 px-8 rounded-xl shadow-lg shadow-slate-200 dark:shadow-none transition-all">
                                         {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                        {editingItem ? "Update Activity" : "Create Activity"}
+                                        {editingItem ? "Commit Changes" : "Save Activity"}
                                     </Button>
                                 </DialogFooter>
                             </form>
@@ -365,79 +388,81 @@ export default function ActivitiesPage() {
                 </div>
             ) : activities.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
                         {activities.map((item) => (
-                            <Card key={item.id} className="group relative overflow-hidden border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
-                                <div className="relative aspect-video overflow-hidden bg-slate-100">
+                            <Card key={item.id} className="group relative overflow-hidden border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-500 rounded-[2.5rem] bg-white dark:bg-slate-900 flex flex-col h-full border-none">
+                                <div className="absolute top-0 right-0 p-5 flex gap-2 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                                    <Button
+                                        variant="secondary"
+                                        size="icon"
+                                        className="h-9 w-9 shadow-xl bg-white dark:bg-slate-900/90 backdrop-blur-md hover:bg-primary hover:text-white rounded-2xl transition-all border border-slate-100 dark:border-slate-800"
+                                        onClick={() => handleEdit(item)}
+                                    >
+                                        <Pencil className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                        variant="secondary"
+                                        size="icon"
+                                        className="h-9 w-9 shadow-xl bg-white dark:bg-slate-900/90 backdrop-blur-md hover:bg-destructive hover:text-white rounded-2xl transition-all border border-slate-100 dark:border-slate-800"
+                                        onClick={() => handleDelete(item.id)}
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </div>
+
+                                <div className="relative aspect-video overflow-hidden bg-slate-50 dark:bg-slate-950">
                                     {item.image?.url ? (
                                         <Image
                                             src={item.image.url}
                                             alt={item.title}
                                             fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                            className="object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
                                     ) : item.type === "VIDEO" ? (
-                                        <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900 text-white">
-                                            <Video className="h-10 w-10 opacity-50 mb-2" />
-                                            <span className="text-xs opacity-50 uppercase tracking-widest">Video Content</span>
+                                        <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900 dark:bg-slate-950 text-white">
+                                            <Video className="h-12 w-12 opacity-40 mb-3 animate-pulse" />
+                                            <span className="text-[10px] font-black opacity-40 uppercase tracking-[0.3em]">Video Feed</span>
                                         </div>
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center">
-                                            <ImageIcon className="h-10 w-10 text-slate-300" />
+                                        <div className="w-full h-full flex items-center justify-center opacity-30">
+                                            <ImageIcon className="h-12 w-12 text-slate-300" />
                                         </div>
                                     )}
-                                    <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Button
-                                            variant="secondary"
-                                            size="icon"
-                                            className="h-8 w-8 shadow-md bg-white/90 backdrop-blur-sm"
-                                            onClick={() => handleEdit(item)}
-                                        >
-                                            <Pencil className="h-3.5 w-3.5" />
-                                        </Button>
-                                        <Button
-                                            variant="destructive"
-                                            size="icon"
-                                            className="h-8 w-8 shadow-md"
-                                            onClick={() => handleDelete(item.id)}
-                                        >
-                                            <Trash2 className="h-3.5 w-3.5" />
-                                        </Button>
-                                    </div>
-                                    <div className="absolute top-2 left-2 flex gap-1.5">
+
+                                    <div className="absolute top-4 left-4 flex flex-col gap-2">
                                         <Badge className={cn(
-                                            "shadow-sm border-none py-0.5",
-                                            item.type === "IMAGE" ? "bg-blue-500" : "bg-red-500"
+                                            "shadow-xl border-none font-black text-[9px] px-3 h-6 rounded-lg uppercase tracking-widest",
+                                            item.type === "IMAGE" ? "bg-blue-500/90" : "bg-red-500/90"
                                         )}>
-                                            {item.type}
+                                            {item.type === "IMAGE" ? "STILL" : "VIDEO"}
                                         </Badge>
-                                        <Badge variant="outline" className="bg-white/90 backdrop-blur-sm border-slate-200 py-0.5 text-slate-700 font-bold">
-                                            #{item.order}
+                                        <Badge variant="outline" className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-transparent py-1 px-3 h-6 text-slate-900 dark:text-slate-100 font-bold text-[10px] shadow-sm rounded-lg">
+                                            RANK #{item.order}
                                         </Badge>
                                     </div>
                                 </div>
 
-                                <CardHeader className="p-4 space-y-1">
-                                    <div className="flex items-center text-[11px] text-slate-400 gap-2 mb-1">
-                                        <Calendar className="h-3 w-3" />
-                                        {new Date(item.createdAt).toLocaleDateString()}
+                                <CardHeader className="p-6 space-y-3">
+                                    <div className="flex items-center text-[10px] text-slate-400 dark:text-slate-500 font-black gap-2 uppercase tracking-widest">
+                                        <Clock className="h-3 w-3 text-primary" />
+                                        {new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                     </div>
-                                    <CardTitle className="text-lg font-bold leading-tight line-clamp-1">
+                                    <CardTitle className="text-xl font-bold font-outfit leading-tight line-clamp-2 text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">
                                         {item.title}
                                     </CardTitle>
                                 </CardHeader>
 
-                                <CardContent className="p-4 pt-0 grow">
-                                    <CardDescription className="line-clamp-3 text-slate-600 text-sm">
+                                <CardContent className="px-6 pb-6 pt-0 grow">
+                                    <CardDescription className="line-clamp-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed italic">
                                         {item.description}
                                     </CardDescription>
                                 </CardContent>
 
-                                <CardFooter className="p-4 border-t border-slate-50 flex items-center justify-between bg-slate-50/30">
-                                    <span className="text-[10px] font-medium text-slate-400 uppercase tracking-wider">ID: #{item.id}</span>
+                                <CardFooter className="p-4 border-t border-slate-50 dark:border-slate-800/50 flex items-center justify-between bg-slate-50/50 dark:bg-slate-950/50 shrink-0">
+                                    <span className="text-[9px] font-black text-slate-300 dark:text-slate-700 uppercase tracking-widest">REC ID: #{item.id}</span>
                                     {item.videoUrl && (
-                                        <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-xs font-semibold">
-                                            View Video <ExternalLink className="h-3 w-3 ml-1" />
+                                        <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="h-8 pl-4 pr-3 py-1 bg-primary text-white hover:bg-primary/90 rounded-xl flex items-center text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5">
+                                            Stream <ExternalLink className="h-3 w-3 ml-2" />
                                         </a>
                                     )}
                                 </CardFooter>
@@ -447,42 +472,42 @@ export default function ActivitiesPage() {
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-2 pt-4">
+                        <div className="flex items-center justify-center gap-4 pt-8">
                             <Button
                                 variant="outline"
-                                size="icon"
+                                size="sm"
                                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                 disabled={currentPage === 1}
-                                className="h-9 w-9"
+                                className="h-11 px-6 rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-950 transition-all font-bold text-slate-600 dark:text-slate-300"
                             >
-                                <ChevronLeft className="h-4 w-4" />
+                                <ChevronLeft className="h-4 w-4 mr-2" /> Previous
                             </Button>
-                            <div className="text-sm font-medium px-4 bg-white border rounded-md h-9 flex items-center">
-                                Page {currentPage} of {totalPages}
-                            </div>
+                            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] px-4">
+                                Page <span className="text-slate-900 dark:text-slate-100">{currentPage}</span> of <span className="text-slate-900 dark:text-slate-100">{totalPages}</span>
+                            </p>
                             <Button
                                 variant="outline"
-                                size="icon"
+                                size="sm"
                                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                 disabled={currentPage === totalPages}
-                                className="h-9 w-9"
+                                className="h-11 px-6 rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-950 transition-all font-bold text-slate-600 dark:text-slate-300"
                             >
-                                <ChevronRight className="h-4 w-4" />
+                                Next <ChevronRight className="h-4 w-4 ml-2" />
                             </Button>
                         </div>
                     )}
                 </>
             ) : (
-                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50">
-                    <div className="p-4 rounded-full bg-white shadow-sm mb-4">
-                        <LayoutDashboard className="h-10 w-10 text-slate-300" />
+                <div className="flex flex-col items-center justify-center min-h-[400px] border-4 border-dashed border-slate-100 dark:border-slate-800 rounded-[3rem] bg-slate-50/50 dark:bg-slate-950/50">
+                    <div className="p-6 bg-white dark:bg-slate-900 rounded-full shadow-lg mb-6 text-slate-200 dark:text-slate-700">
+                        <LayoutDashboard className="h-16 w-16" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900">No activities found</h3>
-                    <p className="text-slate-500 text-sm mt-1 max-w-[280px] text-center">
-                        {searchQuery ? "Try adjusting your search terms." : "You haven't added any activities yet. Click the button above to showcase your work."}
-                    </p>
+                    <div className="text-center space-y-2">
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 font-outfit">Gallery is empty</h3>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-[320px] mx-auto font-medium">Click the button above to start showcasing your accomplishments with the world.</p>
+                    </div>
                     {searchQuery && (
-                        <Button variant="link" className="mt-2 text-primary" onClick={() => setSearchQuery("")}>Clear search</Button>
+                        <Button variant="link" className="mt-4 text-primary font-bold uppercase text-[10px]" onClick={() => setSearchQuery("")}>Reset Filters</Button>
                     )}
                 </div>
             )}

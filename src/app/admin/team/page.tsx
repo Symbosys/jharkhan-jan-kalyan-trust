@@ -224,21 +224,21 @@ export default function TeamPage() {
                             Add Team Member
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden border-none rounded-[32px] shadow-2xl">
-                        <form onSubmit={handleSubmit} className="flex flex-col">
-                            <div className="bg-slate-900 text-white p-8">
-                                <DialogTitle className="text-2xl font-bold font-outfit">
+                    <DialogContent className="sm:max-w-[450px] max-h-[90vh] p-0 overflow-hidden border-none rounded-[28px] shadow-2xl flex flex-col">
+                        <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
+                            <div className="bg-slate-900 text-white p-4 shrink-0">
+                                <DialogTitle className="text-lg font-bold font-outfit">
                                     {editingMember ? "Update Member" : "Add New Member"}
                                 </DialogTitle>
-                                <DialogDescription className="text-slate-400 dark:text-slate-500 mt-1">
+                                <DialogDescription className="text-slate-400 mt-0.5 text-[10px]">
                                     Fill in the details to {editingMember ? "modify" : "add"} a team member.
                                 </DialogDescription>
                             </div>
 
-                            <div className="p-8 space-y-6 bg-white dark:bg-slate-900">
+                            <div className="p-4 space-y-4 bg-white dark:bg-slate-900 flex-1 overflow-y-auto min-h-0">
                                 <div className="space-y-2">
-                                    <Label className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Profile Photo</Label>
-                                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-[32px] p-4 bg-slate-50/50 dark:bg-slate-950/50 hover:bg-slate-50 dark:hover:bg-slate-950 transition-all group overflow-hidden relative aspect-square w-48 mx-auto shadow-inner">
+                                    <Label className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Profile Photo</Label>
+                                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl p-3 bg-slate-50/50 dark:bg-slate-950/50 hover:bg-slate-50 dark:hover:bg-slate-950 transition-all group overflow-hidden relative aspect-square w-36 mx-auto shadow-inner">
                                         {preview ? (
                                             <>
                                                 <Image
@@ -260,10 +260,10 @@ export default function TeamPage() {
                                             </>
                                         ) : (
                                             <label htmlFor="team-image-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                                                <div className="p-4 bg-white dark:bg-slate-900 rounded-full shadow-sm text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors">
-                                                    <ImageIcon className="h-8 w-8" />
+                                                <div className="p-3 bg-white dark:bg-slate-900 rounded-full shadow-sm text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors">
+                                                    <ImageIcon className="h-6 w-6" />
                                                 </div>
-                                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Upload Photo</span>
+                                                <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Upload Photo</span>
                                                 <input
                                                     id="team-image-upload"
                                                     type="file"
@@ -278,44 +278,44 @@ export default function TeamPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <Label htmlFor="name" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Full Name</Label>
+                                        <Label htmlFor="name" className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Full Name</Label>
                                         <Input
                                             id="name"
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                             placeholder="John Doe"
                                             required
-                                            className="h-12 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all"
+                                            className="h-10 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all text-sm"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label htmlFor="type" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Member Type</Label>
+                                        <Label htmlFor="type" className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Member Type</Label>
                                         <Select value={formData.type} onValueChange={(v: TeamType) => setFormData({ ...formData, type: v })}>
-                                            <SelectTrigger className="h-12 bg-slate-50 dark:bg-slate-950 border-transparent focus:ring-primary/20 rounded-xl">
+                                            <SelectTrigger className="h-10 bg-slate-50 dark:bg-slate-950 border-transparent focus:ring-primary/20 rounded-xl text-sm">
                                                 <SelectValue placeholder="Select Type" />
                                             </SelectTrigger>
                                             <SelectContent>
-                                                <SelectItem value="MEMBER">General Member</SelectItem>
-                                                <SelectItem value="MANAGMENT">Management Staff</SelectItem>
+                                                <SelectItem value="MEMBER">Member</SelectItem>
+                                                <SelectItem value="MANAGMENT">Management</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="position" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Job Position</Label>
+                                    <Label htmlFor="position" className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Job Position</Label>
                                     <Input
                                         id="position"
                                         value={formData.position}
                                         onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                                         placeholder="e.g. Project Manager"
                                         required
-                                        className="h-12 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all"
+                                        className="h-10 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all text-sm"
                                     />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="location" className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Location (Office/Branch)</Label>
+                                    <Label htmlFor="location" className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-1">Location (Office/Branch)</Label>
                                     <div className="relative">
                                         <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
                                         <Input
@@ -323,19 +323,19 @@ export default function TeamPage() {
                                             value={formData.location}
                                             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                                             placeholder="e.g. New Delhi, India"
-                                            className="h-12 pl-11 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all"
+                                            className="h-10 pl-11 bg-slate-50 dark:bg-slate-950 border-transparent focus-visible:bg-white dark:focus-visible:bg-slate-900 focus-visible:ring-primary/20 rounded-xl transition-all text-sm"
                                         />
                                     </div>
                                 </div>
                             </div>
 
-                            <DialogFooter className="bg-slate-50 dark:bg-slate-950 p-6 flex flex-row items-center justify-between gap-4">
-                                <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="rounded-xl h-12 px-6 font-bold text-slate-500 dark:text-slate-400">
+                            <DialogFooter className="bg-slate-50 dark:bg-slate-950 p-3 shrink-0 flex flex-row items-center justify-between gap-4">
+                                <Button type="button" variant="ghost" onClick={() => setIsDialogOpen(false)} className="rounded-xl h-9 px-4 font-bold text-slate-500 dark:text-slate-400 text-xs">
                                     Cancel
                                 </Button>
-                                <Button type="submit" disabled={isSubmitting} className="bg-slate-900 hover:bg-slate-800 text-white font-bold h-12 px-10 rounded-xl shadow-lg shadow-slate-200">
-                                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    {editingMember ? "Update Record" : "Save Member"}
+                                <Button type="submit" disabled={isSubmitting} className="bg-slate-900 hover:bg-slate-800 text-white font-bold h-9 px-8 rounded-xl shadow-lg shadow-slate-200 text-xs">
+                                    {isSubmitting && <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />}
+                                    {editingMember ? "Update" : "Save"}
                                 </Button>
                             </DialogFooter>
                         </form>
@@ -372,7 +372,7 @@ export default function TeamPage() {
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="h-12 w-12 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800 transition-colors"
+                            className="h-12 w-12 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 transition-colors"
                             onClick={() => {
                                 setSearchQuery("");
                                 setTypeFilter("ALL");

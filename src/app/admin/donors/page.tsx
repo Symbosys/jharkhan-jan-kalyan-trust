@@ -295,23 +295,23 @@ export default function DonorsPage() {
                                 Add Donation Record
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[800px] p-0 overflow-hidden border-none rounded-[32px] shadow-2xl bg-white dark:bg-slate-900">
-                            <form onSubmit={handleSubmit} className="flex flex-col">
-                                <div className="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 p-8 flex items-center justify-between">
+                        <DialogContent className="sm:max-w-[800px] p-0 overflow-hidden border-none rounded-[32px] shadow-2xl bg-white dark:bg-slate-900 max-h-[90vh] flex flex-col">
+                            <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
+                                <div className="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 p-5 flex items-center justify-between shrink-0">
                                     <div>
-                                        <DialogTitle className="text-2xl font-bold font-outfit text-slate-900 dark:text-slate-100">
+                                        <DialogTitle className="text-xl font-bold font-outfit text-slate-900 dark:text-slate-100">
                                             {editingDonor ? "Edit Donor Record" : "New Donation Record"}
                                         </DialogTitle>
-                                        <DialogDescription className="text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                                        <DialogDescription className="text-slate-500 dark:text-slate-400 mt-0.5 text-xs font-medium">
                                             {editingDonor ? "Modify existing contribution details." : "Register a new manual donation to the NGO system."}
                                         </DialogDescription>
                                     </div>
-                                    <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center">
-                                        <Heart className="h-6 w-6 text-primary" />
+                                    <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                        <Heart className="h-5 w-5 text-primary" />
                                     </div>
                                 </div>
 
-                                <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 overflow-y-auto min-h-0">
                                     {/* Left Side: Personal Info */}
                                     <div className="space-y-6">
                                         <div className="flex items-center gap-3 mb-2">
@@ -319,41 +319,41 @@ export default function DonorsPage() {
                                             <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-widest">Donor Identity</h4>
                                         </div>
 
-                                        <div className="flex flex-col items-center gap-4">
-                                            <div className="relative h-32 w-32 rounded-[2rem] border-4 border-slate-50 shadow-inner bg-slate-100 dark:bg-slate-800 group overflow-hidden">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <div className="relative h-28 w-28 rounded-3xl border-4 border-slate-50 shadow-inner bg-slate-100 dark:bg-slate-800 group overflow-hidden">
                                                 {donorImagePreview ? (
                                                     <Image src={donorImagePreview} alt="Donor" fill className="object-cover" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600">
-                                                        <User className="h-12 w-12" />
+                                                        <User className="h-10 w-10" />
                                                     </div>
                                                 )}
                                                 <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center cursor-pointer">
-                                                    <ImageIcon className="h-6 w-6 text-white" />
+                                                    <ImageIcon className="h-5 w-5 text-white" />
                                                     <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, 'donorImage')} />
                                                 </label>
                                             </div>
-                                            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tight">Upload Profile Photo (Optional)</p>
+                                            <p className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-tight">Upload Profile Photo (Optional)</p>
                                         </div>
 
                                         <div className="space-y-4">
                                             <div className="space-y-1.5">
                                                 <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Full Name</Label>
-                                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Rahul Sharma" className="h-12 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-2xl transition-all" />
+                                                <Input required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g. Rahul Sharma" className="h-10 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-xl transition-all" />
                                             </div>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="space-y-1.5">
                                                     <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Mobile Number</Label>
-                                                    <Input required value={formData.mobile} onChange={e => setFormData({ ...formData, mobile: e.target.value })} placeholder="10-digit number" className="h-12 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-2xl transition-all" />
+                                                    <Input required value={formData.mobile} onChange={e => setFormData({ ...formData, mobile: e.target.value })} placeholder="10-digit" className="h-10 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-xl transition-all" />
                                                 </div>
                                                 <div className="space-y-1.5">
                                                     <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">PAN Number</Label>
-                                                    <Input required value={formData.panNumber} onChange={e => setFormData({ ...formData, panNumber: e.target.value })} placeholder="ABCDE1234F" className="h-12 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-2xl transition-all uppercase" />
+                                                    <Input required value={formData.panNumber} onChange={e => setFormData({ ...formData, panNumber: e.target.value })} placeholder="ABCDE1234F" className="h-10 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-xl transition-all uppercase" />
                                                 </div>
                                             </div>
                                             <div className="space-y-1.5">
                                                 <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Email Address</Label>
-                                                <Input type="email" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="example@email.com" className="h-12 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-2xl transition-all" />
+                                                <Input type="email" required value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="example@email.com" className="h-10 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 focus:bg-white dark:focus:bg-slate-900 rounded-xl transition-all" />
                                             </div>
                                         </div>
                                     </div>
@@ -369,15 +369,15 @@ export default function DonorsPage() {
                                             <div className="space-y-1.5">
                                                 <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Amount (INR)</Label>
                                                 <div className="relative">
-                                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-emerald-600 dark:text-emerald-400">₹</span>
-                                                    <Input type="number" required value={formData.amount} onChange={e => setFormData({ ...formData, amount: e.target.value })} className="h-12 pl-10 bg-emerald-50/30 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-900/20 focus:bg-white dark:focus:bg-slate-900 rounded-2xl font-bold text-lg text-emerald-700 dark:text-emerald-400 transition-all border-2" />
+                                                    <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-emerald-600 dark:text-emerald-400 text-sm">₹</span>
+                                                    <Input type="number" required value={formData.amount} onChange={e => setFormData({ ...formData, amount: e.target.value })} className="h-10 pl-10 bg-emerald-50/30 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-900/20 focus:bg-white dark:focus:bg-slate-900 rounded-xl font-bold text-md text-emerald-700 dark:text-emerald-400 transition-all border-2" />
                                                 </div>
                                             </div>
 
                                             <div className="space-y-1.5">
                                                 <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Payment Mode</Label>
                                                 <Select value={formData.paymentMode} onValueChange={(v: PaymentMode) => setFormData({ ...formData, paymentMode: v })}>
-                                                    <SelectTrigger className="h-12 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 rounded-2xl">
+                                                    <SelectTrigger className="h-10 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 rounded-xl">
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -390,7 +390,7 @@ export default function DonorsPage() {
 
                                             <div className="space-y-1.5">
                                                 <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Payment Proof / Receipt</Label>
-                                                <label className="relative aspect-video rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex items-center justify-center group cursor-pointer hover:bg-slate-100 dark:bg-slate-800 transition-all overflow-hidden">
+                                                <label className="relative aspect-video rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex items-center justify-center group cursor-pointer hover:bg-slate-100 transition-all overflow-hidden">
                                                     {paymentPreview ? (
                                                         <Image src={paymentPreview} alt="Receipt" fill className="object-contain p-4" />
                                                     ) : (
@@ -398,7 +398,7 @@ export default function DonorsPage() {
                                                             <div className="p-3 bg-white dark:bg-slate-900 rounded-full shadow-sm">
                                                                 <ImageIcon className="h-6 w-6 text-slate-400 dark:text-slate-500" />
                                                             </div>
-                                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest italic font-bold">Attach Evidence</span>
+                                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest italic">Attach Evidence</span>
                                                         </div>
                                                     )}
                                                     <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, 'payment')} />
@@ -412,15 +412,15 @@ export default function DonorsPage() {
 
                                             <div className="space-y-1.5">
                                                 <Label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 ml-1">Permanent Address</Label>
-                                                <Input required value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} placeholder="Full address details" className="h-12 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 rounded-2xl" />
+                                                <Input required value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} placeholder="Full address details" className="h-10 bg-slate-50 dark:bg-slate-950 border-slate-100 dark:border-slate-800 rounded-xl" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="bg-slate-50 dark:bg-slate-950 p-8 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
-                                    <Button type="button" variant="ghost" className="rounded-2xl h-12 px-8 font-bold text-slate-500 dark:text-slate-400" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
-                                    <Button type="submit" disabled={isSubmitting} className="bg-slate-900 hover:bg-slate-800 text-white rounded-2xl h-12 px-12 font-bold shadow-xl shadow-slate-200">
+                                <div className="bg-slate-50 dark:bg-slate-950 p-4 px-6 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 shrink-0">
+                                    <Button type="button" variant="ghost" className="rounded-xl h-10 px-6 font-bold text-slate-500 dark:text-slate-400" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+                                    <Button type="submit" disabled={isSubmitting} className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl h-10 px-10 font-bold shadow-xl shadow-slate-200">
                                         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : editingDonor ? <Pencil className="h-4 w-4 mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
                                         {editingDonor ? "Save Changes" : "Create Record"}
                                     </Button>
@@ -455,7 +455,7 @@ export default function DonorsPage() {
                             </SelectContent>
                         </Select>
                         <Button
-                            variant="ghost" size="icon" className="h-12 w-12 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:bg-slate-800"
+                            variant="ghost" size="icon" className="h-12 w-12 rounded-2xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100"
                             onClick={() => { setSearchQuery(""); setStatusFilter("ALL"); setCurrentPage(1); }}
                         >
                             <Filter className="h-4 w-4 text-slate-400 dark:text-slate-500" />
@@ -577,55 +577,54 @@ export default function DonorsPage() {
 
             {/* Verification Dialog */}
             <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-                <DialogContent className="sm:max-w-4xl p-0 overflow-hidden border-none rounded-[40px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] bg-white dark:bg-slate-900">
+                <DialogContent className="sm:max-w-[700px] p-0 overflow-hidden border-none rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] bg-white dark:bg-slate-900 max-h-[90vh] flex flex-col">
                     {selectedDonor && (
-                        <div className="flex flex-col h-[85vh]">
-                            <div className="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 p-10 flex flex-col md:flex-row items-center gap-8">
-                                <div className="relative h-32 w-32 rounded-[2.5rem] overflow-hidden border-[6px] border-white shadow-2xl bg-slate-100 dark:bg-slate-800 shrink-0 transform -rotate-3 hover:rotate-0 transition-all duration-500">
+                        <div className="flex flex-col h-full overflow-hidden">
+                            <div className="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 p-6 flex flex-col md:flex-row items-center gap-6 shrink-0">
+                                <div className="relative h-20 w-20 rounded-3xl overflow-hidden border-4 border-white shadow-xl bg-slate-100 dark:bg-slate-800 shrink-0 transform -rotate-2 hover:rotate-0 transition-all duration-500">
                                     {selectedDonor.donorImage?.url ? (
                                         <Image src={selectedDonor.donorImage.url} alt={selectedDonor.name} fill className="object-cover" />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-slate-200 dark:text-slate-700"><User className="h-14 w-14" /></div>
+                                        <div className="w-full h-full flex items-center justify-center text-slate-200 dark:text-slate-700"><User className="h-10 w-10" /></div>
                                     )}
                                 </div>
-                                <div className="flex-1 text-center md:text-left space-y-3">
-                                    <div className="flex flex-col md:flex-row md:items-center gap-4">
-                                        <h2 className="text-4xl font-black tracking-tight font-outfit text-slate-900 dark:text-slate-100 leading-tight">{selectedDonor.name}</h2>
-                                        <div className="flex flex-wrap justify-center md:justify-start gap-3">
+                                <div className="flex-1 text-center md:text-left space-y-1.5">
+                                    <div className="flex flex-col md:flex-row md:items-center gap-3">
+                                        <h2 className="text-xl font-black tracking-tight font-outfit text-slate-900 dark:text-slate-100 leading-tight">{selectedDonor.name}</h2>
+                                        <div className="flex flex-wrap justify-center md:justify-start gap-2">
                                             {getStatusBadge(selectedDonor.status)}
-                                            <Badge variant="outline" className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 rounded-xl px-3 h-8 flex items-center gap-2 font-mono">
-                                                <span className="h-2 w-2 rounded-full bg-slate-300 animate-pulse" />
+                                            <Badge variant="outline" className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 rounded-lg px-2 h-6 flex items-center gap-1.5 font-mono text-[9px]">
                                                 ID: #{selectedDonor.id.toString().padStart(4, '0')}
                                             </Badge>
                                         </div>
                                     </div>
-                                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-slate-500 dark:text-slate-400 text-sm font-medium">
-                                        <span className="flex items-center gap-1.5 bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm"><Phone className="h-3.5 w-3.5 text-primary" /> {selectedDonor.mobile}</span>
-                                        <span className="flex items-center gap-1.5 bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm"><Mail className="h-3.5 w-3.5 text-primary" /> {selectedDonor.email}</span>
+                                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-slate-500 dark:text-slate-400 text-[11px] font-medium">
+                                        <span className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm"><Phone className="h-3 w-3 text-primary" /> {selectedDonor.mobile}</span>
+                                        <span className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm"><Mail className="h-3 w-3 text-primary" /> {selectedDonor.email}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto p-10 bg-[#fafafa] dark:bg-slate-950">
-                                <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-                                    {/* Verification Column */}
-                                    <div className="md:col-span-4 space-y-6">
-                                        <div className="space-y-4">
-                                            <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Identity & Status</h3>
-                                            <Card className="p-6 rounded-[2rem] border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-slate-900 group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all">
-                                                <div className="space-y-6">
-                                                    <div className="space-y-2">
-                                                        <p className="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase">Verification Level</p>
-                                                        <div className="flex items-center gap-3">
-                                                            <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center transition-colors", selectedDonor.status === 'VERIFIED' ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500" : "bg-amber-50 dark:bg-amber-900/20 text-amber-500")}>
-                                                                {selectedDonor.status === 'VERIFIED' ? <BadgeCheck className="h-6 w-6" /> : <Clock className="h-6 w-6" />}
-                                                            </div>
-                                                            <p className="font-bold text-slate-700">{selectedDonor.status === 'VERIFIED' ? "Bank Verified" : "Verification Pending"}</p>
+                            <div className="flex-1 overflow-y-auto p-5 bg-[#fafafa] dark:bg-slate-950 min-h-0">
+                                <div className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {/* Identity & Status */}
+                                        <div className="space-y-3">
+                                            <h3 className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Identity & Status</h3>
+                                            <Card className="p-4 rounded-2xl border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-slate-900">
+                                                <div className="space-y-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", selectedDonor.status === 'VERIFIED' ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500" : "bg-amber-50 dark:bg-amber-900/20 text-amber-500")}>
+                                                            {selectedDonor.status === 'VERIFIED' ? <BadgeCheck className="h-5 w-5" /> : <Clock className="h-5 w-5" />}
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase">Verification</p>
+                                                            <p className="font-bold text-slate-700 text-xs">{selectedDonor.status === 'VERIFIED' ? "Bank Verified" : "Pending"}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="space-y-2">
-                                                        <p className="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase">Registered PAN</p>
-                                                        <div className="p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800 font-mono text-center text-lg font-black text-slate-600 tracking-wider">
+                                                    <div className="pt-2 border-t border-slate-50 dark:border-slate-800">
+                                                        <p className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase mb-1.5">Registered PAN</p>
+                                                        <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-100 dark:border-slate-800 font-mono text-center text-sm font-black text-slate-600 tracking-wider">
                                                             {selectedDonor.panNumber}
                                                         </div>
                                                     </div>
@@ -633,57 +632,57 @@ export default function DonorsPage() {
                                             </Card>
                                         </div>
 
-                                        <div className="space-y-4 pt-4">
-                                            <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Account Summary</h3>
-                                            <Card className="p-8 rounded-[2rem] border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-slate-900 text-center">
-                                                <p className="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase mb-2">Total Contribution</p>
-                                                <h4 className="text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 font-outfit mb-4 italic">₹{selectedDonor.amount.toLocaleString()}</h4>
-                                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest border border-emerald-100/50">
+                                        {/* Account Summary */}
+                                        <div className="space-y-3">
+                                            <h3 className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Account Summary</h3>
+                                            <Card className="p-4 rounded-2xl border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-slate-900 flex flex-col justify-between">
+                                                <div className="text-center py-2">
+                                                    <p className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase mb-1">Total Contribution</p>
+                                                    <h4 className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 font-outfit italic">₹{selectedDonor.amount.toLocaleString()}</h4>
+                                                </div>
+                                                <div className="mt-2 flex items-center justify-center gap-2 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl text-[9px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest border border-emerald-100/50">
                                                     <CreditCard className="h-3 w-3" /> {selectedDonor.paymentMode.replace(/_/g, " ")}
                                                 </div>
                                             </Card>
                                         </div>
                                     </div>
 
-                                    {/* Document Preview Column */}
-                                    <div className="md:col-span-8 space-y-6">
+                                    {/* Transaction Evidence */}
+                                    <div className="space-y-3">
                                         <div className="flex items-center justify-between px-1">
-                                            <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Transaction Evidence</h3>
-                                            <span className="text-[10px] font-bold text-primary flex items-center gap-2 px-3 py-1 bg-primary/5 rounded-lg">
+                                            <h3 className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Transaction Evidence</h3>
+                                            <span className="text-[9px] font-bold text-primary flex items-center gap-2 px-2 py-0.5 bg-primary/5 rounded-lg">
                                                 <ImageIcon className="h-3 w-3" /> OFFICIAL RECEIPT
                                             </span>
                                         </div>
-                                        <div className="group relative aspect-video rounded-[3rem] border-8 border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.1)] bg-white dark:bg-slate-900 overflow-hidden flex items-center justify-center transition-all hover:shadow-[0_32px_70px_-12px_rgba(0,0,0,0.15)] bg-grid-slate-100/[0.2]">
+                                        <div className="group relative aspect-video rounded-3xl border-4 border-white shadow-[0_24px_50px_-12px_rgba(0,0,0,0.1)] bg-white dark:bg-slate-900 overflow-hidden flex items-center justify-center transition-all hover:shadow-[0_32px_70px_-12px_rgba(0,0,0,0.15)]">
                                             {selectedDonor.payment?.url ? (
                                                 <Image src={selectedDonor.payment.url} alt="Receipt" fill className="object-contain p-2 group-hover:scale-[1.02] transition-transform duration-700" />
                                             ) : (
-                                                <div className="flex flex-col items-center gap-4 text-slate-300 dark:text-slate-600 italic font-medium">
-                                                    <div className="h-16 w-16 rounded-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center"><XCircle className="h-8 w-8" /></div>
+                                                <div className="flex flex-col items-center gap-3 text-slate-300 dark:text-slate-600 italic font-medium">
+                                                    <div className="h-12 w-12 rounded-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center"><XCircle className="h-6 w-6" /></div>
                                                     No Evidence Found
                                                 </div>
                                             )}
-                                            <div className="absolute inset-x-0 bottom-0 p-8 bg-linear-to-t from-black/20 to-transparent group-hover:opacity-0 transition-all pointer-events-none">
-                                                <p className="text-white text-xs font-bold uppercase tracking-widest opacity-80 flex items-center gap-2">
-                                                    <Search className="h-4 w-4" /> Hover to focus
-                                                </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Address */}
+                                    <Card className="p-4 rounded-2xl border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-slate-900">
+                                        <div className="flex items-start gap-3">
+                                            <div className="h-8 w-8 rounded-lg bg-slate-50 dark:bg-slate-950 flex items-center justify-center shrink-0">
+                                                <MapPin className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <p className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase">Registered Address</p>
+                                                <p className="text-xs font-medium text-slate-600 leading-relaxed italic">{selectedDonor.address}</p>
                                             </div>
                                         </div>
-                                        <Card className="p-6 rounded-[2rem] border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-white dark:bg-slate-900">
-                                            <div className="flex items-start gap-4">
-                                                <div className="h-10 w-10 rounded-xl bg-slate-50 dark:bg-slate-950 flex items-center justify-center shrink-0">
-                                                    <MapPin className="h-5 w-5 text-slate-400 dark:text-slate-500" />
-                                                </div>
-                                                <div className="space-y-1">
-                                                    <p className="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase">Registered Address</p>
-                                                    <p className="text-sm font-medium text-slate-600 leading-relaxed italic pr-6">{selectedDonor.address}</p>
-                                                </div>
-                                            </div>
-                                        </Card>
-                                    </div>
+                                    </Card>
                                 </div>
                             </div>
 
-                            <div className="p-10 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col md:flex-row items-center justify-between gap-6 shrink-0">
                                 <div className="flex items-center gap-4 py-2 px-5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800">
                                     <Clock className="h-4 w-4 text-slate-400 dark:text-slate-500" />
                                     <div className="flex flex-col">
@@ -695,13 +694,13 @@ export default function DonorsPage() {
                                     <Button variant="ghost" className="rounded-2xl h-14 px-8 font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 w-full md:w-auto" onClick={() => setIsDetailsOpen(false)}>Close Summary</Button>
                                     <div className="h-8 w-px bg-slate-100 dark:bg-slate-800 hidden md:block" />
                                     {selectedDonor.status === 'PENDING' ? (
-                                        <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl h-14 px-10 font-black tracking-wide shadow-xl shadow-emerald-200 group w-full md:w-auto" onClick={() => handleStatusUpdate(selectedDonor.id, 'VERIFIED')}>
-                                            <CheckCircle2 className="h-5 w-5 mr-3 group-hover:scale-125 transition-transform" />
+                                        <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-10 px-6 font-black tracking-wide shadow-xl shadow-emerald-200 group w-full md:w-auto text-xs" onClick={() => handleStatusUpdate(selectedDonor.id, 'VERIFIED')}>
+                                            <CheckCircle2 className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
                                             VERIFY CONTRIBUTION
                                         </Button>
                                     ) : (
-                                        <Button variant="outline" className="border-amber-200 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:bg-amber-900/20 rounded-2xl h-14 px-10 font-black tracking-wide w-full md:w-auto" onClick={() => handleStatusUpdate(selectedDonor.id, 'PENDING')}>
-                                            <Clock className="h-5 w-5 mr-3" />
+                                        <Button variant="outline" className="border-amber-200 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:bg-amber-900/20 rounded-xl h-10 px-6 font-black tracking-wide w-full md:w-auto text-xs" onClick={() => handleStatusUpdate(selectedDonor.id, 'PENDING')}>
+                                            <Clock className="h-4 w-4 mr-2" />
                                             REVERT TO PENDING
                                         </Button>
                                     )}

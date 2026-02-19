@@ -57,6 +57,12 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+const getYoutubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url?.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+};
+
 export default function GalleryPage() {
     const [items, setItems] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -348,12 +354,28 @@ export default function GalleryPage() {
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
+                                ) : item.videoUrl && getYoutubeId(item.videoUrl) ? (
+                                    <div className="w-full h-full relative group/video">
+                                        <iframe
+                                            width="100%"
+                                            height="100%"
+                                            src={`https://www.youtube.com/embed/${getYoutubeId(item.videoUrl)}?modestbranding=1&rel=0`}
+                                            title="YouTube video player"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                            className="absolute inset-0 z-0 pointer-events-none group-hover/video:pointer-events-auto"
+                                        ></iframe>
+                                        <div className="absolute inset-0 bg-black/10 pointer-events-none group-hover/video:bg-transparent transition-colors z-1"></div>
+                                    </div>
                                 ) : (
                                     <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-center">
                                         <div className="p-4 rounded-full bg-primary/10">
                                             <Video className="h-8 w-8 text-primary" />
                                         </div>
-                                        <span className="text-xs font-semibold text-slate-600 truncate max-w-full italic">{item.videoUrl}</span>
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-600 truncate max-w-full">
+                                            {item.videoUrl ? "External Video" : "No Content"}
+                                        </span>
                                     </div>
                                 )}
 
@@ -365,8 +387,8 @@ export default function GalleryPage() {
                                 </div>
 
                                 {/* Actions Overlay */}
-                                <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center gap-3">
-                                    <div className="flex gap-2">
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 pointer-events-none">
+                                    <div className="flex gap-2 pointer-events-auto">
                                         <Button
                                             variant="secondary"
                                             size="icon"

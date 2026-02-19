@@ -108,6 +108,7 @@ export default function EventsPage() {
   const debouncedSearch = useDebounce(searchQuery, 500);
 
   const [imagePreview, setImagePreview] = useState("");
+  const [mediaType, setMediaType] = useState<"image" | "video">("image");
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(eventSchema),
@@ -153,6 +154,7 @@ export default function EventsPage() {
         const base64 = reader.result as string;
         form.setValue("image", base64);
         setImagePreview(base64);
+        form.setValue("videoUrl", ""); // Clear video URL when image is set
       };
       reader.readAsDataURL(file);
     }
@@ -197,6 +199,8 @@ export default function EventsPage() {
 
   const handleEdit = (event: any) => {
     setEditingEvent(event);
+    const type = event.videoUrl ? "video" : "image";
+    setMediaType(type);
     form.reset({
       title: event.title,
       description: event.description,
@@ -232,6 +236,7 @@ export default function EventsPage() {
 
   const resetForm = () => {
     setEditingEvent(null);
+    setMediaType("image");
     form.reset({
       title: "",
       description: "",
@@ -242,6 +247,13 @@ export default function EventsPage() {
       date: undefined,
     });
     setImagePreview("");
+  };
+
+  const getYoutubeId = (url: string) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
   };
 
   return (
@@ -276,10 +288,10 @@ export default function EventsPage() {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="flex flex-col h-full overflow-hidden"
                 >
-                  <DialogHeader className="bg-muted/50 border-b border-border p-8 shrink-0">
+                  <DialogHeader className="bg-muted/50 border-b border-border p-5 shrink-0">
                     <div className="flex items-center justify-between">
                       <div>
-                        <DialogTitle className="text-2xl font-bold font-outfit text-foreground">
+                        <DialogTitle className="text-xl font-bold font-outfit text-foreground">
                           {editingEvent ? "Edit Event" : "Create Event"}
                         </DialogTitle>
                         <DialogDescription className="text-muted-foreground mt-1 font-medium">
@@ -295,7 +307,7 @@ export default function EventsPage() {
                   </DialogHeader>
 
                   <div className="flex-1 overflow-y-auto bg-background min-h-0">
-                    <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* Left Side: General Info */}
                       <div className="space-y-6">
                         <div className="flex items-center gap-3 mb-2">
@@ -404,7 +416,7 @@ export default function EventsPage() {
                                         className={cn(
                                           "h-12 bg-muted/30 border-border focus:bg-background rounded-2xl transition-all font-medium text-left px-4",
                                           !field.value &&
-                                            "text-muted-foreground",
+                                          "text-muted-foreground",
                                         )}
                                       >
                                         {field.value ? (
@@ -451,11 +463,53 @@ export default function EventsPage() {
                         </div>
 
                         <div className="space-y-4">
+                          <div className="space-y-3">
+                            <Label className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Media Type</Label>
+                            <div className="flex items-center gap-6">
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="radio"
+                                  id="media-image"
+                                  name="mediaType"
+                                  value="image"
+                                  checked={mediaType === "image"}
+                                  onChange={() => {
+                                    setMediaType("image");
+                                    form.setValue("videoUrl", "");
+                                  }}
+                                  className="accent-primary h-4 w-4 cursor-pointer"
+                                />
+                                <Label htmlFor="media-image" className="cursor-pointer font-bold text-xs text-foreground">Upload Image</Label>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <input
+                                  type="radio"
+                                  id="media-video"
+                                  name="mediaType"
+                                  value="video"
+                                  checked={mediaType === "video"}
+                                  onChange={() => {
+                                    setMediaType("video");
+                                    form.setValue("image", "");
+                                    setImagePreview("");
+                                  }}
+                                  className="accent-primary h-4 w-4 cursor-pointer"
+                                />
+                                <Label htmlFor="media-video" className="cursor-pointer font-bold text-xs text-foreground">Video URL</Label>
+                              </div>
+                            </div>
+                          </div>
+
                           <div className="space-y-1.5">
                             <Label className="text-[11px] font-bold text-muted-foreground ml-1">
                               Cover Image
                             </Label>
-                            <label className="relative aspect-video rounded-3xl border-2 border-dashed border-border bg-muted/30 flex items-center justify-center group cursor-pointer hover:bg-muted/50 transition-all overflow-hidden">
+                            <label className={cn(
+                              "relative aspect-video rounded-3xl border-2 border-dashed border-border flex items-center justify-center group transition-all overflow-hidden",
+                              mediaType === "video"
+                                ? "bg-muted opacity-50 cursor-not-allowed pointer-events-none"
+                                : "bg-muted/30 cursor-pointer hover:bg-muted/50"
+                            )}>
                               {imagePreview ? (
                                 <Image
                                   src={imagePreview}
@@ -478,8 +532,9 @@ export default function EventsPage() {
                                 className="hidden"
                                 accept="image/*"
                                 onChange={handleFileChange}
+                                disabled={mediaType === "video"}
                               />
-                              {imagePreview && (
+                              {imagePreview && mediaType === "image" && (
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center">
                                   <Button
                                     type="button"
@@ -491,7 +546,7 @@ export default function EventsPage() {
                                       form.setValue("image", "");
                                     }}
                                   >
-                                    Change Image
+                                    Remove
                                   </Button>
                                 </div>
                               )}
@@ -504,7 +559,7 @@ export default function EventsPage() {
                             render={({ field }) => (
                               <FormItem className="space-y-1.5">
                                 <FormLabel className="text-[11px] font-bold text-muted-foreground ml-1">
-                                  Video Reference (Optional URL)
+                                  Video Reference URL
                                 </FormLabel>
                                 <div className="relative">
                                   <Video className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -513,6 +568,14 @@ export default function EventsPage() {
                                       placeholder="YouTube or direct link"
                                       className="h-12 pl-11 bg-muted/30 border-border focus:bg-background rounded-2xl transition-all"
                                       {...field}
+                                      disabled={mediaType === "image"}
+                                      onChange={(e) => {
+                                        field.onChange(e);
+                                        if (e.target.value) {
+                                          form.setValue("image", "");
+                                          setImagePreview("");
+                                        }
+                                      }}
                                     />
                                   </FormControl>
                                 </div>
@@ -545,11 +608,11 @@ export default function EventsPage() {
                     </div>
                   </div>
 
-                  <DialogFooter className="bg-muted/50 p-8 flex items-center justify-between border-t border-border shrink-0">
+                  <DialogFooter className="bg-muted/50 p-4 flex items-center justify-between border-t border-border shrink-0">
                     <Button
                       type="button"
                       variant="ghost"
-                      className="rounded-2xl h-12 px-8 font-bold text-muted-foreground"
+                      className="rounded-xl h-10 px-6 font-bold text-muted-foreground"
                       onClick={() => setIsDialogOpen(false)}
                     >
                       Cancel
@@ -557,7 +620,7 @@ export default function EventsPage() {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl h-12 px-12 font-bold shadow-xl shadow-primary/20"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl h-10 px-8 font-bold shadow-xl shadow-primary/20"
                     >
                       {isSubmitting ? (
                         <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -636,7 +699,13 @@ export default function EventsPage() {
                 >
                   <TableCell>
                     <div className="relative h-14 w-20 rounded-xl overflow-hidden border border-border shadow-sm bg-muted/50">
-                      {item.image?.url ? (
+                      {item.videoUrl && getYoutubeId(item.videoUrl) ? (
+                        <img
+                          src={`https://img.youtube.com/vi/${getYoutubeId(item.videoUrl)}/mqdefault.jpg`}
+                          alt={item.title}
+                          className="object-cover w-full h-full"
+                        />
+                      ) : item.image?.url ? (
                         <Image
                           src={item.image.url}
                           alt={item.title}
@@ -774,175 +843,141 @@ export default function EventsPage() {
       </Card>
 
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
-        <DialogContent className="sm:max-w-4xl p-0 border-none rounded-[40px] shadow-2xl bg-background max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden border-none rounded-[24px] shadow-2xl bg-background max-h-[90vh] flex flex-col outline-none">
           {selectedEvent && (
             <>
-              {/* Header / Banner */}
-              <div className="relative h-64 w-full shrink-0 group">
-                {selectedEvent.image?.url ? (
-                  <Image
-                    src={selectedEvent.image.url}
-                    alt={selectedEvent.title}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-slate-900 flex items-center justify-center text-slate-700">
-                    <ImageIcon className="h-20 w-20" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-linear-to-t from-background via-background/40 to-transparent" />
-                <div className="absolute bottom-8 left-10 text-foreground space-y-2">
-                  <Badge className="bg-primary hover:bg-primary border-none text-white rounded-lg px-3 py-1 text-[10px] font-black uppercase tracking-widest leading-none h-6 flex items-center w-fit">
-                    {selectedEvent.type}
-                  </Badge>
-                  <h2 className="text-4xl font-black tracking-tight font-outfit leading-none">
+              <DialogHeader className="px-6 py-4 border-b border-border bg-background shrink-0 flex flex-row items-center justify-between gap-4 space-y-0">
+                <div className="space-y-1">
+                  <DialogTitle className="text-lg font-bold font-outfit text-foreground tracking-tight leading-tight">
                     {selectedEvent.title}
-                  </h2>
-                </div>
-              </div>
-
-              {/* Scrollable Content Body */}
-              <div className="flex-1 overflow-y-auto bg-background min-h-0">
-                <div className="p-10">
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-                    <div className="md:col-span-8 space-y-8">
-                      <div className="space-y-4">
-                        <h3 className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">
-                          About Event
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed text-lg font-medium">
-                          {selectedEvent.description}
-                        </p>
-                      </div>
-
-                      {selectedEvent.videoUrl && (
-                        <div className="space-y-4">
-                          <h3 className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">
-                            Video Reference
-                          </h3>
-                          <a
-                            href={selectedEvent.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-4 p-6 rounded-[2rem] bg-muted/30 border border-border hover:bg-muted/50 transition-all group"
-                          >
-                            <div className="h-12 w-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                              <Video className="h-6 w-6" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-bold text-foreground leading-none">
-                                Watch Event Promo
-                              </p>
-                              <p className="text-xs font-medium text-muted-foreground mt-1 truncate max-w-[200px] md:max-w-md">
-                                {selectedEvent.videoUrl}
-                              </p>
-                            </div>
-                          </a>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="md:col-span-4 space-y-6">
-                      <div className="space-y-4">
-                        <h3 className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">
-                          Event Logistics
-                        </h3>
-                        <Card className="p-6 rounded-[2rem] border-none shadow-sm bg-muted/30 space-y-6">
-                          <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 rounded-xl bg-background shadow-sm flex items-center justify-center shrink-0">
-                              <CalendarIcon className="h-5 w-5 text-primary" />
-                            </div>
-                            <div>
-                              <p className="text-[10px] font-bold text-muted-foreground/60 uppercase leading-none mb-1">
-                                Date
-                              </p>
-                              <p className="text-sm font-bold text-foreground">
-                                {new Date(
-                                  selectedEvent.date,
-                                ).toLocaleDateString("en-GB", {
-                                  dateStyle: "long",
-                                })}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 rounded-xl bg-background shadow-sm flex items-center justify-center shrink-0">
-                              <MapPin className="h-5 w-5 text-emerald-500" />
-                            </div>
-                            <div>
-                              <p className="text-[10px] font-bold text-muted-foreground/60 uppercase leading-none mb-1">
-                                Venue
-                              </p>
-                              <p className="text-sm font-bold text-foreground">
-                                {selectedEvent.location}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <div className="h-10 w-10 rounded-xl bg-background shadow-sm flex items-center justify-center shrink-0">
-                              <LayoutGrid className="h-5 w-5 text-amber-500" />
-                            </div>
-                            <div>
-                              <p className="text-[10px] font-bold text-muted-foreground/60 uppercase leading-none mb-1">
-                                Event ID
-                              </p>
-                              <p className="text-sm font-bold text-foreground font-mono">
-                                #{selectedEvent.id.toString().padStart(4, "0")}
-                              </p>
-                            </div>
-                          </div>
-                        </Card>
-                      </div>
-
-                      <div className="space-y-4 pt-4">
-                        <h3 className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">
-                          Engagement
-                        </h3>
-                        <Card className="p-8 rounded-[2rem] border-none shadow-[0_8px_30px_rgb(0,0,0,0.04)] bg-primary flex flex-col items-center text-center">
-                          <div className="h-14 w-14 rounded-[1.5rem] bg-white/10 flex items-center justify-center mb-4">
-                            <Plus className="h-8 w-8 text-white" />
-                          </div>
-                          <h4 className="text-3xl font-black text-white font-outfit leading-none">
-                            {selectedEvent._count?.eventBookings || 0}
-                          </h4>
-                          <p className="text-[10px] font-bold text-white/60 uppercase tracking-widest mt-2 px-2">
-                            Confirmed Attendees
-                          </p>
-                        </Card>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer / Actions */}
-              <DialogFooter className="p-10 border-t border-border bg-muted/50 shrink-0 flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="flex items-center gap-4 text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  <p className="text-[10px] font-bold uppercase tracking-tighter">
-                    Event Created:{" "}
-                    {new Date(selectedEvent.createdAt).toLocaleString()}
+                  </DialogTitle>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
+                    ID: #{selectedEvent.id}
                   </p>
                 </div>
-                <div className="flex items-center gap-4 w-full md:w-auto">
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={() => setIsDetailsOpen(false)}>
+                  <ChevronRight className="h-4 w-4 rotate-90" />
+                </Button>
+              </DialogHeader>
+
+              <div className="flex-1 overflow-y-auto bg-muted/5">
+                <div className="p-5 space-y-5">
+
+                  <div className="w-full aspect-video rounded-xl overflow-hidden border border-border/50 bg-black shadow-sm relative group ring-1 ring-border/50">
+                    {selectedEvent.videoUrl && getYoutubeId(selectedEvent.videoUrl) ? (
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${getYoutubeId(selectedEvent.videoUrl)}`}
+                        title={selectedEvent.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute inset-0"
+                      ></iframe>
+                    ) : selectedEvent.image?.url ? (
+                      <Image
+                        src={selectedEvent.image.url}
+                        alt={selectedEvent.title}
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-muted">
+                        <ImageIcon className="h-10 w-10 opacity-20" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-xl bg-background border border-border shadow-sm flex items-center gap-3">
+                      <div className="h-9 w-9 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+                        <MapPin className="h-4 w-4 text-emerald-500" />
+                      </div>
+                      <div className="overflow-hidden">
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest truncate">Location</p>
+                        <p className="font-bold text-foreground text-xs leading-tight truncate">{selectedEvent.location}</p>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-background border border-border shadow-sm flex items-center gap-3">
+                      <div className="h-9 w-9 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
+                        <CalendarIcon className="h-4 w-4 text-blue-500" />
+                      </div>
+                      <div className="overflow-hidden">
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest truncate">Date</p>
+                        <p className="font-bold text-foreground text-xs leading-tight truncate">
+                          {format(new Date(selectedEvent.date), "PPP")}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-background border border-border shadow-sm flex items-center gap-3">
+                      <div className="h-9 w-9 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
+                        <LayoutGrid className="h-4 w-4 text-indigo-500" />
+                      </div>
+                      <div className="overflow-hidden">
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest truncate">Event Type</p>
+                        <p className="font-bold text-foreground text-xs leading-tight truncate">{selectedEvent.type}</p>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-background border border-border shadow-sm flex items-center gap-3">
+                      <div className="h-9 w-9 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
+                        <Clock className="h-4 w-4 text-amber-500" />
+                      </div>
+                      <div className="overflow-hidden">
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest truncate">Created</p>
+                        <p className="font-bold text-foreground text-xs leading-tight truncate">
+                          {selectedEvent.createdAt ? new Date(selectedEvent.createdAt).toLocaleDateString() : 'N/A'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 bg-background p-4 rounded-xl border border-border shadow-sm">
+                    <h4 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+                      Description
+                    </h4>
+                    <p className="text-xs font-medium text-foreground leading-relaxed whitespace-pre-wrap">
+                      {selectedEvent.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter className="p-4 border-t border-border bg-background shrink-0 flex items-center justify-between gap-3">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsDetailsOpen(false)}
+                  className="rounded-lg font-bold text-muted-foreground hover:text-foreground h-9 px-4"
+                >
+                  Close
+                </Button>
+                <div className="flex gap-2">
                   <Button
-                    variant="ghost"
-                    className="rounded-2xl h-14 px-8 font-bold text-muted-foreground hover:text-foreground w-full md:w-auto cursor-pointer"
-                    onClick={() => setIsDetailsOpen(false)}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (confirm("Are you sure you want to delete this event?")) {
+                        handleDelete(selectedEvent.id);
+                        setIsDetailsOpen(false);
+                      }
+                    }}
+                    className="rounded-lg border-destructive/20 text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30 font-bold h-9 px-4 bg-transparent shadow-none"
                   >
-                    Close View
+                    <Trash2 className="h-3.5 w-3.5 mr-2" /> Delete
                   </Button>
-                  <div className="h-8 w-px bg-border hidden md:block" />
                   <Button
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-2xl h-14 px-10 font-black tracking-wide shadow-xl shadow-primary/20 w-full md:w-auto cursor-pointer"
+                    size="sm"
                     onClick={() => {
                       setIsDetailsOpen(false);
                       handleEdit(selectedEvent);
                     }}
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-lg h-9 px-6 shadow-md shadow-primary/20"
                   >
-                    <Pencil className="h-5 w-5 mr-3" />
-                    EDIT DETAILS
+                    <Pencil className="h-3.5 w-3.5 mr-2" /> Edit
                   </Button>
                 </div>
               </DialogFooter>
