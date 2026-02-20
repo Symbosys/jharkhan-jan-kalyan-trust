@@ -103,7 +103,7 @@ export async function createBooking(data: {
                 email: data.email,
                 city: data.city,
                 isTeamMember: data.isTeamMember || false,
-                memberShipNumber: data.memberShipNumber,
+                memberShipNumber: (data.isTeamMember && data.memberShipNumber) ? data.memberShipNumber : null,
                 status: "PENDING",
             },
         });

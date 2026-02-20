@@ -6,7 +6,7 @@ import { BenefitsSection } from "@/components/server/home/BenefitsSection";
 import { NewsSection } from "@/components/server/home/NewsSection";
 import { Features } from "@/components/server/home/Features";
 import { TeamSection } from "@/components/server/home/TeamSection";
-import { DonateSection } from "@/components/server/home/DonateSection";
+
 import { GallerySection } from "@/components/server/home/GallerySection";
 import { MembershipSection } from "@/components/server/home/MembershipSection";
 import { TestimonialSection } from "@/components/server/home/TestimonialSection";
@@ -29,7 +29,7 @@ export default async function Home() {
         <NewsSection />
         <Features />
         <TeamSection />
-        <DonateSection />
+
         <GallerySection />
         <MembershipSection />
         <TestimonialSection />

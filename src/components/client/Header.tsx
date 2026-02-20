@@ -1,11 +1,18 @@
 "use client"
 import Link from "next/link";
-import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users } from "lucide-react";
-import { useState } from "react";
+import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const toggleDropdown = (label: string) => {
         setActiveDropdown(activeDropdown === label ? null : label);
@@ -31,8 +38,8 @@ export function Header() {
             label: "About Us",
             dropdown: [
                 { label: "Our Story", href: "/about-us" },
-                { label: "Management Team", href: "/management-team" },
-                { label: "Our Members", href: "/our-members" },
+                { label: "Management Team", href: "/team/management-team" },
+                { label: "Our Members", href: "/team/our-members" },
                 { label: "List of Donors", href: "/donors" },
             ],
         },
@@ -63,8 +70,9 @@ export function Header() {
         {
             label: "Donations",
             dropdown: [
+                { label: "Donate Now", href: "/donate", icon: Heart },
                 { label: "Crowd Funding", href: "/donations/crowd-funding", icon: Coins },
-                { label: "List of Donors", href: "/donations/list", icon: Users },
+                { label: "List of Donors", href: "/donors", icon: Users },
                 { label: "Audit Reports", href: "/donations/audit-reports", icon: FileText },
             ],
         },
@@ -153,6 +161,17 @@ export function Header() {
 
                     {/* Right Actions */}
                     <div className="hidden lg:flex items-center gap-4">
+                        <button
+                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                            className="p-2 rounded-full hover:bg-secondary/10 text-muted-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                            aria-label="Toggle theme"
+                        >
+                            {mounted ? (
+                                theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+                            ) : (
+                                <div className="h-5 w-5" />
+                            )}
+                        </button>
                         <Link
                             href="/donate"
                             className="flex items-center justify-center rounded-xl bg-linear-to-r from-primary to-green-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
@@ -162,13 +181,27 @@ export function Header() {
                         </Link>
                     </div>
 
-                    {/* Mobile Toggle */}
-                    <button
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="lg:hidden p-2 text-muted-foreground hover:text-primary transition-colors"
-                    >
-                        {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                    </button>
+                    {/* Mobile Actions */}
+                    <div className="lg:hidden flex items-center gap-2">
+                        <button
+                            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                            className="p-2 rounded-full hover:bg-secondary/10 text-muted-foreground hover:text-primary transition-colors focus:outline-none"
+                            aria-label="Toggle theme"
+                        >
+                            {mounted ? (
+                                theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+                            ) : (
+                                <div className="h-5 w-5" />
+                            )}
+                        </button>
+                        {/* Mobile Toggle */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="p-2 text-muted-foreground hover:text-primary transition-colors focus:outline-none"
+                        >
+                            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                        </button>
+                    </div>
                 </div>
             </div>
 
