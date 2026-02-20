@@ -11,16 +11,30 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { ModeToggle } from "@/components/client/ModeToggle";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function AdminLayout({
+export default async function AdminLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const session = await auth();
+
+    if (!session?.user) {
+        redirect("/login");
+    }
+
+    const user = {
+        name: session.user?.name,
+        email: session.user?.email,
+        image: session.user?.image,
+    };
+
     return (
         <SidebarProvider>
             <div className="flex h-screen overflow-hidden w-full bg-background text-foreground">
-                <AdminSidebar />
+                <AdminSidebar user={user as any} />
                 <SidebarInset className="flex flex-col flex-1 overflow-hidden">
                     <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4">
                         <div className="flex items-center gap-2">

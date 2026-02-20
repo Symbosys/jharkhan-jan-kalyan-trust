@@ -54,6 +54,7 @@ export function Header() {
         {
             label: "Our Initiatives",
             dropdown: [
+                { label: "Our Activities", href: "/activities", icon: Globe },
                 { label: "Upcoming Events", href: "/events", icon: Calendar },
                 // { label: "Our Solutions", href: "/solutions", icon: Globe },
                 // { label: "Key Challenges", href: "/challenges", icon: Smartphone },

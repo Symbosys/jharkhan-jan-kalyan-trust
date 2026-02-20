@@ -174,8 +174,14 @@ const data = {
     ],
 };
 
-export function AdminSidebar() {
+import { logout } from "@/actions/auth";
+
+export function AdminSidebar({ user }: { user?: any }) {
     const pathname = usePathname();
+
+    const handleLogout = async () => {
+        await logout();
+    };
 
     return (
         <Sidebar collapsible="icon" className="border-r border-border bg-card">
@@ -234,36 +240,28 @@ export function AdminSidebar() {
                     </SidebarGroup>
                 ))}
             </SidebarContent>
-            <SidebarFooter className="p-3 border-t border-border">
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <button className="flex items-center w-full gap-3 p-1.5 rounded-lg hover:bg-accent transition-colors group">
-                            <Avatar className="h-8 w-8 border border-border">
-                                <AvatarImage src="" />
-                                <AvatarFallback className="bg-muted text-muted-foreground text-xs font-medium">AD</AvatarFallback>
-                            </Avatar>
-                            <div className="flex flex-col items-start overflow-hidden transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0">
-                                <span className="text-sm font-medium text-foreground truncate">Admin User</span>
-                                <span className="text-xs text-muted-foreground truncate">admin@jankalyan.org</span>
-                            </div>
-                        </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56" align="start" sideOffset={10}>
-                        <DropdownMenuItem className="cursor-pointer">
-                            <User className="mr-2 h-4 w-4" />
-                            <span>Profile</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
-                            <Settings className="mr-2 h-4 w-4" />
-                            <span>Settings</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-500 focus:text-red-500 focus:bg-red-50/50 cursor-pointer">
-                            <LogOut className="mr-2 h-4 w-4" />
-                            <span>Log out</span>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+            <SidebarFooter className="p-3 border-t border-border space-y-3">
+                <div className="flex items-center gap-3 p-1.5 rounded-lg">
+                    <Avatar className="h-8 w-8 border border-border shrink-0">
+                        <AvatarImage src={user?.image || ""} />
+                        <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">
+                            {user?.name?.slice(0, 2).toUpperCase() || "AD"}
+                        </AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col overflow-hidden transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0">
+                        <span className="text-sm font-semibold text-foreground truncate">{user?.name || "Admin"}</span>
+                        <span className="text-xs text-muted-foreground truncate">{user?.email || ""}</span>
+                    </div>
+                </div>
+                <form action={handleLogout} className="group-data-[collapsible=icon]:hidden">
+                    <button
+                        type="submit"
+                        className="flex items-center justify-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-950/40 dark:hover:bg-red-950/60 transition-colors cursor-pointer"
+                    >
+                        <LogOut className="h-4 w-4" />
+                        <span>Log out</span>
+                    </button>
+                </form>
             </SidebarFooter>
         </Sidebar>
     );

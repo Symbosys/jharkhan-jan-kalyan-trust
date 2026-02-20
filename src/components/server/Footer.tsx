@@ -17,6 +17,7 @@ import { CopyrightYear } from "@/components/client/CopyrightYear";
 const quickLinks = [
     { href: "/", label: "Home" },
     { href: "/about-us", label: "About Us" },
+    { href: "/activities", label: "Our Activities" },
     { href: "/team/management-team", label: "Management Team" },
     { href: "/team/our-members", label: "Our Members" },
     { href: "/gallery/photos", label: "Photo Gallery" },
