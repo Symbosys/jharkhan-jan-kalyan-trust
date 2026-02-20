@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon } from "lucide-react";
+import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon, ShieldAlert } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 
@@ -54,9 +54,10 @@ export function Header() {
             label: "Our Initiatives",
             dropdown: [
                 { label: "Upcoming Events", href: "/events", icon: Calendar },
-                { label: "Our Solutions", href: "/solutions", icon: Globe },
-                { label: "Key Challenges", href: "/challenges", icon: Smartphone },
-                { label: "Our Projects", href: "/projects", icon: Briefcase },
+                // { label: "Our Solutions", href: "/solutions", icon: Globe },
+                // { label: "Key Challenges", href: "/challenges", icon: Smartphone },
+                // { label: "Our Projects", href: "/projects", icon: Briefcase },
+                { label: "Register Your Problem", href: "/register-complaint", icon: ShieldAlert },
             ],
         },
         {
@@ -71,9 +72,9 @@ export function Header() {
             label: "Donations",
             dropdown: [
                 { label: "Donate Now", href: "/donate", icon: Heart },
-                { label: "Crowd Funding", href: "/donations/crowd-funding", icon: Coins },
+                // { label: "Crowd Funding", href: "/donations/crowd-funding", icon: Coins },
                 { label: "List of Donors", href: "/donors", icon: Users },
-                { label: "Audit Reports", href: "/donations/audit-reports", icon: FileText },
+                // { label: "Audit Reports", href: "/donations/audit-reports", icon: FileText },
             ],
         },
         { label: "Contact Us", href: "/contact" },
