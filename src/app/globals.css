@@ -157,7 +157,7 @@
 }
 
 .animate-vertical-news {
-  animation: vertical-news-scroll 5s linear infinite;
+  animation: vertical-news-scroll 15s linear infinite;
 }
 
 .pause-on-hover:hover {
@@ -196,4 +196,22 @@
 
 .animation-delay-4000 {
   animation-delay: 4s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

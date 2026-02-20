@@ -2,11 +2,13 @@
 
 import { Activity, ArrowRight, Rss } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface NewsItem {
     id: number;
     title: string;
     description: string;
+    link?: string | null;
 }
 
 interface NewsTickerProps {
@@ -35,14 +37,6 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
                             Latest <span className="text-primary italic">Happenings.</span>
                         </h2>
                     </div>
-
-                    <Link
-                        href="/news"
-                        className="group whitespace-nowrap inline-flex items-center gap-2 text-sm font-bold text-foreground hover:text-primary transition-all pb-1 border-b-2 border-primary/20 hover:border-primary"
-                    >
-                        VIEW ALL NEWS
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
                 </div>
 
                 {/* Scrolling Section - Clean & Professional */}
@@ -56,7 +50,10 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
                                 {displayNews.map((item, index) => (
                                     <div
                                         key={`${item.id}-${index}`}
-                                        className="py-6 border-b border-border/40 last:border-0 group/item transition-colors hover:bg-slate-50 dark:hover:bg-slate-900/50 -mx-6 md:-mx-12 px-6 md:px-12"
+                                        className={cn(
+                                            "py-6 border-b border-border/40 last:border-0 group/item transition-colors -mx-6 md:-mx-12 px-6 md:px-12 relative",
+                                            item.link ? "hover:bg-slate-50 dark:hover:bg-slate-900/50 cursor-pointer" : "cursor-default"
+                                        )}
                                     >
                                         <div className="flex gap-5 items-start">
                                             {/* Minimal Bullet Point */}
@@ -64,19 +61,42 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
 
                                             {/* Content */}
                                             <div className="space-y-1.5 flex-1 min-w-0">
-                                                <Link
-                                                    href={item.id ? `/news/${item.id}` : "#"}
-                                                    className="block text-lg font-bold text-foreground hover:text-primary transition-colors leading-tight tracking-tight"
-                                                >
-                                                    {item.title}
-                                                </Link>
-                                                <p className="text-sm text-muted-foreground font-medium leading-relaxed line-clamp-2">
-                                                    {item.description}
-                                                </p>
+                                                {item.link ? (
+                                                    <>
+                                                        {/* Stretched Link Overlay */}
+                                                        <a
+                                                            href={item.link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="absolute inset-0 z-10"
+                                                            aria-label={item.title}
+                                                        />
+                                                        <h3 className="block text-lg font-bold text-foreground group-hover/item:text-primary transition-colors leading-tight tracking-tight">
+                                                            {item.title}
+                                                        </h3>
+                                                        <p className="text-sm text-muted-foreground font-medium leading-relaxed line-clamp-2">
+                                                            {item.description}
+                                                        </p>
+                                                        <div className="inline-flex items-center gap-1 text-xs font-bold text-primary opacity-0 group-hover/item:opacity-100 transition-opacity mt-2">
+                                                            Read More <ArrowRight className="h-3 w-3" />
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <h3 className="block text-lg font-bold text-foreground leading-tight tracking-tight">
+                                                            {item.title}
+                                                        </h3>
+                                                        <p className="text-sm text-muted-foreground font-medium leading-relaxed line-clamp-2">
+                                                            {item.description}
+                                                        </p>
+                                                    </>
+                                                )}
                                             </div>
 
-                                            {/* Arrow Icon on Hover */}
-                                            <ArrowRight className="shrink-0 h-5 w-5 text-muted-foreground/30 -translate-x-2 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300 mt-1.5" />
+                                            {/* Arrow Icon on Hover - only for clickable items */}
+                                            {item.link && (
+                                                <ArrowRight className="shrink-0 h-5 w-5 text-muted-foreground/30 -translate-x-2 opacity-0 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300 mt-1.5" />
+                                            )}
                                         </div>
                                     </div>
                                 ))}

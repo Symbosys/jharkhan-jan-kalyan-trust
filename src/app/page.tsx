@@ -11,12 +11,15 @@ import { GallerySection } from "@/components/server/home/GallerySection";
 import { MembershipSection } from "@/components/server/home/MembershipSection";
 import { TestimonialSection } from "@/components/server/home/TestimonialSection";
 import { DonorsSection } from "@/components/server/home/DonorsSection";
+import { DonateSection } from "@/components/server/home/DonateSection";
 import { MapSection } from "@/components/server/home/MapSection";
 import { Footer } from "@/components/server/Footer";
 import { getAllSliders } from "@/actions/slider";
+import { getAllDonars } from "@/actions/donar";
 
 export default async function Home() {
   const { sliders } = await getAllSliders(1, 20);
+  const { donars, pagination } = await getAllDonars({ limit: 3, status: "VERIFIED" });
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground font-sans selection:bg-secondary/20 selection:text-secondary">
@@ -32,6 +35,7 @@ export default async function Home() {
 
         <GallerySection />
         <MembershipSection />
+        <DonateSection donors={donars} totalDonors={pagination.total} />
         <TestimonialSection />
         <DonorsSection />
         <MapSection />

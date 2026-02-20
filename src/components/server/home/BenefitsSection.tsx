@@ -147,7 +147,7 @@ export function BenefitsSection() {
                         </div>
 
                         <Link
-                            href="/join-us"
+                            href="/member-apply"
                             className="relative z-10 mt-8 py-3 bg-white text-primary rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-all group-hover:gap-4"
                         >
                             Get Started

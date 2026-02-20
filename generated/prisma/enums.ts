@@ -140,3 +140,12 @@ export const ComplaintStatus = {
 } as const
 
 export type ComplaintStatus = (typeof ComplaintStatus)[keyof typeof ComplaintStatus]
+
+
+export const RenewalStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type RenewalStatus = (typeof RenewalStatus)[keyof typeof RenewalStatus]

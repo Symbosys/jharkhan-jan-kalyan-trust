@@ -44,7 +44,7 @@ export function MembershipSection() {
                         </div>
 
                         <Link
-                            href="/membership/apply"
+                            href="/member-apply"
                             className="group inline-flex items-center gap-3 px-10 py-5 bg-primary text-white font-black text-sm uppercase tracking-widest rounded-[2rem] shadow-2xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300"
                         >
                             Apply for Membership

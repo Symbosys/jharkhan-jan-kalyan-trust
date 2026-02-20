@@ -399,7 +399,8 @@ export const ModelName = {
   Event: 'Event',
   EventBooking: 'EventBooking',
   RegisterComplaint: 'RegisterComplaint',
-  Enquiry: 'Enquiry'
+  Enquiry: 'Enquiry',
+  MembershipRenewal: 'MembershipRenewal'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry"
+    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1475,6 +1476,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MembershipRenewal: {
+      payload: Prisma.$MembershipRenewalPayload<ExtArgs>
+      fields: Prisma.MembershipRenewalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MembershipRenewalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MembershipRenewalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>
+        }
+        findFirst: {
+          args: Prisma.MembershipRenewalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MembershipRenewalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>
+        }
+        findMany: {
+          args: Prisma.MembershipRenewalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>[]
+        }
+        create: {
+          args: Prisma.MembershipRenewalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>
+        }
+        createMany: {
+          args: Prisma.MembershipRenewalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.MembershipRenewalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>
+        }
+        update: {
+          args: Prisma.MembershipRenewalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>
+        }
+        deleteMany: {
+          args: Prisma.MembershipRenewalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MembershipRenewalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.MembershipRenewalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MembershipRenewalPayload>
+        }
+        aggregate: {
+          args: Prisma.MembershipRenewalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMembershipRenewal>
+        }
+        groupBy: {
+          args: Prisma.MembershipRenewalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MembershipRenewalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MembershipRenewalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MembershipRenewalCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1595,8 +1662,7 @@ export const NewsScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  image: 'image',
-  videoUrl: 'videoUrl',
+  link: 'link',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1670,7 +1736,8 @@ export const MemberShipScalarFieldEnum = {
   planId: 'planId',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  expiresAt: 'expiresAt'
 } as const
 
 export type MemberShipScalarFieldEnum = (typeof MemberShipScalarFieldEnum)[keyof typeof MemberShipScalarFieldEnum]
@@ -1757,6 +1824,21 @@ export const EnquiryScalarFieldEnum = {
 } as const
 
 export type EnquiryScalarFieldEnum = (typeof EnquiryScalarFieldEnum)[keyof typeof EnquiryScalarFieldEnum]
+
+
+export const MembershipRenewalScalarFieldEnum = {
+  id: 'id',
+  membershipId: 'membershipId',
+  planId: 'planId',
+  paymentMode: 'paymentMode',
+  paymentProof: 'paymentProof',
+  status: 'status',
+  adminComment: 'adminComment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MembershipRenewalScalarFieldEnum = (typeof MembershipRenewalScalarFieldEnum)[keyof typeof MembershipRenewalScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1853,7 +1935,7 @@ export type TestimonialOrderByRelevanceFieldEnum = (typeof TestimonialOrderByRel
 export const NewsOrderByRelevanceFieldEnum = {
   title: 'title',
   description: 'description',
-  videoUrl: 'videoUrl'
+  link: 'link'
 } as const
 
 export type NewsOrderByRelevanceFieldEnum = (typeof NewsOrderByRelevanceFieldEnum)[keyof typeof NewsOrderByRelevanceFieldEnum]
@@ -1957,6 +2039,13 @@ export const EnquiryOrderByRelevanceFieldEnum = {
 } as const
 
 export type EnquiryOrderByRelevanceFieldEnum = (typeof EnquiryOrderByRelevanceFieldEnum)[keyof typeof EnquiryOrderByRelevanceFieldEnum]
+
+
+export const MembershipRenewalOrderByRelevanceFieldEnum = {
+  adminComment: 'adminComment'
+} as const
+
+export type MembershipRenewalOrderByRelevanceFieldEnum = (typeof MembershipRenewalOrderByRelevanceFieldEnum)[keyof typeof MembershipRenewalOrderByRelevanceFieldEnum]
 
 
 
@@ -2099,6 +2188,13 @@ export type EnumBookingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'RenewalStatus'
+ */
+export type EnumRenewalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RenewalStatus'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2215,6 +2311,7 @@ export type GlobalOmitConfig = {
   eventBooking?: Prisma.EventBookingOmit
   registerComplaint?: Prisma.RegisterComplaintOmit
   enquiry?: Prisma.EnquiryOmit
+  membershipRenewal?: Prisma.MembershipRenewalOmit
 }
 
 /* Types for Logging */

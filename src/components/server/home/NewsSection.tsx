@@ -9,7 +9,8 @@ export async function NewsSection() {
         const simplifiedNews = news.map((item: any) => ({
             id: item.id,
             title: item.title,
-            description: item.description
+            description: item.description,
+            link: item.link
         }));
 
         // We render it even if empty so the user sees the "News Section" container

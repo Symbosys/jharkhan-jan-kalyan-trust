@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon, ShieldAlert } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -87,12 +88,17 @@ export function Header() {
 
                     {/* Logo Section */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-tr from-primary to-secondary group-hover:scale-105 transition-transform duration-300 shadow-lg shadow-primary/20">
-                            <Heart className="h-6 w-6 text-white fill-white" />
+                        <div className="relative h-12 w-12 rounded-xl overflow-hidden group-hover:scale-105 transition-transform duration-300 shadow-md">
+                            <Image
+                                src="/logo/logo.jpeg"
+                                alt="Jan Kalyan Logo"
+                                fill
+                                className="object-cover"
+                            />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-xl font-bold tracking-tight text-tertiary leading-none">Jan Kalyan</span>
-                            <span className="text-xs font-medium text-muted-foreground tracking-widest uppercase">NGO Foundation</span>
+                            <span className="text-xl font-bold tracking-tight text-tertiary leading-none">Jharkhand</span>
+                            <span className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase mt-0.5">Jan Kalyan Trust</span>
                         </div>
                     </Link>
 

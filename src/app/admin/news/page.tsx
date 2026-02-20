@@ -6,13 +6,13 @@ import {
     Trash2,
     Pencil,
     Loader2,
-    Image as ImageIcon,
     Search,
     ExternalLink,
     Calendar,
     ChevronLeft,
     ChevronRight,
-    AlertCircle
+    AlertCircle,
+    Newspaper
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,9 +41,7 @@ import {
     updateNews,
     deleteNews
 } from "@/actions/news";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newsSchema, NewsInput } from "@/validators/news";
@@ -54,30 +52,24 @@ export default function NewsPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<any>(null);
-    const [mediaType, setMediaType] = useState<"image" | "video">("image");
 
     // Search and Pagination
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    // Image preview state
-    const [preview, setPreview] = useState<string>("");
-
     // React Hook Form
     const {
         register,
         handleSubmit,
         reset,
-        setValue,
         formState: { errors }
     } = useForm<NewsInput>({
         resolver: zodResolver(newsSchema),
         defaultValues: {
             title: "",
             description: "",
-            image: "",
-            videoUrl: ""
+            link: ""
         }
     });
 
@@ -101,20 +93,6 @@ export default function NewsPage() {
     useEffect(() => {
         fetchNews();
     }, [currentPage, searchQuery]);
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64 = reader.result as string;
-                setValue("image", base64);
-                setPreview(base64);
-                setValue("videoUrl", ""); // Clear video URL when image is added
-            };
-            reader.readAsDataURL(file);
-        }
-    };
 
     const onSubmit = async (data: NewsInput) => {
         try {
@@ -157,34 +135,20 @@ export default function NewsPage() {
 
     const handleEdit = (item: any) => {
         setEditingItem(item);
-        const type = item.videoUrl ? "video" : "image";
-        setMediaType(type);
         reset({
             title: item.title,
             description: item.description,
-            image: "",
-            videoUrl: item.videoUrl || ""
+            link: item.link || ""
         });
-        setPreview(item.image?.url || "");
         setIsDialogOpen(true);
-    };
-
-    const getYoutubeId = (url: string) => {
-        if (!url) return null;
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-        const match = url.match(regExp);
-        return (match && match[2].length === 11) ? match[2] : null;
     };
 
     const handleResetForm = () => {
         reset({
             title: "",
             description: "",
-            image: "",
-            videoUrl: ""
+            link: ""
         });
-        setPreview("");
-        setMediaType("image");
         setEditingItem(null);
     };
 
@@ -265,98 +229,22 @@ export default function NewsPage() {
                                         />
                                     </div>
 
-                                    <div className="space-y-3">
-                                        <Label className="text-base font-semibold">Media Type</Label>
-                                        <div className="flex items-center gap-6">
-                                            <div className="flex items-center space-x-2">
-                                                <input
-                                                    type="radio"
-                                                    id="media-image"
-                                                    name="mediaType"
-                                                    value="image"
-                                                    checked={mediaType === "image"}
-                                                    onChange={() => {
-                                                        setMediaType("image");
-                                                        setValue("videoUrl", "");
-                                                    }}
-                                                    className="accent-primary h-4 w-4 cursor-pointer"
-                                                />
-                                                <Label htmlFor="media-image" className="cursor-pointer font-normal">Upload Image</Label>
-                                            </div>
-                                            <div className="flex items-center space-x-2">
-                                                <input
-                                                    type="radio"
-                                                    id="media-video"
-                                                    name="mediaType"
-                                                    value="video"
-                                                    checked={mediaType === "video"}
-                                                    onChange={() => {
-                                                        setMediaType("video");
-                                                        setValue("image", "");
-                                                        setPreview("");
-                                                    }}
-                                                    className="accent-primary h-4 w-4 cursor-pointer"
-                                                />
-                                                <Label htmlFor="media-video" className="cursor-pointer font-normal">Video URL</Label>
-                                            </div>
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <Label htmlFor="link">Link (Optional)</Label>
+                                            {errors.link && (
+                                                <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
+                                                    <AlertCircle className="h-2.5 w-2.5" /> {errors.link.message}
+                                                </span>
+                                            )}
                                         </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="space-y-2">
-                                            <Label>Cover Image</Label>
-                                            <div className={cn(
-                                                "flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-3 transition-colors h-[120px]",
-                                                mediaType === "video"
-                                                    ? "bg-slate-100 border-slate-200 opacity-50 cursor-not-allowed dark:bg-slate-800 dark:border-slate-700"
-                                                    : "border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900"
-                                            )}>
-                                                {preview ? (
-                                                    <div className="relative w-full h-full rounded-lg overflow-hidden group">
-                                                        <Image src={preview} alt="Preview" fill className="object-cover" />
-                                                        {mediaType === "image" && (
-                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                                <Button type="button" variant="ghost" size="sm" className="text-white h-8" onClick={() => { setPreview(""); setValue("image", ""); }}>
-                                                                    Remove
-                                                                </Button>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                ) : (
-                                                    <label htmlFor="image-upload" className={cn("flex flex-col items-center w-full", mediaType === "video" ? "cursor-not-allowed pointer-events-none" : "cursor-pointer")}>
-                                                        <ImageIcon className="h-6 w-6 text-slate-300 mb-1" />
-                                                        <span className="text-xs text-slate-500 font-medium text-center px-2">Click to upload</span>
-                                                        <input
-                                                            id="image-upload"
-                                                            type="file"
-                                                            className="hidden"
-                                                            accept="image/*"
-                                                            onChange={handleImageChange}
-                                                            disabled={mediaType === "video"}
-                                                        />
-                                                    </label>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <div className="flex justify-between items-center">
-                                                <Label htmlFor="videoUrl">Video URL</Label>
-                                                {errors.videoUrl && (
-                                                    <span className="text-[10px] text-destructive font-medium flex items-center gap-1">
-                                                        <AlertCircle className="h-2.5 w-2.5" /> {errors.videoUrl.message}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <Input
-                                                id="videoUrl"
-                                                {...register("videoUrl")}
-                                                placeholder="YouTube / Vimeo link"
-                                                className={cn(errors.videoUrl && "border-destructive focus-visible:ring-destructive")}
-                                                disabled={mediaType === "image"}
-                                            />
-                                            <p className="text-[10px] text-slate-400">Add a link to embed video content.</p>
-                                        </div>
+                                        <Input
+                                            id="link"
+                                            {...register("link")}
+                                            placeholder="https://example.com/news-article"
+                                            className={cn(errors.link && "border-destructive focus-visible:ring-destructive")}
+                                        />
+                                        <p className="text-[10px] text-slate-400">Add an external link to the full news article.</p>
                                     </div>
                                 </div>
 
@@ -383,56 +271,30 @@ export default function NewsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {newsItems.map((item) => (
                             <Card key={item.id} className="group relative overflow-hidden border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full bg-white dark:bg-slate-900">
-                                <div className="relative aspect-video overflow-hidden">
-                                    {item.videoUrl && getYoutubeId(item.videoUrl) ? (
-                                        <div className="w-full h-full">
-                                            <iframe
-                                                width="100%"
-                                                height="100%"
-                                                src={`https://www.youtube.com/embed/${getYoutubeId(item.videoUrl)}`}
-                                                title={item.title}
-                                                frameBorder="0"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowFullScreen
-                                                className="absolute inset-0"
-                                            ></iframe>
-                                        </div>
-                                    ) : item.image?.url ? (
-                                        <Image
-                                            src={item.image.url}
-                                            alt={item.title}
-                                            fill
-                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                                            <ImageIcon className="h-10 w-10 text-slate-300 dark:text-slate-600" />
-                                        </div>
-                                    )}
-                                    <div className="absolute top-2 right-2 flex gap-1.5 z-10">
-                                        <Button
-                                            variant="secondary"
-                                            size="icon"
-                                            className="h-8 w-8 shadow-md bg-white/90 backdrop-blur-sm text-slate-900 hover:bg-white"
-                                            onClick={() => handleEdit(item)}
-                                        >
-                                            <Pencil className="h-3.5 w-3.5" />
-                                        </Button>
-                                        <Button
-                                            variant="destructive"
-                                            size="icon"
-                                            className="h-8 w-8 shadow-md"
-                                            onClick={() => handleDelete(item.id)}
-                                        >
-                                            <Trash2 className="h-3.5 w-3.5" />
-                                        </Button>
-                                    </div>
-                                </div>
-
                                 <CardHeader className="p-4 space-y-1">
-                                    <div className="flex items-center text-[11px] text-slate-400 gap-2 mb-1">
-                                        <Calendar className="h-3 w-3" />
-                                        {new Date(item.createdAt).toLocaleDateString()}
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center text-[11px] text-slate-400 gap-2 mb-1">
+                                            <Calendar className="h-3 w-3" />
+                                            {new Date(item.createdAt).toLocaleDateString()}
+                                        </div>
+                                        <div className="flex gap-1.5">
+                                            <Button
+                                                variant="secondary"
+                                                size="icon"
+                                                className="h-8 w-8 shadow-sm bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700"
+                                                onClick={() => handleEdit(item)}
+                                            >
+                                                <Pencil className="h-3.5 w-3.5" />
+                                            </Button>
+                                            <Button
+                                                variant="destructive"
+                                                size="icon"
+                                                className="h-8 w-8 shadow-sm"
+                                                onClick={() => handleDelete(item.id)}
+                                            >
+                                                <Trash2 className="h-3.5 w-3.5" />
+                                            </Button>
+                                        </div>
                                     </div>
                                     <CardTitle className="text-lg font-bold leading-tight line-clamp-2 min-h-[50px] text-slate-900 dark:text-slate-100">
                                         {item.title}
@@ -447,9 +309,9 @@ export default function NewsPage() {
 
                                 <CardFooter className="p-4 border-t border-slate-50 dark:border-slate-800 flex items-center justify-between">
                                     <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">News ID: #{item.id}</span>
-                                    {item.videoUrl && (
-                                        <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-xs font-semibold">
-                                            Watch <ExternalLink className="h-3 w-3 ml-1" />
+                                    {item.link && (
+                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center text-xs font-semibold">
+                                            Read More <ExternalLink className="h-3 w-3 ml-1" />
                                         </a>
                                     )}
                                 </CardFooter>

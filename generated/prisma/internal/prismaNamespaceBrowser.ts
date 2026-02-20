@@ -66,7 +66,8 @@ export const ModelName = {
   Event: 'Event',
   EventBooking: 'EventBooking',
   RegisterComplaint: 'RegisterComplaint',
-  Enquiry: 'Enquiry'
+  Enquiry: 'Enquiry',
+  MembershipRenewal: 'MembershipRenewal'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -166,8 +167,7 @@ export const NewsScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
-  image: 'image',
-  videoUrl: 'videoUrl',
+  link: 'link',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -241,7 +241,8 @@ export const MemberShipScalarFieldEnum = {
   planId: 'planId',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  expiresAt: 'expiresAt'
 } as const
 
 export type MemberShipScalarFieldEnum = (typeof MemberShipScalarFieldEnum)[keyof typeof MemberShipScalarFieldEnum]
@@ -328,6 +329,21 @@ export const EnquiryScalarFieldEnum = {
 } as const
 
 export type EnquiryScalarFieldEnum = (typeof EnquiryScalarFieldEnum)[keyof typeof EnquiryScalarFieldEnum]
+
+
+export const MembershipRenewalScalarFieldEnum = {
+  id: 'id',
+  membershipId: 'membershipId',
+  planId: 'planId',
+  paymentMode: 'paymentMode',
+  paymentProof: 'paymentProof',
+  status: 'status',
+  adminComment: 'adminComment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MembershipRenewalScalarFieldEnum = (typeof MembershipRenewalScalarFieldEnum)[keyof typeof MembershipRenewalScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -424,7 +440,7 @@ export type TestimonialOrderByRelevanceFieldEnum = (typeof TestimonialOrderByRel
 export const NewsOrderByRelevanceFieldEnum = {
   title: 'title',
   description: 'description',
-  videoUrl: 'videoUrl'
+  link: 'link'
 } as const
 
 export type NewsOrderByRelevanceFieldEnum = (typeof NewsOrderByRelevanceFieldEnum)[keyof typeof NewsOrderByRelevanceFieldEnum]
@@ -528,4 +544,11 @@ export const EnquiryOrderByRelevanceFieldEnum = {
 } as const
 
 export type EnquiryOrderByRelevanceFieldEnum = (typeof EnquiryOrderByRelevanceFieldEnum)[keyof typeof EnquiryOrderByRelevanceFieldEnum]
+
+
+export const MembershipRenewalOrderByRelevanceFieldEnum = {
+  adminComment: 'adminComment'
+} as const
+
+export type MembershipRenewalOrderByRelevanceFieldEnum = (typeof MembershipRenewalOrderByRelevanceFieldEnum)[keyof typeof MembershipRenewalOrderByRelevanceFieldEnum]
 

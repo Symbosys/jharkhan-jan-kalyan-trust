@@ -97,3 +97,8 @@ export type RegisterComplaint = Prisma.RegisterComplaintModel
  * 
  */
 export type Enquiry = Prisma.EnquiryModel
+/**
+ * Model MembershipRenewal
+ * 
+ */
+export type MembershipRenewal = Prisma.MembershipRenewalModel

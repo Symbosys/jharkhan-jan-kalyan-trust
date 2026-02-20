@@ -11,6 +11,7 @@ import {
     DocumentType, 
     Prisma
 } from "../../generated/prisma/client";
+import { calculateExpirationDate } from "@/lib/membership-utils";
 
 /**
  * Utility to generate a unique Membership Number
@@ -181,6 +182,23 @@ export async function getAllMemberships(options?: {
 }
 
 /**
+ * Get Membership by Number
+ */
+export async function getMembershipByNumber(memberShipNumber: string) {
+    "use cache";
+    cacheTag(`membership-${memberShipNumber}`, "memberships");
+    try {
+        return await prisma.memberShip.findUnique({
+            where: { memberShipNumber },
+            include: { plan: true }
+        });
+    } catch (error: any) {
+        console.error("Error fetching membership:", error);
+        throw new Error(error.message);
+    }
+}
+
+/**
  * Get Membership by ID
  */
 export async function getMembershipById(id: number) {
@@ -231,12 +249,22 @@ export async function deleteMembership(id: number) {
  */
 export async function updateMembershipStatus(id: number, status: MemberShipStatus) {
     try {
-        const existing = await prisma.memberShip.findUnique({ where: { id } });
+        const existing = await prisma.memberShip.findUnique({ 
+            where: { id },
+            include: { plan: true }
+        });
         if (!existing) throw new Error("Membership not found");
+
+        const data: Prisma.MemberShipUpdateInput = { status };
+
+        // If activating a membership that doesn't have an expiration date yet
+        if (status === "ACTIVE" && !existing.expiresAt) {
+            data.expiresAt = calculateExpirationDate(existing.plan.duration, existing.plan.durationType);
+        }
 
         const updated = await prisma.memberShip.update({
             where: { id },
-            data: { status },
+            data,
             include: { plan: true }
         });
 

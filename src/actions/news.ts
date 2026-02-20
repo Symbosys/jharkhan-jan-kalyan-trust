@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/config/prisma";
-import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cacheTag, updateTag } from "next/cache";
 import { Prisma } from "../../generated/prisma/client";
 
@@ -75,26 +74,14 @@ export async function getAllNews(options?: {
 export async function createNews(data: {
     title: string;
     description: string;
-    image?: string;
-    videoUrl?: string;
+    link?: string;
 }) {
     try {
-        let imageData = {};
-
-        if (data.image) {
-            const uploadResult = await uploadToCloudinary(data.image, "news");
-            imageData = {
-                url: uploadResult.url,
-                public_id: uploadResult.public_id,
-            };
-        }
-
         const news = await prisma.news.create({
             data: {
                 title: data.title,
                 description: data.description,
-                image: imageData,
-                videoUrl: data.videoUrl,
+                link: data.link || null,
             },
         });
 
@@ -114,8 +101,7 @@ export async function updateNews(
     data: {
         title?: string;
         description?: string;
-        image?: string;
-        videoUrl?: string;
+        link?: string;
     }
 ) {
     try {
@@ -127,34 +113,12 @@ export async function updateNews(
             return { success: false, error: "News post not found" };
         }
 
-        let imageData = existing.image || {};
-
-        if (data.image) {
-            // Delete old image if exists
-            const existingImageData = existing.image as any;
-            if (existingImageData?.public_id) {
-                try {
-                    await deleteFromCloudinary(existingImageData.public_id);
-                } catch (cloudinaryError) {
-                    console.error("Error deleting old image:", cloudinaryError);
-                }
-            }
-
-            // Upload new
-            const uploadResult = await uploadToCloudinary(data.image, "news");
-            imageData = {
-                url: uploadResult.url,
-                public_id: uploadResult.public_id,
-            };
-        }
-
         const updated = await prisma.news.update({
             where: { id },
             data: {
                 title: data.title,
                 description: data.description,
-                image: imageData,
-                videoUrl: data.videoUrl,
+                link: data.link ?? existing.link,
             },
         });
 
@@ -178,16 +142,6 @@ export async function deleteNews(id: number) {
 
         if (!existing) {
             return { success: false, error: "News post not found" };
-        }
-
-        // Delete image from Cloudinary
-        const imageData = existing.image as any;
-        if (imageData?.public_id) {
-            try {
-                await deleteFromCloudinary(imageData.public_id);
-            } catch (cloudinaryError) {
-                console.error("Error deleting image from Cloudinary:", cloudinaryError);
-            }
         }
 
         await prisma.news.delete({

@@ -59,6 +59,7 @@ export type MemberShipMinAggregateOutputType = {
   status: $Enums.MemberShipStatus | null
   createdAt: Date | null
   updatedAt: Date | null
+  expiresAt: Date | null
 }
 
 export type MemberShipMaxAggregateOutputType = {
@@ -84,6 +85,7 @@ export type MemberShipMaxAggregateOutputType = {
   status: $Enums.MemberShipStatus | null
   createdAt: Date | null
   updatedAt: Date | null
+  expiresAt: Date | null
 }
 
 export type MemberShipCountAggregateOutputType = {
@@ -113,6 +115,7 @@ export type MemberShipCountAggregateOutputType = {
   status: number
   createdAt: number
   updatedAt: number
+  expiresAt: number
   _all: number
 }
 
@@ -150,6 +153,7 @@ export type MemberShipMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  expiresAt?: true
 }
 
 export type MemberShipMaxAggregateInputType = {
@@ -175,6 +179,7 @@ export type MemberShipMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  expiresAt?: true
 }
 
 export type MemberShipCountAggregateInputType = {
@@ -204,6 +209,7 @@ export type MemberShipCountAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  expiresAt?: true
   _all?: true
 }
 
@@ -320,6 +326,7 @@ export type MemberShipGroupByOutputType = {
   status: $Enums.MemberShipStatus
   createdAt: Date
   updatedAt: Date
+  expiresAt: Date | null
   _count: MemberShipCountAggregateOutputType | null
   _avg: MemberShipAvgAggregateOutputType | null
   _sum: MemberShipSumAggregateOutputType | null
@@ -372,8 +379,10 @@ export type MemberShipWhereInput = {
   status?: Prisma.EnumMemberShipStatusFilter<"MemberShip"> | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFilter<"MemberShip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MemberShip"> | Date | string
+  expiresAt?: Prisma.DateTimeNullableFilter<"MemberShip"> | Date | string | null
   plan?: Prisma.XOR<Prisma.MemberShipPlanScalarRelationFilter, Prisma.MemberShipPlanWhereInput>
   eventBookings?: Prisma.EventBookingListRelationFilter
+  membershipRenewals?: Prisma.MembershipRenewalListRelationFilter
 }
 
 export type MemberShipOrderByWithRelationInput = {
@@ -403,8 +412,10 @@ export type MemberShipOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   plan?: Prisma.MemberShipPlanOrderByWithRelationInput
   eventBookings?: Prisma.EventBookingOrderByRelationAggregateInput
+  membershipRenewals?: Prisma.MembershipRenewalOrderByRelationAggregateInput
   _relevance?: Prisma.MemberShipOrderByRelevanceInput
 }
 
@@ -438,8 +449,10 @@ export type MemberShipWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumMemberShipStatusFilter<"MemberShip"> | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFilter<"MemberShip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MemberShip"> | Date | string
+  expiresAt?: Prisma.DateTimeNullableFilter<"MemberShip"> | Date | string | null
   plan?: Prisma.XOR<Prisma.MemberShipPlanScalarRelationFilter, Prisma.MemberShipPlanWhereInput>
   eventBookings?: Prisma.EventBookingListRelationFilter
+  membershipRenewals?: Prisma.MembershipRenewalListRelationFilter
 }, "id" | "memberShipNumber">
 
 export type MemberShipOrderByWithAggregationInput = {
@@ -469,6 +482,7 @@ export type MemberShipOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MemberShipCountOrderByAggregateInput
   _avg?: Prisma.MemberShipAvgOrderByAggregateInput
   _max?: Prisma.MemberShipMaxOrderByAggregateInput
@@ -506,6 +520,7 @@ export type MemberShipScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumMemberShipStatusWithAggregatesFilter<"MemberShip"> | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MemberShip"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"MemberShip"> | Date | string
+  expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"MemberShip"> | Date | string | null
 }
 
 export type MemberShipCreateInput = {
@@ -533,8 +548,10 @@ export type MemberShipCreateInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
   plan: Prisma.MemberShipPlanCreateNestedOneWithoutMemberShipsInput
   eventBookings?: Prisma.EventBookingCreateNestedManyWithoutMemberShipInput
+  membershipRenewals?: Prisma.MembershipRenewalCreateNestedManyWithoutMembershipInput
 }
 
 export type MemberShipUncheckedCreateInput = {
@@ -564,7 +581,9 @@ export type MemberShipUncheckedCreateInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
   eventBookings?: Prisma.EventBookingUncheckedCreateNestedManyWithoutMemberShipInput
+  membershipRenewals?: Prisma.MembershipRenewalUncheckedCreateNestedManyWithoutMembershipInput
 }
 
 export type MemberShipUpdateInput = {
@@ -592,8 +611,10 @@ export type MemberShipUpdateInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   plan?: Prisma.MemberShipPlanUpdateOneRequiredWithoutMemberShipsNestedInput
   eventBookings?: Prisma.EventBookingUpdateManyWithoutMemberShipNestedInput
+  membershipRenewals?: Prisma.MembershipRenewalUpdateManyWithoutMembershipNestedInput
 }
 
 export type MemberShipUncheckedUpdateInput = {
@@ -623,7 +644,9 @@ export type MemberShipUncheckedUpdateInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   eventBookings?: Prisma.EventBookingUncheckedUpdateManyWithoutMemberShipNestedInput
+  membershipRenewals?: Prisma.MembershipRenewalUncheckedUpdateManyWithoutMembershipNestedInput
 }
 
 export type MemberShipCreateManyInput = {
@@ -653,6 +676,7 @@ export type MemberShipCreateManyInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
 }
 
 export type MemberShipUpdateManyMutationInput = {
@@ -680,6 +704,7 @@ export type MemberShipUpdateManyMutationInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type MemberShipUncheckedUpdateManyInput = {
@@ -709,6 +734,7 @@ export type MemberShipUncheckedUpdateManyInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type MemberShipListRelationFilter = {
@@ -754,6 +780,7 @@ export type MemberShipCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type MemberShipAvgOrderByAggregateInput = {
@@ -784,6 +811,7 @@ export type MemberShipMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type MemberShipMinOrderByAggregateInput = {
@@ -809,6 +837,7 @@ export type MemberShipMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
 }
 
 export type MemberShipSumOrderByAggregateInput = {
@@ -819,6 +848,11 @@ export type MemberShipSumOrderByAggregateInput = {
 export type MemberShipNullableScalarRelationFilter = {
   is?: Prisma.MemberShipWhereInput | null
   isNot?: Prisma.MemberShipWhereInput | null
+}
+
+export type MemberShipScalarRelationFilter = {
+  is?: Prisma.MemberShipWhereInput
+  isNot?: Prisma.MemberShipWhereInput
 }
 
 export type MemberShipCreateNestedManyWithoutPlanInput = {
@@ -883,6 +917,10 @@ export type EnumMemberShipStatusFieldUpdateOperationsInput = {
   set?: $Enums.MemberShipStatus
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type MemberShipCreateNestedOneWithoutEventBookingsInput = {
   create?: Prisma.XOR<Prisma.MemberShipCreateWithoutEventBookingsInput, Prisma.MemberShipUncheckedCreateWithoutEventBookingsInput>
   connectOrCreate?: Prisma.MemberShipCreateOrConnectWithoutEventBookingsInput
@@ -897,6 +935,20 @@ export type MemberShipUpdateOneWithoutEventBookingsNestedInput = {
   delete?: Prisma.MemberShipWhereInput | boolean
   connect?: Prisma.MemberShipWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.MemberShipUpdateToOneWithWhereWithoutEventBookingsInput, Prisma.MemberShipUpdateWithoutEventBookingsInput>, Prisma.MemberShipUncheckedUpdateWithoutEventBookingsInput>
+}
+
+export type MemberShipCreateNestedOneWithoutMembershipRenewalsInput = {
+  create?: Prisma.XOR<Prisma.MemberShipCreateWithoutMembershipRenewalsInput, Prisma.MemberShipUncheckedCreateWithoutMembershipRenewalsInput>
+  connectOrCreate?: Prisma.MemberShipCreateOrConnectWithoutMembershipRenewalsInput
+  connect?: Prisma.MemberShipWhereUniqueInput
+}
+
+export type MemberShipUpdateOneRequiredWithoutMembershipRenewalsNestedInput = {
+  create?: Prisma.XOR<Prisma.MemberShipCreateWithoutMembershipRenewalsInput, Prisma.MemberShipUncheckedCreateWithoutMembershipRenewalsInput>
+  connectOrCreate?: Prisma.MemberShipCreateOrConnectWithoutMembershipRenewalsInput
+  upsert?: Prisma.MemberShipUpsertWithoutMembershipRenewalsInput
+  connect?: Prisma.MemberShipWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MemberShipUpdateToOneWithWhereWithoutMembershipRenewalsInput, Prisma.MemberShipUpdateWithoutMembershipRenewalsInput>, Prisma.MemberShipUncheckedUpdateWithoutMembershipRenewalsInput>
 }
 
 export type MemberShipCreateWithoutPlanInput = {
@@ -924,7 +976,9 @@ export type MemberShipCreateWithoutPlanInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
   eventBookings?: Prisma.EventBookingCreateNestedManyWithoutMemberShipInput
+  membershipRenewals?: Prisma.MembershipRenewalCreateNestedManyWithoutMembershipInput
 }
 
 export type MemberShipUncheckedCreateWithoutPlanInput = {
@@ -953,7 +1007,9 @@ export type MemberShipUncheckedCreateWithoutPlanInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
   eventBookings?: Prisma.EventBookingUncheckedCreateNestedManyWithoutMemberShipInput
+  membershipRenewals?: Prisma.MembershipRenewalUncheckedCreateNestedManyWithoutMembershipInput
 }
 
 export type MemberShipCreateOrConnectWithoutPlanInput = {
@@ -1012,6 +1068,7 @@ export type MemberShipScalarWhereInput = {
   status?: Prisma.EnumMemberShipStatusFilter<"MemberShip"> | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFilter<"MemberShip"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"MemberShip"> | Date | string
+  expiresAt?: Prisma.DateTimeNullableFilter<"MemberShip"> | Date | string | null
 }
 
 export type MemberShipCreateWithoutEventBookingsInput = {
@@ -1039,7 +1096,9 @@ export type MemberShipCreateWithoutEventBookingsInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
   plan: Prisma.MemberShipPlanCreateNestedOneWithoutMemberShipsInput
+  membershipRenewals?: Prisma.MembershipRenewalCreateNestedManyWithoutMembershipInput
 }
 
 export type MemberShipUncheckedCreateWithoutEventBookingsInput = {
@@ -1069,6 +1128,8 @@ export type MemberShipUncheckedCreateWithoutEventBookingsInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
+  membershipRenewals?: Prisma.MembershipRenewalUncheckedCreateNestedManyWithoutMembershipInput
 }
 
 export type MemberShipCreateOrConnectWithoutEventBookingsInput = {
@@ -1112,7 +1173,9 @@ export type MemberShipUpdateWithoutEventBookingsInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   plan?: Prisma.MemberShipPlanUpdateOneRequiredWithoutMemberShipsNestedInput
+  membershipRenewals?: Prisma.MembershipRenewalUpdateManyWithoutMembershipNestedInput
 }
 
 export type MemberShipUncheckedUpdateWithoutEventBookingsInput = {
@@ -1142,6 +1205,146 @@ export type MemberShipUncheckedUpdateWithoutEventBookingsInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  membershipRenewals?: Prisma.MembershipRenewalUncheckedUpdateManyWithoutMembershipNestedInput
+}
+
+export type MemberShipCreateWithoutMembershipRenewalsInput = {
+  name: string
+  gender?: $Enums.Gender
+  dob: Date | string
+  gurdianType?: $Enums.GurdianType
+  gurdianName: string
+  profession: string
+  bloodGroup: string
+  state: string
+  district: string
+  mobile: string
+  aadhaar: string
+  address: string
+  pinCode: string
+  email: string
+  memberShipNumber: string
+  profilePicture: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  documentsType?: $Enums.DocumentType
+  documents: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  otherDocuments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentMode?: $Enums.PaymentMode
+  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  status?: $Enums.MemberShipStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  expiresAt?: Date | string | null
+  plan: Prisma.MemberShipPlanCreateNestedOneWithoutMemberShipsInput
+  eventBookings?: Prisma.EventBookingCreateNestedManyWithoutMemberShipInput
+}
+
+export type MemberShipUncheckedCreateWithoutMembershipRenewalsInput = {
+  id?: number
+  name: string
+  gender?: $Enums.Gender
+  dob: Date | string
+  gurdianType?: $Enums.GurdianType
+  gurdianName: string
+  profession: string
+  bloodGroup: string
+  state: string
+  district: string
+  mobile: string
+  aadhaar: string
+  address: string
+  pinCode: string
+  email: string
+  memberShipNumber: string
+  profilePicture: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  documentsType?: $Enums.DocumentType
+  documents: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  otherDocuments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentMode?: $Enums.PaymentMode
+  payment: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  planId: number
+  status?: $Enums.MemberShipStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  expiresAt?: Date | string | null
+  eventBookings?: Prisma.EventBookingUncheckedCreateNestedManyWithoutMemberShipInput
+}
+
+export type MemberShipCreateOrConnectWithoutMembershipRenewalsInput = {
+  where: Prisma.MemberShipWhereUniqueInput
+  create: Prisma.XOR<Prisma.MemberShipCreateWithoutMembershipRenewalsInput, Prisma.MemberShipUncheckedCreateWithoutMembershipRenewalsInput>
+}
+
+export type MemberShipUpsertWithoutMembershipRenewalsInput = {
+  update: Prisma.XOR<Prisma.MemberShipUpdateWithoutMembershipRenewalsInput, Prisma.MemberShipUncheckedUpdateWithoutMembershipRenewalsInput>
+  create: Prisma.XOR<Prisma.MemberShipCreateWithoutMembershipRenewalsInput, Prisma.MemberShipUncheckedCreateWithoutMembershipRenewalsInput>
+  where?: Prisma.MemberShipWhereInput
+}
+
+export type MemberShipUpdateToOneWithWhereWithoutMembershipRenewalsInput = {
+  where?: Prisma.MemberShipWhereInput
+  data: Prisma.XOR<Prisma.MemberShipUpdateWithoutMembershipRenewalsInput, Prisma.MemberShipUncheckedUpdateWithoutMembershipRenewalsInput>
+}
+
+export type MemberShipUpdateWithoutMembershipRenewalsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gurdianType?: Prisma.EnumGurdianTypeFieldUpdateOperationsInput | $Enums.GurdianType
+  gurdianName?: Prisma.StringFieldUpdateOperationsInput | string
+  profession?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  memberShipNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  documentsType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
+  documents?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  otherDocuments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentMode?: Prisma.EnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode
+  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plan?: Prisma.MemberShipPlanUpdateOneRequiredWithoutMemberShipsNestedInput
+  eventBookings?: Prisma.EventBookingUpdateManyWithoutMemberShipNestedInput
+}
+
+export type MemberShipUncheckedUpdateWithoutMembershipRenewalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  gurdianType?: Prisma.EnumGurdianTypeFieldUpdateOperationsInput | $Enums.GurdianType
+  gurdianName?: Prisma.StringFieldUpdateOperationsInput | string
+  profession?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  pinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  memberShipNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  documentsType?: Prisma.EnumDocumentTypeFieldUpdateOperationsInput | $Enums.DocumentType
+  documents?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  otherDocuments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  paymentMode?: Prisma.EnumPaymentModeFieldUpdateOperationsInput | $Enums.PaymentMode
+  payment?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  planId?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  eventBookings?: Prisma.EventBookingUncheckedUpdateManyWithoutMemberShipNestedInput
 }
 
 export type MemberShipCreateManyPlanInput = {
@@ -1170,6 +1373,7 @@ export type MemberShipCreateManyPlanInput = {
   status?: $Enums.MemberShipStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  expiresAt?: Date | string | null
 }
 
 export type MemberShipUpdateWithoutPlanInput = {
@@ -1197,7 +1401,9 @@ export type MemberShipUpdateWithoutPlanInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   eventBookings?: Prisma.EventBookingUpdateManyWithoutMemberShipNestedInput
+  membershipRenewals?: Prisma.MembershipRenewalUpdateManyWithoutMembershipNestedInput
 }
 
 export type MemberShipUncheckedUpdateWithoutPlanInput = {
@@ -1226,7 +1432,9 @@ export type MemberShipUncheckedUpdateWithoutPlanInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   eventBookings?: Prisma.EventBookingUncheckedUpdateManyWithoutMemberShipNestedInput
+  membershipRenewals?: Prisma.MembershipRenewalUncheckedUpdateManyWithoutMembershipNestedInput
 }
 
 export type MemberShipUncheckedUpdateManyWithoutPlanInput = {
@@ -1255,6 +1463,7 @@ export type MemberShipUncheckedUpdateManyWithoutPlanInput = {
   status?: Prisma.EnumMemberShipStatusFieldUpdateOperationsInput | $Enums.MemberShipStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1264,10 +1473,12 @@ export type MemberShipUncheckedUpdateManyWithoutPlanInput = {
 
 export type MemberShipCountOutputType = {
   eventBookings: number
+  membershipRenewals: number
 }
 
 export type MemberShipCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   eventBookings?: boolean | MemberShipCountOutputTypeCountEventBookingsArgs
+  membershipRenewals?: boolean | MemberShipCountOutputTypeCountMembershipRenewalsArgs
 }
 
 /**
@@ -1285,6 +1496,13 @@ export type MemberShipCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
  */
 export type MemberShipCountOutputTypeCountEventBookingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.EventBookingWhereInput
+}
+
+/**
+ * MemberShipCountOutputType without action
+ */
+export type MemberShipCountOutputTypeCountMembershipRenewalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MembershipRenewalWhereInput
 }
 
 
@@ -1315,8 +1533,10 @@ export type MemberShipSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  expiresAt?: boolean
   plan?: boolean | Prisma.MemberShipPlanDefaultArgs<ExtArgs>
   eventBookings?: boolean | Prisma.MemberShip$eventBookingsArgs<ExtArgs>
+  membershipRenewals?: boolean | Prisma.MemberShip$membershipRenewalsArgs<ExtArgs>
   _count?: boolean | Prisma.MemberShipCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["memberShip"]>
 
@@ -1349,12 +1569,14 @@ export type MemberShipSelectScalar = {
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  expiresAt?: boolean
 }
 
-export type MemberShipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "gender" | "dob" | "gurdianType" | "gurdianName" | "profession" | "bloodGroup" | "state" | "district" | "mobile" | "aadhaar" | "address" | "pinCode" | "email" | "memberShipNumber" | "profilePicture" | "documentsType" | "documents" | "otherDocuments" | "paymentMode" | "payment" | "planId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["memberShip"]>
+export type MemberShipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "gender" | "dob" | "gurdianType" | "gurdianName" | "profession" | "bloodGroup" | "state" | "district" | "mobile" | "aadhaar" | "address" | "pinCode" | "email" | "memberShipNumber" | "profilePicture" | "documentsType" | "documents" | "otherDocuments" | "paymentMode" | "payment" | "planId" | "status" | "createdAt" | "updatedAt" | "expiresAt", ExtArgs["result"]["memberShip"]>
 export type MemberShipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.MemberShipPlanDefaultArgs<ExtArgs>
   eventBookings?: boolean | Prisma.MemberShip$eventBookingsArgs<ExtArgs>
+  membershipRenewals?: boolean | Prisma.MemberShip$membershipRenewalsArgs<ExtArgs>
   _count?: boolean | Prisma.MemberShipCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -1363,6 +1585,7 @@ export type $MemberShipPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     plan: Prisma.$MemberShipPlanPayload<ExtArgs>
     eventBookings: Prisma.$EventBookingPayload<ExtArgs>[]
+    membershipRenewals: Prisma.$MembershipRenewalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1391,6 +1614,7 @@ export type $MemberShipPayload<ExtArgs extends runtime.Types.Extensions.Internal
     status: $Enums.MemberShipStatus
     createdAt: Date
     updatedAt: Date
+    expiresAt: Date | null
   }, ExtArgs["result"]["memberShip"]>
   composites: {}
 }
@@ -1733,6 +1957,7 @@ export interface Prisma__MemberShipClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   plan<T extends Prisma.MemberShipPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberShipPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__MemberShipPlanClient<runtime.Types.Result.GetResult<Prisma.$MemberShipPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   eventBookings<T extends Prisma.MemberShip$eventBookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberShip$eventBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventBookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  membershipRenewals<T extends Prisma.MemberShip$membershipRenewalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MemberShip$membershipRenewalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MembershipRenewalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1788,6 +2013,7 @@ export interface MemberShipFieldRefs {
   readonly status: Prisma.FieldRef<"MemberShip", 'MemberShipStatus'>
   readonly createdAt: Prisma.FieldRef<"MemberShip", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"MemberShip", 'DateTime'>
+  readonly expiresAt: Prisma.FieldRef<"MemberShip", 'DateTime'>
 }
     
 
@@ -2152,6 +2378,30 @@ export type MemberShip$eventBookingsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.EventBookingScalarFieldEnum | Prisma.EventBookingScalarFieldEnum[]
+}
+
+/**
+ * MemberShip.membershipRenewals
+ */
+export type MemberShip$membershipRenewalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MembershipRenewal
+   */
+  select?: Prisma.MembershipRenewalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MembershipRenewal
+   */
+  omit?: Prisma.MembershipRenewalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MembershipRenewalInclude<ExtArgs> | null
+  where?: Prisma.MembershipRenewalWhereInput
+  orderBy?: Prisma.MembershipRenewalOrderByWithRelationInput | Prisma.MembershipRenewalOrderByWithRelationInput[]
+  cursor?: Prisma.MembershipRenewalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MembershipRenewalScalarFieldEnum | Prisma.MembershipRenewalScalarFieldEnum[]
 }
 
 /**

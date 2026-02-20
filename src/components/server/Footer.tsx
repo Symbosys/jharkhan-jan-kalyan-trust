@@ -1,5 +1,6 @@
 import { getWebSettings } from "@/actions/webSetting";
 import Link from "next/link";
+import Image from "next/image";
 import {
     Phone,
     Mail,
@@ -16,18 +17,19 @@ import { CopyrightYear } from "@/components/client/CopyrightYear";
 const quickLinks = [
     { href: "/", label: "Home" },
     { href: "/about-us", label: "About Us" },
-    { href: "/team", label: "Our Team" },
-    { href: "/activities", label: "Activities" },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/news", label: "News" },
+    { href: "/team/management-team", label: "Management Team" },
+    { href: "/team/our-members", label: "Our Members" },
+    { href: "/gallery/photos", label: "Photo Gallery" },
+    { href: "/donors", label: "Our Donors" },
 ];
 
 const supportLinks = [
-    { href: "/membership/apply", label: "Apply for Membership" },
+    { href: "/member-apply", label: "Apply for Membership" },
+    { href: "/membership/renew", label: "Renew ID Card" },
     { href: "/donate", label: "Donate Now" },
-    { href: "/events", label: "Events" },
+    { href: "/events", label: "Upcoming Events" },
+    { href: "/register-complaint", label: "Register Your Problem" },
     { href: "/contact", label: "Contact Us" },
-    { href: "/complaints", label: "File a Complaint" },
 ];
 
 export async function Footer() {
@@ -68,7 +70,7 @@ export async function Footer() {
                                     <Heart className="h-3.5 w-3.5 fill-white" />
                                 </Link>
                                 <Link
-                                    href="/membership/apply"
+                                    href="/member-apply"
                                     className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white/10 border border-white/20 text-background font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-white/20 hover:-translate-y-0.5 transition-all"
                                 >
                                     Join as Member
@@ -87,12 +89,17 @@ export async function Footer() {
                         <div className="lg:col-span-4 space-y-8">
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-10 w-10 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
-                                        <Heart className="h-5 w-5 text-white fill-white" />
+                                    <div className="relative h-12 w-12 rounded-2xl overflow-hidden shadow-lg shadow-primary/20">
+                                        <Image
+                                            src="/logo/logo.jpeg"
+                                            alt="Jan Kalyan Logo"
+                                            fill
+                                            className="object-cover"
+                                        />
                                     </div>
                                     <div>
-                                        <p className="font-black text-background text-lg leading-none tracking-tight">Jan Kalyan</p>
-                                        <p className="text-[10px] text-background/40 font-bold uppercase tracking-widest">Trust</p>
+                                        <p className="font-black text-background text-lg leading-none tracking-tight">Jharkhand</p>
+                                        <p className="text-[10px] text-background/40 font-bold uppercase tracking-widest mt-1">Jan Kalyan Trust</p>
                                     </div>
                                 </div>
                                 <p className="text-background/50 text-sm font-medium leading-relaxed max-w-sm">

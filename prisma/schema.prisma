@@ -101,8 +101,7 @@ model News {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  image       Json?
-  videoUrl    String?
+  link        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -129,7 +128,8 @@ model MemberShipPlan {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  memberShips MemberShip[]
+  memberShips        MemberShip[]
+  membershipRenewals MembershipRenewal[]
 }
 
 enum PlanDurationType {
@@ -186,7 +186,10 @@ model MemberShip {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  eventBookings EventBooking[]
+  expiresAt DateTime?
+
+  eventBookings      EventBooking[]
+  membershipRenewals MembershipRenewal[]
 }
 
 enum Gender {
@@ -331,4 +334,24 @@ model Enquiry {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model MembershipRenewal {
+  id           Int            @id @default(autoincrement())
+  membershipId Int
+  membership   MemberShip     @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  planId       Int
+  plan         MemberShipPlan @relation(fields: [planId], references: [id])
+  paymentMode  PaymentMode
+  paymentProof Json // Cloudinary image data
+  status       RenewalStatus  @default(PENDING)
+  adminComment String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+enum RenewalStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }

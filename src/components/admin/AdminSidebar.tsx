@@ -12,6 +12,7 @@ import {
     MessageSquareQuote,
     Newspaper,
     Settings,
+    RefreshCw,
     ShieldCheck,
     Trophy,
     User,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -91,6 +93,11 @@ const data = {
                     title: "Members",
                     url: "/admin/members",
                     icon: User,
+                },
+                {
+                    title: "Renewals",
+                    url: "/admin/renewals",
+                    icon: RefreshCw,
                 },
                 {
                     title: "Team",
@@ -174,11 +181,16 @@ export function AdminSidebar() {
         <Sidebar collapsible="icon" className="border-r border-border bg-card">
             <SidebarHeader className="h-14 flex items-center px-4">
                 <div className="flex items-center gap-3 overflow-hidden">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary font-bold">
-                        JK
+                    <div className="relative h-8 w-8 shrink-0 rounded-lg overflow-hidden border border-border/50">
+                        <Image
+                            src="/logo/logo.jpeg"
+                            alt="Logo"
+                            fill
+                            className="object-cover"
+                        />
                     </div>
                     <div className="flex flex-col overflow-hidden transition-all group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0">
-                        <span className="font-semibold text-sm text-foreground truncate">Jan Kalyan NGO</span>
+                        <span className="font-semibold text-sm text-foreground truncate">Jharkhand Jan Kalyan Trust</span>
                         <span className="text-xs text-muted-foreground truncate">Administration</span>
                     </div>
                 </div>
