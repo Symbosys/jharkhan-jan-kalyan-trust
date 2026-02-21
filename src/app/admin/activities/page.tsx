@@ -391,11 +391,11 @@ export default function ActivitiesPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-10">
                         {activities.map((item) => (
                             <Card key={item.id} className="group relative overflow-hidden border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-500 rounded-[2.5rem] bg-white dark:bg-slate-900 flex flex-col h-full border-none">
-                                <div className="absolute top-0 right-0 p-5 flex gap-2 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                                <div className="absolute top-0 right-0 p-5 flex gap-2 z-10">
                                     <Button
                                         variant="secondary"
                                         size="icon"
-                                        className="h-9 w-9 shadow-xl bg-white dark:bg-slate-900/90 backdrop-blur-md hover:bg-primary hover:text-white rounded-2xl transition-all border border-slate-100 dark:border-slate-800"
+                                        className="h-9 w-9 shadow-2xl bg-white dark:bg-slate-900 backdrop-blur-md hover:bg-primary hover:text-white rounded-2xl transition-all border border-slate-200 dark:border-slate-800 text-primary dark:text-primary-foreground"
                                         onClick={() => handleEdit(item)}
                                     >
                                         <Pencil className="h-4 w-4" />
@@ -403,7 +403,7 @@ export default function ActivitiesPage() {
                                     <Button
                                         variant="secondary"
                                         size="icon"
-                                        className="h-9 w-9 shadow-xl bg-white dark:bg-slate-900/90 backdrop-blur-md hover:bg-destructive hover:text-white rounded-2xl transition-all border border-slate-100 dark:border-slate-800"
+                                        className="h-9 w-9 shadow-2xl bg-white dark:bg-slate-900 backdrop-blur-md hover:bg-destructive hover:text-white rounded-2xl transition-all border border-slate-200 dark:border-slate-800 text-destructive dark:text-destructive-foreground"
                                         onClick={() => handleDelete(item.id)}
                                     >
                                         <Trash2 className="h-4 w-4" />

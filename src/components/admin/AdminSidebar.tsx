@@ -109,6 +109,11 @@ const data = {
                     url: "/admin/donors",
                     icon: Trophy,
                 },
+                {
+                    title: "ID Card",
+                    url: "/admin/id-card",
+                    icon: CreditCard,
+                },
             ],
         },
         {

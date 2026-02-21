@@ -66,8 +66,8 @@ export function Header() {
             label: "Membership",
             dropdown: [
                 { label: "Apply for Membership", href: "/member-apply", icon: UserPlus },
-                { label: "Download ID Card", href: "/membership/download-id", icon: IdCard },
-                { label: "Renew ID Card", href: "/membership/renew", icon: RefreshCw },
+                { label: "Download Membership Card", href: "/download-id-card", icon: IdCard },
+                { label: "Renew Membership", href: "/membership/renew", icon: RefreshCw },
             ],
         },
         {

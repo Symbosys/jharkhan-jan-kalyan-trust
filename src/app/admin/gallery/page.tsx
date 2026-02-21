@@ -387,27 +387,25 @@ export default function GalleryPage() {
                                 </div>
 
                                 {/* Actions Overlay */}
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 pointer-events-none">
-                                    <div className="flex gap-2 pointer-events-auto">
-                                        <Button
-                                            variant="secondary"
-                                            size="icon"
-                                            className="h-10 w-10 rounded-full bg-white hover:bg-white/90 text-slate-900 border-none shadow-xl transition-all"
-                                            onClick={() => handleEdit(item)}
-                                        >
-                                            <Pencil className="h-4 w-4" />
-                                        </Button>
-                                        <Button
-                                            variant="destructive"
-                                            size="icon"
-                                            className="h-10 w-10 rounded-full shadow-xl transition-all"
-                                            onClick={() => handleDelete(item.id)}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                    <span className="text-[10px] font-bold text-white/60 tracking-widest uppercase">ID: #{item.id}</span>
+                                <div className="absolute top-0 right-0 p-6 flex gap-2 z-10">
+                                    <Button
+                                        variant="secondary"
+                                        size="icon"
+                                        className="h-9 w-9 bg-white dark:bg-slate-900 backdrop-blur-md hover:bg-primary hover:text-white rounded-2xl shadow-2xl transition-all text-primary dark:text-primary-foreground border border-slate-200 dark:border-slate-800"
+                                        onClick={() => handleEdit(item)}
+                                    >
+                                        <Pencil className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                        variant="secondary"
+                                        size="icon"
+                                        className="h-9 w-9 bg-white dark:bg-slate-900 backdrop-blur-md hover:bg-destructive hover:text-white rounded-2xl shadow-2xl transition-all text-destructive dark:text-destructive-foreground border border-slate-200 dark:border-slate-800"
+                                        onClick={() => handleDelete(item.id)}
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
                                 </div>
+                                <span className="absolute bottom-3 left-3 text-[10px] font-bold text-white tracking-widest uppercase bg-black/40 px-2 py-0.5 rounded-full z-10">ID: #{item.id}</span>
                             </div>
                         ))}
                     </div>

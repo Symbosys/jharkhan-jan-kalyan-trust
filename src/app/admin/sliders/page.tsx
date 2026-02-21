@@ -246,18 +246,18 @@ export default function SlidersPage() {
                                     <Button
                                         variant="secondary"
                                         size="icon"
-                                        className="h-8 w-8 shadow-lg bg-white/90 backdrop-blur-sm hover:bg-white"
+                                        className="h-8 w-8 shadow-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-primary dark:text-primary-foreground hover:bg-primary hover:text-white transition-all"
                                         onClick={() => handleEdit(slider)}
                                     >
-                                        <Pencil className="h-4 w-4 text-slate-700" />
+                                        <Pencil className="h-3.5 w-3.5" />
                                     </Button>
                                     <Button
-                                        variant="destructive"
+                                        variant="secondary"
                                         size="icon"
-                                        className="h-8 w-8 shadow-lg"
+                                        className="h-8 w-8 shadow-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-destructive dark:text-destructive-foreground hover:bg-destructive hover:text-white transition-all"
                                         onClick={() => handleDelete(slider.id)}
                                     >
-                                        <Trash2 className="h-4 w-4" />
+                                        <Trash2 className="h-3.5 w-3.5" />
                                     </Button>
                                 </div>
                             </div>
