@@ -52,7 +52,7 @@ export async function TeamSection() {
                                             src={imageData.url}
                                             alt={member.name}
                                             fill
-                                            className="object-fill object-top transition-transform duration-700 group-hover:scale-110"
+                                            className="object-contain object-top transition-transform duration-700 group-hover:scale-110"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-linear-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
