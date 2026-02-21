@@ -31,7 +31,7 @@ export async function TeamSection() {
                     </div>
 
                     <Link
-                        href="/team"
+                        href="/team/management-team"
                         className="group whitespace-nowrap inline-flex items-center gap-2 text-sm font-bold text-foreground hover:text-primary transition-all pb-1 border-b-2 border-primary/20 hover:border-primary"
                     >
                         SEE ALL MEMBERS
@@ -52,7 +52,7 @@ export async function TeamSection() {
                                             src={imageData.url}
                                             alt={member.name}
                                             fill
-                                            className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                                            className="object-fill object-top transition-transform duration-700 group-hover:scale-110"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-linear-to-br from-primary/10 to-secondary/10 flex items-center justify-center">

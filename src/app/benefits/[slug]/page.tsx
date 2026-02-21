@@ -52,13 +52,13 @@ export default async function BenefitDetailPage({ params }: { params: Promise<{ 
 
                         <div className="max-w-4xl">
                             {/* Icon */}
-                            <div className={`h-20 w-20 rounded-3xl bg-gradient-to-br ${benefit.gradient} flex items-center justify-center text-white shadow-xl shadow-primary/10 mb-8`}>
+                            <div className={`h-20 w-20 rounded-3xl bg-linear-to-br ${benefit.gradient} flex items-center justify-center text-white shadow-xl shadow-primary/10 mb-8`}>
                                 <Icon className="h-10 w-10" />
                             </div>
 
                             {/* Tag */}
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-md mb-6">
-                                <span className={`flex h-2 w-2 rounded-full bg-gradient-to-r ${benefit.gradient}`}></span>
+                                <span className={`flex h-2 w-2 rounded-full bg-linear-to-r ${benefit.gradient}`}></span>
                                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-foreground/80">
                                     {benefit.englishTitle}
                                 </span>
@@ -79,7 +79,7 @@ export default async function BenefitDetailPage({ params }: { params: Promise<{ 
                 <section className="relative py-16 px-6 z-10">
                     <div className="container mx-auto">
                         <div className="relative rounded-[3rem] p-8 md:p-16 overflow-hidden border border-white/40 dark:border-white/10 bg-white/20 dark:bg-white/5 backdrop-blur-2xl shadow-2xl">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50" />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-linear-to-r from-transparent via-white/50 to-transparent opacity-50" />
 
                             <div className="space-y-8">
                                 <h2 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">
@@ -128,7 +128,7 @@ export default async function BenefitDetailPage({ params }: { params: Promise<{ 
                                         key={i}
                                         className="flex items-start gap-4 p-6 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 backdrop-blur-md hover:shadow-lg transition-all duration-300"
                                     >
-                                        <div className={`h-8 w-8 rounded-lg bg-gradient-to-br ${benefit.gradient} flex items-center justify-center text-white shrink-0 mt-0.5`}>
+                                        <div className={`h-8 w-8 rounded-lg bg-linear-to-br ${benefit.gradient} flex items-center justify-center text-white shrink-0 mt-0.5`}>
                                             <CheckCircle className="h-4 w-4" />
                                         </div>
                                         <p className="text-foreground font-medium leading-relaxed">
@@ -145,7 +145,7 @@ export default async function BenefitDetailPage({ params }: { params: Promise<{ 
                 <section className="py-20 px-6 relative z-10">
                     <div className="container mx-auto max-w-4xl">
                         <div className="relative rounded-[3rem] p-12 md:p-20 overflow-hidden text-center">
-                            <div className={`absolute inset-0 bg-gradient-to-tr ${benefit.gradient} opacity-90`} />
+                            <div className={`absolute inset-0 bg-linear-to-tr ${benefit.gradient} opacity-90`} />
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay" />
 
                             <div className="relative z-10 space-y-8">

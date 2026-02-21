@@ -55,7 +55,7 @@ export async function DonorsSection() {
                                                 alt={donor.name}
                                                 width={80}
                                                 height={80}
-                                                className="object-cover w-full h-full"
+                                                className="object-fill w-full h-full"
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-slate-800">
