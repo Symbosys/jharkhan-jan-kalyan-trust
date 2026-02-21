@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
 import { MembershipCard } from "@/components/membership/MembershipCard";
 import { getMembershipByNumber } from "@/actions/membership";
 import { Input } from "@/components/ui/input";
@@ -49,7 +50,7 @@ export function MembershipCardPortal() {
         if (!cardRef.current || !member) return;
 
         setDownloading(true);
-        const loadingToast = toast.loading("Generating your membership card...");
+        const loadingToast = toast.loading("Generating your PDF membership card...");
         try {
             await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -59,11 +60,16 @@ export function MembershipCardPortal() {
                 quality: 1
             });
 
-            const link = document.createElement('a');
-            link.download = `JK-Membership-Card-${member.memberShipNumber}.png`;
-            link.href = dataUrl;
-            link.click();
-            toast.success("Membership card downloaded!");
+            const pdf = new jsPDF({
+                orientation: "landscape",
+                unit: "mm",
+                format: [200, 140],
+            });
+
+            pdf.addImage(dataUrl, "PNG", 0, 0, 200, 140);
+            pdf.save(`JK-Membership-Card-${member.memberShipNumber}.pdf`);
+
+            toast.success("Membership card PDF downloaded!");
         } catch (err) {
             toast.error("Download failed. Please try again.");
             console.error("Download error:", err);

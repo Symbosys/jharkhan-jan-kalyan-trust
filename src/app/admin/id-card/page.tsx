@@ -660,12 +660,27 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             >
                 <div
                     style={{
-                        width: 140,
-                        height: 45,
-                        borderBottom: "2px solid rgba(255,255,255,0.5)",
+                        width: 180,
+                        height: 80,
                         marginBottom: 4,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                     }}
-                />
+                >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src="/signature/president.jpeg"
+                        alt="Authorized Signatory"
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            mixBlendMode: "multiply",
+                            filter: "brightness(1.1) contrast(1.1)"
+                        }}
+                    />
+                </div>
                 <span
                     style={{
                         fontSize: 10,

@@ -353,12 +353,25 @@ export const MembershipCard: React.FC<MembershipCardProps> = ({ member, cardRef 
                         Secretary
                     </span>
                     <div style={{
-                        width: 170,
-                        height: 62,
-                        backgroundColor: "rgba(255,255,255,0.7)",
-                        borderRadius: 18,
-                        border: "2px solid rgba(0,0,0,0.15)",
-                    }} />
+                        width: 240,
+                        height: 100,
+                        backgroundColor: "transparent",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src="/signature/secretry.jpeg"
+                            alt="Secretary Signature"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "contain",
+                                mixBlendMode: "multiply"
+                            }}
+                        />
+                    </div>
                 </div>
 
                 {/* President */}
@@ -377,12 +390,25 @@ export const MembershipCard: React.FC<MembershipCardProps> = ({ member, cardRef 
                         President
                     </span>
                     <div style={{
-                        width: 170,
-                        height: 62,
-                        backgroundColor: "rgba(255,255,255,0.7)",
-                        borderRadius: 18,
-                        border: "2px solid rgba(0,0,0,0.15)",
-                    }} />
+                        width: 240,
+                        height: 100,
+                        backgroundColor: "transparent",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src="/signature/president.jpeg"
+                            alt="President Signature"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "contain",
+                                mixBlendMode: "multiply"
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

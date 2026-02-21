@@ -1,8 +1,13 @@
 "use client";
 
-import { ImageIcon, Loader2, Play } from "lucide-react";
+import { ImageIcon, Loader2, Play, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+} from "@/components/ui/dialog";
 
 interface GalleryItem {
     id: number;
@@ -93,24 +98,36 @@ export function GalleryInfiniteGrid({ initialData, totalCount, category, fetchGa
 
     return (
         <>
-            {/* Lightbox */}
-            {lightbox && (
-                <div
-                    className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl flex items-center justify-center p-6 cursor-pointer"
-                    onClick={() => setLightbox(null)}
+            {/* Lightbox using shadcn Dialog */}
+            <Dialog open={!!lightbox} onOpenChange={(open) => { if (!open) setLightbox(null); }}>
+                <DialogContent
+                    showCloseButton={false}
+                    className="max-w-[95vw] sm:max-w-5xl w-auto border-none bg-transparent p-0 shadow-none [&>button]:hidden"
+                    overlayClassName="bg-black/80 backdrop-blur-xl"
                 >
-                    <div className="relative max-w-5xl max-h-[85vh] w-full h-full flex items-center justify-center">
-                        <Image
-                            src={lightbox}
-                            alt="Gallery Preview"
-                            width={1200}
-                            height={800}
-                            className="object-contain max-h-[85vh] rounded-3xl shadow-2xl"
-                            onClick={(e) => e.stopPropagation()}
-                        />
+                    <DialogTitle className="sr-only">Image Preview</DialogTitle>
+                    {/* Image */}
+                    <div className="relative flex items-center justify-center">
+                        {lightbox && (
+                            <Image
+                                src={lightbox}
+                                alt="Gallery Preview"
+                                width={1200}
+                                height={800}
+                                className="object-contain max-h-[85vh] rounded-2xl shadow-2xl"
+                            />
+                        )}
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setLightbox(null)}
+                            className="absolute top-3 right-3 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white hover:bg-black/70 transition-colors duration-200 cursor-pointer"
+                            aria-label="Close preview"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
                     </div>
-                </div>
-            )}
+                </DialogContent>
+            </Dialog>
 
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
                 {items.map((item, index) => {

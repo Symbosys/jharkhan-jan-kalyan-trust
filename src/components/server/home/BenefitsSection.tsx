@@ -1,74 +1,9 @@
 import {
-    Activity,
-    BookOpen,
-    TrendingUp,
-    Utensils,
-    Heart,
-    Wind,
-    Trees,
     ArrowRight,
     Users
 } from "lucide-react";
 import Link from "next/link";
-
-const benefits = [
-    {
-        title: "स्वास्थ्य शिविर",
-        englishTitle: "Health Camps",
-        description: "Organizing regular medical checkups and health awareness programs for the community.",
-        icon: Activity,
-        color: "text-blue-500",
-        bgColor: "bg-blue-500/10"
-    },
-    {
-        title: "मुफ्त शिक्षा",
-        englishTitle: "Free Education",
-        description: "Providing quality education and learning resources to underprivileged children.",
-        icon: BookOpen,
-        color: "text-green-500",
-        bgColor: "bg-green-500/10"
-    },
-    {
-        title: "समाज प्रगति",
-        englishTitle: "Social Progress",
-        description: "Driving community development and social empowerment initiatives at the grassroots level.",
-        icon: TrendingUp,
-        color: "text-amber-500",
-        bgColor: "bg-amber-500/10"
-    },
-    {
-        title: "मुफ्त भोजन",
-        englishTitle: "Free Food",
-        description: "Ensuring nutrition security through regular food distribution drives for the needy.",
-        icon: Utensils,
-        color: "text-orange-500",
-        bgColor: "bg-orange-500/10"
-    },
-    {
-        title: "महिला कल्याण",
-        englishTitle: "Women Welfare",
-        description: "Empowering women through skill development, health support, and social advocacy.",
-        icon: Heart,
-        color: "text-rose-500",
-        bgColor: "bg-rose-500/10"
-    },
-    {
-        title: "वातावरण, जल, वायु सुरक्षा",
-        englishTitle: "Environment Safety",
-        description: "Protecting our natural resources through water conservation and air quality initiatives.",
-        icon: Wind,
-        color: "text-cyan-500",
-        bgColor: "bg-cyan-500/10"
-    },
-    {
-        title: "वृक्षारोपण",
-        englishTitle: "Tree Plantation",
-        description: "Promoting a greener future through sustainable plantation and forest preservation.",
-        icon: Trees,
-        color: "text-emerald-500",
-        bgColor: "bg-emerald-500/10"
-    }
-];
+import { benefits } from "@/data/benefits-data";
 
 export function BenefitsSection() {
     return (
@@ -120,7 +55,14 @@ export function BenefitsSection() {
                                 </div>
                             </div>
 
-
+                            {/* Learn More Link */}
+                            <Link
+                                href={`/benefits/${benefit.slug}`}
+                                className={`mt-6 inline-flex items-center gap-2 text-sm font-bold ${benefit.color} hover:underline underline-offset-4 transition-all group/link`}
+                            >
+                                Learn More
+                                <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                            </Link>
 
                             {/* Decorative corner element */}
                             <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-[4rem] group-hover:bg-primary/10 transition-all duration-500" />

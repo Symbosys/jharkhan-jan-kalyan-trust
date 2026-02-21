@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, LayoutGrid } from "lucide-react";
 
 export async function GallerySection() {
-    const { items } = await getAllGalleryItems({ limit: 6 });
+    const { items } = await getAllGalleryItems({ limit: 1 });
 
     if (!items || items.length === 0) return null;
 
@@ -50,7 +50,7 @@ export async function GallerySection() {
                 {/* Bottom CTA */}
                 <div className="mt-12 text-center">
                     <Link
-                        href="/gallery"
+                        href="/gallery/photos"
                         className="inline-flex items-center gap-2 px-10 py-4 bg-foreground text-background font-black text-xs uppercase tracking-widest rounded-[2rem] hover:-translate-y-1 transition-all duration-300 shadow-2xl"
                     >
                         Explore Full Gallery
