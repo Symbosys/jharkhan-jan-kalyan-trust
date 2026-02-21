@@ -30,6 +30,7 @@ const supportLinks = [
     { href: "/donate", label: "Donate Now" },
     { href: "/events", label: "Upcoming Events" },
     { href: "/register-complaint", label: "Register Your Problem" },
+    { href: "/login", label: "Admin" },
     { href: "/contact", label: "Contact Us" },
 ];
 
