@@ -283,52 +283,68 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                 height: 750,
                 position: "relative",
                 overflow: "hidden",
-                borderRadius: 18,
+                borderRadius: 0, // Using 0 for square print bounds, matching the exact edge-to-edge layout
                 fontFamily: "Arial, Helvetica, sans-serif",
                 userSelect: "none",
+                backgroundColor: "#2B2889", // Base blue background (Layer 0)
             }}
         >
-            {/* ── Background: Blue-Green Gradient ── */}
+            {/* ── Layer 1: Top Green Background ── */}
             <div
                 style={{
                     position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(180deg, #1a3a8a 0%, #1565a0 25%, #0d8a5f 55%, #0a6e3f 100%)",
-                    zIndex: 0,
-                }}
-            />
-
-            {/* ── Left Green Curved Accent ── */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: -80,
-                    width: 300,
-                    height: "100%",
-                    backgroundColor: "#0b6e2f",
-                    borderRadius: "0 60% 60% 0",
+                    top: 52,
+                    left: 0,
+                    width: "100%",
+                    height: 350,
+                    backgroundColor: "#16A54B",
                     zIndex: 1,
-                    opacity: 0.4,
                 }}
             />
 
-            {/* ── Right Golden Curved Accent ── */}
+            {/* ── Layer 2: Gold Ellipse Sliver ── */}
             <div
                 style={{
                     position: "absolute",
-                    top: 180,
-                    right: -60,
-                    width: 200,
-                    height: 400,
-                    backgroundColor: "#c8a832",
-                    borderRadius: "50% 0 0 50%",
-                    zIndex: 1,
-                    opacity: 0.25,
+                    top: 135,
+                    left: -110,
+                    width: 600,
+                    height: 280,
+                    borderRadius: "50%",
+                    backgroundColor: "#CBA735",
+                    zIndex: 2,
                 }}
             />
 
-            {/* ── 1. "IDENTITY CARD" Green Top Banner ── */}
+            {/* ── Layer 3: Dark Green Ellipse Sliver ── */}
+            <div
+                style={{
+                    position: "absolute",
+                    top: 120,
+                    left: -90,
+                    width: 600,
+                    height: 280,
+                    borderRadius: "50%",
+                    backgroundColor: "#0A5F2C",
+                    zIndex: 3,
+                }}
+            />
+
+            {/* ── Layer 4: Main White Ellipse ── */}
+            <div
+                style={{
+                    position: "absolute",
+                    top: 100,
+                    left: -75,
+                    width: 600,
+                    height: 280,
+                    borderRadius: "50%",
+                    backgroundColor: "#FFFFFF",
+                    zIndex: 4,
+                }}
+            />
+
+            {/* ── 1. "IDENTITY CARD" Top Blue Banner ── */}
             <div
                 style={{
                     position: "absolute",
@@ -336,33 +352,32 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     left: 0,
                     width: "100%",
                     height: 52,
-                    backgroundColor: "#1a7a3a",
-                    borderRadius: "18px 18px 0 0",
-                    zIndex: 5,
+                    backgroundColor: "#272379",
+                    zIndex: 10,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    borderBottom: "1px solid rgba(0,0,0,0.1)",
                 }}
             >
                 <span
                     style={{
-                        fontSize: 28,
+                        fontSize: 30,
                         fontWeight: 900,
-                        color: "#ffd700",
-                        letterSpacing: "3px",
-                        textTransform: "uppercase",
-                        textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+                        color: "#F4D33C", // Official yellow text
+                        letterSpacing: "1.5px",
+                        fontFamily: "'Arial Narrow', Arial, sans-serif",
                     }}
                 >
                     IDENTITY CARD
                 </span>
             </div>
 
-            {/* ── 2. Logo Circle ── */}
+            {/* ── 2. Logo inside White Ellipse ── */}
             <div
                 style={{
                     position: "absolute",
-                    top: 65,
+                    top: 105,
                     left: "50%",
                     transform: "translateX(-50%)",
                     zIndex: 10,
@@ -373,286 +388,134 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             >
                 <div
                     style={{
-                        width: 130,
-                        height: 130,
+                        width: 95,
+                        height: 95,
                         borderRadius: "50%",
                         backgroundColor: "#fff",
-                        border: "4px solid #c8a832",
+                        border: "3px solid #D6B75B", // Thin gold border
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        overflow: "hidden",
-                        boxShadow: "0 4px 15px rgba(0,0,0,0.25)",
+                        padding: 3,
                     }}
                 >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src="/logo/logo.jpeg"
                         alt="JJKT Logo"
-                        style={{
-                            width: 110,
-                            height: 110,
-                            objectFit: "contain",
-                            borderRadius: "50%",
-                        }}
+                        style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: "50%" }}
                     />
                 </div>
             </div>
 
-            {/* ── 3. Trust Name & Location ── */}
+            {/* ── 3. Trust Name & Location (Inside White Shape) ── */}
             <div
                 style={{
                     position: "absolute",
-                    top: 205,
+                    top: 215,
                     left: 0,
                     width: "100%",
                     textAlign: "center",
-                    zIndex: 5,
-                }}
-            >
-                <p
-                    style={{
-                        fontSize: 22,
-                        fontWeight: 900,
-                        color: "#ffffff",
-                        letterSpacing: "1px",
-                        margin: 0,
-                        textShadow: "1px 1px 3px rgba(0,0,0,0.4)",
-                    }}
-                >
-                    JHARKHAND JAN KALYAN TRUST
-                </p>
-                <p
-                    style={{
-                        fontSize: 16,
-                        fontWeight: 700,
-                        color: "#ffd700",
-                        margin: "4px 0 0 0",
-                        letterSpacing: "0.5px",
-                    }}
-                >
-                    Ranchi-Jharkhand
-                </p>
-            </div>
-
-            {/* ── 4. Decorative Curves Around Photo ── */}
-            {/* Left green curve */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: 275,
-                    left: 20,
-                    width: 120,
-                    height: 200,
-                    borderRadius: "50%",
-                    border: "4px solid #1a7a3a",
-                    borderRight: "none",
-                    zIndex: 2,
-                }}
-            />
-            {/* Right golden curve */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: 275,
-                    right: 20,
-                    width: 120,
-                    height: 200,
-                    borderRadius: "50%",
-                    border: "4px solid #c8a832",
-                    borderLeft: "none",
-                    zIndex: 2,
-                }}
-            />
-
-            {/* ── 5. Member Photo ── */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: 280,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    zIndex: 5,
+                    zIndex: 10,
                 }}
             >
                 <div
                     style={{
-                        width: 170,
-                        height: 200,
-                        borderRadius: "50% 50% 50% 50%",
+                        fontSize: 22,
+                        fontWeight: 900,
+                        color: "#BA9B38", // Gold text
+                        letterSpacing: "-0.2px",
+                        transform: "scaleY(1.3)", // Stretch vertically slightly
+                        marginBottom: 10,
+                    }}
+                >
+                    JHARKHAND JAN KALYAN TRUST
+                </div>
+                <div
+                    style={{
+                        fontSize: 18,
+                        fontWeight: 900,
+                        color: "#0A5F2C", // Green location text
+                        letterSpacing: "0.2px",
+                    }}
+                >
+                    Ranchi-Jharkhand
+                </div>
+            </div>
+
+            {/* ── 4. Member Photo ── */}
+            <div
+                style={{
+                    position: "absolute",
+                    top: 310,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    zIndex: 15,
+                }}
+            >
+                <div
+                    style={{
+                        width: 140,
+                        height: 140,
+                        borderRadius: "50%",
                         overflow: "hidden",
-                        border: "5px solid #b0e0f0",
-                        backgroundColor: "#d4eef8",
-                        boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+                        border: "4px solid #ffffff",
+                        backgroundColor: "#e0e0e0",
+                        boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
                     }}
                 >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={photoUrl}
                         alt="Member Photo"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                        }}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                 </div>
             </div>
 
-            {/* ── 6. Member Details Section ── */}
+            {/* ── 5. Member Details Rows ── */}
             <div
                 style={{
                     position: "absolute",
-                    top: 500,
-                    left: 30,
-                    right: 30,
+                    top: 480,
+                    left: 25,
+                    right: 15,
                     zIndex: 5,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 12,
                 }}
             >
-                {/* Name Row */}
-                <div style={{ display: "flex", alignItems: "baseline", marginBottom: 10 }}>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 900,
-                            color: "#ffd700",
-                            width: 155,
-                            flexShrink: 0,
-                        }}
-                    >
-                        Name
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffd700",
-                            marginRight: 8,
-                        }}
-                    >
-                        :
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffffff",
-                        }}
-                    >
-                        {name}
-                    </span>
+                {/* Fixed Labels perfectly aligned */}
+                <div style={{ display: "flex", alignItems: "baseline" }}>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>Name</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{name}</span>
                 </div>
-
-                {/* DOB Row */}
-                <div style={{ display: "flex", alignItems: "baseline", marginBottom: 10 }}>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 900,
-                            color: "#ffd700",
-                            width: 155,
-                            flexShrink: 0,
-                        }}
-                    >
-                        DOB
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffd700",
-                            marginRight: 8,
-                        }}
-                    >
-                        :
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffffff",
-                        }}
-                    >
-                        {dob}
-                    </span>
+                <div style={{ display: "flex", alignItems: "baseline" }}>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>DOB</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{dob}</span>
                 </div>
-
-                {/* Contact No Row */}
-                <div style={{ display: "flex", alignItems: "baseline", marginBottom: 10 }}>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 900,
-                            color: "#ffd700",
-                            width: 155,
-                            flexShrink: 0,
-                        }}
-                    >
-                        Contact No.
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffd700",
-                            marginRight: 8,
-                        }}
-                    >
-                        :
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffffff",
-                        }}
-                    >
-                        {contactNo}
-                    </span>
+                <div style={{ display: "flex", alignItems: "baseline" }}>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>Contact No.</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contactNo}</span>
                 </div>
-
-                {/* Designation Row */}
-                <div style={{ display: "flex", alignItems: "baseline", marginBottom: 10 }}>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 900,
-                            color: "#ffd700",
-                            width: 155,
-                            flexShrink: 0,
-                        }}
-                    >
-                        Designation
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffd700",
-                            marginRight: 8,
-                        }}
-                    >
-                        :
-                    </span>
-                    <span
-                        style={{
-                            fontSize: 20,
-                            fontWeight: 700,
-                            color: "#ffffff",
-                        }}
-                    >
-                        {designation}
-                    </span>
+                <div style={{ display: "flex", alignItems: "baseline" }}>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>Designation</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{designation}</span>
                 </div>
             </div>
 
-            {/* ── 7. Authorized Signatory Section ── */}
+            {/* ── 6. Authorized Signatory Section ── */}
             <div
                 style={{
                     position: "absolute",
-                    bottom: 52,
+                    bottom: 45,
                     right: 25,
-                    zIndex: 5,
+                    zIndex: 10,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -660,64 +523,57 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             >
                 <div
                     style={{
-                        width: 180,
-                        height: 80,
-                        marginBottom: 4,
+                        width: 140,
+                        height: 40,
+                        backgroundColor: "#fff",
+                        borderRadius: 20, // Pill shape
+                        border: "2px solid #CD2C29", // Red border
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        overflow: "hidden",
                     }}
                 >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src="/signature/president.jpeg"
                         alt="Authorized Signatory"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                            mixBlendMode: "multiply",
-                            filter: "brightness(1.1) contrast(1.1)"
-                        }}
+                        style={{ width: "95%", height: "95%", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                 </div>
                 <span
                     style={{
                         fontSize: 10,
                         fontWeight: 700,
-                        color: "#ffd700",
-                        letterSpacing: "1px",
-                        textTransform: "uppercase",
+                        color: "#fff",
+                        letterSpacing: "0.5px",
+                        marginTop: 4,
                     }}
                 >
                     AUTHORIZED SIGNATORY
                 </span>
             </div>
 
-            {/* ── 8. Bottom Address Bar ── */}
+            {/* ── 7. Bottom Address Bar ── */}
             <div
                 style={{
                     position: "absolute",
                     bottom: 0,
                     left: 0,
                     width: "100%",
-                    height: 42,
-                    backgroundColor: "rgba(0,0,0,0.45)",
-                    borderRadius: "0 0 18px 18px",
-                    zIndex: 5,
+                    height: 35,
+                    zIndex: 10,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: "0 15px",
                 }}
             >
                 <span
                     style={{
-                        fontSize: 11,
-                        fontWeight: 600,
+                        fontSize: 13,
+                        fontWeight: 700,
                         color: "#ffffff",
-                        textAlign: "center",
-                        letterSpacing: "0.3px",
+                        letterSpacing: "0.2px",
                     }}
                 >
                     Opp. Bank of India Street, Kokar, Ranchi-834001

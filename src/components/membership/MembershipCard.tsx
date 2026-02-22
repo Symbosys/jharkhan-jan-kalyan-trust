@@ -29,386 +29,383 @@ export const MembershipCard: React.FC<MembershipCardProps> = ({ member, cardRef 
                 height: 700,
                 position: "relative",
                 overflow: "hidden",
-                border: "14px solid #cc3333",
+                border: "14px solid #ce2521",
+                backgroundColor: "#fdf8cd",
                 fontFamily: "Georgia, 'Times New Roman', serif",
                 userSelect: "none",
+                boxSizing: "border-box",
             }}
         >
-            {/* ===== LAYER 0: Golden base background ===== */}
+            {/* ===== LAYER 1: Bottom-Left Blue Polygon ===== */}
             <div style={{
                 position: "absolute",
-                inset: 0,
-                backgroundColor: "#c8a82e",
-            }} />
-
-            {/* ===== LAYER 1: Cream body — covers bottom-right with diagonal top edge ===== */}
-            {/* In the target, cream covers: right side from ~25% down, left side from ~50% down */}
-            <div style={{
-                position: "absolute",
-                inset: 0,
-                backgroundColor: "#f0dfa0",
-                clipPath: "polygon(28% 28%, 100% 24%, 100% 100%, 0 100%, 0 50%)",
+                left: 0,
+                bottom: 0,
+                width: 320,
+                height: 300,
+                backgroundColor: "#36338b",
+                clipPath: "polygon(0 0, 100% 0, 25% 100%, 0 100%)",
                 zIndex: 1,
             }} />
 
-            {/* ===== LAYER 2: Yellow accent (thin strip at edge of green triangle) ===== */}
+            {/* ===== LAYER 2: Top Header Text (100% FIXED) ===== */}
             <div style={{
                 position: "absolute",
-                inset: 0,
-                backgroundColor: "#c8a82e",
-                clipPath: "polygon(0 0, 24% 0, 2% 44%,  0 44%)",
-                zIndex: 4,
-            }} />
-
-            {/* ===== LAYER 3: Green triangle (top-left corner) ===== */}
-            {/* Target: compact triangle — ~21% wide at top, ~40% tall on left */}
-            <div style={{
-                position: "absolute",
-                inset: 0,
-                backgroundColor: "#1b7a3a",
-                clipPath: "polygon(0 0, 21% 0, 0 40%)",
-                zIndex: 5,
-            }} />
-
-            {/* ===== LAYER 4: Dark green header bar ===== */}
-            {/* Left edge diagonal: 22% at top, 18% at bottom. Full width to right. Height ~78px */}
-            <div style={{
-                position: "absolute",
-                top: 0,
+                top: 40,
                 left: 0,
                 width: "100%",
-                height: 78,
-                backgroundColor: "#1a2e1c",
-                clipPath: "polygon(22% 0, 100% 0, 100% 100%, 18% 100%)",
-                zIndex: 10,
+                paddingLeft: 420, // Pushes past the green polygon
+                paddingRight: 20, // Small margin on the right
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                paddingLeft: 260,
-                paddingRight: 30,
+                zIndex: 2,
+                boxSizing: "border-box",
             }}>
                 <span style={{
-                    fontSize: 36,
+                    fontFamily: "'Arial Narrow', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+                    fontSize: 28, // Safe size to prevent wrapping or cutting off
                     fontWeight: 900,
-                    color: "#c8a82e",
-                    letterSpacing: "0.06em",
+                    color: "#0e0e0e",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
                     whiteSpace: "nowrap",
                 }}>
                     JHARKHAND JAN KALYAN TRUST
                 </span>
             </div>
 
-            {/* ===== LAYER 5: Logo circle + text below ===== */}
+            {/* ===== LAYER 3: Blue Banner ("Certificate") ===== */}
             <div style={{
                 position: "absolute",
-                top: 6,
-                left: 14,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                zIndex: 30,
-            }}>
-                <div style={{
-                    width: 148,
-                    height: 148,
-                    borderRadius: "50%",
-                    backgroundColor: "#ffffff",
-                    border: "5px solid #c8a82e",
-                    padding: 4,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 3px 10px rgba(0,0,0,0.12)",
-                }}>
-                    <Image
-                        src="/logo/logo.jpeg"
-                        alt="JJKT Logo"
-                        width={122}
-                        height={122}
-                        style={{ objectFit: "contain", borderRadius: "50%" }}
-                    />
-                </div>
-                <span style={{
-                    fontSize: 10,
-                    fontWeight: 800,
-                    color: "#ffffff",
-                    letterSpacing: "0.05em",
-                    textTransform: "uppercase",
-                    marginTop: 2,
-                    textAlign: "center",
-                    lineHeight: "1.2",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.4)",
-                }}>
-                    JHARKHAND JAN KALYAN TRUST
-                </span>
-            </div>
-
-            {/* ===== LAYER 6: Blue/purple Certificate banner ===== */}
-            {/* Full-width diagonal stripe right below header bar */}
-            <div style={{
-                position: "absolute",
-                top: 80,
+                top: 105,
                 left: 0,
                 width: "100%",
-                height: 120,
-                backgroundColor: "#2b2d78",
-                clipPath: "polygon(0 18%, 100% 0, 100% 82%, 0 100%)",
-                zIndex: 15,
+                height: 130,
+                backgroundColor: "#36338b",
+                borderBottom: "7px solid #1a1a1a",
+                zIndex: 2,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                paddingLeft: 400, // Centers it within the visible blue area
+                boxSizing: "border-box",
             }}>
                 <span
                     className={parisienne.className}
                     style={{
-                        fontSize: 100,
+                        fontSize: 105,
                         color: "#ffffff",
                         lineHeight: "1",
-                        textShadow: "2px 2px 4px rgba(0,0,0,0.4)",
-                        marginLeft: 60,
-                        marginTop: 8,
-                        fontWeight: "500",
-                        padding: 90,
+                        textShadow: "3px 3px 6px rgba(0,0,0,0.5)",
+                        marginTop: -15,
                     }}
                 >
                     Certificate
                 </span>
             </div>
 
-            {/* ===== LAYER 7: "of Membership Card" golden sub-banner ===== */}
+            {/* ===== LAYER 4: Gold Banner ("of Membership Card") ===== */}
             <div style={{
                 position: "absolute",
-                top: 190,
-                left: "50%",
-                transform: "translateX(-45%) skewX(-12deg)",
-                backgroundColor: "#b89a28",
+                top: 242,
+                left: 0,
+                width: "100%",
                 height: 42,
-                paddingLeft: 44,
-                paddingRight: 44,
+                backgroundColor: "#cba962",
+                zIndex: 2,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                border: "1px solid rgba(0,0,0,0.15)",
-                zIndex: 20,
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                paddingLeft: 340, // Centers it within the visible gold area
+                boxSizing: "border-box",
             }}>
                 <span
-                    className={parisienne.className}
                     style={{
-                        fontSize: 32,
-                        color: "#1a2e1c",
-                        transform: "skewX(12deg)",
-                        lineHeight: "1",
-                        whiteSpace: "nowrap",
+                        fontFamily: "Georgia, serif",
+                        fontSize: 30,
                         fontWeight: "bold",
+                        fontStyle: "italic",
+                        color: "#ffffff",
+                        WebkitTextStroke: "1px #000",
+                        textShadow: "2px 2px 4px rgba(0,0,0,0.4)",
+                        letterSpacing: "1px",
                     }}
                 >
                     of Membership Card
                 </span>
             </div>
 
-            {/* ===== LAYER 8: Main text content ===== */}
+            {/* ===== LAYER 5: Main Green Polygon ===== */}
             <div style={{
                 position: "absolute",
-                top: 228,
+                top: 0,
                 left: 0,
-                right: 0,
-                zIndex: 20,
+                width: 440,
+                height: 550,
+                backgroundColor: "#0a6f36",
+                clipPath: "polygon(0 0, 100% 0, 36.3% 100%, 0 100%)",
+                zIndex: 10,
+            }} />
+
+            {/* ===== LAYER 6: Logo & Text inside the Green Area ===== */}
+            <div style={{
+                position: "absolute",
+                top: 30,
+                left: 35,
+                width: 220,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                paddingLeft: 150,
-                paddingRight: 90,
+                zIndex: 11,
             }}>
-                {/* "This is to certify that" */}
-                <p style={{
-                    fontSize: 26,
+                <div style={{
+                    position: "absolute",
+                    top: 15,
+                    width: 150,
+                    height: 150,
+                    borderRadius: "50%",
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    filter: "blur(25px)",
+                    zIndex: 0,
+                }} />
+
+                <div style={{
+                    width: 140,
+                    height: 140,
+                    borderRadius: "50%",
+                    border: "4px solid #ceab5f",
+                    backgroundColor: "#ffffff",
+                    padding: 5,
+                    position: "relative",
+                    zIndex: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}>
+                    <Image
+                        src="/logo/logo.jpeg"
+                        alt="JJKT Logo"
+                        width={125}
+                        height={125}
+                        style={{ objectFit: "contain", borderRadius: "50%" }}
+                    />
+                </div>
+
+                <span style={{
+                    color: "#e8ca31",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    textAlign: "center",
+                    marginTop: 18,
+                    zIndex: 1,
+                    letterSpacing: "0.5px",
+                }}>
+                    JHARKHAND JAN KALYAN TRUST
+                </span>
+            </div>
+
+            {/* ===== LAYER 7: Main Body Texts (100% Safe Alignment) ===== */}
+            <div style={{
+                position: "absolute",
+                top: 320,
+                left: 360, // Mathematically clears the blue and green shapes
+                right: 40,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 28,
+                zIndex: 20,
+            }}>
+                <span style={{
+                    fontFamily: "Georgia, serif",
                     fontStyle: "italic",
-                    color: "rgba(0,0,0,0.8)",
-                    fontWeight: 600,
-                    margin: "0 0 24px 0",
+                    fontWeight: "bold",
+                    color: "#000000",
+                    fontSize: 26,
                 }}>
                     This is to certify that
-                </p>
+                </span>
 
-                {/* "Mr./Mrs.  ___name___" */}
                 <div style={{
                     display: "flex",
                     alignItems: "baseline",
-                    gap: 14,
                     width: "100%",
-                    marginBottom: 20,
+                    gap: 12,
                 }}>
                     <span style={{
-                        fontSize: 22,
+                        fontFamily: "Georgia, serif",
                         fontStyle: "italic",
+                        fontWeight: "bold",
                         color: "#000000",
-                        fontWeight: 600,
+                        fontSize: 22,
                         whiteSpace: "nowrap",
                     }}>
                         Mr./Mrs.
                     </span>
                     <div style={{
                         flex: 1,
-                        borderBottom: "2px solid rgba(0,0,0,0.35)",
-                        paddingBottom: 3,
+                        borderBottom: "2px solid #000000",
                         textAlign: "center",
+                        paddingBottom: 2,
                     }}>
-                        <span style={{
-                            fontSize: 25,
-                            fontWeight: 700,
-                            color: "#000000",
-                            letterSpacing: "0.01em",
-                        }}>
+                        <span style={{ fontSize: 24, fontWeight: "bold", color: "#000000" }}>
                             {member.name}
                         </span>
                     </div>
                 </div>
 
-                {/* "has Taken membership for Jharkhand Jan Kalyan Trust" */}
-                <p style={{
-                    fontSize: 20,
+                <span style={{
+                    fontFamily: "Georgia, serif",
                     fontStyle: "italic",
+                    fontWeight: "bold",
                     color: "#000000",
-                    fontWeight: 600,
-                    margin: "8px 0 0 0",
+                    fontSize: 22,
                     whiteSpace: "nowrap",
                 }}>
                     has Taken membership for Jharkhand Jan Kalyan Trust
-                </p>
+                </span>
 
-                {/* "Valid up to ___ to ___" */}
                 <div style={{
                     display: "flex",
                     alignItems: "baseline",
-                    gap: 10,
                     width: "100%",
-                    marginTop: 26,
+                    gap: 12,
                 }}>
                     <span style={{
-                        fontSize: 20,
+                        fontFamily: "Georgia, serif",
                         fontStyle: "italic",
+                        fontWeight: "bold",
                         color: "#000000",
-                        fontWeight: 600,
+                        fontSize: 22,
                         whiteSpace: "nowrap",
                     }}>
                         Valid up to
                     </span>
                     <div style={{
                         flex: 1,
-                        borderBottom: "2px solid rgba(0,0,0,0.35)",
-                        paddingBottom: 3,
+                        borderBottom: "2px solid #000000",
                         textAlign: "center",
+                        paddingBottom: 2,
                     }}>
-                        <span style={{ fontSize: 22, fontWeight: 700, color: "#000000" }}>
+                        <span style={{ fontSize: 22, fontWeight: "bold", color: "#000000" }}>
                             {startDate}
                         </span>
                     </div>
                     <span style={{
-                        fontSize: 20,
+                        fontFamily: "Georgia, serif",
                         fontStyle: "italic",
+                        fontWeight: "bold",
                         color: "#000000",
-                        fontWeight: 600,
-                        padding: "0 4px",
+                        fontSize: 22,
+                        padding: "0 10px",
                     }}>
                         to
                     </span>
                     <div style={{
                         flex: 1,
-                        borderBottom: "2px solid rgba(0,0,0,0.35)",
-                        paddingBottom: 3,
+                        borderBottom: "2px solid #000000",
                         textAlign: "center",
+                        paddingBottom: 2,
                     }}>
-                        <span style={{ fontSize: 22, fontWeight: 700, color: "#000000" }}>
+                        <span style={{ fontSize: 22, fontWeight: "bold", color: "#000000" }}>
                             {expiryDate}
                         </span>
                     </div>
                 </div>
             </div>
 
-            {/* ===== LAYER 9: Signature section (bottom) ===== */}
+            {/* ===== LAYER 8: Signatures (100% Fixed Positioning) ===== */}
+
+            {/* Secretary Box */}
             <div style={{
                 position: "absolute",
-                bottom: 16,
-                left: 60,
-                right: 60,
+                bottom: 30,
+                left: 260, // Perfectly clears the blue triangle and aligns under text
+                width: 200,
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                zIndex: 20,
+                flexDirection: "column",
+                alignItems: "center",
+                zIndex: 10,
             }}>
-                {/* Secretary */}
-                <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 4,
+                <span style={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: 18,
+                    fontStyle: "italic",
+                    fontWeight: "bold",
+                    color: "#000000",
+                    marginBottom: 6,
                 }}>
-                    <span style={{
-                        fontSize: 17,
-                        fontStyle: "italic",
-                        color: "rgba(0,0,0,0.7)",
-                        fontWeight: 600,
-                    }}>
-                        Secretary
-                    </span>
-                    <div style={{
-                        width: 240,
-                        height: 100,
-                        backgroundColor: "transparent",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src="/signature/secretry.jpeg"
-                            alt="Secretary Signature"
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "contain",
-                                mixBlendMode: "multiply"
-                            }}
-                        />
-                    </div>
+                    Secretary
+                </span>
+                <div style={{
+                    width: 180,
+                    height: 45,
+                    borderRadius: 25,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #d3d3d3",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src="/signature/secretry.jpeg"
+                        alt="Secretary Signature"
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            mixBlendMode: "multiply",
+                        }}
+                    />
                 </div>
+            </div>
 
-                {/* President */}
-                <div style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 4,
+            {/* President Box */}
+            <div style={{
+                position: "absolute",
+                bottom: 30,
+                right: 80, // Perfectly balances symmetrically
+                width: 200,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                zIndex: 10,
+            }}>
+                <span style={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: 18,
+                    fontStyle: "italic",
+                    fontWeight: "bold",
+                    color: "#000000",
+                    marginBottom: 6,
                 }}>
-                    <span style={{
-                        fontSize: 17,
-                        fontStyle: "italic",
-                        color: "rgba(0,0,0,0.7)",
-                        fontWeight: 600,
-                    }}>
-                        President
-                    </span>
-                    <div style={{
-                        width: 240,
-                        height: 100,
-                        backgroundColor: "transparent",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src="/signature/president.jpeg"
-                            alt="President Signature"
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "contain",
-                                mixBlendMode: "multiply"
-                            }}
-                        />
-                    </div>
+                    President
+                </span>
+                <div style={{
+                    width: 180,
+                    height: 45,
+                    borderRadius: 25,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #d3d3d3",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                        src="/signature/president.jpeg"
+                        alt="President Signature"
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "contain",
+                            mixBlendMode: "multiply",
+                        }}
+                    />
                 </div>
             </div>
         </div>
