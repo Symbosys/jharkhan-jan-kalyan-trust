@@ -478,13 +478,13 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, v
                         marginBottom: 2,
                     }}
                 >
-                    Cricket tournament
+                    (Cricket tournament)
                 </div>
                 <div
                     style={{
                         fontSize: 16,
                         fontWeight: 900,
-                        color: "#0A5F2C",
+                        color: "red",
                         letterSpacing: "0.2px",
                         textTransform: "uppercase",
                     }}
@@ -582,12 +582,14 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, v
                         alignItems: "center",
                         justifyContent: "center",
                         overflow: "hidden",
+                        objectFit: "contain",
                     }}
                 >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src="/signature/president.jpeg"
                         alt="Authorized Signatory"
+                        className="object-contain"
                         style={{ width: "95%", height: "95%", objectFit: "contain", mixBlendMode: "multiply" }}
                     />
                 </div>
@@ -627,9 +629,9 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, v
                         letterSpacing: "0.2px",
                     }}
                 >
-                    KHAJMUNDA, CHICKNADSH, HIRODIH
+                    KHAJMUNDA, CHIKNADIH, HIRODIH
                     GIRIDIH-815314
-                </span>
+                </span> 
             </div>
         </div>
     );
