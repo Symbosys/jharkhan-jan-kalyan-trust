@@ -289,7 +289,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                 backgroundColor: "#2B2889", // Base blue background (Layer 0)
             }}
         >
-            {/* ── Layer 1: Top Green Background ── */}
+            {/* ── Layer 1: Top Blue Background (formerly Green) ── */}
             <div
                 style={{
                     position: "absolute",
@@ -297,7 +297,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     left: 0,
                     width: "100%",
                     height: 350,
-                    backgroundColor: "#16A54B",
+                    backgroundColor: "#2B2889", // Changed to match base blue
                     zIndex: 1,
                 }}
             />
@@ -316,7 +316,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                 }}
             />
 
-            {/* ── Layer 3: Dark Green Ellipse Sliver ── */}
+            {/* ── Layer 3: Dark Blue Ellipse Sliver (formerly dark green) ── */}
             <div
                 style={{
                     position: "absolute",
@@ -325,7 +325,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     width: 600,
                     height: 280,
                     borderRadius: "50%",
-                    backgroundColor: "#0A5F2C",
+                    backgroundColor: "#2B2889", // Changed to match the base blue background
                     zIndex: 3,
                 }}
             />
@@ -562,6 +562,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     left: 0,
                     width: "100%",
                     height: 35,
+                    backgroundColor: "#16A54B", // Added green background
                     zIndex: 10,
                     display: "flex",
                     alignItems: "center",
