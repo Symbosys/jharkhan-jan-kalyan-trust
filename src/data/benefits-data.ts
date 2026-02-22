@@ -65,9 +65,9 @@ export const benefits: Benefit[] = [
         longDescription:
             "Education is the cornerstone of empowerment. Our Free Education initiative provides quality learning resources, tutoring, and mentorship to children from economically weaker families across Jharkhand. We run community learning centers equipped with books, stationery, and digital tools. Our volunteer teachers conduct classes in subjects ranging from mathematics and science to English and computer literacy. We also offer scholarships and exam preparation support to help students pursue higher education and break the cycle of poverty.",
         icon: BookOpen,
-        color: "text-green-500",
-        bgColor: "bg-green-500/10",
-        gradient: "from-green-500 to-emerald-500",
+        color: "text-green-400",
+        bgColor: "bg-green-400/10",
+        gradient: "from-green-400 to-emerald-400",
         highlights: [
             "Community learning centers with free study materials",
             "Volunteer-led tutoring in core academic subjects",
@@ -92,9 +92,9 @@ export const benefits: Benefit[] = [
         longDescription:
             "Our Social Progress programs aim to uplift communities by addressing systemic challenges at the grassroots level. We work on skill development, livelihood creation, and social awareness campaigns that empower individuals to become self-reliant. Through community gatherings, workshops, and micro-enterprise support, we help villagers develop new income sources, understand their rights, and participate actively in local governance. Our focus is on creating a ripple effect where empowered individuals lift entire communities.",
         icon: TrendingUp,
-        color: "text-amber-500",
-        bgColor: "bg-amber-500/10",
-        gradient: "from-amber-500 to-yellow-500",
+        color: "text-orange-500",
+        bgColor: "bg-orange-500/10",
+        gradient: "from-orange-500 to-amber-500",
         highlights: [
             "Skill development and vocational training workshops",
             "Micro-enterprise and livelihood support programs",
@@ -119,9 +119,9 @@ export const benefits: Benefit[] = [
         longDescription:
             "Hunger should never be a barrier to dignity. Our Free Food initiative ensures that no one in our community goes to bed hungry. We organize regular food distribution drives in urban slums, rural hamlets, and during natural disasters or festivals. Our community kitchens serve nutritious meals prepared by volunteers, while our packaged food drives reach remote areas. We also run nutrition awareness programs for mothers and children, ensuring that families understand the importance of balanced diets for healthy growth and development.",
         icon: Utensils,
-        color: "text-orange-500",
-        bgColor: "bg-orange-500/10",
-        gradient: "from-orange-500 to-red-500",
+        color: "text-yellow-600",
+        bgColor: "bg-yellow-600/10",
+        gradient: "from-yellow-600 to-amber-600",
         highlights: [
             "Regular food distribution in slums and remote villages",
             "Community kitchens serving nutritious meals",
@@ -146,9 +146,9 @@ export const benefits: Benefit[] = [
         longDescription:
             "Women are the backbone of our communities, and their empowerment is central to our mission. Our Women Welfare programs encompass skill development workshops in tailoring, handicrafts, and entrepreneurship. We provide health support through specialized maternal and reproductive health camps. Our advocacy efforts focus on legal rights awareness, domestic violence prevention, and creating safe spaces for women to voice their concerns. We believe that when women thrive, families and communities flourish.",
         icon: Heart,
-        color: "text-rose-500",
-        bgColor: "bg-rose-500/10",
-        gradient: "from-rose-500 to-pink-500",
+        color: "text-pink-500",
+        bgColor: "bg-pink-500/10",
+        gradient: "from-pink-500 to-rose-400",
         highlights: [
             "Skill development in tailoring, handicrafts, and business",
             "Maternal and reproductive health awareness camps",
@@ -173,9 +173,9 @@ export const benefits: Benefit[] = [
         longDescription:
             "Our environment is our legacy. The Environment Safety initiative works to protect and restore the natural resources of Jharkhand. We organize clean water access programs, rainwater harvesting installations, and river-cleanup drives. Our air quality initiatives include promoting clean cooking fuel, reducing stubble burning awareness, and supporting green energy adoption. We also run environmental education programs in schools to build a generation of eco-conscious citizens who understand their role in preserving the planet.",
         icon: Wind,
-        color: "text-cyan-500",
-        bgColor: "bg-cyan-500/10",
-        gradient: "from-cyan-500 to-teal-500",
+        color: "text-sky-500",
+        bgColor: "bg-sky-500/10",
+        gradient: "from-sky-500 to-blue-400",
         highlights: [
             "Clean water access and rainwater harvesting programs",
             "River and water body cleanup drives",
@@ -200,9 +200,9 @@ export const benefits: Benefit[] = [
         longDescription:
             "Trees are the lungs of our planet. Our Tree Plantation drives aim to restore green cover across Jharkhand's degraded landscapes. We organize large-scale plantation events involving schools, colleges, corporate volunteers, and local communities. Our focus is on planting native species that support local biodiversity and provide livelihood benefits like fruit-bearing and medicinal trees. We also maintain nurseries and conduct post-plantation care to ensure high survival rates, and we educate communities on forest preservation and sustainable harvesting.",
         icon: Trees,
-        color: "text-emerald-500",
-        bgColor: "bg-emerald-500/10",
-        gradient: "from-emerald-500 to-green-500",
+        color: "text-green-700",
+        bgColor: "bg-green-700/10",
+        gradient: "from-green-700 to-emerald-700",
         highlights: [
             "Large-scale tree plantation drives with community participation",
             "Focus on native and fruit-bearing species",

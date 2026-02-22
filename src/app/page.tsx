@@ -26,10 +26,10 @@ export default async function Home() {
       <Header />
       <main className="flex-1">
         <HeroSlider sliders={sliders} />
+        <NewsSection />
         <AboutSection />
         <ActivitySection />
         <BenefitsSection />
-        <NewsSection />
         <Features />
         <TeamSection />
 
