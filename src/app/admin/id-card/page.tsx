@@ -457,16 +457,28 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, v
             >
                 <div
                     style={{
-                        fontSize: 24, // Increased from 22
+                        fontSize: 24,
                         fontWeight: 900,
-                        color: "#BA9B38", // Gold text
+                        color: "#BA9B38",
                         letterSpacing: "-0.2px",
-                        transform: "scaleY(1.3)", // Stretch vertically slightly
-                        marginBottom: 10,
-                        marginTop: 10,
+                        transform: "scaleY(1.3)",
+                        marginBottom: 2,
+                        marginTop: 2,
                     }}
                 >
                     JHARKHAND JAN KALYAN TRUST
+                </div>
+                <div
+                    style={{
+                        fontSize: 20,
+                        fontWeight: 900,
+                        color: "#0A5F2C",
+                        letterSpacing: "0.5px",
+                        textTransform: "uppercase",
+                        marginBottom: 2,
+                    }}
+                >
+                    Cricket tournament
                 </div>
                 <div
                     style={{
@@ -485,7 +497,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, v
             <div
                 style={{
                     position: "absolute",
-                    top: 310,
+                    top: 325,
                     left: "50%",
                     transform: "translateX(-50%)",
                     zIndex: 15,
@@ -515,13 +527,13 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, v
             <div
                 style={{
                     position: "absolute",
-                    top: 465,
+                    top: 475,
                     left: 25,
                     right: 15,
                     zIndex: 5,
                     display: "flex",
                     flexDirection: "column",
-                    gap: 10, // Reduced slightly to fit bigger fonts
+                    gap: 8, // Reduced slightly to fit bigger fonts
                 }}
             >
                 {/* Fixed Labels perfectly aligned */}
