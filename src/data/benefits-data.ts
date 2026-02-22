@@ -31,7 +31,7 @@ export interface Benefit {
 export const benefits: Benefit[] = [
     {
         slug: "health-camps",
-        title: "स्वास्थ्य शिविर",
+        title: "Health Camps",
         englishTitle: "Health Camps",
         description:
             "Organizing regular medical checkups and health awareness programs for the community.",
@@ -58,7 +58,7 @@ export const benefits: Benefit[] = [
     },
     {
         slug: "free-education",
-        title: "मुफ्त शिक्षा",
+        title: "Free Education",
         englishTitle: "Free Education",
         description:
             "Providing quality education and learning resources to underprivileged children.",
@@ -85,7 +85,7 @@ export const benefits: Benefit[] = [
     },
     {
         slug: "social-progress",
-        title: "समाज प्रगति",
+        title: "Social Progress",
         englishTitle: "Social Progress",
         description:
             "Driving community development and social empowerment initiatives at the grassroots level.",
@@ -112,7 +112,7 @@ export const benefits: Benefit[] = [
     },
     {
         slug: "free-food",
-        title: "मुफ्त भोजन",
+        title: "Free Food",
         englishTitle: "Free Food",
         description:
             "Ensuring nutrition security through regular food distribution drives for the needy.",
@@ -139,7 +139,7 @@ export const benefits: Benefit[] = [
     },
     {
         slug: "women-welfare",
-        title: "महिला कल्याण",
+        title: "Women Welfare",
         englishTitle: "Women Welfare",
         description:
             "Empowering women through skill development, health support, and social advocacy.",
@@ -166,7 +166,7 @@ export const benefits: Benefit[] = [
     },
     {
         slug: "environment-safety",
-        title: "वातावरण, जल, वायु सुरक्षा",
+        title: "Environment, Water & Air Safety",
         englishTitle: "Environment Safety",
         description:
             "Protecting our natural resources through water conservation and air quality initiatives.",
@@ -193,7 +193,7 @@ export const benefits: Benefit[] = [
     },
     {
         slug: "tree-plantation",
-        title: "वृक्षारोपण",
+        title: "Tree Plantation",
         englishTitle: "Tree Plantation",
         description:
             "Promoting a greener future through sustainable plantation and forest preservation.",

@@ -21,8 +21,8 @@ export function BenefitsSection() {
                     </div>
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-tertiary leading-[1.1] tracking-tight">
-                        झारखंड जन कल्याण ट्रस्ट <br />
-                        <span className="text-foreground italic">हमारी सुविधाएँ</span>
+                        Jharkhand Jan Kalyan Trust <br />
+                        <span className="text-foreground italic">Our Facilities</span>
                     </h2>
 
                     <p className="text-lg text-muted-foreground font-medium max-w-2xl leading-relaxed">
@@ -77,7 +77,7 @@ export function BenefitsSection() {
                             </div>
                             <div className="space-y-2">
                                 <h3 className="text-4xl font-black leading-none">
-                                    हमसे जुड़िये !
+                                    Join Us!
                                 </h3>
                                 <p className="text-sm font-bold uppercase tracking-widest text-white/80">
                                     Join Our Mission
@@ -107,18 +107,18 @@ export function BenefitsSection() {
                     <div className="flex items-center gap-6">
                         <div className="text-center md:text-left">
                             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-1">Our Philosophy</p>
-                            <p className="text-2xl font-black text-foreground">हमारा विश्वास</p>
+                            <p className="text-2xl font-black text-foreground">Our Belief</p>
                         </div>
                         <div className="h-12 w-px bg-border/60 hidden md:block" />
                         <div className="text-center md:text-left">
                             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-1">Your Wellbeing</p>
-                            <p className="text-2xl font-black text-foreground">आपकी सुरक्षा</p>
+                            <p className="text-2xl font-black text-foreground">Your Safety</p>
                         </div>
                     </div>
 
                     <div className="px-8 py-4 bg-tertiary/10 border border-tertiary/20 rounded-full">
                         <p className="text-tertiary font-black text-xl tracking-tighter uppercase italic">
-                            सुरक्षित रहिये !!
+                            Stay Safe !!
                         </p>
                     </div>
                 </div>

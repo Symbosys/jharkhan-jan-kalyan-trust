@@ -150,7 +150,7 @@ export default async function BenefitDetailPage({ params }: { params: Promise<{ 
 
                             <div className="relative z-10 space-y-8">
                                 <h2 className="text-4xl md:text-6xl font-black text-white tracking-tight">
-                                    हमसे जुड़िये !
+                                    Join Our Mission !
                                 </h2>
                                 <p className="text-white/80 text-xl font-medium max-w-2xl mx-auto">
                                     Your support can help us expand this initiative and reach more people in need. Join our mission today.
