@@ -24,17 +24,15 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
     ];
 
     return (
-        <section className="py-16 bg-white dark:bg-slate-950 relative overflow-hidden border-t border-border/40">
-            {/* Background Decorations */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] bg-tertiary/5 rounded-full blur-[120px]" />
-                <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[120px]" />
-            </div>
+        <section className="py-24 bg-slate-50 dark:bg-slate-950/50 relative overflow-hidden border-t border-border/40">
+            {/* Background Accents (Matching BenefitsSection Aesthetic) */}
+            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-tertiary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-primary/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
-                    {/* Left Column: Context & Typography */}
+                    {/* Left Column (Original Structure) */}
                     <div className="lg:col-span-5 space-y-6">
                         <div className="space-y-6">
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-tertiary/10 border border-tertiary/20 shadow-sm">
@@ -63,51 +61,44 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
                         </div>
                     </div>
 
-                    {/* Right Column: Ticker Container */}
+                    {/* Right Column (Original Structure with Benefits-style Cards) */}
                     <div className="lg:col-span-7 relative">
-                        <div className="relative h-[480px] w-full rounded-[1.5rem] bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 p-2 shadow-inner overflow-hidden">
+                        <div className="relative h-[550px] w-full rounded-[2.5rem] bg-white dark:bg-slate-900 border border-border/50 shadow-inner overflow-hidden">
 
-                            {/* Gradient Masks for smooth scroll fading */}
-                            <div className="absolute top-0 inset-x-0 h-24 bg-linear-to-b from-slate-50 dark:from-[hsl(var(--background))] to-transparent z-10 pointer-events-none" />
-                            <div className="absolute bottom-0 inset-x-0 h-24 bg-linear-to-t from-slate-50 dark:from-[hsl(var(--background))] to-transparent z-10 pointer-events-none" />
+                            {/* Gradient Masks */}
+                            <div className="absolute top-0 inset-x-0 h-24 bg-linear-to-b from-white dark:from-slate-900 to-transparent z-10 pointer-events-none" />
+                            <div className="absolute bottom-0 inset-x-0 h-24 bg-linear-to-t from-white dark:from-slate-900 to-transparent z-10 pointer-events-none" />
 
                             <div className="h-full overflow-hidden ticker-mask">
-                                <div className="animate-vertical-news hover:paused flex flex-col gap-3 px-1 md:px-3 py-8">
+                                <div className="animate-vertical-news hover:paused flex flex-col gap-4 px-4 md:px-6 py-8">
                                     {displayNews.map((item, index) => {
                                         const CardContent = (
-                                            <div className="bg-white dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-xl p-4 md:p-5 shadow-sm hover:shadow-lg hover:border-tertiary/40 transition-all duration-300 group flex items-start gap-4 relative overflow-hidden">
-                                                {/* Decorative line */}
-                                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-tertiary/20 group-hover:bg-tertiary transition-colors" />
-
+                                            <div className="group relative p-6 rounded-[2rem] bg-tertiary/10 border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-tertiary/5 hover:-translate-y-1 transition-all duration-500 flex items-start gap-4 overflow-hidden">
                                                 {/* Icon */}
-                                                <div className="shrink-0 mt-0.5">
-                                                    <div className="h-10 w-10 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-tertiary group-hover:bg-tertiary group-hover:text-white transition-colors border border-slate-100 dark:border-slate-800">
-                                                        <Newspaper className="h-4 w-4" />
+                                                <div className="shrink-0 mt-0.5 relative z-10">
+                                                    <div className="h-12 w-12 rounded-2xl bg-tertiary text-white flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-lg shadow-tertiary/20">
+                                                        <Newspaper className="h-6 w-6" />
                                                     </div>
                                                 </div>
 
                                                 {/* Text Content */}
-                                                <div className="flex-1 min-w-0 space-y-1.5">
-                                                    <h3 className="text-lg font-bold text-tertiary leading-snug transition-colors pr-5">
+                                                <div className="flex-1 min-w-0 space-y-1 relative z-10">
+                                                    <h3 className="text-lg font-black text-tertiary leading-snug transition-colors pr-5">
                                                         {item.title}
                                                     </h3>
-                                                    <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-2 gap-1">
+                                                    <p className="text-xs text-muted-foreground font-medium leading-relaxed line-clamp-2">
                                                         {item.description}
                                                     </p>
 
                                                     {item.link && (
-                                                        <div className="pt-1.5 flex items-center gap-1 text-[10px] font-bold text-tertiary opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0 duration-300 uppercase tracking-wider">
-                                                            Read Full Story <ArrowRight className="h-2.5 w-2.5" />
+                                                        <div className="pt-2 flex items-center gap-1 text-[10px] font-bold text-tertiary hover:underline underline-offset-4 transition-all uppercase tracking-wider">
+                                                            Read Full Story <ArrowRight className="h-3 w-3" />
                                                         </div>
                                                     )}
                                                 </div>
 
-                                                {/* External Link Hint */}
-                                                {item.link && (
-                                                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-tertiary/60">
-                                                        <ExternalLink className="h-3.5 w-3.5" />
-                                                    </div>
-                                                )}
+                                                {/* Decorative corner element (Matching BenefitsSection) */}
+                                                <div className="absolute top-0 right-0 w-20 h-20 bg-tertiary/20 rounded-bl-[3rem] opacity-60 group-hover:opacity-100 transition-all duration-500" />
                                             </div>
                                         );
 
@@ -117,7 +108,7 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
                                                 href={item.link}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="block focus:outline-none focus:ring-2 focus:ring-tertiary focus:ring-offset-2 rounded-xl"
+                                                className="block focus:outline-none focus:ring-2 focus:ring-tertiary focus:ring-offset-2 rounded-[2rem]"
                                             >
                                                 {CardContent}
                                             </a>
@@ -141,7 +132,7 @@ export function NewsTicker({ news = [] }: NewsTickerProps) {
                 }
 
                 .animate-vertical-news {
-                    animation: vertical-news-scroll 40s linear infinite;
+                    animation: vertical-news-scroll 45s linear infinite;
                 }
 
                 .ticker-mask {
