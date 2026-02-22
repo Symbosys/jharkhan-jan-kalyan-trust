@@ -24,6 +24,8 @@ export default function IdCardPage() {
     const [dob, setDob] = useState("");
     const [contactNo, setContactNo] = useState("");
     const [designation, setDesignation] = useState("");
+    const [validFrom, setValidFrom] = useState("");
+    const [validTo, setValidTo] = useState("");
     const [photoPreview, setPhotoPreview] = useState<string | null>(null);
     const [showPreview, setShowPreview] = useState(false);
     const [downloading, setDownloading] = useState(false);
@@ -175,6 +177,36 @@ export default function IdCardPage() {
                         />
                     </div>
 
+                    {/* Validity Period */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="validFrom" className="flex items-center gap-2 text-sm font-medium">
+                                <Calendar className="w-4 h-4 text-muted-foreground" />
+                                Valid From
+                            </Label>
+                            <Input
+                                id="validFrom"
+                                type="date"
+                                value={validFrom}
+                                onChange={(e) => setValidFrom(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="validTo" className="flex items-center gap-2 text-sm font-medium">
+                                <Calendar className="w-4 h-4 text-muted-foreground" />
+                                Valid To
+                            </Label>
+                            <Input
+                                id="validTo"
+                                type="date"
+                                value={validTo}
+                                onChange={(e) => setValidTo(e.target.value)}
+                                className="h-11"
+                            />
+                        </div>
+                    </div>
+
                     {/* Photo Upload */}
                     <div className="space-y-2">
                         <Label htmlFor="photo" className="flex items-center gap-2 text-sm font-medium">
@@ -241,6 +273,8 @@ export default function IdCardPage() {
                                     dob={dob}
                                     contactNo={contactNo}
                                     designation={designation}
+                                    validFrom={validFrom}
+                                    validTo={validTo}
                                     photoUrl={photoPreview!}
                                 />
                             </div>
@@ -271,10 +305,12 @@ interface IdCardDesignProps {
     dob: string;
     contactNo: string;
     designation: string;
+    validFrom: string;
+    validTo: string;
     photoUrl: string;
 }
 
-function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: IdCardDesignProps) {
+function IdCardDesign({ cardRef, name, dob, contactNo, designation, validFrom, validTo, photoUrl }: IdCardDesignProps) {
     return (
         <div
             ref={cardRef}
@@ -434,13 +470,14 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                 </div>
                 <div
                     style={{
-                        fontSize: 19, // Increased from 18
+                        fontSize: 16,
                         fontWeight: 900,
-                        color: "#0A5F2C", // Green location text
+                        color: "#0A5F2C",
                         letterSpacing: "0.2px",
+                        textTransform: "uppercase",
                     }}
                 >
-                    Ranchi-Jharkhand
+                    Valid: {validFrom ? new Date(validFrom).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : "DD-MM-YYYY"} To {validTo ? new Date(validTo).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : "DD-MM-YYYY"}
                 </div>
             </div>
 
@@ -478,13 +515,13 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             <div
                 style={{
                     position: "absolute",
-                    top: 480,
+                    top: 465,
                     left: 25,
                     right: 15,
                     zIndex: 5,
                     display: "flex",
                     flexDirection: "column",
-                    gap: 12, // Reduced slightly to fit bigger fonts
+                    gap: 10, // Reduced slightly to fit bigger fonts
                 }}
             >
                 {/* Fixed Labels perfectly aligned */}
@@ -514,7 +551,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             <div
                 style={{
                     position: "absolute",
-                    bottom: 45,
+                    bottom: 38,
                     right: 25,
                     zIndex: 10,
                     display: "flex",
@@ -578,7 +615,8 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                         letterSpacing: "0.2px",
                     }}
                 >
-                    Opp. Bank of India Street, Kokar, Ranchi-834001
+                    KHAJMUNDA, CHICKNADSH, HIRODIH
+                    GIRIDIH-815314
                 </span>
             </div>
         </div>
