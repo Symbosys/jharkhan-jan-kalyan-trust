@@ -388,8 +388,8 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             >
                 <div
                     style={{
-                        width: 95,
-                        height: 95,
+                        width: 120, // Increased from 95
+                        height: 120, // Increased from 95
                         borderRadius: "50%",
                         backgroundColor: "#fff",
                         border: "3px solid #D6B75B", // Thin gold border
@@ -412,7 +412,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             <div
                 style={{
                     position: "absolute",
-                    top: 215,
+                    top: 220, // Pushed down slightly to account for bigger logo
                     left: 0,
                     width: "100%",
                     textAlign: "center",
@@ -421,19 +421,20 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             >
                 <div
                     style={{
-                        fontSize: 22,
+                        fontSize: 24, // Increased from 22
                         fontWeight: 900,
                         color: "#BA9B38", // Gold text
                         letterSpacing: "-0.2px",
                         transform: "scaleY(1.3)", // Stretch vertically slightly
                         marginBottom: 10,
+                        marginTop: 10,
                     }}
                 >
                     JHARKHAND JAN KALYAN TRUST
                 </div>
                 <div
                     style={{
-                        fontSize: 18,
+                        fontSize: 19, // Increased from 18
                         fontWeight: 900,
                         color: "#0A5F2C", // Green location text
                         letterSpacing: "0.2px",
@@ -483,29 +484,29 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     zIndex: 5,
                     display: "flex",
                     flexDirection: "column",
-                    gap: 12,
+                    gap: 12, // Reduced slightly to fit bigger fonts
                 }}
             >
                 {/* Fixed Labels perfectly aligned */}
                 <div style={{ display: "flex", alignItems: "baseline" }}>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>Name</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{name}</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 145, flexShrink: 0 }}>Name</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{name}</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "baseline" }}>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>DOB</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{dob}</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 145, flexShrink: 0 }}>DOB</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{dob}</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "baseline" }}>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>Contact No.</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contactNo}</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 145, flexShrink: 0 }}>Contact No.</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contactNo}</span>
                 </div>
                 <div style={{ display: "flex", alignItems: "baseline" }}>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 140, flexShrink: 0 }}>Designation</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{designation}</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 145, flexShrink: 0 }}>Designation</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", width: 15 }}>:</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: "#fff", flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{designation}</span>
                 </div>
             </div>
 
@@ -571,7 +572,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
             >
                 <span
                     style={{
-                        fontSize: 13,
+                        fontSize: 14, // Increased from 13
                         fontWeight: 700,
                         color: "#ffffff",
                         letterSpacing: "0.2px",
