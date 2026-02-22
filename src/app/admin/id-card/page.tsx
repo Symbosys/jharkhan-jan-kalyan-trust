@@ -286,10 +286,10 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                 borderRadius: 0, // Using 0 for square print bounds, matching the exact edge-to-edge layout
                 fontFamily: "Arial, Helvetica, sans-serif",
                 userSelect: "none",
-                backgroundColor: "#2B2889", // Base blue background (Layer 0)
+                background: "radial-gradient(ellipse 110% 70% at 50% 65%, #16A54B 0%, #2B2889 65%)", // Green center blending out to blue edges
             }}
         >
-            {/* ── Layer 1: Top Blue Background (formerly Green) ── */}
+            {/* ── Layer 1: Top Green Background ── */}
             <div
                 style={{
                     position: "absolute",
@@ -297,7 +297,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     left: 0,
                     width: "100%",
                     height: 350,
-                    backgroundColor: "#2B2889", // Changed to match base blue
+                    backgroundColor: "#16A54B", // Reverted back to green
                     zIndex: 1,
                 }}
             />
@@ -563,7 +563,7 @@ function IdCardDesign({ cardRef, name, dob, contactNo, designation, photoUrl }: 
                     left: 0,
                     width: "100%",
                     height: 35,
-                    backgroundColor: "#16A54B", // Added green background
+                    backgroundColor: "#2B2889", // Added green background
                     zIndex: 10,
                     display: "flex",
                     alignItems: "center",
