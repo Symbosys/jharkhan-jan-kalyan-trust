@@ -35,7 +35,7 @@ export function BenefitsSection() {
                     {benefits.map((benefit, index) => (
                         <div
                             key={index}
-                            className="group relative p-8 rounded-[2.5rem] bg-background border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+                            className={`group relative p-8 rounded-[2.5rem] ${benefit.bgColor} border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between`}
                         >
                             <div className="space-y-6">
                                 <div className={`h-14 w-14 rounded-2xl ${benefit.bgColor} flex items-center justify-center transition-all duration-500 group-hover:scale-110`}>
@@ -65,7 +65,7 @@ export function BenefitsSection() {
                             </Link>
 
                             {/* Decorative corner element */}
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-[4rem] group-hover:bg-primary/10 transition-all duration-500" />
+                            <div className={`absolute top-0 right-0 w-24 h-24 ${benefit.bgColor} rounded-bl-[4rem] opacity-60 group-hover:opacity-100 transition-all duration-500`} />
                         </div>
                     ))}
 
