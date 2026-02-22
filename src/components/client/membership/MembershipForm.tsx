@@ -41,7 +41,7 @@ import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 
 // ── Constants ──
-const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -102,7 +102,7 @@ const fileSchema = z
             const sizeInBytes = (base64.length * 3) / 4;
             return sizeInBytes <= MAX_FILE_SIZE;
         },
-        { message: "File must be less than 1 MB" }
+        { message: "File must be less than 5 MB" }
     );
 
 const optionalFileSchema = z
@@ -116,7 +116,7 @@ const optionalFileSchema = z
             const sizeInBytes = (base64.length * 3) / 4;
             return sizeInBytes <= MAX_FILE_SIZE;
         },
-        { message: "File must be less than 1 MB" }
+        { message: "File must be less than 5 MB" }
     );
 
 // ── Zod Schema ──
@@ -231,7 +231,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             if (!file) return;
 
             if (file.size > MAX_FILE_SIZE) {
-                toast.error("File too large", { description: "Maximum file size is 1 MB" });
+                toast.error("File too large", { description: "Maximum file size is 5 MB" });
                 return;
             }
 
@@ -587,7 +587,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                             <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
                                 <div>
                                     <h3 className="text-2xl font-black text-foreground tracking-tight">Upload Documents</h3>
-                                    <p className="text-sm text-muted-foreground mt-1">All files must be under 1 MB. Accepted formats: JPG, PNG, PDF.</p>
+                                    <p className="text-sm text-muted-foreground mt-1">All files must be under 5 MB. Accepted formats: JPG, PNG, PDF.</p>
                                 </div>
 
                                 {/* Profile Photo */}
@@ -611,7 +611,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                                         <input type="file" className="hidden" accept="image/*" onChange={handleFileChange("profilePicture")} />
                                                     </label>
                                                     <div className="pt-2 space-y-2">
-                                                        <p className="text-sm text-muted-foreground">Upload a clear passport-size photo. Max 1 MB.</p>
+                                                        <p className="text-sm text-muted-foreground">Upload a clear passport-size photo. Max 5 MB.</p>
                                                         {field.value && (
                                                             <button type="button" onClick={() => form.setValue("profilePicture", "", { shouldValidate: true })} className="text-xs text-red-500 font-bold flex items-center gap-1 hover:underline">
                                                                 <X className="h-3 w-3" /> Remove photo
