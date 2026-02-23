@@ -14,55 +14,49 @@ const features = [
         icon: Users,
         title: "Community Support",
         description: "Building resilient families by providing essential resources, counseling, and grassroots support systems.",
-        accent: "text-primary",
-        iconBg: "bg-primary/10",
-        border: "hover:border-primary/30",
-        glow: "group-hover:shadow-primary/10",
+        slug: "community-support",
+        bgColor: "bg-primary/10",
+        color: "text-primary",
     },
     {
         icon: BookOpen,
         title: "Education & Scholarships",
         description: "Empowering the next generation through free education, digital literacy programs, and merit-based scholarships.",
-        accent: "text-secondary",
-        iconBg: "bg-secondary/10",
-        border: "hover:border-secondary/30",
-        glow: "group-hover:shadow-secondary/10",
+        slug: "education-scholarships",
+        bgColor: "bg-secondary/10",
+        color: "text-secondary",
     },
     {
         icon: HeartHandshake,
         title: "Healthcare Access",
         description: "Delivering free medical camps, maternal care, and preventive health drives directly to remote villages.",
-        accent: "text-tertiary",
-        iconBg: "bg-tertiary/10",
-        border: "hover:border-tertiary/30",
-        glow: "group-hover:shadow-tertiary/10",
+        slug: "healthcare-access",
+        bgColor: "bg-tertiary/10",
+        color: "text-tertiary",
     },
     {
         icon: TreePine,
         title: "Environment & Nature",
         description: "Planting thousands of trees and safeguarding water bodies to ensure a sustainable future for Jharkhand.",
-        accent: "text-green-600",
-        iconBg: "bg-green-500/10",
-        border: "hover:border-green-500/30",
-        glow: "group-hover:shadow-green-500/10",
+        slug: "environment-nature",
+        bgColor: "bg-green-500/10",
+        color: "text-green-600",
     },
     {
         icon: ShieldCheck,
         title: "Women Empowerment",
         description: "Creating safe spaces and skill-building programs that drive financial independence for women.",
-        accent: "text-rose-500",
-        iconBg: "bg-rose-500/10",
-        border: "hover:border-rose-500/30",
-        glow: "group-hover:shadow-rose-500/10",
+        slug: "women-empowerment",
+        bgColor: "bg-rose-500/10",
+        color: "text-rose-500",
     },
     {
         icon: Sparkles,
         title: "Rural Development",
         description: "Infrastructure, sanitation, and livelihood programs that transform villages into thriving, self-sufficient communities.",
-        accent: "text-violet-500",
-        iconBg: "bg-violet-500/10",
-        border: "hover:border-violet-500/30",
-        glow: "group-hover:shadow-violet-500/10",
+        slug: "rural-development",
+        bgColor: "bg-violet-500/10",
+        color: "text-violet-500",
     },
 ];
 
@@ -111,25 +105,34 @@ export function Features() {
                     {features.map((feature) => (
                         <div
                             key={feature.title}
-                            className={`group relative bg-background rounded-[2rem] p-8 border border-border/60 ${feature.border} hover:shadow-2xl ${feature.glow} transition-all duration-500 hover:-translate-y-2 flex flex-col gap-6 overflow-hidden`}
+                            className={`group relative p-8 rounded-[2.5rem] ${feature.bgColor} border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between`}
                         >
-                            {/* Background Decoration */}
-                            <div className={`absolute -top-6 -right-6 h-24 w-24 rounded-full ${feature.iconBg} blur-2xl opacity-0 group-hover:opacity-80 transition-opacity duration-700`} />
+                            <div className="space-y-6">
+                                <div className={`h-14 w-14 rounded-2xl ${feature.bgColor} flex items-center justify-center transition-all duration-500 group-hover:scale-110`}>
+                                    <feature.icon className={`h-7 w-7 ${feature.color}`} />
+                                </div>
 
-                            {/* Icon */}
-                            <div className={`h-14 w-14 rounded-2xl ${feature.iconBg} flex items-center justify-center transition-all duration-500 group-hover:scale-110`}>
-                                <feature.icon className={`h-7 w-7 ${feature.accent}`} />
+                                <div className="space-y-2">
+                                    <h3 className="text-2xl font-black text-foreground leading-tight transition-colors duration-300 group-hover:text-primary">
+                                        {feature.title}
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed font-medium pt-2">
+                                        {feature.description}
+                                    </p>
+                                </div>
                             </div>
 
-                            {/* Content */}
-                            <div className="space-y-3 relative z-10">
-                                <h3 className={`text-xl font-extrabold text-foreground group-hover:${feature.accent} transition-colors duration-300 leading-tight tracking-tight`}>
-                                    {feature.title}
-                                </h3>
-                                <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-                                    {feature.description}
-                                </p>
-                            </div>
+                            {/* Learn More Link */}
+                            <Link
+                                href={`/features/${feature.slug}`}
+                                className={`mt-6 inline-flex items-center gap-2 text-sm font-bold ${feature.color} hover:underline underline-offset-4 transition-all group/link`}
+                            >
+                                Learn More
+                                <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                            </Link>
+
+                            {/* Decorative corner element */}
+                            <div className={`absolute top-0 right-0 w-24 h-24 ${feature.bgColor} rounded-bl-[4rem] opacity-60 group-hover:opacity-100 transition-all duration-500`} />
                         </div>
                     ))}
                 </div>
