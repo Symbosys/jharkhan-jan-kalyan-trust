@@ -572,7 +572,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                             <FormItem className="md:col-span-2">
                                                 <FormLabel className="font-bold">Full Address *</FormLabel>
                                                 <FormControl>
-                                                    <Textarea placeholder="Street, Area, Landmark..." {...field} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 min-h-[100px]" />
+                                                    <Textarea placeholder="Street, Area, Landmark..." {...field} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 min-h-25" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -659,7 +659,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                                     <FormLabel className="font-bold">Upload Document *</FormLabel>
                                                     <FormControl>
                                                         <div className="space-y-2">
-                                                            <label className="flex items-center justify-center w-full h-[42px] rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
+                                                            <label className="flex items-center justify-center w-full h-10.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
                                                                 {field.value ? (
                                                                     <span className="text-sm font-bold text-green-600 flex items-center gap-2"><CheckCircle className="h-4 w-4" /> File selected</span>
                                                                 ) : (
@@ -692,7 +692,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                             <FormLabel className="font-bold">Other Supporting Document <span className="text-muted-foreground font-normal text-xs">(Optional)</span></FormLabel>
                                             <FormControl>
                                                 <div className="space-y-2">
-                                                    <label className="flex items-center justify-center w-full h-[42px] rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
+                                                    <label className="flex items-center justify-center w-full h-10.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
                                                         {field.value ? (
                                                             <span className="text-sm font-bold text-green-600 flex items-center gap-2"><CheckCircle className="h-4 w-4" /> File selected</span>
                                                         ) : (
@@ -861,7 +861,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                                 <FormLabel className="font-bold">Payment Receipt *</FormLabel>
                                                 <FormControl>
                                                     <div className="space-y-2">
-                                                        <label className="flex items-center justify-center w-full h-[42px] rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
+                                                        <label className="flex items-center justify-center w-full h-10.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
                                                             {field.value ? (
                                                                 <span className="text-sm font-bold text-green-600 flex items-center gap-2"><CheckCircle className="h-4 w-4" /> Receipt uploaded</span>
                                                             ) : (
