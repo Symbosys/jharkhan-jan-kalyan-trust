@@ -10,6 +10,12 @@ import {
     PlanDurationType
 } from "../../generated/prisma/client";
 import { calculateExpirationDate } from "@/lib/membership-utils";
+import { sendEmail } from "@/config/email";
+import { 
+    renewalPendingEmailTemplate, 
+    renewalApprovedEmailTemplate, 
+    renewalRejectedEmailTemplate 
+} from "@/constants/membership-renewal-email";
 
 /**
  * Submit a Membership Renewal Request
@@ -34,6 +40,20 @@ export async function submitRenewalRequest(data: {
                 status: "PENDING"
             }
         });
+
+        // Fetch membership & plan to send email
+        const membershipData = await prisma.memberShip.findUnique({
+            where: { id: data.membershipId },
+            include: { plan: true }
+        });
+
+        if (membershipData && membershipData.email) {
+            await sendEmail({
+                to: membershipData.email,
+                subject: "Membership Renewal Request Received | Jharkhand Jan Kalyan Trust",
+                html: renewalPendingEmailTemplate(membershipData.name, membershipData.plan.name)
+            });
+        }
 
         updateTag("membership-renewals");
         return { success: true, data: renewal };
@@ -123,7 +143,7 @@ export async function verifyRenewal(renewalId: number, status: RenewalStatus, ad
             // If the membership is already active, we might want to extend from current expiresAt
             // If it's expired, we extend from today.
             const baseDate = (renewal.membership.expiresAt && renewal.membership.expiresAt > new Date()) 
-                ? renewal.membership.expiresAt 
+                ? (renewal.membership.expiresAt as Date)
                 : new Date();
             
             const newExpiresAt = calculateExpirationDate(renewal.plan.duration, renewal.plan.durationType, baseDate);
@@ -148,6 +168,14 @@ export async function verifyRenewal(renewalId: number, status: RenewalStatus, ad
                     }
                 })
             ]);
+
+            if (renewal.membership.email) {
+                await sendEmail({
+                    to: renewal.membership.email,
+                    subject: "Membership Renewal Approved | Jharkhand Jan Kalyan Trust",
+                    html: renewalApprovedEmailTemplate(renewal.membership.name, renewal.plan.name, newExpiresAt as Date)
+                });
+            }
         } else {
             // Just update renewal status to REJECTED
             await prisma.membershipRenewal.update({
@@ -157,6 +185,14 @@ export async function verifyRenewal(renewalId: number, status: RenewalStatus, ad
                     adminComment
                 }
             });
+
+            if (renewal.membership.email) {
+                await sendEmail({
+                    to: renewal.membership.email,
+                    subject: "Membership Renewal Request Issue | Jharkhand Jan Kalyan Trust",
+                    html: renewalRejectedEmailTemplate(renewal.membership.name, renewal.plan.name, adminComment)
+                });
+            }
         }
 
         updateTag("membership-renewals");

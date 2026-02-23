@@ -4,6 +4,8 @@ import { prisma } from "@/config/prisma";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cacheTag, updateTag } from "next/cache";
 import { DonarStatus, PaymentMode, Prisma } from "../../generated/prisma/client";
+import { sendEmail } from "@/config/email";
+import { donationPendingEmailTemplate, donationVerifiedEmailTemplate } from "@/constants/donation-email";
 
 /**
  * Create a new Donor (Donar)
@@ -41,6 +43,14 @@ export async function createDonar(data: {
                 status: "PENDING",
             },
         });
+
+        if (data.email) {
+            await sendEmail({
+                to: data.email,
+                subject: "Donation Received - Pending Verification | Jharkhand Jan Kalyan Trust",
+                html: donationPendingEmailTemplate(data.name, data.amount)
+            });
+        }
 
         updateTag("donars");
         return { success: true, data: donar };
@@ -141,6 +151,14 @@ export async function updateDonarStatus(id: number, status: DonarStatus) {
             where: { id },
             data: { status }
         });
+
+        if (status === "VERIFIED" && updated.email) {
+            await sendEmail({
+                to: updated.email,
+                subject: "Donation Verified Successfully | Jharkhand Jan Kalyan Trust",
+                html: donationVerifiedEmailTemplate(updated.name, updated.amount)
+            });
+        }
 
         updateTag("donars");
         updateTag(`donar-${id}`);

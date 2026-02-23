@@ -3,6 +3,12 @@
 import { prisma } from "@/config/prisma";
 import { cacheTag, updateTag } from "next/cache";
 import { BookingStatus, Prisma } from "../../generated/prisma/client";
+import { sendEmail } from "@/config/email";
+import { 
+    eventBookingPendingEmailTemplate, 
+    eventBookingConfirmedEmailTemplate, 
+    eventBookingCancelledEmailTemplate 
+} from "@/constants/event-booking-email";
 
 /**
  * Get all event bookings with pagination and filtering
@@ -95,6 +101,12 @@ export async function createBooking(data: {
             }
         }
 
+        const event = await prisma.event.findUnique({
+            where: { id: data.eventId },
+            select: { title: true }
+        });
+        const eventName = event?.title || "Event";
+
         const booking = await prisma.eventBooking.create({
             data: {
                 eventId: data.eventId,
@@ -107,6 +119,14 @@ export async function createBooking(data: {
                 status: "PENDING",
             },
         });
+
+        if (data.email) {
+            await sendEmail({
+                to: data.email,
+                subject: `Booking Request Received for ${eventName} | Jharkhand Jan Kalyan Trust`,
+                html: eventBookingPendingEmailTemplate(data.name, eventName)
+            });
+        }
 
         updateTag("bookings");
         updateTag(`event-bookings-${data.eventId}`);
@@ -124,8 +144,25 @@ export async function updateBookingStatus(id: number, status: BookingStatus) {
     try {
         const updated = await prisma.eventBooking.update({
             where: { id },
-            data: { status }
+            data: { status },
+            include: { event: { select: { title: true } } }
         });
+
+        if (updated.email) {
+            if (status === "CONFIRMED") {
+                await sendEmail({
+                    to: updated.email,
+                    subject: `Booking Confirmed for ${updated.event.title} | Jharkhand Jan Kalyan Trust`,
+                    html: eventBookingConfirmedEmailTemplate(updated.name, updated.event.title)
+                });
+            } else if (status === "CANCELLED") {
+                await sendEmail({
+                    to: updated.email,
+                    subject: `Booking Cancelled for ${updated.event.title} | Jharkhand Jan Kalyan Trust`,
+                    html: eventBookingCancelledEmailTemplate(updated.name, updated.event.title)
+                });
+            }
+        }
 
         updateTag("bookings");
         return { success: true, data: updated };

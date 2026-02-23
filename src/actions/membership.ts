@@ -12,6 +12,11 @@ import {
     Prisma
 } from "../../generated/prisma/client";
 import { calculateExpirationDate } from "@/lib/membership-utils";
+import { sendEmail } from "@/config/email";
+import { 
+    membershipPendingEmailTemplate, 
+    membershipApprovedEmailTemplate 
+} from "@/constants/membership-email";
 
 /**
  * Utility to generate a unique Membership Number
@@ -98,7 +103,16 @@ export async function applyMembership(data: {
                 planId: data.planId,
                 status: "PENDING",
             },
+            include: { plan: true }
         });
+
+        if (data.email) {
+            await sendEmail({
+                to: data.email,
+                subject: "Membership Application Received | Jharkhand Jan Kalyan Trust",
+                html: membershipPendingEmailTemplate(data.name, membership.plan.name, memberShipNumber)
+            });
+        }
 
         updateTag("memberships");
         return { success: true, data: membership };
@@ -267,6 +281,21 @@ export async function updateMembershipStatus(id: number, status: MemberShipStatu
             data,
             include: { plan: true }
         });
+
+        if (updated.email) {
+            if (status === "ACTIVE") {
+                await sendEmail({
+                    to: updated.email,
+                    subject: "Membership Approved! | Jharkhand Jan Kalyan Trust",
+                    html: membershipApprovedEmailTemplate(
+                        updated.name, 
+                        updated.plan.name, 
+                        updated.memberShipNumber, 
+                        updated.expiresAt
+                    )
+                });
+            }
+        }
 
         updateTag("memberships");
         updateTag(`membership-${id}`);
