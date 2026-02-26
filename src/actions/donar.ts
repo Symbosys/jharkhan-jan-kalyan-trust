@@ -17,18 +17,17 @@ export async function createDonar(data: {
     panNumber: string;
     address: string;
     amount: number;
-    donorImage?: string; // base64/path
     paymentMode: PaymentMode;
-    payment: string; // base64/path for proof
+    // Client-side uploaded image data
+    donorImageData?: { url: string; public_id: string };
+    paymentData: { url: string; public_id: string };
 }) {
-    try {
-        // 1. Upload files to Cloudinary
-        const [donorImageRes, paymentRes] = await Promise.all([
-            data.donorImage ? uploadToCloudinary(data.donorImage, "donars") : Promise.resolve(null),
-            uploadToCloudinary(data.payment, "donars")
-        ]);
+    const uploadedPublicIds: string[] = [];
+    if (data.donorImageData?.public_id) uploadedPublicIds.push(data.donorImageData.public_id);
+    if (data.paymentData.public_id) uploadedPublicIds.push(data.paymentData.public_id);
 
-        // 2. Create record
+    try {
+        // 1. Create record
         const donar = await prisma.donar.create({
             data: {
                 name: data.name,
@@ -37,26 +36,41 @@ export async function createDonar(data: {
                 panNumber: data.panNumber,
                 address: data.address,
                 amount: data.amount,
-                donorImage: donorImageRes ? { url: donorImageRes.url, public_id: donorImageRes.public_id } : {},
+                donorImage: data.donorImageData || {},
                 paymentMode: data.paymentMode,
-                payment: { url: paymentRes.url, public_id: paymentRes.public_id },
+                payment: data.paymentData,
                 status: "PENDING",
             },
         });
 
+        // 2. Send Email
         if (data.email) {
-            await sendEmail({
-                to: data.email,
-                subject: "Donation Received - Pending Verification | Jharkhand Jan Kalyan Trust",
-                html: donationPendingEmailTemplate(data.name, data.amount)
-            });
+            try {
+                await sendEmail({
+                    to: data.email,
+                    subject: "Donation Received - Pending Verification | Jharkhand Jan Kalyan Trust",
+                    html: donationPendingEmailTemplate(data.name, data.amount)
+                });
+            } catch (emailError) {
+                // We don't fail the donation if only the email fails
+                console.error("Error sending donation email:", emailError);
+            }
         }
 
         updateTag("donars");
         return { success: true, data: donar };
     } catch (error: any) {
         console.error("Error creating donor:", error);
-        return { success: false, error: error.message };
+
+        // CLEANUP: If anything goes wrong, delete the pre-uploaded images from Cloudinary
+        if (uploadedPublicIds.length > 0) {
+            console.log("Cleaning up uploaded images due to server failure...");
+            await Promise.allSettled(
+                uploadedPublicIds.map(pid => deleteFromCloudinary(pid))
+            );
+        }
+
+        return { success: false, error: error.message || "Failed to create donor record" };
     }
 }
 

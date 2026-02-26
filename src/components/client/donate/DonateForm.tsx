@@ -17,6 +17,7 @@ import {
     Sparkles,
 } from "lucide-react";
 import { createDonar } from "@/actions/donar";
+import { uploadImageClient } from "@/utils/cloudinary-client";
 import {
     Form,
     FormControl,
@@ -152,10 +153,43 @@ export function DonateForm({ paymentDetails }: DonateFormProps) {
 
     const onSubmit = async (values: DonateFormValues) => {
         setIsSubmitting(true);
+        let donorImageData = undefined;
+        let paymentData = undefined;
+
         try {
+            // 1. Upload images to Cloudinary from client side
+
+            // Upload donor photo if provided
+            if (values.donorImage) {
+                try {
+                    donorImageData = await uploadImageClient(values.donorImage, "donars");
+                } catch (err: any) {
+                    toast.error("Failed to upload donor photo: " + err.message);
+                    setIsSubmitting(false);
+                    return;
+                }
+            }
+
+            // Upload payment receipt (required)
+            try {
+                paymentData = await uploadImageClient(values.payment, "donars");
+            } catch (err: any) {
+                toast.error("Failed to upload payment receipt: " + err.message);
+                setIsSubmitting(false);
+                return;
+            }
+
+            // 2. Send payload to server action
             const result = await createDonar({
-                ...values,
+                name: values.name,
+                mobile: values.mobile,
+                email: values.email,
+                panNumber: values.panNumber,
+                address: values.address,
+                amount: values.amount,
                 paymentMode: values.paymentMode as any,
+                donorImageData,
+                paymentData: paymentData!,
             });
 
             if (result.success) {
@@ -164,8 +198,8 @@ export function DonateForm({ paymentDetails }: DonateFormProps) {
             } else {
                 toast.error(result.error || "Failed to submit donation");
             }
-        } catch {
-            toast.error("An unexpected error occurred");
+        } catch (err: any) {
+            toast.error("An unexpected error occurred: " + err.message);
         } finally {
             setIsSubmitting(false);
         }
