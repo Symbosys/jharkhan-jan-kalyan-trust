@@ -19,6 +19,7 @@ import {
     Copy,
 } from "lucide-react";
 import { applyMembership } from "@/actions/membership";
+import { uploadImageClient } from "@/utils/cloudinary-client";
 import {
     Form,
     FormControl,
@@ -260,6 +261,28 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
     const onSubmit = async (values: MembershipFormValues) => {
         setIsSubmitting(true);
         try {
+            // 1. Upload Images to Cloudinary from client side
+
+            let profilePictureData;
+            let documentsData;
+            let otherDocumentsData = undefined;
+            let paymentImageData;
+
+            try {
+                // Sequential uploads for better error management
+                profilePictureData = await uploadImageClient(values.profilePicture, "memberships");
+                documentsData = await uploadImageClient(values.documents, "memberships");
+                if (values.otherDocuments) {
+                    otherDocumentsData = await uploadImageClient(values.otherDocuments, "memberships");
+                }
+                paymentImageData = await uploadImageClient(values.paymentImage, "memberships");
+            } catch (err: any) {
+                toast.error("Image upload failed: " + err.message);
+                setIsSubmitting(false);
+                return;
+            }
+
+            // 2. Send payload to server action
             const result = await applyMembership({
                 ...values,
                 gender: values.gender as any,
@@ -267,6 +290,10 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                 gurdianType: values.gurdianType as any,
                 documentsType: values.documentsType as any,
                 paymentMode: values.paymentMode as any,
+                profilePictureData,
+                documentsData,
+                otherDocumentsData,
+                paymentImageData
             });
 
             if (result.success) {
@@ -276,8 +303,8 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             } else {
                 toast.error(result.error || "Failed to submit application");
             }
-        } catch {
-            toast.error("An unexpected error occurred");
+        } catch (err: any) {
+            toast.error("An unexpected error occurred: " + err.message);
         } finally {
             setIsSubmitting(false);
         }

@@ -56,27 +56,26 @@ export async function applyMembership(data: {
     address: string;
     pinCode: string;
     email: string;
-    profilePicture: string; // base64/path
+    profilePictureData: { url: string; public_id: string };
     documentsType: DocumentType;
-    documents: string; // base64/path
-    otherDocuments?: string; // base64/path
+    documentsData: { url: string; public_id: string };
+    otherDocumentsData?: { url: string; public_id: string };
     paymentMode: PaymentMode;
-    paymentImage: string; // base64/path for receipt
+    paymentImageData: { url: string; public_id: string };
     planId: number;
 }) {
+    const uploadedPublicIds: string[] = [
+        data.profilePictureData.public_id,
+        data.documentsData.public_id,
+        data.paymentImageData.public_id
+    ];
+    if (data.otherDocumentsData?.public_id) uploadedPublicIds.push(data.otherDocumentsData.public_id);
+
     try {
         // 1. Generate Membership Number
         const memberShipNumber = await generateMembershipNumber();
 
-        // 2. Upload Files to Cloudinary
-        const [profileRes, docRes, payRes, otherRes] = await Promise.all([
-            uploadToCloudinary(data.profilePicture, "memberships"),
-            uploadToCloudinary(data.documents, "memberships"),
-            uploadToCloudinary(data.paymentImage, "memberships"),
-            data.otherDocuments ? uploadToCloudinary(data.otherDocuments, "memberships") : Promise.resolve(null)
-        ]);
-
-        // 3. Create Record
+        // 2. Create Record
         const membership = await prisma.memberShip.create({
             data: {
                 name: data.name,
@@ -94,31 +93,46 @@ export async function applyMembership(data: {
                 pinCode: data.pinCode,
                 email: data.email,
                 memberShipNumber,
-                profilePicture: { url: profileRes.url, public_id: profileRes.public_id },
+                profilePicture: data.profilePictureData,
                 documentsType: data.documentsType,
-                documents: { url: docRes.url, public_id: docRes.public_id },
-                otherDocuments: otherRes ? { url: otherRes.url, public_id: otherRes.public_id } : {},
+                documents: data.documentsData,
+                otherDocuments: data.otherDocumentsData || {},
                 paymentMode: data.paymentMode,
-                payment: { url: payRes.url, public_id: payRes.public_id },
+                payment: data.paymentImageData,
                 planId: data.planId,
                 status: "PENDING",
             },
             include: { plan: true }
         });
 
+        // 3. Send Email
         if (data.email) {
-            await sendEmail({
-                to: data.email,
-                subject: "Membership Application Received | Jharkhand Jan Kalyan Trust",
-                html: membershipPendingEmailTemplate(data.name, membership.plan.name, memberShipNumber)
-            });
+            try {
+                await sendEmail({
+                    to: data.email,
+                    subject: "Membership Application Received | Jharkhand Jan Kalyan Trust",
+                    html: membershipPendingEmailTemplate(data.name, membership.plan.name, memberShipNumber)
+                });
+            } catch (emailError) {
+                // Don't fail the whole membership application if only the email fails
+                console.error("Error sending membership application email:", emailError);
+            }
         }
 
         updateTag("memberships");
         return { success: true, data: membership };
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error applying membership:", error);
-        return { success: false, error: "Failed to apply for membership" };
+
+        // CLEANUP: Delete pre-uploaded images from Cloudinary if DB record creation fails
+        if (uploadedPublicIds.length > 0) {
+            console.log("Cleaning up membership images due to server failure...");
+            await Promise.allSettled(
+                uploadedPublicIds.map(pid => deleteFromCloudinary(pid))
+            );
+        }
+
+        return { success: false, error: error.message || "Failed to apply for membership" };
     }
 }
 

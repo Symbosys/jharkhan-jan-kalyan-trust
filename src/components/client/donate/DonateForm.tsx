@@ -89,7 +89,7 @@ const donateSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
     email: z.string().email("Invalid email address"),
     mobile: z.string().regex(/^[0-9]{10}$/, "Enter a valid 10-digit mobile number"),
-    panNumber: z.string().min(1, "PAN number is required").regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, "Enter a valid PAN (e.g., ABCDE1234F)"),
+    panNumber: z.string().min(1, "Aadhar number is required"),
     address: z.string().min(5, "Address must be at least 5 characters"),
     amount: z.number().min(1, "Amount must be at least ₹1"),
     donorImage: optionalFileSchema,
@@ -421,9 +421,9 @@ export function DonateForm({ paymentDetails }: DonateFormProps) {
                                         name="panNumber"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className="font-bold">PAN Number *</FormLabel>
+                                                <FormLabel className="font-bold">Aadhar Number *</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="ABCDE1234F" {...field} onChange={(e) => field.onChange(e.target.value.toUpperCase())} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 uppercase" />
+                                                    <Input placeholder="123456789012" {...field} onChange={(e) => field.onChange(e.target.value.toUpperCase())} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 uppercase" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
