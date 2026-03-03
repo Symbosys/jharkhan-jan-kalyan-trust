@@ -42,7 +42,7 @@ import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 
 // ── Constants ──
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -103,7 +103,7 @@ const fileSchema = z
             const sizeInBytes = (base64.length * 3) / 4;
             return sizeInBytes <= MAX_FILE_SIZE;
         },
-        { message: "File must be less than 5 MB" }
+        { message: "File must be less than 2 MB" }
     );
 
 const optionalFileSchema = z
@@ -117,7 +117,7 @@ const optionalFileSchema = z
             const sizeInBytes = (base64.length * 3) / 4;
             return sizeInBytes <= MAX_FILE_SIZE;
         },
-        { message: "File must be less than 5 MB" }
+        { message: "File must be less than 2 MB" }
     );
 
 // ── Zod Schema ──
@@ -142,9 +142,6 @@ const membershipSchema = z.object({
 
     // Step 3: Documents
     profilePicture: fileSchema,
-    documentsType: z.string().min(1, "Document type is required"),
-    documents: fileSchema,
-    otherDocuments: optionalFileSchema,
 
     // Step 4: Plan & Payment
     planId: z.number("Please select a plan").min(1, "Please select a plan"),
@@ -188,7 +185,7 @@ const STEPS = [
 const STEP_FIELDS: (keyof MembershipFormValues)[][] = [
     ["name", "gender", "dob", "gurdianType", "gurdianName", "profession", "bloodGroup"],
     ["mobile", "email", "aadhaar", "state", "district", "address", "pinCode"],
-    ["profilePicture", "documentsType", "documents", "otherDocuments"],
+    ["profilePicture"],
     ["planId", "paymentMode", "paymentImage"],
 ];
 
@@ -217,9 +214,6 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             address: "",
             pinCode: "",
             profilePicture: "",
-            documentsType: "",
-            documents: "",
-            otherDocuments: "",
             planId: 0,
             paymentMode: "",
             paymentImage: "",
@@ -232,7 +226,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             if (!file) return;
 
             if (file.size > MAX_FILE_SIZE) {
-                toast.error("File too large", { description: "Maximum file size is 5 MB" });
+                toast.error("File too large", { description: "Maximum file size is 2 MB" });
                 return;
             }
 
@@ -271,10 +265,6 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             try {
                 // Sequential uploads for better error management
                 profilePictureData = await uploadImageClient(values.profilePicture, "memberships");
-                documentsData = await uploadImageClient(values.documents, "memberships");
-                if (values.otherDocuments) {
-                    otherDocumentsData = await uploadImageClient(values.otherDocuments, "memberships");
-                }
                 paymentImageData = await uploadImageClient(values.paymentImage, "memberships");
             } catch (err: any) {
                 toast.error("Image upload failed: " + err.message);
@@ -288,11 +278,8 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                 gender: values.gender as any,
                 dob: new Date(values.dob),
                 gurdianType: values.gurdianType as any,
-                documentsType: values.documentsType as any,
                 paymentMode: values.paymentMode as any,
                 profilePictureData,
-                documentsData,
-                otherDocumentsData,
                 paymentImageData
             });
 
@@ -614,7 +601,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                             <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
                                 <div>
                                     <h3 className="text-2xl font-black text-foreground tracking-tight">Upload Documents</h3>
-                                    <p className="text-sm text-muted-foreground mt-1">All files must be under 5 MB. Accepted formats: JPG, PNG, PDF.</p>
+                                    <p className="text-sm text-muted-foreground mt-1">All files must be under 2 MB. Accepted formats: JPG, PNG, PDF.</p>
                                 </div>
 
                                 {/* Profile Photo */}
@@ -645,95 +632,6 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                                             </button>
                                                         )}
                                                     </div>
-                                                </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                {/* ID Document */}
-                                <div className="p-6 rounded-2xl bg-white/20 dark:bg-white/3 border border-white/40 dark:border-white/10 space-y-5">
-                                    <h4 className="text-sm font-black uppercase tracking-widest text-foreground/70">Identity Document</h4>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                        <FormField
-                                            control={form.control}
-                                            name="documentsType"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="font-bold">Document Type *</FormLabel>
-                                                    <Select onValueChange={field.onChange} value={field.value}>
-                                                        <FormControl>
-                                                            <SelectTrigger className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10">
-                                                                <SelectValue placeholder="Select document type" />
-                                                            </SelectTrigger>
-                                                        </FormControl>
-                                                        <SelectContent>
-                                                            {DOCUMENT_TYPES.map((d) => (
-                                                                <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="documents"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="font-bold">Upload Document *</FormLabel>
-                                                    <FormControl>
-                                                        <div className="space-y-2">
-                                                            <label className="flex items-center justify-center w-full h-10.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
-                                                                {field.value ? (
-                                                                    <span className="text-sm font-bold text-green-600 flex items-center gap-2"><CheckCircle className="h-4 w-4" /> File selected</span>
-                                                                ) : (
-                                                                    <span className="flex items-center gap-2 text-muted-foreground text-sm">
-                                                                        <Upload className="h-4 w-4" /> Choose file
-                                                                    </span>
-                                                                )}
-                                                                <input type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange("documents")} />
-                                                            </label>
-                                                            {field.value && (
-                                                                <button type="button" onClick={() => form.setValue("documents", "", { shouldValidate: true })} className="text-xs text-red-500 font-bold flex items-center gap-1 hover:underline">
-                                                                    <X className="h-3 w-3" /> Remove
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Other Documents (optional) */}
-                                <FormField
-                                    control={form.control}
-                                    name="otherDocuments"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-bold">Other Supporting Document <span className="text-muted-foreground font-normal text-xs">(Optional)</span></FormLabel>
-                                            <FormControl>
-                                                <div className="space-y-2">
-                                                    <label className="flex items-center justify-center w-full h-10.5 rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
-                                                        {field.value ? (
-                                                            <span className="text-sm font-bold text-green-600 flex items-center gap-2"><CheckCircle className="h-4 w-4" /> File selected</span>
-                                                        ) : (
-                                                            <span className="flex items-center gap-2 text-muted-foreground text-sm">
-                                                                <Upload className="h-4 w-4" /> Choose file (optional)
-                                                            </span>
-                                                        )}
-                                                        <input type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange("otherDocuments")} />
-                                                    </label>
-                                                    {field.value && (
-                                                        <button type="button" onClick={() => form.setValue("otherDocuments", "", { shouldValidate: true })} className="text-xs text-red-500 font-bold flex items-center gap-1 hover:underline">
-                                                            <X className="h-3 w-3" /> Remove
-                                                        </button>
-                                                    )}
                                                 </div>
                                             </FormControl>
                                             <FormMessage />

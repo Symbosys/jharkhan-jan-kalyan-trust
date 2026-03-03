@@ -57,8 +57,8 @@ export async function applyMembership(data: {
     pinCode: string;
     email: string;
     profilePictureData: { url: string; public_id: string };
-    documentsType: DocumentType;
-    documentsData: { url: string; public_id: string };
+    documentsType?: DocumentType;
+    documentsData?: { url: string; public_id: string };
     otherDocumentsData?: { url: string; public_id: string };
     paymentMode: PaymentMode;
     paymentImageData: { url: string; public_id: string };
@@ -66,10 +66,8 @@ export async function applyMembership(data: {
 }) {
     const uploadedPublicIds: string[] = [
         data.profilePictureData.public_id,
-        data.documentsData.public_id,
         data.paymentImageData.public_id
     ];
-    if (data.otherDocumentsData?.public_id) uploadedPublicIds.push(data.otherDocumentsData.public_id);
 
     try {
         // 1. Generate Membership Number
@@ -94,9 +92,9 @@ export async function applyMembership(data: {
                 email: data.email,
                 memberShipNumber,
                 profilePicture: data.profilePictureData,
-                documentsType: data.documentsType,
-                documents: data.documentsData,
-                otherDocuments: data.otherDocumentsData || {},
+                documentsType: data.documentsType || "AADHAAR",
+                documents: {},
+                otherDocuments: {},
                 paymentMode: data.paymentMode,
                 payment: data.paymentImageData,
                 planId: data.planId,
