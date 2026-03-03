@@ -472,7 +472,7 @@ export default function DonorsPage() {
                             <TableHead className="w-[80px]">Donor</TableHead>
                             <TableHead>Personal Details</TableHead>
                             <TableHead>Contribution</TableHead>
-                            <TableHead>Tax Info (PAN)</TableHead>
+                            <TableHead>Aadhaar</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>

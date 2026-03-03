@@ -534,17 +534,7 @@ export default function MembersPage() {
 
                                 <div className="space-y-4">
                                     <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 font-outfit px-2">Verification Documents</h4>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="space-y-2">
-                                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2">Identity Proof ({selectedMember.documentsType})</span>
-                                            <div className="relative aspect-4/3 rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-700 group cursor-zoom-in bg-white dark:bg-slate-900 shadow-sm">
-                                                {selectedMember.documents?.url ? (
-                                                    <Image src={selectedMember.documents.url} alt="ID Proof" fill className="object-contain p-4 transition-transform group-hover:scale-110" />
-                                                ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600 font-medium italic">Document not found</div>
-                                                )}
-                                            </div>
-                                        </div>
+                                    <div className="grid grid-cols-1 gap-6">
                                         <div className="space-y-2">
                                             <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2">Payment Receipt ({selectedMember.paymentMode.replace(/_/g, " ")})</span>
                                             <div className="relative aspect-4/3 rounded-3xl overflow-hidden border-2 border-slate-200 dark:border-slate-700 group cursor-zoom-in bg-white dark:bg-slate-900 shadow-sm">

@@ -256,10 +256,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
         setIsSubmitting(true);
         try {
             // 1. Upload Images to Cloudinary from client side
-
             let profilePictureData;
-            let documentsData;
-            let otherDocumentsData = undefined;
             let paymentImageData;
 
             try {
@@ -272,9 +269,12 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                 return;
             }
 
+            // Exclude huge base64 strings from payload to avoid NextJs/Vercel Server Action 1MB-4MB crash limits
+            const { profilePicture, paymentImage, ...filteredValues } = values;
+
             // 2. Send payload to server action
             const result = await applyMembership({
-                ...values,
+                ...filteredValues,
                 gender: values.gender as any,
                 dob: new Date(values.dob),
                 gurdianType: values.gurdianType as any,
