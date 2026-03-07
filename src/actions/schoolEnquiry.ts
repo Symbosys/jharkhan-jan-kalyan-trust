@@ -103,6 +103,7 @@ export async function getAllSchoolEnquiries(options?: {
     limit?: number;
     startDate?: Date;
     endDate?: Date;
+    status?: EnquiryStatus;
     search?: string;
 }) {
     "use cache";
@@ -121,7 +122,10 @@ export async function getAllSchoolEnquiries(options?: {
         if (options.endDate) where.createdAt.lte = new Date(options.endDate);
     }
 
-    // Multi-field Search
+    // Status Filter
+    if (options?.status) where.status = options.status;
+
+    // Multi-field Search (including registrationNumber)
     if (options?.search) {
         where.OR = [
             { name: { contains: options.search } },
@@ -129,6 +133,7 @@ export async function getAllSchoolEnquiries(options?: {
             { email: { contains: options.search } },
             { school: { contains: options.search } },
             { board: { contains: options.search } },
+            { registrationNumber: { contains: options.search } },
         ];
     }
 
@@ -188,6 +193,7 @@ export async function updateSchoolEnquiry(
         board?: string;
         photo?: string; // base64
         payment?: string; // base64
+        status?: EnquiryStatus;
     }
 ) {
     try {
@@ -195,6 +201,11 @@ export async function updateSchoolEnquiry(
         if (!existing) throw new Error("School enquiry not found");
 
         const updateData: any = { ...data };
+
+        // Handle Status Update
+        if (data.status) {
+            updateData.status = data.status;
+        }
 
         // Handle Image Updates
         if (data.photo && data.photo.startsWith('data:')) {

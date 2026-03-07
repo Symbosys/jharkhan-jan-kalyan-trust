@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteSchoolEnquiry, getAllSchoolEnquiries } from "@/actions/schoolEnquiry";
+import { deleteSchoolEnquiry, getAllSchoolEnquiries, updateSchoolEnquiry } from "@/actions/schoolEnquiry";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,6 +29,7 @@ import { format } from "date-fns";
 import {
     BookOpen,
     Calendar,
+    CheckCircle,
     Eye,
     GraduationCap,
     Loader2,
@@ -37,7 +38,8 @@ import {
     Search,
     School,
     Trash2,
-    User
+    User,
+    XCircle
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -51,6 +53,8 @@ interface SchoolEnquiry {
     school: string;
     class: string;
     board: string;
+    registrationNumber: string;
+    status: 'PENDING' | 'APPROVED' | 'REJECTED';
     photo: { url: string; public_id: string } | null;
     payment: { url: string; public_id: string } | null;
     createdAt: Date;
@@ -61,14 +65,19 @@ export default function SchoolEnquiriesPage() {
     const [enquiries, setEnquiries] = useState<SchoolEnquiry[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [statusFilter, setStatusFilter] = useState<string>("ALL");
     const [selectedEnquiry, setSelectedEnquiry] = useState<SchoolEnquiry | null>(null);
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
+    const [isUpdating, setIsUpdating] = useState<number | null>(null);
 
     const fetchEnquiries = async () => {
         setLoading(true);
         try {
-            const data = await getAllSchoolEnquiries({ search });
+            const data = await getAllSchoolEnquiries({ 
+                search,
+                status: statusFilter !== "ALL" ? statusFilter as any : undefined
+            });
             setEnquiries(data.enquiries as any);
         } catch (error) {
             console.error("Fetch school enquiries error:", error);
@@ -83,7 +92,7 @@ export default function SchoolEnquiriesPage() {
             fetchEnquiries();
         }, 500);
         return () => clearTimeout(timer);
-    }, [search]);
+    }, [search, statusFilter]);
 
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure you want to delete this school enquiry?")) return;
@@ -109,15 +118,34 @@ export default function SchoolEnquiriesPage() {
         setIsDetailOpen(true);
     };
 
+    const handleStatusUpdate = async (id: number, status: 'APPROVED' | 'REJECTED') => {
+        if (!confirm(`Are you sure you want to ${status.toLowerCase()} this registration?`)) return;
+
+        setIsUpdating(id);
+        try {
+            const res = await updateSchoolEnquiry(id, { status: status as any });
+            if (res.success) {
+                toast.success(`Registration ${status.toLowerCase()} successfully`);
+                fetchEnquiries();
+            } else {
+                toast.error(res.error || `Failed to ${status.toLowerCase()} registration`);
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred");
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
     return (
         <div className="p-6 max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight text-foreground font-outfit">
-                        School Enquiries
+                        GK Competition Registrations
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Manage school admission enquiries and student information requests.
+                        Manage GK competition registrations and participant information.
                     </p>
                 </div>
             </div>
@@ -125,19 +153,38 @@ export default function SchoolEnquiriesPage() {
             <Card className="border-border shadow-sm overflow-hidden bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
                 <CardHeader className="border-b border-border bg-slate-50/50 dark:bg-slate-950/50">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div className="relative max-w-sm w-full">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                placeholder="Search by name, email, school..."
-                                className="pl-9 bg-background border-border"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
+                        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+                            <div className="relative flex-1">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    placeholder="Search by name, email, reg number..."
+                                    className="pl-9 bg-background border-border"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                            </div>
+                            <select 
+                                className="px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm"
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                            >
+                                <option value="ALL">All Status</option>
+                                <option value="PENDING">Pending</option>
+                                <option value="APPROVED">Approved</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="px-3 py-1 bg-background font-medium text-muted-foreground border-border">
-                                {enquiries.length} Enquiries Found
-                            </Badge>
+                            <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="px-3 py-1 bg-background font-medium text-muted-foreground border-border">
+                                    {enquiries.length} Registrations Found
+                                </Badge>
+                                {statusFilter !== "ALL" && (
+                                    <Badge variant="secondary" className="px-3 py-1 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50">
+                                        {statusFilter} Only
+                                    </Badge>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </CardHeader>
@@ -151,9 +198,9 @@ export default function SchoolEnquiriesPage() {
                             <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
                                 <GraduationCap className="h-6 w-6 text-muted-foreground" />
                             </div>
-                            <h3 className="text-lg font-semibold text-foreground">No school enquiries found</h3>
+                            <h3 className="text-lg font-semibold text-foreground">No registrations found</h3>
                             <p className="text-sm text-muted-foreground max-w-sm mt-1">
-                                No students have submitted school enquiries yet or your search criteria didn't match.
+                                No participants have registered yet or your search criteria didn't match.
                             </p>
                         </div>
                     ) : (
@@ -161,16 +208,23 @@ export default function SchoolEnquiriesPage() {
                             <Table>
                                 <TableHeader>
                                     <TableRow className="bg-muted/50 hover:bg-muted/50 border-border">
-                                        <TableHead className="w-[200px] font-semibold text-foreground">Student</TableHead>
-                                        <TableHead className="w-[250px] font-semibold text-foreground">Contact Details</TableHead>
-                                        <TableHead className="w-[200px] font-semibold text-foreground">School Info</TableHead>
+                                        <TableHead className="w-[150px] font-semibold text-foreground">Reg Number</TableHead>
+                                        <TableHead className="w-[200px] font-semibold text-foreground">Participant</TableHead>
+                                        <TableHead className="w-[200px] font-semibold text-foreground">Contact Details</TableHead>
+                                        <TableHead className="w-[150px] font-semibold text-foreground">School Info</TableHead>
+                                        <TableHead className="w-[100px] font-semibold text-foreground">Status</TableHead>
                                         <TableHead className="w-[150px] font-semibold text-foreground text-right">Submitted On</TableHead>
-                                        <TableHead className="w-[100px] text-right font-semibold text-foreground">Actions</TableHead>
+                                        <TableHead className="w-[150px] text-right font-semibold text-foreground">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                     {enquiries.map((enquiry) => (
                                         <TableRow key={enquiry.id} className="group hover:bg-muted/30 transition-colors border-border">
+                                            <TableCell>
+                                                <Badge variant="outline" className="font-mono text-sm">
+                                                    {enquiry.registrationNumber}
+                                                </Badge>
+                                            </TableCell>
                                             <TableCell>
                                                 <div className="flex items-center gap-3">
                                                     {enquiry.photo ? (
@@ -215,6 +269,17 @@ export default function SchoolEnquiriesPage() {
                                                     </div>
                                                 </div>
                                             </TableCell>
+                                            <TableCell>
+                                                <Badge 
+                                                    variant={
+                                                        enquiry.status === 'PENDING' ? 'secondary' : 
+                                                        enquiry.status === 'APPROVED' ? 'default' : 'destructive'
+                                                    }
+                                                    className="capitalize"
+                                                >
+                                                    {enquiry.status.toLowerCase()}
+                                                </Badge>
+                                            </TableCell>
                                             <TableCell className="text-right">
                                                 <div className="flex flex-col items-end gap-0.5">
                                                     <span className="text-sm text-foreground font-medium flex items-center gap-1.5">
@@ -227,7 +292,39 @@ export default function SchoolEnquiriesPage() {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <div className="flex justify-end gap-2">
+                                                <div className="flex justify-end gap-1">
+                                                    {enquiry.status === 'PENDING' && (
+                                                        <>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 text-muted-foreground hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20"
+                                                                disabled={isUpdating === enquiry.id}
+                                                                onClick={() => handleStatusUpdate(enquiry.id, 'APPROVED')}
+                                                                title="Approve registration"
+                                                            >
+                                                                {isUpdating === enquiry.id ? (
+                                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                                ) : (
+                                                                    <CheckCircle className="h-4 w-4" />
+                                                                )}
+                                                            </Button>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                                                disabled={isUpdating === enquiry.id}
+                                                                onClick={() => handleStatusUpdate(enquiry.id, 'REJECTED')}
+                                                                title="Reject registration"
+                                                            >
+                                                                {isUpdating === enquiry.id ? (
+                                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                                ) : (
+                                                                    <XCircle className="h-4 w-4" />
+                                                                )}
+                                                            </Button>
+                                                        </>
+                                                    )}
                                                     <Button
                                                         variant="ghost"
                                                         size="icon"
@@ -266,10 +363,10 @@ export default function SchoolEnquiriesPage() {
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold font-outfit text-foreground flex items-center gap-2">
                             <GraduationCap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                            School Enquiry Details
+                            GK Competition Registration Details
                         </DialogTitle>
                         <DialogDescription className="text-muted-foreground">
-                            Student enquiry received on {selectedEnquiry && format(new Date(selectedEnquiry.createdAt), "MMMM dd, yyyy")}
+                            Registration received on {selectedEnquiry && format(new Date(selectedEnquiry.createdAt), "MMMM dd, yyyy")}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -277,7 +374,25 @@ export default function SchoolEnquiriesPage() {
                         <div className="space-y-6 pt-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-1">
-                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Student Name</p>
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Registration Number</p>
+                                    <Badge variant="outline" className="font-mono text-lg px-3 py-1">
+                                        {selectedEnquiry.registrationNumber}
+                                    </Badge>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</p>
+                                    <Badge 
+                                        variant={
+                                            selectedEnquiry.status === 'PENDING' ? 'secondary' : 
+                                            selectedEnquiry.status === 'APPROVED' ? 'default' : 'destructive'
+                                        }
+                                        className="capitalize text-sm px-3 py-1"
+                                    >
+                                        {selectedEnquiry.status.toLowerCase()}
+                                    </Badge>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Participant Name</p>
                                     <p className="text-sm font-medium text-foreground flex items-center gap-2">
                                         <User className="h-4 w-4 text-blue-500" /> {selectedEnquiry.name}
                                     </p>
@@ -295,7 +410,7 @@ export default function SchoolEnquiriesPage() {
                                     </p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">School Name</p>
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">School/Institution</p>
                                     <p className="text-sm font-medium text-foreground flex items-center gap-2">
                                         <School className="h-4 w-4 text-blue-500" /> {selectedEnquiry.school}
                                     </p>
@@ -320,7 +435,7 @@ export default function SchoolEnquiriesPage() {
                                     <div className="flex gap-4">
                                         {selectedEnquiry.photo && (
                                             <div className="flex flex-col items-center gap-2">
-                                                <p className="text-xs text-muted-foreground">Student Photo</p>
+                                                <p className="text-xs text-muted-foreground">Participant Photo</p>
                                                 <div className="relative h-24 w-24 rounded-lg overflow-hidden border border-border">
                                                     <Image
                                                         src={selectedEnquiry.photo.url}
@@ -354,9 +469,37 @@ export default function SchoolEnquiriesPage() {
                         <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setIsDetailOpen(false)}>
                             Back to List
                         </Button>
+                        {selectedEnquiry && selectedEnquiry.status === 'PENDING' && (
+                            <div className="flex gap-2 flex-1">
+                                <Button
+                                    variant="default"
+                                    className="flex-1 gap-2 bg-green-600 hover:bg-green-700"
+                                    onClick={() => {
+                                        if (selectedEnquiry) {
+                                            handleStatusUpdate(selectedEnquiry.id, 'APPROVED');
+                                            setIsDetailOpen(false);
+                                        }
+                                    }}
+                                >
+                                    <CheckCircle className="h-4 w-4" /> Approve
+                                </Button>
+                                <Button
+                                    variant="destructive"
+                                    className="flex-1 gap-2"
+                                    onClick={() => {
+                                        if (selectedEnquiry) {
+                                            handleStatusUpdate(selectedEnquiry.id, 'REJECTED');
+                                            setIsDetailOpen(false);
+                                        }
+                                    }}
+                                >
+                                    <XCircle className="h-4 w-4" /> Reject
+                                </Button>
+                            </div>
+                        )}
                         <Button
-                            variant="destructive"
-                            className="flex-1 sm:flex-none gap-2 hover:bg-red-600 dark:bg-red-900/80 dark:hover:bg-red-900 transition-colors"
+                            variant="outline"
+                            className="flex-1 sm:flex-none gap-2"
                             onClick={() => {
                                 if (selectedEnquiry) {
                                     handleDelete(selectedEnquiry.id);
@@ -364,7 +507,7 @@ export default function SchoolEnquiriesPage() {
                                 }
                             }}
                         >
-                            <Trash2 className="h-4 w-4" /> Delete Enquiry
+                            <Trash2 className="h-4 w-4" /> Delete Registration
                         </Button>
                     </DialogFooter>
                 </DialogContent>

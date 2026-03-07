@@ -378,5 +378,6 @@ model SchoolEnquiry {
 
 enum EnquiryStatus {
   PENDING
-  VERIFIED
+  APPROVED
+  REJECTED
 }
