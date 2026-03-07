@@ -368,7 +368,15 @@ model SchoolEnquiry {
   board       String
   photo       Json?
   payment     Json?
+  registrationNumber String @unique @default("NOT PROVIDED")
+
+  status      EnquiryStatus @default(PENDING)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum EnquiryStatus {
+  PENDING
+  VERIFIED
 }

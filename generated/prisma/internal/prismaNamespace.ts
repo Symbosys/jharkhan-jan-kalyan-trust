@@ -1918,6 +1918,8 @@ export const SchoolEnquiryScalarFieldEnum = {
   board: 'board',
   photo: 'photo',
   payment: 'payment',
+  registrationNumber: 'registrationNumber',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2138,7 +2140,8 @@ export const SchoolEnquiryOrderByRelevanceFieldEnum = {
   email: 'email',
   school: 'school',
   class: 'class',
-  board: 'board'
+  board: 'board',
+  registrationNumber: 'registrationNumber'
 } as const
 
 export type SchoolEnquiryOrderByRelevanceFieldEnum = (typeof SchoolEnquiryOrderByRelevanceFieldEnum)[keyof typeof SchoolEnquiryOrderByRelevanceFieldEnum]
@@ -2287,6 +2290,13 @@ export type EnumBookingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'RenewalStatus'
  */
 export type EnumRenewalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RenewalStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EnquiryStatus'
+ */
+export type EnumEnquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnquiryStatus'>
     
 
 

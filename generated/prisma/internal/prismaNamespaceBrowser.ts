@@ -357,6 +357,8 @@ export const SchoolEnquiryScalarFieldEnum = {
   board: 'board',
   photo: 'photo',
   payment: 'payment',
+  registrationNumber: 'registrationNumber',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -577,7 +579,8 @@ export const SchoolEnquiryOrderByRelevanceFieldEnum = {
   email: 'email',
   school: 'school',
   class: 'class',
-  board: 'board'
+  board: 'board',
+  registrationNumber: 'registrationNumber'
 } as const
 
 export type SchoolEnquiryOrderByRelevanceFieldEnum = (typeof SchoolEnquiryOrderByRelevanceFieldEnum)[keyof typeof SchoolEnquiryOrderByRelevanceFieldEnum]

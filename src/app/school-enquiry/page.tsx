@@ -6,9 +6,9 @@ import { getPaymentDetails } from "@/actions/payment";
 import { GraduationCap, BookOpen, Users, Award, IndianRupee } from "lucide-react";
 
 export const metadata = {
-    title: "School Enquiry | Jharkhand Jan Kalyan Trust",
+    title: "GK Competition Registration | Jharkhand Jan Kalyan Trust",
     description:
-        "Submit your school enquiry for admission support, scholarships, and educational assistance programs.",
+        "Register for the GK competition and showcase your knowledge. Submit your registration details and join our educational initiatives.",
 };
 
 const FEATURES = [
@@ -74,11 +74,11 @@ export default async function SchoolEnquiryPage() {
                         </div>
 
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-linear-to-r from-foreground via-foreground/80 to-foreground/50 mb-6 drop-shadow-sm">
-                            School Enquiry.
+                            GK Competition.
                         </h1>
 
                         <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto font-medium leading-relaxed">
-                            Looking for educational support? Fill out the enquiry form and our team will get back to you with guidance on admissions, scholarships, and more.
+                            Ready to showcase your knowledge? Register for our GK competition and join other talented participants in this exciting educational event.
                         </p>
                     </div>
                 </section>
@@ -116,10 +116,10 @@ export default async function SchoolEnquiryPage() {
                                 <div className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/20 space-y-3">
                                     <div className="flex items-center gap-2">
                                         <IndianRupee className="h-5 w-5 text-blue-600" />
-                                        <h4 className="text-sm font-black text-blue-700 dark:text-blue-400">Processing Fee: ₹501</h4>
+                                        <h4 className="text-sm font-black text-blue-700 dark:text-blue-400">Registration Fee: ₹50</h4>
                                     </div>
                                     <p className="text-xs text-muted-foreground leading-relaxed">
-                                        A processing fee of ₹501 is applicable for submitting your school enquiry. Please make the payment before filling the form.
+                                        A registration fee of ₹50 is applicable for participating in the GK competition. Please make the payment before filling the registration form.
                                     </p>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@ export default async function SchoolEnquiryPage() {
                                 Need Help?
                             </h3>
                             <p className="text-muted-foreground text-sm leading-relaxed max-w-2xl mx-auto">
-                                If you have any questions about the admission process, scholarships, or our educational programs, feel free to reach out to us. Our team is here to help you every step of the way.
+                                If you have any questions about the GK competition, registration process, or our educational initiatives, feel free to reach out to us. Our team is here to assist you every step of the way.
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
                                 <div className="space-y-2">

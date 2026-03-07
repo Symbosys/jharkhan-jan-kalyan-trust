@@ -149,3 +149,11 @@ export const RenewalStatus = {
 } as const
 
 export type RenewalStatus = (typeof RenewalStatus)[keyof typeof RenewalStatus]
+
+
+export const EnquiryStatus = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED'
+} as const
+
+export type EnquiryStatus = (typeof EnquiryStatus)[keyof typeof EnquiryStatus]

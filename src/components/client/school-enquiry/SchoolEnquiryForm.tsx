@@ -11,6 +11,7 @@ import {
     Upload,
     X,
     Sparkles,
+    Copy,
 } from "lucide-react";
 import { createSchoolEnquiry } from "@/actions/schoolEnquiry";
 import { uploadImageClient } from "@/utils/cloudinary-client";
@@ -121,7 +122,7 @@ type SchoolEnquiryFormValues = z.infer<typeof schoolEnquirySchema>;
 
 export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
+    const [submitted, setSubmitted] = useState<{ success: boolean; registrationNumber?: string }>({ success: false });
 
     const form = useForm<SchoolEnquiryFormValues>({
         resolver: zodResolver(schoolEnquirySchema),
@@ -199,11 +200,11 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                 paymentData,
             });
 
-            if (result.success) {
-                setSubmitted(true);
-                toast.success("Enquiry submitted successfully! We will contact you soon.");
+            if (result.success && result.data) {
+                setSubmitted({ success: true, registrationNumber: result.data.registrationNumber });
+                toast.success("Registration successful! Your 6-digit registration number: " + result.data.registrationNumber);
             } else {
-                toast.error(result.error || "Failed to submit enquiry");
+                toast.error(result.error || "Failed to register for competition");
             }
         } catch (err: any) {
             toast.error("An unexpected error occurred: " + err.message);
@@ -213,7 +214,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
     };
 
     // ── Success Screen ──
-    if (submitted) {
+    if (submitted.success) {
         return (
             <div className="text-center py-20 space-y-8 animate-in fade-in duration-500">
                 <div className="relative inline-block">
@@ -223,19 +224,47 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                     </div>
                 </div>
                 <h2 className="text-4xl md:text-5xl font-black text-foreground tracking-tight">
-                    Enquiry Submitted! 🎓
+                    Registration Successful! 🎓
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                    Thank you for your enquiry. Our team will review your application and contact you soon.
+                    Thank you for registering for the GK competition. Our team will review your application and contact you with further details.
                 </p>
-                <div className="inline-block px-8 py-4 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-xl shadow-xl">
+                
+                {/* Registration Number Display */}
+                <div className="inline-block px-8 py-6 rounded-2xl bg-white/40 dark:bg-white/5 border border-white/60 dark:border-white/10 backdrop-blur-xl shadow-xl space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground block">
+                        Registration Number
+                    </span>
+                    <div className="flex items-center justify-center gap-3">
+                        <span className="text-4xl font-black text-primary tracking-wider">
+                            {submitted.registrationNumber}
+                        </span>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                navigator.clipboard.writeText(submitted.registrationNumber || '');
+                                toast.success("Registration number copied!");
+                            }}
+                            className="p-2 rounded-lg hover:bg-primary/10 transition-colors text-muted-foreground hover:text-primary"
+                            title="Copy registration number"
+                        >
+                            <Copy className="h-5 w-5" />
+                        </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                        6-digit registration number for your records
+                    </p>
+                </div>
+                
+                <div className="inline-block px-8 py-4 rounded-2xl bg-white/20 dark:bg-white/5 border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-lg">
                     <span className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground block mb-1">
-                        Your Details
+                        Participant Details
                     </span>
                     <span className="text-xl font-black text-primary">{form.getValues("name")}</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                    A confirmation email will be sent to your email address.
+                
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                    Please save your registration number for future reference. A confirmation email with competition details has been sent to your email address.
                 </p>
             </div>
         );
@@ -248,8 +277,8 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                     <GraduationCap className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                    <h3 className="text-xl font-black text-foreground tracking-tight">School Enquiry Form</h3>
-                    <p className="text-xs text-muted-foreground">Fill in your details to get started</p>
+                    <h3 className="text-xl font-black text-foreground tracking-tight">GK Competition Registration</h3>
+                    <p className="text-xs text-muted-foreground">Fill in your details to register for the competition</p>
                 </div>
             </div>
 
@@ -266,7 +295,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                     <FormItem>
                                         <FormLabel className="font-bold">Full Name *</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Student's full name" {...field} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" />
+                                            <Input placeholder="Participant's full name" {...field} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -303,9 +332,9 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                 name="school"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="font-bold">School Name *</FormLabel>
+                                        <FormLabel className="font-bold">School/Institution *</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="Enter school name" {...field} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" />
+                                            <Input placeholder="Enter school or institution name" {...field} className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -368,7 +397,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                 name="photo"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="font-bold">Student Photo <span className="text-muted-foreground font-normal text-xs">(Optional)</span></FormLabel>
+                                        <FormLabel className="font-bold">Participant Photo <span className="text-muted-foreground font-normal text-xs">(Optional)</span></FormLabel>
                                         <FormControl>
                                             <div className="space-y-2">
                                                 <label className="flex items-center justify-center w-full h-[42px] rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
@@ -398,7 +427,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                 name="payment"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="font-bold">Payment Receipt * <span className="text-muted-foreground font-normal text-xs">(₹501 Processing Fee)</span></FormLabel>
+                                        <FormLabel className="font-bold">Payment Receipt * <span className="text-muted-foreground font-normal text-xs">(₹50 Registration Fee)</span></FormLabel>
                                         <FormControl>
                                             <div className="space-y-2">
                                                 <label className="flex items-center justify-center w-full h-[42px] rounded-xl border border-white/40 dark:border-white/10 bg-white/50 dark:bg-black/20 hover:bg-white/60 dark:hover:bg-black/30 transition-colors cursor-pointer px-4">
@@ -436,8 +465,8 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                 <Loader2 className="h-5 w-5 animate-spin" /> Submitting...
                             </>
                         ) : (
-                            <>
-                                <Sparkles className="h-5 w-5" /> Submit Enquiry
+    <>
+                                <Sparkles className="h-5 w-5" /> Register Now
                             </>
                         )}
                     </Button>

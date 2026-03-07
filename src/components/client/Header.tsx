@@ -58,7 +58,7 @@ export function Header() {
                 { label: "Upcoming Events", href: "/events", icon: Calendar },
                 // { label: "Our Solutions", href: "/solutions", icon: Globe },
                 // { label: "Key Challenges", href: "/challenges", icon: Smartphone },
-                { label: "School Enquiry", href: "/school-enquiry", icon: School },
+                { label: "Student Portal", href: "/school-enquiry", icon: School },
                 { label: "Register Your Problem", href: "/register-complaint", icon: ShieldAlert },
             ],
         },

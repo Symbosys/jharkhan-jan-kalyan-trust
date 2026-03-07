@@ -42,6 +42,8 @@ export type SchoolEnquiryMinAggregateOutputType = {
   school: string | null
   class: string | null
   board: string | null
+  registrationNumber: string | null
+  status: $Enums.EnquiryStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +56,8 @@ export type SchoolEnquiryMaxAggregateOutputType = {
   school: string | null
   class: string | null
   board: string | null
+  registrationNumber: string | null
+  status: $Enums.EnquiryStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -68,6 +72,8 @@ export type SchoolEnquiryCountAggregateOutputType = {
   board: number
   photo: number
   payment: number
+  registrationNumber: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -90,6 +96,8 @@ export type SchoolEnquiryMinAggregateInputType = {
   school?: true
   class?: true
   board?: true
+  registrationNumber?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,6 +110,8 @@ export type SchoolEnquiryMaxAggregateInputType = {
   school?: true
   class?: true
   board?: true
+  registrationNumber?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -116,6 +126,8 @@ export type SchoolEnquiryCountAggregateInputType = {
   board?: true
   photo?: true
   payment?: true
+  registrationNumber?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -217,6 +229,8 @@ export type SchoolEnquiryGroupByOutputType = {
   board: string
   photo: runtime.JsonValue | null
   payment: runtime.JsonValue | null
+  registrationNumber: string
+  status: $Enums.EnquiryStatus
   createdAt: Date
   updatedAt: Date
   _count: SchoolEnquiryCountAggregateOutputType | null
@@ -254,6 +268,8 @@ export type SchoolEnquiryWhereInput = {
   board?: Prisma.StringFilter<"SchoolEnquiry"> | string
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
+  registrationNumber?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
 }
@@ -268,6 +284,8 @@ export type SchoolEnquiryOrderByWithRelationInput = {
   board?: Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _relevance?: Prisma.SchoolEnquiryOrderByRelevanceInput
@@ -275,6 +293,7 @@ export type SchoolEnquiryOrderByWithRelationInput = {
 
 export type SchoolEnquiryWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  registrationNumber?: string
   AND?: Prisma.SchoolEnquiryWhereInput | Prisma.SchoolEnquiryWhereInput[]
   OR?: Prisma.SchoolEnquiryWhereInput[]
   NOT?: Prisma.SchoolEnquiryWhereInput | Prisma.SchoolEnquiryWhereInput[]
@@ -286,9 +305,10 @@ export type SchoolEnquiryWhereUniqueInput = Prisma.AtLeast<{
   board?: Prisma.StringFilter<"SchoolEnquiry"> | string
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
+  status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
-}, "id">
+}, "id" | "registrationNumber">
 
 export type SchoolEnquiryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -300,6 +320,8 @@ export type SchoolEnquiryOrderByWithAggregationInput = {
   board?: Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolEnquiryCountOrderByAggregateInput
@@ -322,6 +344,8 @@ export type SchoolEnquiryScalarWhereWithAggregatesInput = {
   board?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   photo?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
+  registrationNumber?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
+  status?: Prisma.EnumEnquiryStatusWithAggregatesFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolEnquiry"> | Date | string
 }
@@ -335,6 +359,8 @@ export type SchoolEnquiryCreateInput = {
   board: string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: string
+  status?: $Enums.EnquiryStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -349,6 +375,8 @@ export type SchoolEnquiryUncheckedCreateInput = {
   board: string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: string
+  status?: $Enums.EnquiryStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -362,6 +390,8 @@ export type SchoolEnquiryUpdateInput = {
   board?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,6 +406,8 @@ export type SchoolEnquiryUncheckedUpdateInput = {
   board?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -390,6 +422,8 @@ export type SchoolEnquiryCreateManyInput = {
   board: string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: string
+  status?: $Enums.EnquiryStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -403,6 +437,8 @@ export type SchoolEnquiryUpdateManyMutationInput = {
   board?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -417,6 +453,8 @@ export type SchoolEnquiryUncheckedUpdateManyInput = {
   board?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -437,6 +475,8 @@ export type SchoolEnquiryCountOrderByAggregateInput = {
   board?: Prisma.SortOrder
   photo?: Prisma.SortOrder
   payment?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -453,6 +493,8 @@ export type SchoolEnquiryMaxOrderByAggregateInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -465,12 +507,18 @@ export type SchoolEnquiryMinOrderByAggregateInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  registrationNumber?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SchoolEnquirySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+}
+
+export type EnumEnquiryStatusFieldUpdateOperationsInput = {
+  set?: $Enums.EnquiryStatus
 }
 
 
@@ -485,6 +533,8 @@ export type SchoolEnquirySelect<ExtArgs extends runtime.Types.Extensions.Interna
   board?: boolean
   photo?: boolean
   payment?: boolean
+  registrationNumber?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["schoolEnquiry"]>
@@ -501,11 +551,13 @@ export type SchoolEnquirySelectScalar = {
   board?: boolean
   photo?: boolean
   payment?: boolean
+  registrationNumber?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "photo" | "payment" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
+export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "photo" | "payment" | "registrationNumber" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
 
 export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SchoolEnquiry"
@@ -520,6 +572,8 @@ export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.Inter
     board: string
     photo: runtime.JsonValue | null
     payment: runtime.JsonValue | null
+    registrationNumber: string
+    status: $Enums.EnquiryStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["schoolEnquiry"]>
@@ -900,6 +954,8 @@ export interface SchoolEnquiryFieldRefs {
   readonly board: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly photo: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
   readonly payment: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
+  readonly registrationNumber: Prisma.FieldRef<"SchoolEnquiry", 'String'>
+  readonly status: Prisma.FieldRef<"SchoolEnquiry", 'EnquiryStatus'>
   readonly createdAt: Prisma.FieldRef<"SchoolEnquiry", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SchoolEnquiry", 'DateTime'>
 }

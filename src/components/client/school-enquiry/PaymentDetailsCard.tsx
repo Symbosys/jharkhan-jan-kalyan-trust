@@ -29,7 +29,7 @@ export function PaymentDetailsCard({ payment }: { payment: PaymentDetails }) {
                     </div>
                     <div>
                         <h4 className="text-sm font-black uppercase tracking-widest text-white">Payment Details</h4>
-                        <p className="text-[10px] text-white/70 font-medium">Transfer ₹501 to the account below</p>
+                        <p className="text-[10px] text-white/70 font-medium">Transfer ₹50 to the account below</p>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@ export function PaymentDetailsCard({ payment }: { payment: PaymentDetails }) {
                         </div>
                         <div className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
                             <QrCode className="h-3.5 w-3.5 text-primary" />
-                            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Scan QR to Pay ₹501</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-primary">Scan QR to Pay ₹50</span>
                         </div>
                     </div>
                 )}

@@ -3,7 +3,9 @@
 import { prisma } from "@/config/prisma";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cacheTag, updateTag } from "next/cache";
-import { Prisma } from "../../generated/prisma/client";
+import { Prisma, EnquiryStatus } from "../../generated/prisma/client";
+import { sendEmail } from "@/config/email";
+import { schoolEnquiryEmailTemplate } from "@/constants/school-enquiry-email";
 
 /**
  * Create a new School Enquiry
@@ -24,7 +26,29 @@ export async function createSchoolEnquiry(data: {
     if (data.paymentData?.public_id) uploadedPublicIds.push(data.paymentData.public_id);
 
     try {
-        // 1. Create record
+        // 1. Generate unique 6-digit registration number
+        let registrationNumber = "";
+        let isUnique = false;
+        let attempts = 0;
+        const maxAttempts = 100; // Prevent infinite loop
+        
+        while (!isUnique && attempts < maxAttempts) {
+            registrationNumber = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit number between 100000-999999
+            const existing = await prisma.schoolEnquiry.findUnique({
+                where: { registrationNumber }
+            });
+            
+            if (!existing) {
+                isUnique = true;
+            }
+            attempts++;
+        }
+        
+        if (!isUnique) {
+            throw new Error("Unable to generate unique registration number. Please try again.");
+        }
+
+        // 2. Create record
         const enquiry = await prisma.schoolEnquiry.create({
             data: {
                 name: data.name,
@@ -33,10 +57,26 @@ export async function createSchoolEnquiry(data: {
                 school: data.school,
                 class: data.class,
                 board: data.board,
+                registrationNumber: registrationNumber!,
+                status: "PENDING" as EnquiryStatus,
                 photo: data.photoData || undefined,
                 payment: data.paymentData || undefined,
             },
         });
+
+        // 3. Send confirmation email
+        if (data.email) {
+            try {
+                await sendEmail({
+                    to: data.email,
+                    subject: `School Enquiry Confirmation - Reg No: ${registrationNumber} | Jharkhand Jan Kalyan Trust`,
+                    html: schoolEnquiryEmailTemplate(data.name, registrationNumber!, data.school)
+                });
+            } catch (emailError) {
+                // We don't fail the enquiry if only the email fails
+                console.error("Error sending school enquiry email:", emailError);
+            }
+        }
 
         updateTag("school-enquiries");
         return { success: true, data: enquiry };

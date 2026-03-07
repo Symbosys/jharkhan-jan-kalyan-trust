@@ -515,6 +515,23 @@ export type EnumRenewalStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumRenewalStatusFilter<$PrismaModel>
 }
 
+export type EnumEnquiryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.EnquiryStatus | Prisma.EnumEnquiryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.EnquiryStatus[]
+  notIn?: $Enums.EnquiryStatus[]
+  not?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel> | $Enums.EnquiryStatus
+}
+
+export type EnumEnquiryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EnquiryStatus | Prisma.EnumEnquiryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.EnquiryStatus[]
+  notIn?: $Enums.EnquiryStatus[]
+  not?: Prisma.NestedEnumEnquiryStatusWithAggregatesFilter<$PrismaModel> | $Enums.EnquiryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -977,6 +994,23 @@ export type NestedEnumRenewalStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumRenewalStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumRenewalStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumEnquiryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.EnquiryStatus | Prisma.EnumEnquiryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.EnquiryStatus[]
+  notIn?: $Enums.EnquiryStatus[]
+  not?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel> | $Enums.EnquiryStatus
+}
+
+export type NestedEnumEnquiryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EnquiryStatus | Prisma.EnumEnquiryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.EnquiryStatus[]
+  notIn?: $Enums.EnquiryStatus[]
+  not?: Prisma.NestedEnumEnquiryStatusWithAggregatesFilter<$PrismaModel> | $Enums.EnquiryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
 }
 
 
