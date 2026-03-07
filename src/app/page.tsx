@@ -4,6 +4,7 @@ import { AboutSection } from "@/components/server/home/AboutSection";
 import { ActivitySection } from "@/components/server/home/ActivitySection";
 import { BenefitsSection } from "@/components/server/home/BenefitsSection";
 import { NewsSection } from "@/components/server/home/NewsSection";
+import { GKCompetitionSection } from "@/components/server/home/GKCompetitionSection";
 import { Features } from "@/components/server/home/Features";
 import { TeamSection } from "@/components/server/home/TeamSection";
 
@@ -27,6 +28,7 @@ export default async function Home() {
       <main className="flex-1">
         <HeroSlider sliders={sliders} />
         <NewsSection />
+        <GKCompetitionSection />
         <AboutSection />
         <ActivitySection />
         <BenefitsSection />

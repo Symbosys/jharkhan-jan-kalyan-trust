@@ -53,6 +53,7 @@ interface SchoolEnquiry {
     school: string;
     class: string;
     board: string;
+    aadhaar: string;
     registrationNumber: string;
     status: 'PENDING' | 'APPROVED' | 'REJECTED';
     photo: { url: string; public_id: string } | null;
@@ -413,6 +414,12 @@ export default function SchoolEnquiriesPage() {
                                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">School/Institution</p>
                                     <p className="text-sm font-medium text-foreground flex items-center gap-2">
                                         <School className="h-4 w-4 text-blue-500" /> {selectedEnquiry.school}
+                                    </p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Aadhaar Number</p>
+                                    <p className="text-sm font-medium text-foreground">
+                                        {selectedEnquiry.aadhaar}
                                     </p>
                                 </div>
                                 <div className="space-y-1">

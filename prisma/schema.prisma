@@ -366,6 +366,8 @@ model SchoolEnquiry {
   school      String
   class       String
   board       String
+  aadhaar     String @default("NOT PROVIDED")
+
   photo       Json?
   payment     Json?
   registrationNumber String @unique @default("NOT PROVIDED")

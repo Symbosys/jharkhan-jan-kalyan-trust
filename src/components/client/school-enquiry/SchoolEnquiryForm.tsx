@@ -32,7 +32,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 
 interface PaymentDetails {
     id: number;
@@ -114,6 +114,7 @@ const schoolEnquirySchema = z.object({
     school: z.string().min(2, "School name must be at least 2 characters"),
     class: z.string().min(1, "Class is required"),
     board: z.string().min(1, "Board is required"),
+    aadhaar: z.string().min(12, "Aadhaar number must be 12 digits").max(12, "Aadhaar number must be 12 digits"),
     photo: optionalFileSchema,
     payment: fileSchema,
 });
@@ -134,6 +135,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
             school: "",
             class: "",
             board: "",
+            aadhaar: "",
             photo: "",
             payment: "",
         },
@@ -196,6 +198,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                 school: values.school,
                 class: values.class,
                 board: values.board,
+                aadhaar: values.aadhaar,
                 photoData,
                 paymentData,
             });
@@ -380,6 +383,24 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="aadhaar"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="font-bold">Aadhaar Number *</FormLabel>
+                                        <FormControl>
+                                            <Input 
+                                                placeholder="123456789012" 
+                                                {...field} 
+                                                onChange={(e) => field.onChange(e.target.value.replace(/\D/g, '').slice(0, 12))}
+                                                className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                            />
+                                        </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}

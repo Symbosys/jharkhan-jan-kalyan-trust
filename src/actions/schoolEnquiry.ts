@@ -17,6 +17,7 @@ export async function createSchoolEnquiry(data: {
     school: string;
     class: string;
     board: string;
+    aadhaar: string;
     // Client-side uploaded image data
     photoData?: { url: string; public_id: string };
     paymentData?: { url: string; public_id: string };
@@ -57,6 +58,7 @@ export async function createSchoolEnquiry(data: {
                 school: data.school,
                 class: data.class,
                 board: data.board,
+                aadhaar: data.aadhaar,
                 registrationNumber: registrationNumber!,
                 status: "PENDING" as EnquiryStatus,
                 photo: data.photoData || undefined,
@@ -175,6 +177,22 @@ export async function getSchoolEnquiryById(id: number) {
         });
     } catch (error: any) {
         console.error("Error fetching school enquiry:", error);
+        throw new Error(error.message);
+    }
+}
+
+/**
+ * Get School Enquiry by Registration Number
+ */
+export async function getSchoolEnquiryByRegistrationNumber(registrationNumber: string) {
+    "use cache";
+    cacheTag(`school-enquiry-reg-${registrationNumber}`, "school-enquiries");
+    try {
+        return await prisma.schoolEnquiry.findUnique({
+            where: { registrationNumber },
+        });
+    } catch (error: any) {
+        console.error("Error fetching school enquiry by registration number:", error);
         throw new Error(error.message);
     }
 }

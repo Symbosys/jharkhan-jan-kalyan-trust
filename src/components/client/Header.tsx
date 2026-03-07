@@ -59,6 +59,7 @@ export function Header() {
                 // { label: "Our Solutions", href: "/solutions", icon: Globe },
                 // { label: "Key Challenges", href: "/challenges", icon: Smartphone },
                 { label: "Student Portal", href: "/school-enquiry", icon: School },
+                { label: "Download Registration Card", href: "/download-gk-card", icon: School },
                 { label: "Register Your Problem", href: "/register-complaint", icon: ShieldAlert },
             ],
         },

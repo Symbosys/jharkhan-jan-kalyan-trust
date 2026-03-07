@@ -355,6 +355,7 @@ export const SchoolEnquiryScalarFieldEnum = {
   school: 'school',
   class: 'class',
   board: 'board',
+  aadhaar: 'aadhaar',
   photo: 'photo',
   payment: 'payment',
   registrationNumber: 'registrationNumber',
@@ -580,6 +581,7 @@ export const SchoolEnquiryOrderByRelevanceFieldEnum = {
   school: 'school',
   class: 'class',
   board: 'board',
+  aadhaar: 'aadhaar',
   registrationNumber: 'registrationNumber'
 } as const
 

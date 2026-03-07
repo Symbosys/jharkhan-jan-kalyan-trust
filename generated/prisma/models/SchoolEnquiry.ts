@@ -42,6 +42,7 @@ export type SchoolEnquiryMinAggregateOutputType = {
   school: string | null
   class: string | null
   board: string | null
+  aadhaar: string | null
   registrationNumber: string | null
   status: $Enums.EnquiryStatus | null
   createdAt: Date | null
@@ -56,6 +57,7 @@ export type SchoolEnquiryMaxAggregateOutputType = {
   school: string | null
   class: string | null
   board: string | null
+  aadhaar: string | null
   registrationNumber: string | null
   status: $Enums.EnquiryStatus | null
   createdAt: Date | null
@@ -70,6 +72,7 @@ export type SchoolEnquiryCountAggregateOutputType = {
   school: number
   class: number
   board: number
+  aadhaar: number
   photo: number
   payment: number
   registrationNumber: number
@@ -96,6 +99,7 @@ export type SchoolEnquiryMinAggregateInputType = {
   school?: true
   class?: true
   board?: true
+  aadhaar?: true
   registrationNumber?: true
   status?: true
   createdAt?: true
@@ -110,6 +114,7 @@ export type SchoolEnquiryMaxAggregateInputType = {
   school?: true
   class?: true
   board?: true
+  aadhaar?: true
   registrationNumber?: true
   status?: true
   createdAt?: true
@@ -124,6 +129,7 @@ export type SchoolEnquiryCountAggregateInputType = {
   school?: true
   class?: true
   board?: true
+  aadhaar?: true
   photo?: true
   payment?: true
   registrationNumber?: true
@@ -227,6 +233,7 @@ export type SchoolEnquiryGroupByOutputType = {
   school: string
   class: string
   board: string
+  aadhaar: string
   photo: runtime.JsonValue | null
   payment: runtime.JsonValue | null
   registrationNumber: string
@@ -266,6 +273,7 @@ export type SchoolEnquiryWhereInput = {
   school?: Prisma.StringFilter<"SchoolEnquiry"> | string
   class?: Prisma.StringFilter<"SchoolEnquiry"> | string
   board?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  aadhaar?: Prisma.StringFilter<"SchoolEnquiry"> | string
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringFilter<"SchoolEnquiry"> | string
@@ -282,6 +290,7 @@ export type SchoolEnquiryOrderByWithRelationInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  aadhaar?: Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
@@ -303,6 +312,7 @@ export type SchoolEnquiryWhereUniqueInput = Prisma.AtLeast<{
   school?: Prisma.StringFilter<"SchoolEnquiry"> | string
   class?: Prisma.StringFilter<"SchoolEnquiry"> | string
   board?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  aadhaar?: Prisma.StringFilter<"SchoolEnquiry"> | string
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
@@ -318,6 +328,7 @@ export type SchoolEnquiryOrderByWithAggregationInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  aadhaar?: Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
@@ -342,6 +353,7 @@ export type SchoolEnquiryScalarWhereWithAggregatesInput = {
   school?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   class?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   board?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
+  aadhaar?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   photo?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
@@ -357,6 +369,7 @@ export type SchoolEnquiryCreateInput = {
   school: string
   class: string
   board: string
+  aadhaar?: string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
@@ -373,6 +386,7 @@ export type SchoolEnquiryUncheckedCreateInput = {
   school: string
   class: string
   board: string
+  aadhaar?: string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
@@ -388,6 +402,7 @@ export type SchoolEnquiryUpdateInput = {
   school?: Prisma.StringFieldUpdateOperationsInput | string
   class?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -404,6 +419,7 @@ export type SchoolEnquiryUncheckedUpdateInput = {
   school?: Prisma.StringFieldUpdateOperationsInput | string
   class?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -420,6 +436,7 @@ export type SchoolEnquiryCreateManyInput = {
   school: string
   class: string
   board: string
+  aadhaar?: string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
@@ -435,6 +452,7 @@ export type SchoolEnquiryUpdateManyMutationInput = {
   school?: Prisma.StringFieldUpdateOperationsInput | string
   class?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -451,6 +469,7 @@ export type SchoolEnquiryUncheckedUpdateManyInput = {
   school?: Prisma.StringFieldUpdateOperationsInput | string
   class?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -473,6 +492,7 @@ export type SchoolEnquiryCountOrderByAggregateInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  aadhaar?: Prisma.SortOrder
   photo?: Prisma.SortOrder
   payment?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
@@ -493,6 +513,7 @@ export type SchoolEnquiryMaxOrderByAggregateInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  aadhaar?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -507,6 +528,7 @@ export type SchoolEnquiryMinOrderByAggregateInput = {
   school?: Prisma.SortOrder
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
+  aadhaar?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -531,6 +553,7 @@ export type SchoolEnquirySelect<ExtArgs extends runtime.Types.Extensions.Interna
   school?: boolean
   class?: boolean
   board?: boolean
+  aadhaar?: boolean
   photo?: boolean
   payment?: boolean
   registrationNumber?: boolean
@@ -549,6 +572,7 @@ export type SchoolEnquirySelectScalar = {
   school?: boolean
   class?: boolean
   board?: boolean
+  aadhaar?: boolean
   photo?: boolean
   payment?: boolean
   registrationNumber?: boolean
@@ -557,7 +581,7 @@ export type SchoolEnquirySelectScalar = {
   updatedAt?: boolean
 }
 
-export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "photo" | "payment" | "registrationNumber" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
+export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "aadhaar" | "photo" | "payment" | "registrationNumber" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
 
 export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SchoolEnquiry"
@@ -570,6 +594,7 @@ export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.Inter
     school: string
     class: string
     board: string
+    aadhaar: string
     photo: runtime.JsonValue | null
     payment: runtime.JsonValue | null
     registrationNumber: string
@@ -952,6 +977,7 @@ export interface SchoolEnquiryFieldRefs {
   readonly school: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly class: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly board: Prisma.FieldRef<"SchoolEnquiry", 'String'>
+  readonly aadhaar: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly photo: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
   readonly payment: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
   readonly registrationNumber: Prisma.FieldRef<"SchoolEnquiry", 'String'>
