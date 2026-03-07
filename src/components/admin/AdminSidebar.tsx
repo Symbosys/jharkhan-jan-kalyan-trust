@@ -6,6 +6,7 @@ import {
     CircleAlert,
     CircleHelp,
     CreditCard,
+    GraduationCap,
     Image as ImageIcon,
     LayoutDashboard,
     LogOut,
@@ -160,9 +161,14 @@ const data = {
                     icon: CircleAlert,
                 },
                 {
-                    title: "Enquiries",
+                    title: "General Enquiries",
                     url: "/admin/enquiries",
                     icon: CircleHelp,
+                },
+                {
+                    title: "School Enquiries",
+                    url: "/admin/school-enquiries",
+                    icon: GraduationCap,
                 },
             ],
         },

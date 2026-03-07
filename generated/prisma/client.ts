@@ -124,3 +124,8 @@ export type Enquiry = Prisma.EnquiryModel
  * 
  */
 export type MembershipRenewal = Prisma.MembershipRenewalModel
+/**
+ * Model SchoolEnquiry
+ * 
+ */
+export type SchoolEnquiry = Prisma.SchoolEnquiryModel

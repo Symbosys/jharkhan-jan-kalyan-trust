@@ -1,0 +1,374 @@
+"use client";
+
+import { deleteSchoolEnquiry, getAllSchoolEnquiries } from "@/actions/schoolEnquiry";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardHeader
+} from "@/components/ui/card";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { format } from "date-fns";
+import {
+    BookOpen,
+    Calendar,
+    Eye,
+    GraduationCap,
+    Loader2,
+    Mail,
+    Phone,
+    Search,
+    School,
+    Trash2,
+    User
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import Image from "next/image";
+
+interface SchoolEnquiry {
+    id: number;
+    name: string;
+    mobile: string;
+    email: string;
+    school: string;
+    class: string;
+    board: string;
+    photo: { url: string; public_id: string } | null;
+    payment: { url: string; public_id: string } | null;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export default function SchoolEnquiriesPage() {
+    const [enquiries, setEnquiries] = useState<SchoolEnquiry[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
+    const [selectedEnquiry, setSelectedEnquiry] = useState<SchoolEnquiry | null>(null);
+    const [isDetailOpen, setIsDetailOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState<number | null>(null);
+
+    const fetchEnquiries = async () => {
+        setLoading(true);
+        try {
+            const data = await getAllSchoolEnquiries({ search });
+            setEnquiries(data.enquiries as any);
+        } catch (error) {
+            console.error("Fetch school enquiries error:", error);
+            toast.error("Failed to fetch school enquiries");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            fetchEnquiries();
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [search]);
+
+    const handleDelete = async (id: number) => {
+        if (!confirm("Are you sure you want to delete this school enquiry?")) return;
+
+        setIsDeleting(id);
+        try {
+            const res = await deleteSchoolEnquiry(id);
+            if (res.success) {
+                toast.success("School enquiry deleted successfully");
+                fetchEnquiries();
+            } else {
+                toast.error(res.error || "Failed to delete school enquiry");
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred");
+        } finally {
+            setIsDeleting(null);
+        }
+    };
+
+    const handleViewDetail = (enquiry: SchoolEnquiry) => {
+        setSelectedEnquiry(enquiry);
+        setIsDetailOpen(true);
+    };
+
+    return (
+        <div className="p-6 max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-500">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground font-outfit">
+                        School Enquiries
+                    </h1>
+                    <p className="text-muted-foreground mt-1">
+                        Manage school admission enquiries and student information requests.
+                    </p>
+                </div>
+            </div>
+
+            <Card className="border-border shadow-sm overflow-hidden bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+                <CardHeader className="border-b border-border bg-slate-50/50 dark:bg-slate-950/50">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div className="relative max-w-sm w-full">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                placeholder="Search by name, email, school..."
+                                className="pl-9 bg-background border-border"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="px-3 py-1 bg-background font-medium text-muted-foreground border-border">
+                                {enquiries.length} Enquiries Found
+                            </Badge>
+                        </div>
+                    </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                    {loading && enquiries.length === 0 ? (
+                        <div className="flex h-[400px] items-center justify-center">
+                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        </div>
+                    ) : enquiries.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center p-12 text-center">
+                            <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
+                                <GraduationCap className="h-6 w-6 text-muted-foreground" />
+                            </div>
+                            <h3 className="text-lg font-semibold text-foreground">No school enquiries found</h3>
+                            <p className="text-sm text-muted-foreground max-w-sm mt-1">
+                                No students have submitted school enquiries yet or your search criteria didn't match.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="bg-muted/50 hover:bg-muted/50 border-border">
+                                        <TableHead className="w-[200px] font-semibold text-foreground">Student</TableHead>
+                                        <TableHead className="w-[250px] font-semibold text-foreground">Contact Details</TableHead>
+                                        <TableHead className="w-[200px] font-semibold text-foreground">School Info</TableHead>
+                                        <TableHead className="w-[150px] font-semibold text-foreground text-right">Submitted On</TableHead>
+                                        <TableHead className="w-[100px] text-right font-semibold text-foreground">Actions</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {enquiries.map((enquiry) => (
+                                        <TableRow key={enquiry.id} className="group hover:bg-muted/30 transition-colors border-border">
+                                            <TableCell>
+                                                <div className="flex items-center gap-3">
+                                                    {enquiry.photo ? (
+                                                        <div className="relative h-9 w-9 rounded-full overflow-hidden">
+                                                            <Image
+                                                                src={enquiry.photo.url}
+                                                                alt={enquiry.name}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <div className="h-9 w-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-sm">
+                                                            {enquiry.name.charAt(0).toUpperCase()}
+                                                        </div>
+                                                    )}
+                                                    <span className="font-medium text-foreground">{enquiry.name}</span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className="flex flex-col gap-1">
+                                                    <span className="text-sm flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+                                                        <Mail className="h-3.5 w-3.5 text-blue-400 dark:text-blue-500" /> {enquiry.email}
+                                                    </span>
+                                                    <span className="text-sm flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+                                                        <Phone className="h-3.5 w-3.5 text-emerald-400 dark:text-emerald-500" /> {enquiry.mobile}
+                                                    </span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className="flex flex-col gap-1">
+                                                    <Badge variant="secondary" className="bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50 hover:bg-blue-100 dark:hover:bg-blue-900/60 transition-colors capitalize px-2.5 py-0.5 font-medium">
+                                                        {enquiry.school}
+                                                    </Badge>
+                                                    <div className="flex gap-2">
+                                                        <Badge variant="outline" className="text-xs px-2 py-0.5">
+                                                            Class {enquiry.class}
+                                                        </Badge>
+                                                        <Badge variant="outline" className="text-xs px-2 py-0.5">
+                                                            {enquiry.board}
+                                                        </Badge>
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                <div className="flex flex-col items-end gap-0.5">
+                                                    <span className="text-sm text-foreground font-medium flex items-center gap-1.5">
+                                                        <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
+                                                        {format(new Date(enquiry.createdAt), "dd MMM, yyyy")}
+                                                    </span>
+                                                    <span className="text-xs text-muted-foreground pr-5">
+                                                        {format(new Date(enquiry.createdAt), "hh:mm a")}
+                                                    </span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                <div className="flex justify-end gap-2">
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                                                        onClick={() => handleViewDetail(enquiry)}
+                                                    >
+                                                        <Eye className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                                        disabled={isDeleting === enquiry.id}
+                                                        onClick={() => handleDelete(enquiry.id)}
+                                                    >
+                                                        {isDeleting === enquiry.id ? (
+                                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                                        ) : (
+                                                            <Trash2 className="h-4 w-4" />
+                                                        )}
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+
+            {/* Enquiry Detail Dialog */}
+            <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
+                <DialogContent className="sm:max-w-[700px] border-border bg-background">
+                    <DialogHeader>
+                        <DialogTitle className="text-2xl font-bold font-outfit text-foreground flex items-center gap-2">
+                            <GraduationCap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                            School Enquiry Details
+                        </DialogTitle>
+                        <DialogDescription className="text-muted-foreground">
+                            Student enquiry received on {selectedEnquiry && format(new Date(selectedEnquiry.createdAt), "MMMM dd, yyyy")}
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    {selectedEnquiry && (
+                        <div className="space-y-6 pt-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Student Name</p>
+                                    <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                                        <User className="h-4 w-4 text-blue-500" /> {selectedEnquiry.name}
+                                    </p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email Address</p>
+                                    <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                                        <Mail className="h-4 w-4 text-blue-500" /> {selectedEnquiry.email}
+                                    </p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone Number</p>
+                                    <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                                        <Phone className="h-4 w-4 text-blue-500" /> {selectedEnquiry.mobile}
+                                    </p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">School Name</p>
+                                    <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                                        <School className="h-4 w-4 text-blue-500" /> {selectedEnquiry.school}
+                                    </p>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Class</p>
+                                    <Badge className="bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50">
+                                        <BookOpen className="h-3 w-3 mr-1.5" /> Class {selectedEnquiry.class}
+                                    </Badge>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Board</p>
+                                    <Badge className="bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50">
+                                        {selectedEnquiry.board}
+                                    </Badge>
+                                </div>
+                            </div>
+
+                            {(selectedEnquiry.photo || selectedEnquiry.payment) && (
+                                <div className="space-y-3">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Uploaded Documents</p>
+                                    <div className="flex gap-4">
+                                        {selectedEnquiry.photo && (
+                                            <div className="flex flex-col items-center gap-2">
+                                                <p className="text-xs text-muted-foreground">Student Photo</p>
+                                                <div className="relative h-24 w-24 rounded-lg overflow-hidden border border-border">
+                                                    <Image
+                                                        src={selectedEnquiry.photo.url}
+                                                        alt="Student photo"
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                        {selectedEnquiry.payment && (
+                                            <div className="flex flex-col items-center gap-2">
+                                                <p className="text-xs text-muted-foreground">Payment Proof</p>
+                                                <div className="relative h-24 w-24 rounded-lg overflow-hidden border border-border">
+                                                    <Image
+                                                        src={selectedEnquiry.payment.url}
+                                                        alt="Payment proof"
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    <DialogFooter className="mt-8 gap-3 sm:gap-0 border-t border-border pt-6">
+                        <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setIsDetailOpen(false)}>
+                            Back to List
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            className="flex-1 sm:flex-none gap-2 hover:bg-red-600 dark:bg-red-900/80 dark:hover:bg-red-900 transition-colors"
+                            onClick={() => {
+                                if (selectedEnquiry) {
+                                    handleDelete(selectedEnquiry.id);
+                                    setIsDetailOpen(false);
+                                }
+                            }}
+                        >
+                            <Trash2 className="h-4 w-4" /> Delete Enquiry
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </div>
+    );
+}

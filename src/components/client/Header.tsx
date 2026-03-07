@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon, ShieldAlert } from "lucide-react";
+import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon, ShieldAlert, School } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -58,7 +58,7 @@ export function Header() {
                 { label: "Upcoming Events", href: "/events", icon: Calendar },
                 // { label: "Our Solutions", href: "/solutions", icon: Globe },
                 // { label: "Key Challenges", href: "/challenges", icon: Smartphone },
-                // { label: "Our Projects", href: "/projects", icon: Briefcase },
+                { label: "School Enquiry", href: "/school-enquiry", icon: School },
                 { label: "Register Your Problem", href: "/register-complaint", icon: ShieldAlert },
             ],
         },

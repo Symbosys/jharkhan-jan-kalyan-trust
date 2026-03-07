@@ -67,7 +67,8 @@ export const ModelName = {
   EventBooking: 'EventBooking',
   RegisterComplaint: 'RegisterComplaint',
   Enquiry: 'Enquiry',
-  MembershipRenewal: 'MembershipRenewal'
+  MembershipRenewal: 'MembershipRenewal',
+  SchoolEnquiry: 'SchoolEnquiry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -346,6 +347,23 @@ export const MembershipRenewalScalarFieldEnum = {
 export type MembershipRenewalScalarFieldEnum = (typeof MembershipRenewalScalarFieldEnum)[keyof typeof MembershipRenewalScalarFieldEnum]
 
 
+export const SchoolEnquiryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  mobile: 'mobile',
+  email: 'email',
+  school: 'school',
+  class: 'class',
+  board: 'board',
+  photo: 'photo',
+  payment: 'payment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolEnquiryScalarFieldEnum = (typeof SchoolEnquiryScalarFieldEnum)[keyof typeof SchoolEnquiryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -551,4 +569,16 @@ export const MembershipRenewalOrderByRelevanceFieldEnum = {
 } as const
 
 export type MembershipRenewalOrderByRelevanceFieldEnum = (typeof MembershipRenewalOrderByRelevanceFieldEnum)[keyof typeof MembershipRenewalOrderByRelevanceFieldEnum]
+
+
+export const SchoolEnquiryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  mobile: 'mobile',
+  email: 'email',
+  school: 'school',
+  class: 'class',
+  board: 'board'
+} as const
+
+export type SchoolEnquiryOrderByRelevanceFieldEnum = (typeof SchoolEnquiryOrderByRelevanceFieldEnum)[keyof typeof SchoolEnquiryOrderByRelevanceFieldEnum]
 

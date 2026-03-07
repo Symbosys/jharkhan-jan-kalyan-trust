@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.0
- * Query Engine version: ab56fe763f921d033a6c195e7ddeb3e255bdbb57
+ * Prisma Client JS version: 7.4.1
+ * Query Engine version: 55ae170b1ced7fc6ed07a15f110549408c501bb3
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.0",
-  engine: "ab56fe763f921d033a6c195e7ddeb3e255bdbb57"
+  client: "7.4.1",
+  engine: "55ae170b1ced7fc6ed07a15f110549408c501bb3"
 }
 
 /**
@@ -400,7 +400,8 @@ export const ModelName = {
   EventBooking: 'EventBooking',
   RegisterComplaint: 'RegisterComplaint',
   Enquiry: 'Enquiry',
-  MembershipRenewal: 'MembershipRenewal'
+  MembershipRenewal: 'MembershipRenewal',
+  SchoolEnquiry: 'SchoolEnquiry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal"
+    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1542,6 +1543,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SchoolEnquiry: {
+      payload: Prisma.$SchoolEnquiryPayload<ExtArgs>
+      fields: Prisma.SchoolEnquiryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolEnquiryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolEnquiryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolEnquiryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolEnquiryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>
+        }
+        findMany: {
+          args: Prisma.SchoolEnquiryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>[]
+        }
+        create: {
+          args: Prisma.SchoolEnquiryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>
+        }
+        createMany: {
+          args: Prisma.SchoolEnquiryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.SchoolEnquiryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>
+        }
+        update: {
+          args: Prisma.SchoolEnquiryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolEnquiryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolEnquiryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.SchoolEnquiryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolEnquiryPayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolEnquiryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolEnquiry>
+        }
+        groupBy: {
+          args: Prisma.SchoolEnquiryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolEnquiryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolEnquiryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolEnquiryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1841,6 +1908,23 @@ export const MembershipRenewalScalarFieldEnum = {
 export type MembershipRenewalScalarFieldEnum = (typeof MembershipRenewalScalarFieldEnum)[keyof typeof MembershipRenewalScalarFieldEnum]
 
 
+export const SchoolEnquiryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  mobile: 'mobile',
+  email: 'email',
+  school: 'school',
+  class: 'class',
+  board: 'board',
+  photo: 'photo',
+  payment: 'payment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolEnquiryScalarFieldEnum = (typeof SchoolEnquiryScalarFieldEnum)[keyof typeof SchoolEnquiryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2046,6 +2130,18 @@ export const MembershipRenewalOrderByRelevanceFieldEnum = {
 } as const
 
 export type MembershipRenewalOrderByRelevanceFieldEnum = (typeof MembershipRenewalOrderByRelevanceFieldEnum)[keyof typeof MembershipRenewalOrderByRelevanceFieldEnum]
+
+
+export const SchoolEnquiryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  mobile: 'mobile',
+  email: 'email',
+  school: 'school',
+  class: 'class',
+  board: 'board'
+} as const
+
+export type SchoolEnquiryOrderByRelevanceFieldEnum = (typeof SchoolEnquiryOrderByRelevanceFieldEnum)[keyof typeof SchoolEnquiryOrderByRelevanceFieldEnum]
 
 
 
@@ -2312,6 +2408,7 @@ export type GlobalOmitConfig = {
   registerComplaint?: Prisma.RegisterComplaintOmit
   enquiry?: Prisma.EnquiryOmit
   membershipRenewal?: Prisma.MembershipRenewalOmit
+  schoolEnquiry?: Prisma.SchoolEnquiryOmit
 }
 
 /* Types for Logging */

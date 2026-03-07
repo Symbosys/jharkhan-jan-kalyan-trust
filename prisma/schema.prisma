@@ -355,3 +355,20 @@ enum RenewalStatus {
   APPROVED
   REJECTED
 }
+
+
+
+model SchoolEnquiry {
+  id          Int    @id @default(autoincrement())
+  name        String
+  mobile      String
+  email       String
+  school      String
+  class       String
+  board       String
+  photo       Json?
+  payment     Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
