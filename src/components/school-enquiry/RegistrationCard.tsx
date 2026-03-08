@@ -1,17 +1,13 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import { format } from "date-fns";
-import { Parisienne } from "next/font/google";
-
-const parisienne = Parisienne({ weight: "400", subsets: ["latin"] });
 
 interface RegistrationCardProps {
     participant: {
         name: string;
         registrationNumber: string;
         mobile: string;
+        email?: string;
         school: string;
         class: string;
         board: string;
@@ -22,464 +18,674 @@ interface RegistrationCardProps {
 }
 
 export const RegistrationCard: React.FC<RegistrationCardProps> = ({ participant, cardRef }) => {
-    const registrationDate = format(new Date(participant.createdAt), "dd/MM/yyyy");
-    const competitionDate = "15/04/2026"; // Fixed competition date
-    const competitionLocation = "Ranchi, Jharkhand"; // Fixed location
-    
+    const competitionDate = "15/04/2026";
+    const competitionTime = "10:00 AM - 12:00 PM";
+    const competitionVenue = "Ranchi, Jharkhand";
+
     // Get initials for avatar if no photo
     const getInitials = (name: string) => {
         const names = name.split(' ');
         return names.map(n => n.charAt(0)).join('').toUpperCase().slice(0, 2);
     };
 
+    const borderColor = "#1a1a1a";
+    const headerBg = "#1e3a8a";
+    const labelBg = "#f1f5f9";
+    const fontFamily = "'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+
     return (
         <div
             ref={cardRef}
             style={{
-                width: 1000,
-                height: 700,
-                position: "relative",
-                overflow: "hidden",
-                border: "14px solid #1e40af",
-                backgroundColor: "#f0f9ff",
-                fontFamily: "Georgia, 'Times New Roman', serif",
+                width: 900,
+                minHeight: 1200,
+                backgroundColor: "#ffffff",
+                fontFamily: fontFamily,
                 userSelect: "none",
                 boxSizing: "border-box",
+                padding: 0,
+                margin: 0,
             }}
         >
-            {/* ===== LAYER 1: Bottom-Left Blue Polygon ===== */}
+            {/* ===== OUTER BORDER ===== */}
             <div style={{
-                position: "absolute",
-                left: 0,
-                bottom: 0,
-                width: 320,
-                height: 300,
-                backgroundColor: "#1e3a8a",
-                clipPath: "polygon(0 0, 100% 0, 25% 100%, 0 100%)",
-                zIndex: 1,
-            }} />
-
-            {/* ===== LAYER 2: Top Header Text (100% FIXED) ===== */}
-            <div style={{
-                position: "absolute",
-                top: 40,
-                left: 0,
-                width: "100%",
-                paddingLeft: 420,
-                paddingRight: 20,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 2,
-                boxSizing: "border-box",
-            }}>
-                <span style={{
-                    fontFamily: "'Arial Narrow', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-                    fontSize: 28,
-                    fontWeight: 900,
-                    color: "#0f172a",
-                    letterSpacing: "1px",
-                    textTransform: "uppercase",
-                    whiteSpace: "nowrap",
-                }}>
-                    JHARKHAND JAN KALYAN TRUST
-                </span>
-            </div>
-
-            {/* ===== LAYER 3: Blue Banner ("GK Competition Registration") ===== */}
-            <div style={{
-                position: "absolute",
-                top: 105,
-                left: 0,
-                width: "100%",
-                height: 130,
-                backgroundColor: "#1e3a8a",
-                borderBottom: "7px solid #1a1a1a",
-                zIndex: 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                paddingLeft: 300,
-                boxSizing: "border-box",
-            }}>
-                <span
-                    className={parisienne.className}
-                    style={{
-                        fontSize: 85,
-                        color: "#ffffff",
-                        lineHeight: "1",
-                        textShadow: "3px 3px 6px rgba(0,0,0,0.5)",
-                        marginTop: -10,
-                    }}
-                >
-                    GK Competition
-                </span>
-            </div>
-
-            {/* ===== LAYER 4: Gold Banner ("Registration Card") ===== */}
-            <div style={{
-                position: "absolute",
-                top: 242,
-                left: 0,
-                width: "100%",
-                height: 42,
-                backgroundColor: "#d97706",
-                zIndex: 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                paddingLeft: 340,
-                boxSizing: "border-box",
-            }}>
-                <span
-                    style={{
-                        fontFamily: "Georgia, serif",
-                        fontSize: 30,
-                        fontWeight: "bold",
-                        fontStyle: "italic",
-                        color: "#ffffff",
-                        WebkitTextStroke: "1px #000",
-                        textShadow: "2px 2px 4px rgba(0,0,0,0.4)",
-                        letterSpacing: "1px",
-                    }}
-                >
-                    Registration Card
-                </span>
-            </div>
-
-            {/* ===== LAYER 5: Main Blue Polygon ===== */}
-            <div style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: 440,
-                height: 550,
-                backgroundColor: "#1e40af",
-                clipPath: "polygon(0 0, 100% 0, 36.3% 100%, 0 100%)",
-                zIndex: 10,
-            }} />
-
-            {/* ===== LAYER 6: Logo & Profile Picture inside the Blue Area ===== */}
-            <div style={{
-                position: "absolute",
-                top: 30,
-                left: 35,
-                width: 220,
+                border: `3px solid ${borderColor}`,
+                margin: 10,
+                padding: 0,
+                minHeight: 1170,
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                zIndex: 11,
             }}>
-                <div style={{
-                    position: "absolute",
-                    top: 15,
-                    width: 150,
-                    height: 150,
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(255, 255, 255, 0.9)",
-                    filter: "blur(25px)",
-                    zIndex: 0,
-                }} />
 
+                {/* ===== HEADER SECTION ===== */}
                 <div style={{
-                    width: 140,
-                    height: 140,
-                    borderRadius: "50%",
-                    border: "4px solid #fbbf24",
-                    backgroundColor: "#ffffff",
-                    padding: 5,
-                    position: "relative",
-                    zIndex: 1,
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
+                    justifyContent: "space-between",
+                    padding: "20px 25px",
+                    borderBottom: `2px solid ${borderColor}`,
+                    minHeight: 120,
                 }}>
-                    {participant.photo ? (
+                    {/* Company Logo */}
+                    <div style={{
+                        width: 90,
+                        height: 90,
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                        border: "2px solid #d4a843",
+                        flexShrink: 0,
+                    }}>
                         <img
-                            src={participant.photo.url}
-                            alt={participant.name}
+                            src="/logo/logo.jpeg"
+                            alt="JJKT Logo"
                             style={{
                                 width: "100%",
                                 height: "100%",
                                 objectFit: "cover",
-                                borderRadius: "50%",
                             }}
                         />
-                    ) : (
+                    </div>
+
+                    {/* Center Title */}
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        flex: 1,
+                        gap: 4,
+                    }}>
+                        <span style={{
+                            fontSize: 16,
+                            fontWeight: 700,
+                            color: "#0f172a",
+                            letterSpacing: "1px",
+                            textTransform: "uppercase",
+                        }}>
+                            Jharkhand Jan Kalyan Trust
+                        </span>
+                        <span style={{
+                            fontSize: 32,
+                            fontWeight: 900,
+                            color: headerBg,
+                            letterSpacing: "2px",
+                            textTransform: "uppercase",
+                        }}>
+                            GK Admit Card
+                        </span>
+                    </div>
+
+                    {/* GK Competition Logo + Text */}
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        flexShrink: 0,
+                        gap: 4,
+                    }}>
                         <div style={{
-                            width: "100%",
-                            height: "100%",
+                            width: 70,
+                            height: 70,
                             borderRadius: "50%",
-                            backgroundColor: "#3b82f6",
+                            overflow: "hidden",
+                            border: "2px solid #1e3a8a",
+                        }}>
+                            <img
+                                src="/gk/gk-logo.jpeg"
+                                alt="GK Logo"
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                }}
+                            />
+                        </div>
+                        <span style={{
+                            fontSize: 13,
+                            fontWeight: 800,
+                            color: "#dc2626",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.5px",
+                            textAlign: "center",
+                            lineHeight: "1.2",
+                        }}>
+                            GK Competition<br />Exam 2026
+                        </span>
+                    </div>
+                </div>
+
+                {/* ===== MAIN DETAILS TABLE ===== */}
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    borderBottom: `2px solid ${borderColor}`,
+                }}>
+                    {/* Top section: Fields + Photo */}
+                    <div style={{ display: "flex" }}>
+                        {/* Left: Fields */}
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                        }}>
+                            {/* Student Name */}
+                            <div style={{
+                                display: "flex",
+                                borderBottom: `1px solid ${borderColor}`,
+                                minHeight: 48,
+                            }}>
+                                <div style={{
+                                    width: 220,
+                                    backgroundColor: labelBg,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    borderRight: `1px solid ${borderColor}`,
+                                    fontWeight: 700,
+                                    fontSize: 15,
+                                    color: "#0f172a",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.5px",
+                                }}>
+                                    Student Name
+                                </div>
+                                <div style={{
+                                    flex: 1,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    fontSize: 16,
+                                    fontWeight: 600,
+                                    color: "#0f172a",
+                                    borderRight: `1px solid ${borderColor}`,
+                                }}>
+                                    {participant.name}
+                                </div>
+                            </div>
+
+                            {/* Registration Number */}
+                            <div style={{
+                                display: "flex",
+                                borderBottom: `1px solid ${borderColor}`,
+                                minHeight: 48,
+                            }}>
+                                <div style={{
+                                    width: 220,
+                                    backgroundColor: labelBg,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    borderRight: `1px solid ${borderColor}`,
+                                    fontWeight: 700,
+                                    fontSize: 15,
+                                    color: "#0f172a",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.5px",
+                                }}>
+                                    Registration Number
+                                </div>
+                                <div style={{
+                                    flex: 1,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    fontSize: 16,
+                                    fontWeight: 700,
+                                    color: "#dc2626",
+                                    fontFamily: "monospace",
+                                    borderRight: `1px solid ${borderColor}`,
+                                }}>
+                                    {participant.registrationNumber}
+                                </div>
+                            </div>
+
+                            {/* Email Id */}
+                            <div style={{
+                                display: "flex",
+                                borderBottom: `1px solid ${borderColor}`,
+                                minHeight: 48,
+                            }}>
+                                <div style={{
+                                    width: 220,
+                                    backgroundColor: labelBg,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    borderRight: `1px solid ${borderColor}`,
+                                    fontWeight: 700,
+                                    fontSize: 15,
+                                    color: "#0f172a",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.5px",
+                                }}>
+                                    Email ID
+                                </div>
+                                <div style={{
+                                    flex: 1,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    fontSize: 15,
+                                    fontWeight: 600,
+                                    color: "#0f172a",
+                                    borderRight: `1px solid ${borderColor}`,
+                                }}>
+                                    {participant.email || "—"}
+                                </div>
+                            </div>
+
+                            {/* Mobile No. */}
+                            <div style={{
+                                display: "flex",
+                                borderBottom: `1px solid ${borderColor}`,
+                                minHeight: 48,
+                            }}>
+                                <div style={{
+                                    width: 220,
+                                    backgroundColor: labelBg,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    borderRight: `1px solid ${borderColor}`,
+                                    fontWeight: 700,
+                                    fontSize: 15,
+                                    color: "#0f172a",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.5px",
+                                }}>
+                                    Mobile No.
+                                </div>
+                                <div style={{
+                                    flex: 1,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px 14px",
+                                    fontSize: 16,
+                                    fontWeight: 600,
+                                    color: "#0f172a",
+                                    borderRight: `1px solid ${borderColor}`,
+                                }}>
+                                    {participant.mobile}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right: Photo */}
+                        <div style={{
+                            width: 200,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
+                            padding: 15,
+                            borderBottom: `1px solid ${borderColor}`,
                         }}>
-                            <span style={{
-                                fontSize: 48,
-                                fontWeight: "bold",
-                                color: "white",
-                                fontFamily: "Arial, sans-serif",
+                            <div style={{
+                                width: 160,
+                                height: 170,
+                                border: `2px solid ${borderColor}`,
+                                borderRadius: 4,
+                                overflow: "hidden",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                backgroundColor: "#f8fafc",
                             }}>
-                                {getInitials(participant.name)}
-                            </span>
+                                {participant.photo ? (
+                                    <img
+                                        src={participant.photo.url}
+                                        alt={participant.name}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                ) : (
+                                    <div style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        backgroundColor: "#e2e8f0",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                        gap: 5,
+                                    }}>
+                                        <span style={{
+                                            fontSize: 42,
+                                            fontWeight: "bold",
+                                            color: "#64748b",
+                                            fontFamily: "Arial, sans-serif",
+                                        }}>
+                                            {getInitials(participant.name)}
+                                        </span>
+                                        <span style={{
+                                            fontSize: 11,
+                                            color: "#94a3b8",
+                                            fontWeight: 600,
+                                            textTransform: "uppercase",
+                                            letterSpacing: "1px",
+                                        }}>
+                                            Photo
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    )}
-                </div>
+                    </div>
 
-                <span style={{
-                    color: "#fbbf24",
-                    fontSize: 13,
-                    fontWeight: 800,
-                    textAlign: "center",
-                    marginTop: 18,
-                    zIndex: 1,
-                    letterSpacing: "0.5px",
-                }}>
-                    JHARKHAND JAN KALYAN TRUST
-                </span>
-            </div>
+                    {/* Full-width rows below the photo area */}
 
-            {/* ===== LAYER 7: Participant Details ===== */}
-            <div style={{
-                position: "absolute",
-                top: 300,
-                left: 360,
-                right: 40,
-                display: "flex",
-                flexDirection: "column",
-                gap: 20,
-                zIndex: 20,
-            }}>
-                {/* Registration Number */}
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                }}>
-                    <span style={{
-                        fontFamily: "Georgia, serif",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#0f172a",
-                        minWidth: 180,
-                    }}>
-                        Registration No:
-                    </span>
+                    {/* Student of School */}
                     <div style={{
-                        flex: 1,
-                        borderBottom: "2px solid #0f172a",
-                        paddingBottom: 2,
+                        display: "flex",
+                        borderBottom: `1px solid ${borderColor}`,
+                        minHeight: 48,
                     }}>
-                        <span style={{ 
-                            fontSize: 20, 
-                            fontWeight: "bold", 
-                            color: "#dc2626",
-                            fontFamily: "monospace"
+                        <div style={{
+                            width: 220,
+                            backgroundColor: labelBg,
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                            fontWeight: 700,
+                            fontSize: 15,
+                            color: "#0f172a",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.5px",
                         }}>
-                            {participant.registrationNumber}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Name */}
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                }}>
-                    <span style={{
-                        fontFamily: "Georgia, serif",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#0f172a",
-                        minWidth: 180,
-                    }}>
-                        Participant Name:
-                    </span>
-                    <div style={{
-                        flex: 1,
-                        borderBottom: "2px solid #0f172a",
-                        paddingBottom: 2,
-                    }}>
-                        <span style={{ fontSize: 20, fontWeight: "bold", color: "#0f172a" }}>
-                            {participant.name}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Mobile */}
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                }}>
-                    <span style={{
-                        fontFamily: "Georgia, serif",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#0f172a",
-                        minWidth: 180,
-                    }}>
-                        Mobile Number:
-                    </span>
-                    <div style={{
-                        flex: 1,
-                        borderBottom: "2px solid #0f172a",
-                        paddingBottom: 2,
-                    }}>
-                        <span style={{ fontSize: 18, fontWeight: "bold", color: "#0f172a" }}>
-                            {participant.mobile}
-                        </span>
-                    </div>
-                </div>
-
-                {/* School */}
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                }}>
-                    <span style={{
-                        fontFamily: "Georgia, serif",
-                        fontSize: 18,
-                        fontWeight: "bold",
-                        color: "#0f172a",
-                        minWidth: 180,
-                    }}>
-                        School/College:
-                    </span>
-                    <div style={{
-                        flex: 1,
-                        borderBottom: "2px solid #0f172a",
-                        paddingBottom: 2,
-                    }}>
-                        <span style={{ fontSize: 18, fontWeight: "bold", color: "#0f172a" }}>
+                            Student of School
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px 14px",
+                            fontSize: 16,
+                            fontWeight: 600,
+                            color: "#0f172a",
+                        }}>
                             {participant.school}
-                        </span>
+                        </div>
+                    </div>
+
+                    {/* Class / Board Row */}
+                    <div style={{
+                        display: "flex",
+                        borderBottom: `1px solid ${borderColor}`,
+                        minHeight: 48,
+                    }}>
+                        <div style={{
+                            width: 220,
+                            backgroundColor: labelBg,
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                            fontWeight: 700,
+                            fontSize: 15,
+                            color: "#0f172a",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.5px",
+                        }}>
+                            Class / Board
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px 14px",
+                            fontSize: 16,
+                            fontWeight: 600,
+                            color: "#0f172a",
+                        }}>
+                            {participant.class} &nbsp;/&nbsp; {participant.board}
+                        </div>
+                    </div>
+
+
+                    {/* Venue of Examination */}
+                    <div style={{
+                        display: "flex",
+                        minHeight: 48,
+                    }}>
+                        <div style={{
+                            width: 220,
+                            backgroundColor: labelBg,
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                            fontWeight: 700,
+                            fontSize: 15,
+                            color: "#0f172a",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.5px",
+                        }}>
+                            Venue of Examination
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px 14px",
+                            fontSize: 16,
+                            fontWeight: 600,
+                            color: "#dc2626",
+                        }}>
+                            {competitionVenue}
+                        </div>
                     </div>
                 </div>
 
-                {/* Class & Board */}
+                {/* ===== SUBJECT / DATE / TIME TABLE ===== */}
                 <div style={{
-                    display: "flex",
-                    gap: 20,
+                    borderBottom: `2px solid ${borderColor}`,
+                }}>
+                    {/* Header Row */}
+                    <div style={{
+                        display: "flex",
+                        backgroundColor: headerBg,
+                        minHeight: 48,
+                    }}>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "10px 14px",
+                            borderRight: `1px solid rgba(255,255,255,0.3)`,
+                            fontWeight: 800,
+                            fontSize: 17,
+                            color: "#ffffff",
+                            textTransform: "uppercase",
+                            letterSpacing: "2px",
+                        }}>
+                            Subject
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "10px 14px",
+                            borderRight: `1px solid rgba(255,255,255,0.3)`,
+                            fontWeight: 800,
+                            fontSize: 17,
+                            color: "#ffffff",
+                            textTransform: "uppercase",
+                            letterSpacing: "2px",
+                        }}>
+                            Date
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "10px 14px",
+                            fontWeight: 800,
+                            fontSize: 17,
+                            color: "#ffffff",
+                            textTransform: "uppercase",
+                            letterSpacing: "2px",
+                        }}>
+                            Time
+                        </div>
+                    </div>
+
+                    {/* Data Row - GK Competition */}
+                    <div style={{
+                        display: "flex",
+                        borderBottom: `1px solid ${borderColor}`,
+                        minHeight: 48,
+                    }}>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "10px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                            fontSize: 16,
+                            fontWeight: 600,
+                            color: "#0f172a",
+                        }}>
+                            General Knowledge
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "10px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                            fontSize: 16,
+                            fontWeight: 700,
+                            color: "#dc2626",
+                        }}>
+                            {competitionDate}
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "10px 14px",
+                            fontSize: 16,
+                            fontWeight: 700,
+                            color: "#dc2626",
+                        }}>
+                            {competitionTime}
+                        </div>
+                    </div>
+
+                    {/* Empty Row for potential additional subjects */}
+                    <div style={{
+                        display: "flex",
+                        minHeight: 48,
+                    }}>
+                        <div style={{
+                            flex: 1,
+                            padding: "10px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                        }}>
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            padding: "10px 14px",
+                            borderRight: `1px solid ${borderColor}`,
+                        }}>
+                        </div>
+                        <div style={{
+                            flex: 1,
+                            padding: "10px 14px",
+                        }}>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ===== INSTRUCTIONS SECTION ===== */}
+                <div style={{
+                    padding: "20px 25px",
+                    flex: 1,
                 }}>
                     <div style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: 12,
-                        flex: 1,
+                        justifyContent: "center",
+                        marginBottom: 18,
                     }}>
+                        <div style={{
+                            width: 80,
+                            height: 2,
+                            backgroundColor: "#0f172a",
+                            marginRight: 12,
+                        }} />
                         <span style={{
-                            fontFamily: "Georgia, serif",
-                            fontSize: 18,
-                            fontWeight: "bold",
+                            fontSize: 20,
+                            fontWeight: 800,
                             color: "#0f172a",
-                            minWidth: 60,
+                            textTransform: "uppercase",
+                            letterSpacing: "3px",
                         }}>
-                            Class:
+                            Instructions
                         </span>
                         <div style={{
-                            flex: 1,
-                            borderBottom: "2px solid #0f172a",
-                            paddingBottom: 2,
-                        }}>
-                            <span style={{ fontSize: 18, fontWeight: "bold", color: "#0f172a" }}>
-                                {participant.class}
-                            </span>
-                        </div>
+                            width: 80,
+                            height: 2,
+                            backgroundColor: "#0f172a",
+                            marginLeft: 12,
+                        }} />
                     </div>
-                    
+
                     <div style={{
+                        paddingLeft: 10,
                         display: "flex",
-                        alignItems: "center",
-                        gap: 12,
-                        flex: 1,
+                        flexDirection: "column",
+                        gap: 10,
                     }}>
-                        <span style={{
-                            fontFamily: "Georgia, serif",
-                            fontSize: 18,
-                            fontWeight: "bold",
-                            color: "#0f172a",
-                            minWidth: 70,
-                        }}>
-                            Board:
-                        </span>
-                        <div style={{
-                            flex: 1,
-                            borderBottom: "2px solid #0f172a",
-                            paddingBottom: 2,
-                        }}>
-                            <span style={{ fontSize: 18, fontWeight: "bold", color: "#0f172a" }}>
-                                {participant.board}
-                            </span>
-                        </div>
+                        {[
+                            "All candidates must bring their Admit Card to the examination hall.",
+                            "Candidates should reach the examination center 30 minutes before the exam time.",
+                            "Mobile phones, smart watches, or any electronic devices are strictly prohibited in the examination hall.",
+                            "Use only blue or black ball pen to answer the questions.",
+                            "Do not write anything on the question paper or admit card except where instructed.",
+                            "Any kind of cheating or unfair means will lead to disqualification.",
+                            "Candidates must follow all instructions given by the invigilator.",
+                            "Maintain silence and discipline inside the examination hall.",
+                            "No candidate will be allowed to leave the hall before the exam ends.",
+                            "After completing the exam, submit your answer sheet to the invigilator.",
+                        ].map((instruction, index) => (
+                            <div key={index} style={{
+                                display: "flex",
+                                gap: 10,
+                                alignItems: "flex-start",
+                            }}>
+                                <span style={{
+                                    fontSize: 14,
+                                    fontWeight: 800,
+                                    color: "#1e3a8a",
+                                    minWidth: 22,
+                                    flexShrink: 0,
+                                }}>
+                                    {index + 1}.
+                                </span>
+                                <span style={{
+                                    fontSize: 14,
+                                    color: "#334155",
+                                    lineHeight: "1.5",
+                                    fontWeight: 500,
+                                }}>
+                                    {instruction}
+                                </span>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Competition Details */}
-                <div style={{
-                    display: "flex",
-                    gap: 20,
-                    marginTop: 10,
-                }}>
-                    <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 12,
-                        flex: 1,
-                    }}>
-                        <span style={{
-                            fontFamily: "Georgia, serif",
-                            fontSize: 16,
-                            fontWeight: "bold",
-                            color: "#0f172a",
-                            minWidth: 60,
-                        }}>
-                            Date:
-                        </span>
-                        <div style={{
-                            flex: 1,
-                            borderBottom: "2px solid #0f172a",
-                            paddingBottom: 2,
-                        }}>
-                            <span style={{ fontSize: 16, fontWeight: "bold", color: "#dc2626" }}>
-                                {competitionDate}
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 12,
-                        flex: 1.5,
-                    }}>
-                        <span style={{
-                            fontFamily: "Georgia, serif",
-                            fontSize: 16,
-                            fontWeight: "bold",
-                            color: "#0f172a",
-                            minWidth: 90,
-                        }}>
-                            Location:
-                        </span>
-                        <div style={{
-                            flex: 1,
-                            borderBottom: "2px solid #0f172a",
-                            paddingBottom: 2,
-                        }}>
-                            <span style={{ fontSize: 16, fontWeight: "bold", color: "#dc2626" }}>
-                                {competitionLocation}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-
-
         </div>
     );
 };

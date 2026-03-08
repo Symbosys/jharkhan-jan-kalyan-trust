@@ -78,12 +78,12 @@ export function RegistrationCardPortal() {
             });
 
             const pdf = new jsPDF({
-                orientation: "landscape",
+                orientation: "portrait",
                 unit: "mm",
-                format: [200, 140],
+                format: [210, 280],
             });
 
-            pdf.addImage(dataUrl, "PNG", 0, 0, 200, 140);
+            pdf.addImage(dataUrl, "PNG", 0, 0, 210, 280);
             pdf.save(`GK-Competition-Card-${participant.registrationNumber}.pdf`);
 
             toast.success("Registration card PDF downloaded!");
@@ -187,7 +187,7 @@ export function RegistrationCardPortal() {
 
                                 <div className="rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 overflow-hidden">
                                     <div className="overflow-x-auto overflow-y-hidden flex justify-center py-6 px-4">
-                                        <div className="bg-white rounded-lg shadow-md transform scale-[0.32] sm:scale-[0.45] md:scale-[0.55] lg:scale-[0.7] xl:scale-[0.85] origin-top shrink-0 transition-transform duration-300">
+                                        <div className="bg-white rounded-lg shadow-md transform scale-[0.28] sm:scale-[0.38] md:scale-[0.48] lg:scale-[0.58] xl:scale-[0.7] origin-top shrink-0 transition-transform duration-300">
                                             <RegistrationCard participant={participant} cardRef={cardRef} />
                                         </div>
                                     </div>
