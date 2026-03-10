@@ -15,12 +15,18 @@ interface RegistrationCardProps {
         createdAt: Date;
     };
     cardRef: React.RefObject<HTMLDivElement | null>;
+    competitionDate?: string;
+    competitionTime?: string;
+    competitionVenue?: string;
 }
 
-export const RegistrationCard: React.FC<RegistrationCardProps> = ({ participant, cardRef }) => {
-    const competitionDate = "15/04/2026";
-    const competitionTime = "10:00 AM - 12:00 PM";
-    const competitionVenue = "Ranchi, Jharkhand";
+export const RegistrationCard: React.FC<RegistrationCardProps> = ({ 
+    participant, 
+    cardRef,
+    competitionDate = "15/04/2026",
+    competitionTime = "10:00 AM - 12:00 PM",
+    competitionVenue = "Ranchi, Jharkhand"
+}) => {
 
     // Get initials for avatar if no photo
     const getInitials = (name: string) => {

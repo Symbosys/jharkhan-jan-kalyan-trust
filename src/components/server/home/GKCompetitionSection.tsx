@@ -14,7 +14,7 @@ export function GKCompetitionSection() {
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    
+
                     {/* Left Column - Content */}
                     <div className="space-y-8">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 shadow-lg shadow-primary/10">
@@ -47,8 +47,8 @@ export function GKCompetitionSection() {
 
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
                             <Link href="/school-enquiry">
-                                <Button 
-                                    size="lg" 
+                                <Button
+                                    size="lg"
                                     className="h-14 px-8 text-lg font-bold rounded-2xl shadow-xl shadow-primary/25 hover:scale-105 transition-all duration-300 gap-2"
                                 >
                                     <GraduationCap className="h-5 w-5" />
@@ -57,9 +57,9 @@ export function GKCompetitionSection() {
                                 </Button>
                             </Link>
                             <Link href="/download-gk-card">
-                                <Button 
-                                    variant="outline" 
-                                    size="lg" 
+                                <Button
+                                    variant="outline"
+                                    size="lg"
                                     className="h-14 px-8 text-lg font-bold rounded-2xl border-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 gap-2"
                                 >
                                     <CheckCircle className="h-5 w-5" />

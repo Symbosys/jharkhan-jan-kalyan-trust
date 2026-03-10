@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { toPng } from "html-to-image";
 import { jsPDF } from "jspdf";
 import { RegistrationCard } from "@/components/school-enquiry/RegistrationCard";
 import { getSchoolEnquiryByRegistrationNumber } from "@/actions/schoolEnquiry";
+import { getWebSettings } from "@/actions/webSetting";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -32,7 +33,26 @@ export function RegistrationCardPortal() {
     const [participant, setParticipant] = useState<SchoolEnquiry | null>(null);
     const [loading, setLoading] = useState(false);
     const [downloading, setDownloading] = useState(false);
+    const [webSettings, setWebSettings] = useState<Record<string, string>>({});
     const cardRef = useRef<HTMLDivElement>(null);
+
+    // Fetch web settings on mount
+    useEffect(() => {
+        async function fetchSettings() {
+            try {
+                const settings = await getWebSettings();
+                setWebSettings(settings);
+            } catch (error) {
+                console.error("Failed to fetch web settings:", error);
+            }
+        }
+        fetchSettings();
+    }, []);
+
+    // Get competition details from web settings or use defaults
+    const competitionDate = webSettings.gk_competion_date || "15/04/2026";
+    const competitionLocation = webSettings.gk_competion_location || "Ranchi, Jharkhand";
+    const competitionTime = webSettings.gk_competion_time || "10:00 AM - 12:00 PM";
 
     const handleSearch = async () => {
         if (!regNumber.trim()) {
@@ -188,7 +208,13 @@ export function RegistrationCardPortal() {
                                 <div className="rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 overflow-hidden">
                                     <div className="overflow-x-auto overflow-y-hidden flex justify-center py-6 px-4">
                                         <div className="bg-white rounded-lg shadow-md transform scale-[0.28] sm:scale-[0.38] md:scale-[0.48] lg:scale-[0.58] xl:scale-[0.7] origin-top shrink-0 transition-transform duration-300">
-                                            <RegistrationCard participant={participant} cardRef={cardRef} />
+                                            <RegistrationCard 
+                                                participant={participant} 
+                                                cardRef={cardRef}
+                                                competitionDate={competitionDate}
+                                                competitionTime={competitionTime}
+                                                competitionVenue={competitionLocation}
+                                            />
                                         </div>
                                     </div>
                                 </div>
