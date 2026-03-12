@@ -401,7 +401,8 @@ export const ModelName = {
   RegisterComplaint: 'RegisterComplaint',
   Enquiry: 'Enquiry',
   MembershipRenewal: 'MembershipRenewal',
-  SchoolEnquiry: 'SchoolEnquiry'
+  SchoolEnquiry: 'SchoolEnquiry',
+  ExamCenter: 'ExamCenter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry"
+    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry" | "examCenter"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1609,6 +1610,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExamCenter: {
+      payload: Prisma.$ExamCenterPayload<ExtArgs>
+      fields: Prisma.ExamCenterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExamCenterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExamCenterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>
+        }
+        findFirst: {
+          args: Prisma.ExamCenterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExamCenterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>
+        }
+        findMany: {
+          args: Prisma.ExamCenterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>[]
+        }
+        create: {
+          args: Prisma.ExamCenterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>
+        }
+        createMany: {
+          args: Prisma.ExamCenterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ExamCenterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>
+        }
+        update: {
+          args: Prisma.ExamCenterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExamCenterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExamCenterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ExamCenterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamCenterPayload>
+        }
+        aggregate: {
+          args: Prisma.ExamCenterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExamCenter>
+        }
+        groupBy: {
+          args: Prisma.ExamCenterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamCenterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExamCenterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamCenterCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1917,6 +1984,7 @@ export const SchoolEnquiryScalarFieldEnum = {
   class: 'class',
   board: 'board',
   aadhaar: 'aadhaar',
+  examCenterId: 'examCenterId',
   photo: 'photo',
   payment: 'payment',
   registrationNumber: 'registrationNumber',
@@ -1926,6 +1994,24 @@ export const SchoolEnquiryScalarFieldEnum = {
 } as const
 
 export type SchoolEnquiryScalarFieldEnum = (typeof SchoolEnquiryScalarFieldEnum)[keyof typeof SchoolEnquiryScalarFieldEnum]
+
+
+export const ExamCenterScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamCenterScalarFieldEnum = (typeof ExamCenterScalarFieldEnum)[keyof typeof ExamCenterScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2147,6 +2233,21 @@ export const SchoolEnquiryOrderByRelevanceFieldEnum = {
 } as const
 
 export type SchoolEnquiryOrderByRelevanceFieldEnum = (typeof SchoolEnquiryOrderByRelevanceFieldEnum)[keyof typeof SchoolEnquiryOrderByRelevanceFieldEnum]
+
+
+export const ExamCenterOrderByRelevanceFieldEnum = {
+  name: 'name',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  description: 'description'
+} as const
+
+export type ExamCenterOrderByRelevanceFieldEnum = (typeof ExamCenterOrderByRelevanceFieldEnum)[keyof typeof ExamCenterOrderByRelevanceFieldEnum]
 
 
 
@@ -2421,6 +2522,7 @@ export type GlobalOmitConfig = {
   enquiry?: Prisma.EnquiryOmit
   membershipRenewal?: Prisma.MembershipRenewalOmit
   schoolEnquiry?: Prisma.SchoolEnquiryOmit
+  examCenter?: Prisma.ExamCenterOmit
 }
 
 /* Types for Logging */

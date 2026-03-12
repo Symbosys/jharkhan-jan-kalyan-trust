@@ -68,7 +68,8 @@ export const ModelName = {
   RegisterComplaint: 'RegisterComplaint',
   Enquiry: 'Enquiry',
   MembershipRenewal: 'MembershipRenewal',
-  SchoolEnquiry: 'SchoolEnquiry'
+  SchoolEnquiry: 'SchoolEnquiry',
+  ExamCenter: 'ExamCenter'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -356,6 +357,7 @@ export const SchoolEnquiryScalarFieldEnum = {
   class: 'class',
   board: 'board',
   aadhaar: 'aadhaar',
+  examCenterId: 'examCenterId',
   photo: 'photo',
   payment: 'payment',
   registrationNumber: 'registrationNumber',
@@ -365,6 +367,24 @@ export const SchoolEnquiryScalarFieldEnum = {
 } as const
 
 export type SchoolEnquiryScalarFieldEnum = (typeof SchoolEnquiryScalarFieldEnum)[keyof typeof SchoolEnquiryScalarFieldEnum]
+
+
+export const ExamCenterScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamCenterScalarFieldEnum = (typeof ExamCenterScalarFieldEnum)[keyof typeof ExamCenterScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -586,4 +606,19 @@ export const SchoolEnquiryOrderByRelevanceFieldEnum = {
 } as const
 
 export type SchoolEnquiryOrderByRelevanceFieldEnum = (typeof SchoolEnquiryOrderByRelevanceFieldEnum)[keyof typeof SchoolEnquiryOrderByRelevanceFieldEnum]
+
+
+export const ExamCenterOrderByRelevanceFieldEnum = {
+  name: 'name',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  pinCode: 'pinCode',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  description: 'description'
+} as const
+
+export type ExamCenterOrderByRelevanceFieldEnum = (typeof ExamCenterOrderByRelevanceFieldEnum)[keyof typeof ExamCenterOrderByRelevanceFieldEnum]
 

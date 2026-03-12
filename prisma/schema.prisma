@@ -367,6 +367,8 @@ model SchoolEnquiry {
   class       String
   board       String
   aadhaar     String @default("NOT PROVIDED")
+  examCenterId Int?    
+  examCenter  ExamCenter? @relation(fields: [examCenterId], references: [id])
 
   photo       Json?
   payment     Json?
@@ -382,4 +384,22 @@ enum EnquiryStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+model ExamCenter {
+  id          Int    @id @default(autoincrement())
+  name        String
+  address     String
+  city        String
+  state       String
+  pinCode     String
+  mobile      String?
+  email       String?
+  website     String?
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  schoolEnquiries SchoolEnquiry[]
 }

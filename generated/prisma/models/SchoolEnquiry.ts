@@ -28,10 +28,12 @@ export type AggregateSchoolEnquiry = {
 
 export type SchoolEnquiryAvgAggregateOutputType = {
   id: number | null
+  examCenterId: number | null
 }
 
 export type SchoolEnquirySumAggregateOutputType = {
   id: number | null
+  examCenterId: number | null
 }
 
 export type SchoolEnquiryMinAggregateOutputType = {
@@ -43,6 +45,7 @@ export type SchoolEnquiryMinAggregateOutputType = {
   class: string | null
   board: string | null
   aadhaar: string | null
+  examCenterId: number | null
   registrationNumber: string | null
   status: $Enums.EnquiryStatus | null
   createdAt: Date | null
@@ -58,6 +61,7 @@ export type SchoolEnquiryMaxAggregateOutputType = {
   class: string | null
   board: string | null
   aadhaar: string | null
+  examCenterId: number | null
   registrationNumber: string | null
   status: $Enums.EnquiryStatus | null
   createdAt: Date | null
@@ -73,6 +77,7 @@ export type SchoolEnquiryCountAggregateOutputType = {
   class: number
   board: number
   aadhaar: number
+  examCenterId: number
   photo: number
   payment: number
   registrationNumber: number
@@ -85,10 +90,12 @@ export type SchoolEnquiryCountAggregateOutputType = {
 
 export type SchoolEnquiryAvgAggregateInputType = {
   id?: true
+  examCenterId?: true
 }
 
 export type SchoolEnquirySumAggregateInputType = {
   id?: true
+  examCenterId?: true
 }
 
 export type SchoolEnquiryMinAggregateInputType = {
@@ -100,6 +107,7 @@ export type SchoolEnquiryMinAggregateInputType = {
   class?: true
   board?: true
   aadhaar?: true
+  examCenterId?: true
   registrationNumber?: true
   status?: true
   createdAt?: true
@@ -115,6 +123,7 @@ export type SchoolEnquiryMaxAggregateInputType = {
   class?: true
   board?: true
   aadhaar?: true
+  examCenterId?: true
   registrationNumber?: true
   status?: true
   createdAt?: true
@@ -130,6 +139,7 @@ export type SchoolEnquiryCountAggregateInputType = {
   class?: true
   board?: true
   aadhaar?: true
+  examCenterId?: true
   photo?: true
   payment?: true
   registrationNumber?: true
@@ -234,6 +244,7 @@ export type SchoolEnquiryGroupByOutputType = {
   class: string
   board: string
   aadhaar: string
+  examCenterId: number | null
   photo: runtime.JsonValue | null
   payment: runtime.JsonValue | null
   registrationNumber: string
@@ -274,12 +285,14 @@ export type SchoolEnquiryWhereInput = {
   class?: Prisma.StringFilter<"SchoolEnquiry"> | string
   board?: Prisma.StringFilter<"SchoolEnquiry"> | string
   aadhaar?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  examCenterId?: Prisma.IntNullableFilter<"SchoolEnquiry"> | number | null
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringFilter<"SchoolEnquiry"> | string
   status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
+  examCenter?: Prisma.XOR<Prisma.ExamCenterNullableScalarRelationFilter, Prisma.ExamCenterWhereInput> | null
 }
 
 export type SchoolEnquiryOrderByWithRelationInput = {
@@ -291,12 +304,14 @@ export type SchoolEnquiryOrderByWithRelationInput = {
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
   aadhaar?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  examCenter?: Prisma.ExamCenterOrderByWithRelationInput
   _relevance?: Prisma.SchoolEnquiryOrderByRelevanceInput
 }
 
@@ -313,11 +328,13 @@ export type SchoolEnquiryWhereUniqueInput = Prisma.AtLeast<{
   class?: Prisma.StringFilter<"SchoolEnquiry"> | string
   board?: Prisma.StringFilter<"SchoolEnquiry"> | string
   aadhaar?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  examCenterId?: Prisma.IntNullableFilter<"SchoolEnquiry"> | number | null
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
+  examCenter?: Prisma.XOR<Prisma.ExamCenterNullableScalarRelationFilter, Prisma.ExamCenterWhereInput> | null
 }, "id" | "registrationNumber">
 
 export type SchoolEnquiryOrderByWithAggregationInput = {
@@ -329,6 +346,7 @@ export type SchoolEnquiryOrderByWithAggregationInput = {
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
   aadhaar?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrderInput | Prisma.SortOrder
   photo?: Prisma.SortOrderInput | Prisma.SortOrder
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
@@ -354,6 +372,7 @@ export type SchoolEnquiryScalarWhereWithAggregatesInput = {
   class?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   board?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   aadhaar?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
+  examCenterId?: Prisma.IntNullableWithAggregatesFilter<"SchoolEnquiry"> | number | null
   photo?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
@@ -376,6 +395,7 @@ export type SchoolEnquiryCreateInput = {
   status?: $Enums.EnquiryStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  examCenter?: Prisma.ExamCenterCreateNestedOneWithoutSchoolEnquiriesInput
 }
 
 export type SchoolEnquiryUncheckedCreateInput = {
@@ -387,6 +407,7 @@ export type SchoolEnquiryUncheckedCreateInput = {
   class: string
   board: string
   aadhaar?: string
+  examCenterId?: number | null
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
@@ -409,6 +430,7 @@ export type SchoolEnquiryUpdateInput = {
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  examCenter?: Prisma.ExamCenterUpdateOneWithoutSchoolEnquiriesNestedInput
 }
 
 export type SchoolEnquiryUncheckedUpdateInput = {
@@ -420,6 +442,7 @@ export type SchoolEnquiryUncheckedUpdateInput = {
   class?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.StringFieldUpdateOperationsInput | string
   aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  examCenterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -437,6 +460,7 @@ export type SchoolEnquiryCreateManyInput = {
   class: string
   board: string
   aadhaar?: string
+  examCenterId?: number | null
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
@@ -470,6 +494,7 @@ export type SchoolEnquiryUncheckedUpdateManyInput = {
   class?: Prisma.StringFieldUpdateOperationsInput | string
   board?: Prisma.StringFieldUpdateOperationsInput | string
   aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  examCenterId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -493,6 +518,7 @@ export type SchoolEnquiryCountOrderByAggregateInput = {
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
   aadhaar?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrder
   photo?: Prisma.SortOrder
   payment?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
@@ -503,6 +529,7 @@ export type SchoolEnquiryCountOrderByAggregateInput = {
 
 export type SchoolEnquiryAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrder
 }
 
 export type SchoolEnquiryMaxOrderByAggregateInput = {
@@ -514,6 +541,7 @@ export type SchoolEnquiryMaxOrderByAggregateInput = {
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
   aadhaar?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -529,6 +557,7 @@ export type SchoolEnquiryMinOrderByAggregateInput = {
   class?: Prisma.SortOrder
   board?: Prisma.SortOrder
   aadhaar?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -537,10 +566,218 @@ export type SchoolEnquiryMinOrderByAggregateInput = {
 
 export type SchoolEnquirySumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  examCenterId?: Prisma.SortOrder
+}
+
+export type SchoolEnquiryListRelationFilter = {
+  every?: Prisma.SchoolEnquiryWhereInput
+  some?: Prisma.SchoolEnquiryWhereInput
+  none?: Prisma.SchoolEnquiryWhereInput
+}
+
+export type SchoolEnquiryOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type EnumEnquiryStatusFieldUpdateOperationsInput = {
   set?: $Enums.EnquiryStatus
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type SchoolEnquiryCreateNestedManyWithoutExamCenterInput = {
+  create?: Prisma.XOR<Prisma.SchoolEnquiryCreateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput> | Prisma.SchoolEnquiryCreateWithoutExamCenterInput[] | Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput[]
+  connectOrCreate?: Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput | Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput[]
+  createMany?: Prisma.SchoolEnquiryCreateManyExamCenterInputEnvelope
+  connect?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+}
+
+export type SchoolEnquiryUncheckedCreateNestedManyWithoutExamCenterInput = {
+  create?: Prisma.XOR<Prisma.SchoolEnquiryCreateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput> | Prisma.SchoolEnquiryCreateWithoutExamCenterInput[] | Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput[]
+  connectOrCreate?: Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput | Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput[]
+  createMany?: Prisma.SchoolEnquiryCreateManyExamCenterInputEnvelope
+  connect?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+}
+
+export type SchoolEnquiryUpdateManyWithoutExamCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolEnquiryCreateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput> | Prisma.SchoolEnquiryCreateWithoutExamCenterInput[] | Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput[]
+  connectOrCreate?: Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput | Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput[]
+  upsert?: Prisma.SchoolEnquiryUpsertWithWhereUniqueWithoutExamCenterInput | Prisma.SchoolEnquiryUpsertWithWhereUniqueWithoutExamCenterInput[]
+  createMany?: Prisma.SchoolEnquiryCreateManyExamCenterInputEnvelope
+  set?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  disconnect?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  delete?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  connect?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  update?: Prisma.SchoolEnquiryUpdateWithWhereUniqueWithoutExamCenterInput | Prisma.SchoolEnquiryUpdateWithWhereUniqueWithoutExamCenterInput[]
+  updateMany?: Prisma.SchoolEnquiryUpdateManyWithWhereWithoutExamCenterInput | Prisma.SchoolEnquiryUpdateManyWithWhereWithoutExamCenterInput[]
+  deleteMany?: Prisma.SchoolEnquiryScalarWhereInput | Prisma.SchoolEnquiryScalarWhereInput[]
+}
+
+export type SchoolEnquiryUncheckedUpdateManyWithoutExamCenterNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolEnquiryCreateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput> | Prisma.SchoolEnquiryCreateWithoutExamCenterInput[] | Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput[]
+  connectOrCreate?: Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput | Prisma.SchoolEnquiryCreateOrConnectWithoutExamCenterInput[]
+  upsert?: Prisma.SchoolEnquiryUpsertWithWhereUniqueWithoutExamCenterInput | Prisma.SchoolEnquiryUpsertWithWhereUniqueWithoutExamCenterInput[]
+  createMany?: Prisma.SchoolEnquiryCreateManyExamCenterInputEnvelope
+  set?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  disconnect?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  delete?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  connect?: Prisma.SchoolEnquiryWhereUniqueInput | Prisma.SchoolEnquiryWhereUniqueInput[]
+  update?: Prisma.SchoolEnquiryUpdateWithWhereUniqueWithoutExamCenterInput | Prisma.SchoolEnquiryUpdateWithWhereUniqueWithoutExamCenterInput[]
+  updateMany?: Prisma.SchoolEnquiryUpdateManyWithWhereWithoutExamCenterInput | Prisma.SchoolEnquiryUpdateManyWithWhereWithoutExamCenterInput[]
+  deleteMany?: Prisma.SchoolEnquiryScalarWhereInput | Prisma.SchoolEnquiryScalarWhereInput[]
+}
+
+export type SchoolEnquiryCreateWithoutExamCenterInput = {
+  name: string
+  mobile: string
+  email: string
+  school: string
+  class: string
+  board: string
+  aadhaar?: string
+  photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: string
+  status?: $Enums.EnquiryStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SchoolEnquiryUncheckedCreateWithoutExamCenterInput = {
+  id?: number
+  name: string
+  mobile: string
+  email: string
+  school: string
+  class: string
+  board: string
+  aadhaar?: string
+  photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: string
+  status?: $Enums.EnquiryStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SchoolEnquiryCreateOrConnectWithoutExamCenterInput = {
+  where: Prisma.SchoolEnquiryWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolEnquiryCreateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput>
+}
+
+export type SchoolEnquiryCreateManyExamCenterInputEnvelope = {
+  data: Prisma.SchoolEnquiryCreateManyExamCenterInput | Prisma.SchoolEnquiryCreateManyExamCenterInput[]
+  skipDuplicates?: boolean
+}
+
+export type SchoolEnquiryUpsertWithWhereUniqueWithoutExamCenterInput = {
+  where: Prisma.SchoolEnquiryWhereUniqueInput
+  update: Prisma.XOR<Prisma.SchoolEnquiryUpdateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedUpdateWithoutExamCenterInput>
+  create: Prisma.XOR<Prisma.SchoolEnquiryCreateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedCreateWithoutExamCenterInput>
+}
+
+export type SchoolEnquiryUpdateWithWhereUniqueWithoutExamCenterInput = {
+  where: Prisma.SchoolEnquiryWhereUniqueInput
+  data: Prisma.XOR<Prisma.SchoolEnquiryUpdateWithoutExamCenterInput, Prisma.SchoolEnquiryUncheckedUpdateWithoutExamCenterInput>
+}
+
+export type SchoolEnquiryUpdateManyWithWhereWithoutExamCenterInput = {
+  where: Prisma.SchoolEnquiryScalarWhereInput
+  data: Prisma.XOR<Prisma.SchoolEnquiryUpdateManyMutationInput, Prisma.SchoolEnquiryUncheckedUpdateManyWithoutExamCenterInput>
+}
+
+export type SchoolEnquiryScalarWhereInput = {
+  AND?: Prisma.SchoolEnquiryScalarWhereInput | Prisma.SchoolEnquiryScalarWhereInput[]
+  OR?: Prisma.SchoolEnquiryScalarWhereInput[]
+  NOT?: Prisma.SchoolEnquiryScalarWhereInput | Prisma.SchoolEnquiryScalarWhereInput[]
+  id?: Prisma.IntFilter<"SchoolEnquiry"> | number
+  name?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  mobile?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  email?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  school?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  class?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  board?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  aadhaar?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  examCenterId?: Prisma.IntNullableFilter<"SchoolEnquiry"> | number | null
+  photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
+  payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
+  registrationNumber?: Prisma.StringFilter<"SchoolEnquiry"> | string
+  status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
+  createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
+}
+
+export type SchoolEnquiryCreateManyExamCenterInput = {
+  id?: number
+  name: string
+  mobile: string
+  email: string
+  school: string
+  class: string
+  board: string
+  aadhaar?: string
+  photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: string
+  status?: $Enums.EnquiryStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type SchoolEnquiryUpdateWithoutExamCenterInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  school?: Prisma.StringFieldUpdateOperationsInput | string
+  class?: Prisma.StringFieldUpdateOperationsInput | string
+  board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SchoolEnquiryUncheckedUpdateWithoutExamCenterInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  school?: Prisma.StringFieldUpdateOperationsInput | string
+  class?: Prisma.StringFieldUpdateOperationsInput | string
+  board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SchoolEnquiryUncheckedUpdateManyWithoutExamCenterInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  mobile?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  school?: Prisma.StringFieldUpdateOperationsInput | string
+  class?: Prisma.StringFieldUpdateOperationsInput | string
+  board?: Prisma.StringFieldUpdateOperationsInput | string
+  aadhaar?: Prisma.StringFieldUpdateOperationsInput | string
+  photo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -554,12 +791,14 @@ export type SchoolEnquirySelect<ExtArgs extends runtime.Types.Extensions.Interna
   class?: boolean
   board?: boolean
   aadhaar?: boolean
+  examCenterId?: boolean
   photo?: boolean
   payment?: boolean
   registrationNumber?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  examCenter?: boolean | Prisma.SchoolEnquiry$examCenterArgs<ExtArgs>
 }, ExtArgs["result"]["schoolEnquiry"]>
 
 
@@ -573,6 +812,7 @@ export type SchoolEnquirySelectScalar = {
   class?: boolean
   board?: boolean
   aadhaar?: boolean
+  examCenterId?: boolean
   photo?: boolean
   payment?: boolean
   registrationNumber?: boolean
@@ -581,11 +821,16 @@ export type SchoolEnquirySelectScalar = {
   updatedAt?: boolean
 }
 
-export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "aadhaar" | "photo" | "payment" | "registrationNumber" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
+export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "aadhaar" | "examCenterId" | "photo" | "payment" | "registrationNumber" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
+export type SchoolEnquiryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  examCenter?: boolean | Prisma.SchoolEnquiry$examCenterArgs<ExtArgs>
+}
 
 export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SchoolEnquiry"
-  objects: {}
+  objects: {
+    examCenter: Prisma.$ExamCenterPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
@@ -595,6 +840,7 @@ export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.Inter
     class: string
     board: string
     aadhaar: string
+    examCenterId: number | null
     photo: runtime.JsonValue | null
     payment: runtime.JsonValue | null
     registrationNumber: string
@@ -941,6 +1187,7 @@ readonly fields: SchoolEnquiryFieldRefs;
  */
 export interface Prisma__SchoolEnquiryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  examCenter<T extends Prisma.SchoolEnquiry$examCenterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolEnquiry$examCenterArgs<ExtArgs>>): Prisma.Prisma__ExamCenterClient<runtime.Types.Result.GetResult<Prisma.$ExamCenterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -978,6 +1225,7 @@ export interface SchoolEnquiryFieldRefs {
   readonly class: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly board: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly aadhaar: Prisma.FieldRef<"SchoolEnquiry", 'String'>
+  readonly examCenterId: Prisma.FieldRef<"SchoolEnquiry", 'Int'>
   readonly photo: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
   readonly payment: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
   readonly registrationNumber: Prisma.FieldRef<"SchoolEnquiry", 'String'>
@@ -1001,6 +1249,10 @@ export type SchoolEnquiryFindUniqueArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * Filter, which SchoolEnquiry to fetch.
    */
   where: Prisma.SchoolEnquiryWhereUniqueInput
@@ -1019,6 +1271,10 @@ export type SchoolEnquiryFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * Filter, which SchoolEnquiry to fetch.
    */
   where: Prisma.SchoolEnquiryWhereUniqueInput
@@ -1036,6 +1292,10 @@ export type SchoolEnquiryFindFirstArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the SchoolEnquiry
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
   /**
    * Filter, which SchoolEnquiry to fetch.
    */
@@ -1085,6 +1345,10 @@ export type SchoolEnquiryFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * Filter, which SchoolEnquiry to fetch.
    */
   where?: Prisma.SchoolEnquiryWhereInput
@@ -1133,6 +1397,10 @@ export type SchoolEnquiryFindManyArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * Filter, which SchoolEnquiries to fetch.
    */
   where?: Prisma.SchoolEnquiryWhereInput
@@ -1176,6 +1444,10 @@ export type SchoolEnquiryCreateArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * The data needed to create a SchoolEnquiry.
    */
   data: Prisma.XOR<Prisma.SchoolEnquiryCreateInput, Prisma.SchoolEnquiryUncheckedCreateInput>
@@ -1204,6 +1476,10 @@ export type SchoolEnquiryUpdateArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the SchoolEnquiry
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
   /**
    * The data needed to update a SchoolEnquiry.
    */
@@ -1245,6 +1521,10 @@ export type SchoolEnquiryUpsertArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * The filter to search for the SchoolEnquiry to update in case it exists.
    */
   where: Prisma.SchoolEnquiryWhereUniqueInput
@@ -1271,6 +1551,10 @@ export type SchoolEnquiryDeleteArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
+  /**
    * Filter which SchoolEnquiry to delete.
    */
   where: Prisma.SchoolEnquiryWhereUniqueInput
@@ -1291,6 +1575,25 @@ export type SchoolEnquiryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
+ * SchoolEnquiry.examCenter
+ */
+export type SchoolEnquiry$examCenterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExamCenter
+   */
+  select?: Prisma.ExamCenterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExamCenter
+   */
+  omit?: Prisma.ExamCenterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExamCenterInclude<ExtArgs> | null
+  where?: Prisma.ExamCenterWhereInput
+}
+
+/**
  * SchoolEnquiry without action
  */
 export type SchoolEnquiryDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1302,4 +1605,8 @@ export type SchoolEnquiryDefaultArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the SchoolEnquiry
    */
   omit?: Prisma.SchoolEnquiryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolEnquiryInclude<ExtArgs> | null
 }

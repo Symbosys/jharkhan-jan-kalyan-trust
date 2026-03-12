@@ -12,8 +12,12 @@ import {
     X,
     Sparkles,
     Copy,
+    Building2,
+    MapPin,
+    Users,
 } from "lucide-react";
 import { createSchoolEnquiry } from "@/actions/schoolEnquiry";
+import { getAvailableExamCenters } from "@/actions/examCenter";
 import { uploadImageClient } from "@/utils/cloudinary-client";
 import {
     Form,
@@ -22,6 +26,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -32,7 +37,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 interface PaymentDetails {
     id: number;
@@ -115,15 +120,43 @@ const schoolEnquirySchema = z.object({
     class: z.string().min(1, "Class is required"),
     board: z.string().min(1, "Board is required"),
     aadhaar: z.string().min(12, "Aadhaar number must be 12 digits").max(12, "Aadhaar number must be 12 digits"),
+    examCenterId: z.string().min(1, "Exam center is required"),
     photo: optionalFileSchema,
     payment: fileSchema,
 });
 
 type SchoolEnquiryFormValues = z.infer<typeof schoolEnquirySchema>;
 
+interface ExamCenter {
+    id: number;
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    availableSeats: number;
+}
+
 export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState<{ success: boolean; registrationNumber?: string }>({ success: false });
+    const [examCenters, setExamCenters] = useState<ExamCenter[]>([]);
+    const [loadingCenters, setLoadingCenters] = useState(true);
+
+    // Fetch available exam centers on mount
+    useEffect(() => {
+        async function fetchExamCenters() {
+            try {
+                const data = await getAvailableExamCenters();
+                setExamCenters(data.examCenters as ExamCenter[]);
+            } catch (error) {
+                console.error("Failed to fetch exam centers:", error);
+                toast.error("Failed to load exam centers");
+            } finally {
+                setLoadingCenters(false);
+            }
+        }
+        fetchExamCenters();
+    }, []);
 
     const form = useForm<SchoolEnquiryFormValues>({
         resolver: zodResolver(schoolEnquirySchema),
@@ -136,6 +169,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
             class: "",
             board: "",
             aadhaar: "",
+            examCenterId: "",
             photo: "",
             payment: "",
         },
@@ -199,6 +233,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                 class: values.class,
                 board: values.board,
                 aadhaar: values.aadhaar,
+                examCenterId: parseInt(values.examCenterId),
                 photoData,
                 paymentData,
             });
@@ -406,6 +441,65 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                 )}
                             />
                         </div>
+                    </div>
+
+                    {/* Exam Center Selection */}
+                    <div className="space-y-5">
+                        <h4 className="text-sm font-black uppercase tracking-widest text-foreground/70 flex items-center gap-2">
+                            <Building2 className="h-4 w-4" />
+                            Exam Center *
+                        </h4>
+                        <FormField
+                            control={form.control}
+                            name="examCenterId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="font-bold">Select Exam Center *</FormLabel>
+                                    <Select 
+                                        onValueChange={field.onChange} 
+                                        value={field.value}
+                                        disabled={loadingCenters || examCenters.length === 0}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10">
+                                                <SelectValue placeholder={loadingCenters ? "Loading exam centers..." : examCenters.length === 0 ? "No exam centers available" : "Select your preferred exam center"} />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {examCenters.map((center) => (
+                                                <SelectItem key={center.id} value={center.id.toString()}>
+                                                    <div className="flex items-center justify-between w-full gap-4">
+                                                        <span className="font-medium">{center.name}</span>
+                                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                                            <MapPin className="h-3 w-3" />
+                                                            {center.city}, {center.state}
+                                                            <span className={`px-2 py-0.5 rounded-full ${
+                                                                center.availableSeats <= 10 
+                                                                    ? 'bg-red-100 text-red-700' 
+                                                                    : center.availableSeats <= 30 
+                                                                        ? 'bg-amber-100 text-amber-700' 
+                                                                        : 'bg-green-100 text-green-700'
+                                                            }`}>
+                                                                {center.availableSeats} seats left
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription className="text-xs">
+                                        Select the exam center where you want to appear for the GK Competition. Each center has a maximum capacity of 120 students.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {examCenters.length === 0 && !loadingCenters && (
+                            <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200 text-sm">
+                                No exam centers are currently available. Please contact the administrator.
+                            </div>
+                        )}
                     </div>
 
                     {/* Document Upload Section */}

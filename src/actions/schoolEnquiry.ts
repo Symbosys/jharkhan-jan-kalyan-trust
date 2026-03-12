@@ -18,6 +18,7 @@ export async function createSchoolEnquiry(data: {
     class: string;
     board: string;
     aadhaar: string;
+    examCenterId: number;
     // Client-side uploaded image data
     photoData?: { url: string; public_id: string };
     paymentData?: { url: string; public_id: string };
@@ -27,7 +28,16 @@ export async function createSchoolEnquiry(data: {
     if (data.paymentData?.public_id) uploadedPublicIds.push(data.paymentData.public_id);
 
     try {
-        // 1. Generate unique 6-digit registration number
+        // 1. Check if exam center has available seats
+        const examCenterCount = await prisma.schoolEnquiry.count({
+            where: { examCenterId: data.examCenterId }
+        });
+
+        if (examCenterCount >= 120) {
+            throw new Error("Selected exam center is full. Please choose another exam center.");
+        }
+
+        // 2. Generate unique 6-digit registration number
         let registrationNumber = "";
         let isUnique = false;
         let attempts = 0;
@@ -49,7 +59,7 @@ export async function createSchoolEnquiry(data: {
             throw new Error("Unable to generate unique registration number. Please try again.");
         }
 
-        // 2. Create record
+        // 3. Create record
         const enquiry = await prisma.schoolEnquiry.create({
             data: {
                 name: data.name,
@@ -59,6 +69,7 @@ export async function createSchoolEnquiry(data: {
                 class: data.class,
                 board: data.board,
                 aadhaar: data.aadhaar,
+                examCenterId: data.examCenterId,
                 registrationNumber: registrationNumber!,
                 status: "PENDING" as EnquiryStatus,
                 photo: data.photoData || undefined,
@@ -146,6 +157,17 @@ export async function getAllSchoolEnquiries(options?: {
                 skip,
                 take: limit,
                 orderBy: { createdAt: "desc" },
+                include: {
+                    examCenter: {
+                        select: {
+                            id: true,
+                            name: true,
+                            address: true,
+                            city: true,
+                            state: true,
+                        }
+                    }
+                }
             }),
             prisma.schoolEnquiry.count({ where }),
         ]);
@@ -174,6 +196,20 @@ export async function getSchoolEnquiryById(id: number) {
     try {
         return await prisma.schoolEnquiry.findUnique({
             where: { id },
+            include: {
+                examCenter: {
+                    select: {
+                        id: true,
+                        name: true,
+                        address: true,
+                        city: true,
+                        state: true,
+                        pinCode: true,
+                        mobile: true,
+                        email: true,
+                    }
+                }
+            }
         });
     } catch (error: any) {
         console.error("Error fetching school enquiry:", error);
@@ -190,6 +226,20 @@ export async function getSchoolEnquiryByRegistrationNumber(registrationNumber: s
     try {
         return await prisma.schoolEnquiry.findUnique({
             where: { registrationNumber },
+            include: {
+                examCenter: {
+                    select: {
+                        id: true,
+                        name: true,
+                        address: true,
+                        city: true,
+                        state: true,
+                        pinCode: true,
+                        mobile: true,
+                        email: true,
+                    }
+                }
+            }
         });
     } catch (error: any) {
         console.error("Error fetching school enquiry by registration number:", error);
@@ -209,6 +259,7 @@ export async function updateSchoolEnquiry(
         school?: string;
         class?: string;
         board?: string;
+        examCenterId?: number;
         photo?: string; // base64
         payment?: string; // base64
         status?: EnquiryStatus;
@@ -217,6 +268,17 @@ export async function updateSchoolEnquiry(
     try {
         const existing = await prisma.schoolEnquiry.findUnique({ where: { id } });
         if (!existing) throw new Error("School enquiry not found");
+
+        // Check if exam center is being changed and has available seats
+        if (data.examCenterId && data.examCenterId !== existing.examCenterId) {
+            const examCenterCount = await prisma.schoolEnquiry.count({
+                where: { examCenterId: data.examCenterId }
+            });
+
+            if (examCenterCount >= 120) {
+                throw new Error("Selected exam center is full. Please choose another exam center.");
+            }
+        }
 
         const updateData: any = { ...data };
 

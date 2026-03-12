@@ -2,6 +2,7 @@
 
 import {
     BookOpen,
+    Building2,
     Calendar,
     CircleAlert,
     CircleHelp,
@@ -169,6 +170,11 @@ const data = {
                     title: "School Enquiries",
                     url: "/admin/school-enquiries",
                     icon: GraduationCap,
+                },
+                {
+                    title: "Exam Centers",
+                    url: "/admin/exam-center",
+                    icon: Building2,
                 },
             ],
         },
