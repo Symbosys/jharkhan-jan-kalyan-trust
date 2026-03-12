@@ -13,6 +13,14 @@ interface RegistrationCardProps {
         board: string;
         photo: { url: string; public_id: string } | null;
         createdAt: Date;
+        examCenter?: {
+            id: number;
+            name: string;
+            address: string;
+            city: string;
+            state: string;
+            pinCode?: string;
+        } | null;
     };
     cardRef: React.RefObject<HTMLDivElement | null>;
     competitionDate?: string;
@@ -450,7 +458,7 @@ export const RegistrationCard: React.FC<RegistrationCardProps> = ({
                     </div>
 
 
-                    {/* Venue of Examination */}
+                    {/* Venue of Examination - Show Exam Center */}
                     <div style={{
                         display: "flex",
                         minHeight: 48,
@@ -479,7 +487,17 @@ export const RegistrationCard: React.FC<RegistrationCardProps> = ({
                             fontWeight: 600,
                             color: "#dc2626",
                         }}>
-                            {competitionVenue}
+                            {participant.examCenter ? (
+                                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                                    <span style={{ fontWeight: 700 }}>{participant.examCenter.name}</span>
+                                    <span style={{ fontSize: 14, color: "#0f172a" }}>
+                                        {participant.examCenter.address}, {participant.examCenter.city}, {participant.examCenter.state}
+                                        {participant.examCenter.pinCode && ` - ${participant.examCenter.pinCode}`}
+                                    </span>
+                                </div>
+                            ) : (
+                                competitionVenue
+                            )}
                         </div>
                     </div>
                 </div>

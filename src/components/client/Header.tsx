@@ -101,6 +101,7 @@ export function Header() {
                         <div className="flex flex-col">
                             <span className="text-xl font-bold tracking-tight text-tertiary leading-none">Jharkhand</span>
                             <span className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase mt-0.5">Jan Kalyan Trust</span>
+                            <span className="text-[9px] font-semibold text-primary/80 tracking-wide mt-0.5">Regd. Under Govt. of Jharkhand</span>
                         </div>
                     </Link>
 
