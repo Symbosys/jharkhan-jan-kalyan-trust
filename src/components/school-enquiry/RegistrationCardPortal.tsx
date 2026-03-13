@@ -24,6 +24,15 @@ interface SchoolEnquiry {
     status: 'PENDING' | 'APPROVED' | 'REJECTED';
     photo: { url: string; public_id: string } | null;
     payment: { url: string; public_id: string } | null;
+    isAllowedToDownloadAdminCard: boolean;
+    examCenter?: {
+        id: number;
+        name: string;
+        address: string;
+        city: string;
+        state: string;
+        pinCode?: string;
+    } | null;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -66,6 +75,12 @@ export function RegistrationCardPortal() {
         try {
             const res = await getSchoolEnquiryByRegistrationNumber(regNumber.trim());
             if (res && res.status === "APPROVED") {
+                // Check if user is allowed to download card
+                if (!res.isAllowedToDownloadAdminCard) {
+                    toast.error("Card download is not enabled yet. Please contact the administrator.");
+                    setLoading(false);
+                    return;
+                }
                 setParticipant(res as SchoolEnquiry);
                 toast.success("Registration verified successfully!");
             } else if (res) {

@@ -28,8 +28,8 @@ interface RegistrationCardProps {
     competitionVenue?: string;
 }
 
-export const RegistrationCard: React.FC<RegistrationCardProps> = ({ 
-    participant, 
+export const RegistrationCard: React.FC<RegistrationCardProps> = ({
+    participant,
     cardRef,
     competitionDate = "15/04/2026",
     competitionTime = "10:00 AM - 12:00 PM",
@@ -81,13 +81,14 @@ export const RegistrationCard: React.FC<RegistrationCardProps> = ({
                     minHeight: 120,
                 }}>
                     {/* Company Logo */}
-                    <div style={{
+                    <div><div style={{
                         width: 90,
                         height: 90,
                         borderRadius: "50%",
                         overflow: "hidden",
                         border: "2px solid #d4a843",
                         flexShrink: 0,
+                        marginLeft: 30
                     }}>
                         <img
                             src="/logo/logo.jpeg"
@@ -99,6 +100,7 @@ export const RegistrationCard: React.FC<RegistrationCardProps> = ({
                             }}
                         />
                     </div>
+                        <span className="text-[10px] font-semibold text-primary/80 tracking-wide mt-0. 5">( Registered Under Govt. of Jharkhand )</span></div>
 
                     {/* Center Title */}
                     <div style={{

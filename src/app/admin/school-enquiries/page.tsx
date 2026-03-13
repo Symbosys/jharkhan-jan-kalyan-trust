@@ -30,6 +30,7 @@ import {
     BookOpen,
     Calendar,
     CheckCircle,
+    Download,
     Eye,
     GraduationCap,
     Loader2,
@@ -39,7 +40,8 @@ import {
     School,
     Trash2,
     User,
-    XCircle
+    XCircle,
+    CreditCard
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -58,6 +60,15 @@ interface SchoolEnquiry {
     status: 'PENDING' | 'APPROVED' | 'REJECTED';
     photo: { url: string; public_id: string } | null;
     payment: { url: string; public_id: string } | null;
+    isAllowedToDownloadAdminCard: boolean;
+    examCenter?: {
+        id: number;
+        name: string;
+        address: string;
+        city: string;
+        state: string;
+        pinCode?: string;
+    } | null;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -71,6 +82,7 @@ export default function SchoolEnquiriesPage() {
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
     const [isUpdating, setIsUpdating] = useState<number | null>(null);
+    const [isTogglingDownload, setIsTogglingDownload] = useState<number | null>(null);
 
     const fetchEnquiries = async () => {
         setLoading(true);
@@ -135,6 +147,30 @@ export default function SchoolEnquiriesPage() {
             toast.error("An unexpected error occurred");
         } finally {
             setIsUpdating(null);
+        }
+    };
+
+    const handleToggleDownloadPermission = async (id: number, currentValue: boolean) => {
+        setIsTogglingDownload(id);
+        try {
+            const res = await updateSchoolEnquiry(id, { isAllowedToDownloadAdminCard: !currentValue });
+            if (res.success) {
+                toast.success(`Download permission ${!currentValue ? 'enabled' : 'disabled'} successfully`);
+                fetchEnquiries();
+                // Update the selectedEnquiry state to reflect the change immediately
+                if (selectedEnquiry && selectedEnquiry.id === id) {
+                    setSelectedEnquiry({
+                        ...selectedEnquiry,
+                        isAllowedToDownloadAdminCard: !currentValue
+                    });
+                }
+            } else {
+                toast.error(res.error || "Failed to update download permission");
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred");
+        } finally {
+            setIsTogglingDownload(null);
         }
     };
 
@@ -329,6 +365,20 @@ export default function SchoolEnquiriesPage() {
                                                     <Button
                                                         variant="ghost"
                                                         size="icon"
+                                                        className={`h-8 w-8 ${enquiry.isAllowedToDownloadAdminCard ? 'text-green-600 bg-green-50 dark:bg-green-900/20' : 'text-muted-foreground hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20'}`}
+                                                        disabled={isTogglingDownload === enquiry.id}
+                                                        onClick={() => handleToggleDownloadPermission(enquiry.id, enquiry.isAllowedToDownloadAdminCard)}
+                                                        title={enquiry.isAllowedToDownloadAdminCard ? "Disable card download" : "Enable card download"}
+                                                    >
+                                                        {isTogglingDownload === enquiry.id ? (
+                                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                                        ) : (
+                                                            <CreditCard className="h-4 w-4" />
+                                                        )}
+                                                    </Button>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
                                                         className="h-8 w-8 text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                                                         onClick={() => handleViewDetail(enquiry)}
                                                     >
@@ -360,8 +410,8 @@ export default function SchoolEnquiriesPage() {
 
             {/* Enquiry Detail Dialog */}
             <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
-                <DialogContent className="sm:max-w-[700px] border-border bg-background">
-                    <DialogHeader>
+                <DialogContent className="sm:max-w-[700px] border-border bg-background max-h-[90vh] flex flex-col">
+                    <DialogHeader className="flex-shrink-0">
                         <DialogTitle className="text-2xl font-bold font-outfit text-foreground flex items-center gap-2">
                             <GraduationCap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                             GK Competition Registration Details
@@ -372,7 +422,8 @@ export default function SchoolEnquiriesPage() {
                     </DialogHeader>
 
                     {selectedEnquiry && (
-                        <div className="space-y-6 pt-4">
+                        <div className="flex-grow overflow-y-auto py-4 pr-2 -mr-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                            <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-1">
                                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Registration Number</p>
@@ -390,6 +441,15 @@ export default function SchoolEnquiriesPage() {
                                         className="capitalize text-sm px-3 py-1"
                                     >
                                         {selectedEnquiry.status.toLowerCase()}
+                                    </Badge>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Card Download</p>
+                                    <Badge 
+                                        variant={selectedEnquiry.isAllowedToDownloadAdminCard ? 'default' : 'secondary'}
+                                        className={`text-sm px-3 py-1 ${selectedEnquiry.isAllowedToDownloadAdminCard ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}`}
+                                    >
+                                        {selectedEnquiry.isAllowedToDownloadAdminCard ? 'Allowed' : 'Not Allowed'}
                                     </Badge>
                                 </div>
                                 <div className="space-y-1">
@@ -434,6 +494,44 @@ export default function SchoolEnquiriesPage() {
                                         {selectedEnquiry.board}
                                     </Badge>
                                 </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Exam Center</p>
+                                    {selectedEnquiry.examCenter ? (
+                                        <div className="space-y-1">
+                                            <p className="text-sm font-medium text-foreground">{selectedEnquiry.examCenter.name}</p>
+                                            <p className="text-xs text-muted-foreground">{selectedEnquiry.examCenter.address}</p>
+                                            <p className="text-xs text-muted-foreground">{selectedEnquiry.examCenter.city}, {selectedEnquiry.examCenter.state} {selectedEnquiry.examCenter.pinCode}</p>
+                                        </div>
+                                    ) : (
+                                        <Badge variant="secondary" className="text-xs">
+                                            Not Selected
+                                        </Badge>
+                                    )}
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Card Download Permission</p>
+                                    <div className="flex items-center gap-3">
+                                        <Badge 
+                                            variant={selectedEnquiry.isAllowedToDownloadAdminCard ? 'default' : 'secondary'}
+                                            className={`text-sm px-3 py-1 ${selectedEnquiry.isAllowedToDownloadAdminCard ? 'bg-green-100 text-green-800 hover:bg-green-100' : ''}`}
+                                        >
+                                            {selectedEnquiry.isAllowedToDownloadAdminCard ? 'Allowed' : 'Not Allowed'}
+                                        </Badge>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className={`h-8 px-3 text-xs ${selectedEnquiry.isAllowedToDownloadAdminCard ? 'border-green-500 text-green-600 hover:bg-green-50' : 'hover:bg-muted'}`}
+                                            disabled={isTogglingDownload === selectedEnquiry.id}
+                                            onClick={() => handleToggleDownloadPermission(selectedEnquiry.id, selectedEnquiry.isAllowedToDownloadAdminCard)}
+                                        >
+                                            {isTogglingDownload === selectedEnquiry.id ? (
+                                                <Loader2 className="h-3 w-3 animate-spin" />
+                                            ) : (
+                                                selectedEnquiry.isAllowedToDownloadAdminCard ? 'Disable' : 'Enable'
+                                            )}
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
 
                             {(selectedEnquiry.photo || selectedEnquiry.payment) && (
@@ -469,10 +567,11 @@ export default function SchoolEnquiriesPage() {
                                     </div>
                                 </div>
                             )}
+                            </div>
                         </div>
                     )}
 
-                    <DialogFooter className="mt-8 gap-3 sm:gap-0 border-t border-border pt-6">
+                    <DialogFooter className="mt-8 gap-3 sm:gap-0 border-t border-border pt-6 flex-shrink-0">
                         <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setIsDetailOpen(false)}>
                             Back to List
                         </Button>

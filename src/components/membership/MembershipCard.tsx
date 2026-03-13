@@ -203,6 +203,7 @@ export const MembershipCard: React.FC<MembershipCardProps> = ({ member, cardRef 
                 }}>
                     JHARKHAND JAN KALYAN TRUST
                 </span>
+                <span className="text-[10px] font-semibold text-[#e8ca31] tracking-wide mt-0.5">( Registered Under Govt. of Jharkhand )</span>
             </div>
 
             {/* ===== LAYER 7: Main Body Texts (100% Safe Alignment) ===== */}
