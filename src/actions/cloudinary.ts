@@ -8,9 +8,47 @@ import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
  */
 export async function uploadImageAction(base64: string, folder: string = "general") {
     try {
-        if (!base64) throw new Error("No image data provided");
+        // Validate input
+        if (!base64) {
+            return {
+                success: false,
+                error: "No image data provided"
+            };
+        }
+        
+        if (!base64.startsWith('data:')) {
+            return {
+                success: false,
+                error: "Invalid image format - must be base64 data URL"
+            };
+        }
+        
+        // Check if base64 data is reasonable size (prevent massive payloads)
+        const base64Data = base64.split(',')[1];
+        if (!base64Data) {
+            return {
+                success: false,
+                error: "Invalid base64 format"
+            };
+        }
+        
+        // Rough size check - if base64 is larger than ~5MB, reject
+        if (base64Data.length > 7000000) { // ~5MB when decoded
+            return {
+                success: false,
+                error: "Image too large - maximum 5MB allowed"
+            };
+        }
         
         const result = await uploadToCloudinary(base64, folder);
+        
+        if (!result || !result.url || !result.public_id) {
+            return {
+                success: false,
+                error: "Upload succeeded but missing response data"
+            };
+        }
+        
         return {
             success: true,
             public_id: result.public_id,

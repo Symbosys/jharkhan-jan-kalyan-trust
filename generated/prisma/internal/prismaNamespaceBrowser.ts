@@ -69,7 +69,8 @@ export const ModelName = {
   Enquiry: 'Enquiry',
   MembershipRenewal: 'MembershipRenewal',
   SchoolEnquiry: 'SchoolEnquiry',
-  ExamCenter: 'ExamCenter'
+  ExamCenter: 'ExamCenter',
+  Affiliation: 'Affiliation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -388,6 +389,32 @@ export const ExamCenterScalarFieldEnum = {
 export type ExamCenterScalarFieldEnum = (typeof ExamCenterScalarFieldEnum)[keyof typeof ExamCenterScalarFieldEnum]
 
 
+export const AffiliationScalarFieldEnum = {
+  id: 'id',
+  AffiliationNumber: 'AffiliationNumber',
+  organizationName: 'organizationName',
+  registrationNumber: 'registrationNumber',
+  establishedYear: 'establishedYear',
+  organizationType: 'organizationType',
+  address: 'address',
+  city: 'city',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  directorName: 'directorName',
+  directorMobile: 'directorMobile',
+  directorEmail: 'directorEmail',
+  documents: 'documents',
+  validFrom: 'validFrom',
+  validTill: 'validTill',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AffiliationScalarFieldEnum = (typeof AffiliationScalarFieldEnum)[keyof typeof AffiliationScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -622,4 +649,22 @@ export const ExamCenterOrderByRelevanceFieldEnum = {
 } as const
 
 export type ExamCenterOrderByRelevanceFieldEnum = (typeof ExamCenterOrderByRelevanceFieldEnum)[keyof typeof ExamCenterOrderByRelevanceFieldEnum]
+
+
+export const AffiliationOrderByRelevanceFieldEnum = {
+  AffiliationNumber: 'AffiliationNumber',
+  organizationName: 'organizationName',
+  registrationNumber: 'registrationNumber',
+  organizationType: 'organizationType',
+  address: 'address',
+  city: 'city',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  directorName: 'directorName',
+  directorMobile: 'directorMobile',
+  directorEmail: 'directorEmail'
+} as const
+
+export type AffiliationOrderByRelevanceFieldEnum = (typeof AffiliationOrderByRelevanceFieldEnum)[keyof typeof AffiliationOrderByRelevanceFieldEnum]
 

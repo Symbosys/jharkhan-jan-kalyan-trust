@@ -158,3 +158,12 @@ export const EnquiryStatus = {
 } as const
 
 export type EnquiryStatus = (typeof EnquiryStatus)[keyof typeof EnquiryStatus]
+
+
+export const AffiliationStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type AffiliationStatus = (typeof AffiliationStatus)[keyof typeof AffiliationStatus]

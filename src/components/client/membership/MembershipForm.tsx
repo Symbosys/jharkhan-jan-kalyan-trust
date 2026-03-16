@@ -97,7 +97,8 @@ const fileSchema = z
     .min(1, "This file is required")
     .refine(
         (val) => {
-            if (!val || !val.startsWith("data:")) return true;
+            if (!val || typeof val !== 'string') return false;
+            if (!val.startsWith("data:")) return false;
             const base64 = val.split(",")[1];
             if (!base64) return false;
             const sizeInBytes = (base64.length * 3) / 4;
@@ -111,7 +112,8 @@ const optionalFileSchema = z
     .optional()
     .refine(
         (val) => {
-            if (!val || !val.startsWith("data:")) return true;
+            if (!val || typeof val !== 'string') return true;
+            if (!val.startsWith("data:")) return true;
             const base64 = val.split(",")[1];
             if (!base64) return true;
             const sizeInBytes = (base64.length * 3) / 4;
@@ -213,10 +215,10 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             district: "",
             address: "",
             pinCode: "",
-            profilePicture: "",
+            profilePicture: undefined, // Changed from empty string to undefined for better type safety
             planId: 0,
             paymentMode: "",
-            paymentImage: "",
+            paymentImage: undefined, // Changed from empty string to undefined for better type safety
         },
     });
 
@@ -225,14 +227,38 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
             const file = e.target.files?.[0];
             if (!file) return;
 
+            // Validate file type
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                toast.error("Invalid file type", { 
+                    description: "Please upload a valid image file (JPEG, PNG, GIF, WEBP)" 
+                });
+                return;
+            }
+
             if (file.size > MAX_FILE_SIZE) {
-                toast.error("File too large", { description: "Maximum file size is 2 MB" });
+                toast.error("File too large", { 
+                    description: `Maximum file size is ${(MAX_FILE_SIZE / (1024 * 1024)).toFixed(1)} MB` 
+                });
                 return;
             }
 
             const reader = new FileReader();
             reader.onloadend = () => {
-                form.setValue(fieldName, reader.result as string, { shouldValidate: true });
+                const result = reader.result as string;
+                // Additional validation of the base64 result
+                if (!result || !result.startsWith('data:')) {
+                    toast.error("File processing failed", { 
+                        description: "Could not process the selected file" 
+                    });
+                    return;
+                }
+                form.setValue(fieldName, result, { shouldValidate: true });
+            };
+            reader.onerror = () => {
+                toast.error("File reading failed", { 
+                    description: "Could not read the selected file" 
+                });
             };
             reader.readAsDataURL(file);
         },
@@ -255,6 +281,19 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
     const onSubmit = async (values: MembershipFormValues) => {
         setIsSubmitting(true);
         try {
+            // Validate base64 strings before upload
+            if (!values.profilePicture || !values.profilePicture.startsWith('data:')) {
+                toast.error("Profile picture is required and must be a valid image");
+                setIsSubmitting(false);
+                return;
+            }
+            
+            if (!values.paymentImage || !values.paymentImage.startsWith('data:')) {
+                toast.error("Payment receipt is required and must be a valid image");
+                setIsSubmitting(false);
+                return;
+            }
+
             // 1. Upload Images to Cloudinary from client side
             let profilePictureData;
             let paymentImageData;
@@ -264,7 +303,21 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                 profilePictureData = await uploadImageClient(values.profilePicture, "memberships");
                 paymentImageData = await uploadImageClient(values.paymentImage, "memberships");
             } catch (err: any) {
-                toast.error("Image upload failed: " + err.message);
+                console.error("Image upload error:", err);
+                toast.error("Image upload failed: " + (err.message || "Unknown error"));
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Validate that we got proper responses
+            if (!profilePictureData || !profilePictureData.url || !profilePictureData.public_id) {
+                toast.error("Profile picture upload failed - invalid response");
+                setIsSubmitting(false);
+                return;
+            }
+            
+            if (!paymentImageData || !paymentImageData.url || !paymentImageData.public_id) {
+                toast.error("Payment receipt upload failed - invalid response");
                 setIsSubmitting(false);
                 return;
             }
@@ -291,7 +344,8 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                 toast.error(result.error || "Failed to submit application");
             }
         } catch (err: any) {
-            toast.error("An unexpected error occurred: " + err.message);
+            console.error("Submission error:", err);
+            toast.error("An unexpected error occurred: " + (err.message || "Unknown error"));
         } finally {
             setIsSubmitting(false);
         }

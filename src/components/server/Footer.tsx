@@ -8,8 +8,6 @@ import {
     Heart,
     Facebook,
     Instagram,
-    Youtube,
-    Twitter,
     ArrowRight
 } from "lucide-react";
 import { CopyrightYear } from "@/components/client/CopyrightYear";
@@ -40,10 +38,8 @@ export async function Footer() {
     const phone = settings?.phone || "+91-XXXXXXXXXX";
     const email = settings?.email || "info@jankalyantrust.org";
     const address = settings?.address || "Jharkhand, India";
-    const facebook = settings?.facebook || "#";
-    const instagram = settings?.instagram || "#";
-    const youtube = settings?.youtube || "#";
-    const twitter = settings?.twitter || "#";
+    const facebook = settings?.facebook || "https://www.facebook.com/people/jharkhandjankalyantrust/61582242404959/";
+    const instagram = settings?.instagram || "https://www.instagram.com/jharkhandjankalyantrust?igsh=MWZwZ2UzNHNwYms1ZQ%3D%3D";
 
     return (
         <footer className="bg-foreground text-background relative overflow-hidden">
@@ -107,6 +103,10 @@ export async function Footer() {
                                 <p className="text-background/50 text-sm font-medium leading-relaxed max-w-sm">
                                     Jharkhand Jan Kalyan Trust is a grassroots NGO dedicated to improving lives through education, healthcare, and sustainable community development.
                                 </p>
+                                <div className="pt-2">
+                                    <p className="text-[9px] font-black text-background/30 uppercase tracking-widest">Registration Number</p>
+                                    <p className="text-sm font-bold text-background/70">2026/JAMU/433/BK4/3</p>
+                                </div>
                             </div>
 
                             {/* Social Icons */}
@@ -114,8 +114,6 @@ export async function Footer() {
                                 {[
                                     { Icon: Facebook, href: facebook, label: "Facebook" },
                                     { Icon: Instagram, href: instagram, label: "Instagram" },
-                                    { Icon: Youtube, href: youtube, label: "YouTube" },
-                                    { Icon: Twitter, href: twitter, label: "Twitter" },
                                 ].map(({ Icon, href, label }) => (
                                     <Link
                                         key={label}
@@ -212,7 +210,7 @@ export async function Footer() {
                             &copy; <CopyrightYear /> Jharkhand Jan Kalyan Trust. All rights reserved.
                         </p>
                         <div className="flex items-center gap-1 text-sm text-background/30 font-medium">
-                            Made with <Heart className="h-3.5 w-3.5 text-red-500 fill-red-500 mx-1" /> for Jharkhand
+                            Developed by <Link href="https://symbosys.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">symbosys</Link>
                         </div>
                     </div>
                 </div>

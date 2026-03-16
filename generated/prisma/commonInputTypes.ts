@@ -559,6 +559,23 @@ export type EnumEnquiryStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
 }
 
+export type EnumAffiliationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AffiliationStatus | Prisma.EnumAffiliationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AffiliationStatus[]
+  notIn?: $Enums.AffiliationStatus[]
+  not?: Prisma.NestedEnumAffiliationStatusFilter<$PrismaModel> | $Enums.AffiliationStatus
+}
+
+export type EnumAffiliationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AffiliationStatus | Prisma.EnumAffiliationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AffiliationStatus[]
+  notIn?: $Enums.AffiliationStatus[]
+  not?: Prisma.NestedEnumAffiliationStatusWithAggregatesFilter<$PrismaModel> | $Enums.AffiliationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAffiliationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAffiliationStatusFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -1065,6 +1082,23 @@ export type NestedEnumEnquiryStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumAffiliationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AffiliationStatus | Prisma.EnumAffiliationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AffiliationStatus[]
+  notIn?: $Enums.AffiliationStatus[]
+  not?: Prisma.NestedEnumAffiliationStatusFilter<$PrismaModel> | $Enums.AffiliationStatus
+}
+
+export type NestedEnumAffiliationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AffiliationStatus | Prisma.EnumAffiliationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AffiliationStatus[]
+  notIn?: $Enums.AffiliationStatus[]
+  not?: Prisma.NestedEnumAffiliationStatusWithAggregatesFilter<$PrismaModel> | $Enums.AffiliationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAffiliationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAffiliationStatusFilter<$PrismaModel>
 }
 
 

@@ -112,3 +112,8 @@ export type SchoolEnquiry = Prisma.SchoolEnquiryModel
  * 
  */
 export type ExamCenter = Prisma.ExamCenterModel
+/**
+ * Model Affiliation
+ * 
+ */
+export type Affiliation = Prisma.AffiliationModel

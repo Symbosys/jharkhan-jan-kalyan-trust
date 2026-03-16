@@ -402,7 +402,8 @@ export const ModelName = {
   Enquiry: 'Enquiry',
   MembershipRenewal: 'MembershipRenewal',
   SchoolEnquiry: 'SchoolEnquiry',
-  ExamCenter: 'ExamCenter'
+  ExamCenter: 'ExamCenter',
+  Affiliation: 'Affiliation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -418,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry" | "examCenter"
+    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry" | "examCenter" | "affiliation"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1676,6 +1677,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Affiliation: {
+      payload: Prisma.$AffiliationPayload<ExtArgs>
+      fields: Prisma.AffiliationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AffiliationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AffiliationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>
+        }
+        findFirst: {
+          args: Prisma.AffiliationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AffiliationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>
+        }
+        findMany: {
+          args: Prisma.AffiliationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>[]
+        }
+        create: {
+          args: Prisma.AffiliationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>
+        }
+        createMany: {
+          args: Prisma.AffiliationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.AffiliationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>
+        }
+        update: {
+          args: Prisma.AffiliationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>
+        }
+        deleteMany: {
+          args: Prisma.AffiliationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AffiliationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.AffiliationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AffiliationPayload>
+        }
+        aggregate: {
+          args: Prisma.AffiliationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAffiliation>
+        }
+        groupBy: {
+          args: Prisma.AffiliationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AffiliationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AffiliationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AffiliationCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2015,6 +2082,32 @@ export const ExamCenterScalarFieldEnum = {
 export type ExamCenterScalarFieldEnum = (typeof ExamCenterScalarFieldEnum)[keyof typeof ExamCenterScalarFieldEnum]
 
 
+export const AffiliationScalarFieldEnum = {
+  id: 'id',
+  AffiliationNumber: 'AffiliationNumber',
+  organizationName: 'organizationName',
+  registrationNumber: 'registrationNumber',
+  establishedYear: 'establishedYear',
+  organizationType: 'organizationType',
+  address: 'address',
+  city: 'city',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  directorName: 'directorName',
+  directorMobile: 'directorMobile',
+  directorEmail: 'directorEmail',
+  documents: 'documents',
+  validFrom: 'validFrom',
+  validTill: 'validTill',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AffiliationScalarFieldEnum = (typeof AffiliationScalarFieldEnum)[keyof typeof AffiliationScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2251,6 +2344,24 @@ export const ExamCenterOrderByRelevanceFieldEnum = {
 export type ExamCenterOrderByRelevanceFieldEnum = (typeof ExamCenterOrderByRelevanceFieldEnum)[keyof typeof ExamCenterOrderByRelevanceFieldEnum]
 
 
+export const AffiliationOrderByRelevanceFieldEnum = {
+  AffiliationNumber: 'AffiliationNumber',
+  organizationName: 'organizationName',
+  registrationNumber: 'registrationNumber',
+  organizationType: 'organizationType',
+  address: 'address',
+  city: 'city',
+  mobile: 'mobile',
+  email: 'email',
+  website: 'website',
+  directorName: 'directorName',
+  directorMobile: 'directorMobile',
+  directorEmail: 'directorEmail'
+} as const
+
+export type AffiliationOrderByRelevanceFieldEnum = (typeof AffiliationOrderByRelevanceFieldEnum)[keyof typeof AffiliationOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -2405,6 +2516,13 @@ export type EnumEnquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'AffiliationStatus'
+ */
+export type EnumAffiliationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AffiliationStatus'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2524,6 +2642,7 @@ export type GlobalOmitConfig = {
   membershipRenewal?: Prisma.MembershipRenewalOmit
   schoolEnquiry?: Prisma.SchoolEnquiryOmit
   examCenter?: Prisma.ExamCenterOmit
+  affiliation?: Prisma.AffiliationOmit
 }
 
 /* Types for Logging */

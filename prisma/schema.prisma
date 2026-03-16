@@ -404,3 +404,35 @@ model ExamCenter {
 
   schoolEnquiries SchoolEnquiry[]
 }
+
+
+model Affiliation {
+  id          Int    @id @default(autoincrement())
+  AffiliationNumber String @unique @default("NOT PROVIDED")
+  organizationName String
+  registrationNumber String?
+  establishedYear Int
+  organizationType String
+  address     String
+  city        String
+  mobile      String
+  email       String
+  website     String?
+  directorName String
+  directorMobile String
+  directorEmail String?
+  documents   Json?
+
+  validFrom   DateTime?
+  validTill   DateTime?
+
+  status      AffiliationStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AffiliationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}

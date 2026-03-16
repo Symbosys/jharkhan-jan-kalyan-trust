@@ -8,6 +8,7 @@ import {
     CircleHelp,
     CreditCard,
     GraduationCap,
+    Handshake,
     Image as ImageIcon,
     LayoutDashboard,
     LogOut,
@@ -170,6 +171,11 @@ const data = {
                     title: "School Enquiries",
                     url: "/admin/school-enquiries",
                     icon: GraduationCap,
+                },
+                {
+                    title: "Affiliation Requests",
+                    url: "/admin/affiliations",
+                    icon: Handshake,
                 },
                 {
                     title: "Exam Centers",
