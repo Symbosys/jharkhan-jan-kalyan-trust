@@ -1,160 +1,187 @@
-import Image from "next/image";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 
 interface Affiliation {
-    id: number;
-    AffiliationNumber: string;
-    organizationName: string;
-    registrationNumber: string | null;
-    establishedYear: number;
-    organizationType: string;
-    address: string;
-    city: string;
-    mobile: string;
-    email: string;
-    website: string | null;
-    directorName: string;
-    directorMobile: string;
-    directorEmail: string | null;
-    documents: any;
-    validFrom: Date | null;
-    validTill: Date | null;
-    status: 'PENDING' | 'APPROVED' | 'REJECTED';
-    createdAt: Date;
-    updatedAt: Date;
+  organizationName: string;
+  AffiliationNumber: string;
+  validFrom: Date | null;
+  validTill: Date | null;
 }
 
 interface AffiliationCardProps {
-    affiliation: Affiliation;
-    cardRef?: React.RefObject<HTMLDivElement>;
+  affiliation: Affiliation;
+  cardRef?: React.RefObject<HTMLDivElement>;
 }
 
 export const AffiliationCard = forwardRef<HTMLDivElement, AffiliationCardProps>(({ affiliation, cardRef }, ref) => {
-    return (
-        <div 
-            ref={ref || cardRef}
-            className="relative w-[800px] h-[550px] bg-white border-8 border-double border-teal-700 rounded-lg overflow-hidden shadow-2xl print:w-[297mm] print:h-[210mm]"
-        >
-            {/* Background decorations */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white via-teal-50 to-green-50 opacity-20"></div>
-            
-            {/* Wave decoration at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-teal-600 via-green-500 to-transparent opacity-30"></div>
-            
-            {/* Tree motif */}
-            <div className="absolute right-12 top-8 bottom-8 w-48 opacity-10">
-                <div className="w-full h-full bg-gradient-to-b from-amber-200 to-amber-100 rounded-full"></div>
-            </div>
+  const formatDate = (date: Date | null) => {
+    if (!date) return "....................................................";
+    return new Date(date).toLocaleDateString("en-IN");
+  };
 
-            <div className="relative z-10 p-12">
-                {/* Header section */}
-                <div className="flex justify-between items-start mb-10">
-                    {/* Logo */}
-                    <div className="flex-shrink-0">
-                        <div className="relative w-28 h-28 rounded-full border-4 border-yellow-500 overflow-hidden bg-gradient-to-br from-yellow-400 to-yellow-600 shadow-lg">
-                            <div className="absolute inset-2 rounded-full bg-white flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-green-700 text-xl font-bold font-serif">TREE</div>
-                                    <div className="text-yellow-600 text-lg font-bold font-serif mt-1">JJKT</div>
-                                </div>
-                            </div>
-                            <div className="absolute inset-0 rounded-full border-2 border-yellow-500"></div>
-                        </div>
-                        <div className="text-center mt-2">
-                            <div className="text-yellow-600 font-bold text-xs tracking-widest font-serif">
-                                JHARKHAND JAN KALYAN TRUST
-                            </div>
-                        </div>
-                    </div>
+  return (
+    // Added min-w and min-h so the external website layout cannot shrink or break the certificate
+    <div className="w-full overflow-x-auto pb-10 flex justify-center">
+      <div
+        ref={ref || cardRef}
+        className="relative w-[1123px] min-w-[1123px] h-[794px] min-h-[794px] bg-white overflow-hidden shadow-2xl shrink-0 print:shadow-none box-border"
+        style={{ fontFamily: "'Times New Roman', Times, serif" }}
+      >
+        {/* ================= BACKGROUND GRAPHICS (THE SWOOSHES) ================= */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1123 794" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="topTeal" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#0b4b45" />
+              <stop offset="100%" stopColor="#1e8175" />
+            </linearGradient>
+            <linearGradient id="bottomDarkBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#073a68" />
+              <stop offset="100%" stopColor="#032142" />
+            </linearGradient>
+            <linearGradient id="bottomLightBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0d6fb8" />
+              <stop offset="100%" stopColor="#084f88" />
+            </linearGradient>
+            <linearGradient id="bottomTeal" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0d5c56" />
+              <stop offset="100%" stopColor="#1a9187" />
+            </linearGradient>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#d4af37" />
+              <stop offset="50%" stopColor="#fff3cd" />
+              <stop offset="100%" stopColor="#b58d19" />
+            </linearGradient>
+          </defs>
 
-                    {/* Center title */}
-                    <div className="flex-grow text-center px-8">
-                        <h1 className="text-2xl font-bold text-blue-900 mb-2 font-serif">
-                            JHARKHAND JAN KALYAN TRUST
-                        </h1>
-                        <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mx-auto"></div>
-                    </div>
+          {/* Top Left Swooshes */}
+          <path d="M 0 0 L 500 0 C 350 50, 200 150, 0 350 Z" fill="url(#topTeal)" />
+          <path d="M 0 0 L 480 0 C 330 60, 180 160, 0 330 Z" fill="#0b4b45" />
+          <path d="M 0 0 L 460 0 C 310 70, 160 170, 0 310 Z" fill="none" stroke="url(#goldGradient)" strokeWidth="4" />
 
-                    {/* Contact info */}
-                    <div className="text-right flex-shrink-0">
-                        <div className="text-blue-900 text-xs leading-relaxed font-serif">
-                            <div>Add: Bank of India Opposite Street Kokar Ranchi</div>
-                            <div>
-                                <a href="http://www.jharkhandjankalyantrust.com" className="text-blue-700 underline">
-                                    www.jharkhandjankalyantrust.com
-                                </a>
-                            </div>
-                            <div>+91 84070 54027</div>
-                        </div>
-                    </div>
-                </div>
+          {/* Bottom Right Swooshes */}
+          <path d="M -50 850 C 300 700, 700 800, 1123 450 L 1123 794 L 0 794 Z" fill="none" stroke="url(#goldGradient)" strokeWidth="6" />
+          <path d="M -50 850 C 300 710, 700 810, 1123 460 L 1123 794 L 0 794 Z" fill="#b0d6cc" opacity="0.4" />
+          <path d="M -50 850 C 350 720, 750 820, 1123 520 L 1123 794 L 0 794 Z" fill="url(#bottomTeal)" />
+          <path d="M -50 850 C 400 760, 800 840, 1123 600 L 1123 794 L 0 794 Z" fill="url(#bottomDarkBlue)" />
+          <path d="M -50 850 C 450 800, 850 860, 1123 680 L 1123 794 L 0 794 Z" fill="url(#bottomLightBlue)" />
+        </svg>
 
-                {/* Main certificate title */}
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-green-800 mb-3 border-b-2 border-green-800 pb-2 inline-block font-serif">
-                        CERTIFICATE OF AFFILIATION
-                    </h2>
-                </div>
+        {/* ================= BORDERS ================= */}
+        <div className="absolute inset-0 border-[3px] border-[#0a4b46] m-2 z-10 pointer-events-none"></div>
+        <div className="absolute inset-0 border-[10px] m-[14px] z-10 pointer-events-none" style={{ borderImage: 'linear-gradient(to bottom right, #e6c875, #b8860b, #fdf0a6, #9e7305) 1' }}></div>
+        <div className="absolute inset-0 border-[1px] border-[#0a4b46] m-[30px] z-10 pointer-events-none bg-white/40 mix-blend-overlay"></div>
 
-                {/* Certification text */}
-                <div className="text-center mb-10">
-                    <p className="text-gray-700 italic text-lg mb-3 font-serif">This is to certify that</p>
-                    <div className="border-b-2 border-dotted border-gray-400 mb-5 mx-auto w-64"></div>
-                    
-                    <p className="text-gray-700 text-base leading-relaxed max-w-2xl mx-auto text-left font-serif px-8">
-                        <span className="font-bold text-green-800">{affiliation.organizationName}</span> is officially affiliated with 
-                        JHARKHAND JAN KALYAN TRUST for conducting educational and all social development programs 
-                        under the guidance and support of the trust.
-                    </p>
-                </div>
-
-                {/* Bottom section */}
-                <div className="flex justify-between items-end mt-8">
-                    {/* Fields section */}
-                    <div className="space-y-3">
-                        <div className="text-green-800 font-serif text-sm">
-                            <span className="font-bold">Affiliation No.:</span> 
-                            <span className="border-b border-dotted border-gray-400 ml-2 w-40 inline-block text-center">
-                                {affiliation.AffiliationNumber}
-                            </span>
-                        </div>
-                        <div className="text-green-800 font-serif text-sm">
-                            <span className="font-bold">Date of Issue:</span> 
-                            <span className="border-b border-dotted border-gray-400 ml-2 w-40 inline-block text-center">
-                                {affiliation.validFrom ? new Date(affiliation.validFrom).toLocaleDateString('en-IN') : 'N/A'}
-                            </span>
-                        </div>
-                        <div className="text-green-800 font-serif text-sm">
-                            <span className="font-bold">Valid Till:</span> 
-                            <span className="border-b border-dotted border-gray-400 ml-2 w-40 inline-block text-center">
-                                {affiliation.validTill ? new Date(affiliation.validTill).toLocaleDateString('en-IN') : 'N/A'}
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Signature section */}
-                    <div className="text-right">
-                        <div className="mb-6">
-                            <div className="w-40 h-16 border-b border-gray-400 mb-2 flex items-end justify-center">
-                                <div className="text-blue-700 font-serif text-sm italic">Signature</div>
-                            </div>
-                            <div className="text-gray-600 italic text-xs font-serif">Authorised Signature</div>
-                            <div className="text-gray-600 italic text-[10px] font-serif">(Chairman)</div>
-                        </div>
-                        <div className="text-blue-900 font-bold text-base font-serif">
-                            JHARKHAND JAN KALYAN TRUST
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Decorative border corners */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-teal-700"></div>
-            <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-teal-700"></div>
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-teal-700"></div>
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-teal-700"></div>
+        {/* ================= WATERMARK ================= */}
+        <div className="absolute right-12 top-1/2 -translate-y-1/2 opacity-[0.08] z-0 pointer-events-none">
+          <img 
+            src="/logo/logo.jpeg" 
+            alt="Tree Watermark" 
+            className="w-[500px] h-[500px] object-contain mix-blend-multiply" 
+          />
         </div>
-    );
+
+        {/* ================= MAIN CONTENT ================= */}
+        {/* Using absolute inset-0 with strict padding ensures content NEVER overflows the 794px height */}
+        <div className="absolute inset-0 z-20 px-[80px] py-[65px] flex flex-col justify-between pointer-events-none">
+          
+          {/* HEADER: Logo & Trust Details */}
+          <div className="flex justify-between items-start pointer-events-auto">
+            {/* Logo */}
+            <div className="w-[170px] h-[170px] rounded-full border-[6px] border-[#d4af37] bg-white flex flex-col items-center justify-center shadow-[0_4px_15px_rgba(0,0,0,0.2)] overflow-hidden relative shrink-0">
+              <div className="absolute inset-1 border-[1px] border-[#d4af37] rounded-full"></div>
+              <img src="/logo/logo.jpeg" alt="JJKT Logo" className="absolute inset-0 w-full h-full object-cover" />
+            </div>
+
+            {/* Trust Details */}
+            <div className="flex-1 text-right mt-4 pr-4">
+              <h1 className="text-[34px] font-bold text-[#0a274c] tracking-[0.02em] uppercase leading-tight mb-2" style={{ textShadow: '0.5px 0.5px 0px rgba(0,0,0,0.1)' }}>
+                JHARKHAND JAN KALYAN TRUST
+              </h1>
+              <div className="text-[14px] text-[#0a274c] space-y-1">
+                <p><span className="font-bold text-[#083e75]">Add:</span> Bank of India Opposite Street Kokar Ranchi</p>
+                <p>
+                  <span className="font-bold text-[#083e75]">Website:</span> www.jharkhandjankalyantrust.com 
+                  <span className="mx-2 text-gray-400">•</span> 
+                  <span className="font-bold text-[#083e75]">Contact no:</span> +91 84070 54027
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CERTIFICATE TITLE */}
+          <div className="text-center mt-2 pointer-events-auto">
+            <h2 className="text-[36px] font-bold text-[#114b46] tracking-[0.05em] uppercase pb-1 border-b-[1.5px] border-gray-300 inline-block px-4">
+              CERTIFICATE OF AFFILIATION
+            </h2>
+            <div className="flex justify-center items-center mt-2 space-x-3">
+               <div className="h-[1px] w-20 bg-gray-300"></div>
+               <div className="w-2 h-2 rotate-45 bg-[#b58d19]"></div>
+               <div className="h-[1px] w-20 bg-gray-300"></div>
+            </div>
+          </div>
+
+          {/* BODY TEXT */}
+          <div className="text-center flex-grow flex flex-col justify-center pointer-events-auto">
+            <p className="text-[22px] italic text-gray-700 mb-6">This is to certify that</p>
+            
+            <div className="mb-8 flex justify-center">
+              <div className="text-[30px] font-bold text-[#114b46] border-b-[2px] border-dotted border-gray-400 px-10 min-w-[550px] text-center pb-1">
+                {affiliation.organizationName || "\u00A0"}
+              </div>
+            </div>
+
+            <p className="text-[20px] text-gray-800 leading-[1.8] max-w-4xl mx-auto">
+              is officially affiliated with <span className="font-bold text-[#114b46]">JHARKHAND JAN KALYAN TRUST</span><br />
+              for conducting educational and all social development programs<br />
+              under the guidance and support of the trust.
+            </p>
+          </div>
+
+          {/* FOOTER: Details & Signature */}
+          <div className="flex justify-between items-end w-full pointer-events-auto">
+            
+            {/* Form Fields */}
+            <div className="space-y-4">
+              <div className="flex items-end">
+                <span className="font-bold text-[#114b46] text-[16px] w-32 mb-1">Affiliation No.:</span>
+                <div className="border-b-[1.5px] border-dotted border-gray-500 w-[260px] text-center text-gray-800 text-[16px] pb-1">
+                  {affiliation.AffiliationNumber || ""}
+                </div>
+              </div>
+              <div className="flex items-end">
+                <span className="font-bold text-[#114b46] text-[16px] w-32 mb-1">Date of Issue:</span>
+                <div className="border-b-[1.5px] border-dotted border-gray-500 w-[260px] text-center text-gray-800 text-[16px] pb-1">
+                  {formatDate(affiliation.validFrom)}
+                </div>
+              </div>
+              <div className="flex items-end">
+                <span className="font-bold text-[#114b46] text-[16px] w-32 mb-1">Valid Till:</span>
+                <div className="border-b-[1.5px] border-dotted border-gray-500 w-[260px] text-center text-gray-800 text-[16px] pb-1">
+                  {formatDate(affiliation.validTill)}
+                </div>
+              </div>
+            </div>
+
+            {/* Signature Block */}
+            <div className="text-center w-[260px]">
+              <div className="relative h-20 flex flex-col items-center justify-end border-b border-gray-400 pb-1 mb-2">
+                <img 
+                  src="/signature/president.jpeg" 
+                  alt="Signature" 
+                  className="absolute bottom-1 w-auto h-[60px] mix-blend-multiply opacity-80"
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-[14px] italic font-semibold text-gray-800">Authorised Signature</span>
+                <span className="text-[11px] text-gray-600 font-sans tracking-wide mt-1">(Chairman)</span>
+                <span className="text-[13px] font-bold text-[#0a274c] mt-1 uppercase tracking-tight">JHARKHAND JAN KALYAN TRUST</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 });
 
 AffiliationCard.displayName = 'AffiliationCard';
