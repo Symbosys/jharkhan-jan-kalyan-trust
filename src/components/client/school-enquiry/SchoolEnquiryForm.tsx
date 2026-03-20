@@ -53,7 +53,7 @@ interface SchoolEnquiryFormProps {
 }
 
 // ── Constants ──
-const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1 MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
 const BOARDS = [
     { value: "CBSE", label: "CBSE" },
@@ -94,7 +94,7 @@ const fileSchema = z
             const sizeInBytes = (base64.length * 3) / 4;
             return sizeInBytes <= MAX_FILE_SIZE;
         },
-        { message: "File must be less than 1 MB" }
+        { message: "File must be less than 5 MB" }
     );
 
 const optionalFileSchema = z
@@ -108,7 +108,7 @@ const optionalFileSchema = z
             const sizeInBytes = (base64.length * 3) / 4;
             return sizeInBytes <= MAX_FILE_SIZE;
         },
-        { message: "File must be less than 1 MB" }
+        { message: "File must be less than 5 MB" }
     );
 
 // ── Zod Schema ──
@@ -181,7 +181,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
             if (!file) return;
 
             if (file.size > MAX_FILE_SIZE) {
-                toast.error("File too large", { description: "Maximum file size is 1 MB" });
+                toast.error("File too large", { description: "Maximum file size is 5 MB" });
                 return;
             }
 
@@ -489,7 +489,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                         </SelectContent>
                                     </Select>
                                     <FormDescription className="text-xs">
-                                        Select the exam center where you want to appear for the GK Competition. Each center has a maximum capacity of 120 students.
+                                        Select the exam center where you want to appear for the GK Competition. Each center has a maximum capacity of 250 students.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

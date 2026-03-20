@@ -33,7 +33,7 @@ export async function createSchoolEnquiry(data: {
             where: { examCenterId: data.examCenterId }
         });
 
-        if (examCenterCount >= 120) {
+        if (examCenterCount >= 250) {
             throw new Error("Selected exam center is full. Please choose another exam center.");
         }
 
@@ -276,7 +276,7 @@ export async function updateSchoolEnquiry(
                 where: { examCenterId: data.examCenterId }
             });
 
-            if (examCenterCount >= 120) {
+            if (examCenterCount >= 500) {
                 throw new Error("Selected exam center is full. Please choose another exam center.");
             }
         }
