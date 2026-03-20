@@ -143,7 +143,7 @@ const membershipSchema = z.object({
     pinCode: z.string().regex(/^[0-9]{6}$/, "PIN Code must be 6 digits"),
 
     // Step 3: Documents
-    profilePicture: fileSchema,
+    profilePicture: optionalFileSchema,
 
     // Step 4: Plan & Payment
     planId: z.number("Please select a plan").min(1, "Please select a plan"),
@@ -281,9 +281,9 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
     const onSubmit = async (values: MembershipFormValues) => {
         setIsSubmitting(true);
         try {
-            // Validate base64 strings before upload
-            if (!values.profilePicture || !values.profilePicture.startsWith('data:')) {
-                toast.error("Profile picture is required and must be a valid image");
+            // Validate base64 strings before upload (optional profile picture, mandatory payment image)
+            if (values.profilePicture && !values.profilePicture.startsWith('data:')) {
+                toast.error("Profile picture must be a valid image");
                 setIsSubmitting(false);
                 return;
             }
@@ -294,46 +294,17 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                 return;
             }
 
-            // 1. Upload Images to Cloudinary from client side
-            let profilePictureData;
-            let paymentImageData;
-
-            try {
-                // Sequential uploads for better error management
-                profilePictureData = await uploadImageClient(values.profilePicture, "memberships");
-                paymentImageData = await uploadImageClient(values.paymentImage, "memberships");
-            } catch (err: any) {
-                console.error("Image upload error:", err);
-                toast.error("Image upload failed: " + (err.message || "Unknown error"));
-                setIsSubmitting(false);
-                return;
-            }
-
-            // Validate that we got proper responses
-            if (!profilePictureData || !profilePictureData.url || !profilePictureData.public_id) {
-                toast.error("Profile picture upload failed - invalid response");
-                setIsSubmitting(false);
-                return;
-            }
-            
-            if (!paymentImageData || !paymentImageData.url || !paymentImageData.public_id) {
-                toast.error("Payment receipt upload failed - invalid response");
-                setIsSubmitting(false);
-                return;
-            }
-
-            // Exclude huge base64 strings from payload to avoid NextJs/Vercel Server Action 1MB-4MB crash limits
+            // Pass base64 strings directly to the server action for server-side processing
             const { profilePicture, paymentImage, ...filteredValues } = values;
 
-            // 2. Send payload to server action
             const result = await applyMembership({
                 ...filteredValues,
                 gender: values.gender as any,
                 dob: new Date(values.dob),
                 gurdianType: values.gurdianType as any,
                 paymentMode: values.paymentMode as any,
-                profilePictureData,
-                paymentImageData
+                profilePictureBase64: profilePicture,
+                paymentImageBase64: paymentImage
             });
 
             if (result.success) {
@@ -664,7 +635,7 @@ export function MembershipForm({ plans, paymentDetails }: MembershipFormProps) {
                                     name="profilePicture"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-bold">Profile Photo *</FormLabel>
+                                            <FormLabel className="font-bold">Profile Photo (Optional)</FormLabel>
                                             <FormControl>
                                                 <div className="flex items-start gap-6">
                                                     <label className="relative shrink-0 flex items-center justify-center w-32 h-32 rounded-2xl border-2 border-dashed border-white/40 dark:border-white/10 bg-white/20 dark:bg-black/10 hover:bg-white/40 dark:hover:bg-black/20 transition-colors cursor-pointer overflow-hidden">

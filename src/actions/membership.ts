@@ -56,24 +56,34 @@ export async function applyMembership(data: {
     address: string;
     pinCode: string;
     email: string;
-    profilePictureData: { url: string; public_id: string };
+    profilePictureBase64?: string;
     documentsType?: DocumentType;
-    documentsData?: { url: string; public_id: string };
-    otherDocumentsData?: { url: string; public_id: string };
     paymentMode: PaymentMode;
-    paymentImageData: { url: string; public_id: string };
+    paymentImageBase64: string;
     planId: number;
 }) {
-    const uploadedPublicIds: string[] = [
-        data.profilePictureData.public_id,
-        data.paymentImageData.public_id
-    ];
+    let uploadedPublicIds: string[] = [];
 
     try {
-        // 1. Generate Membership Number
+        // 1. Upload images on the server side First
+        let profilePictureData;
+        if (data.profilePictureBase64) {
+            profilePictureData = await uploadToCloudinary(data.profilePictureBase64, "memberships");
+            uploadedPublicIds.push(profilePictureData.public_id);
+        } else {
+            profilePictureData = {
+                url: "https://media.istockphoto.com/id/178851574/vector/male-and-female-profile-picture.jpg?s=612x612&w=0&k=20&c=UyiKWUvzojP2EWM5l1ItQ4WKx-8ycF6joBBgqr7CRKc=",
+                public_id: `default_profile_${Math.random().toString(36).substring(2, 10)}`
+            };
+        }
+
+        const paymentImageData = await uploadToCloudinary(data.paymentImageBase64, "memberships");
+        uploadedPublicIds.push(paymentImageData.public_id);
+
+        // 2. Generate Membership Number
         const memberShipNumber = await generateMembershipNumber();
 
-        // 2. Create Record
+        // 3. Create Record
         const membership = await prisma.memberShip.create({
             data: {
                 name: data.name,
@@ -91,19 +101,19 @@ export async function applyMembership(data: {
                 pinCode: data.pinCode,
                 email: data.email,
                 memberShipNumber,
-                profilePicture: data.profilePictureData,
+                profilePicture: profilePictureData,
                 documentsType: data.documentsType || "AADHAAR",
                 documents: {},
                 otherDocuments: {},
                 paymentMode: data.paymentMode,
-                payment: data.paymentImageData,
+                payment: paymentImageData,
                 planId: data.planId,
                 status: "PENDING",
             },
             include: { plan: true }
         });
 
-        // 3. Send Email
+        // 4. Send Email
         if (data.email) {
             try {
                 await sendEmail({
