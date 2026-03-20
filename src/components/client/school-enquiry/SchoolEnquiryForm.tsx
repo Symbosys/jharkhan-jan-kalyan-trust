@@ -196,35 +196,9 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
 
     const onSubmit = async (values: SchoolEnquiryFormValues) => {
         setIsSubmitting(true);
-        let photoData = undefined;
-        let paymentData = undefined;
 
         try {
-            // 1. Upload images to Cloudinary from client side
-
-            // Upload photo if provided
-            if (values.photo) {
-                try {
-                    photoData = await uploadImageClient(values.photo, "school-enquiries");
-                } catch (err: any) {
-                    toast.error("Failed to upload photo: " + err.message);
-                    setIsSubmitting(false);
-                    return;
-                }
-            }
-
-            // Upload payment proof if provided
-            if (values.payment) {
-                try {
-                    paymentData = await uploadImageClient(values.payment, "school-enquiries");
-                } catch (err: any) {
-                    toast.error("Failed to upload payment proof: " + err.message);
-                    setIsSubmitting(false);
-                    return;
-                }
-            }
-
-            // 2. Send payload to server action
+            // 1. Send base64 images directly to server action
             const result = await createSchoolEnquiry({
                 name: values.name,
                 mobile: values.mobile,
@@ -234,8 +208,8 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                 board: values.board,
                 aadhaar: values.aadhaar,
                 examCenterId: parseInt(values.examCenterId),
-                photoData,
-                paymentData,
+                photoBase64: values.photo,
+                paymentBase64: values.payment,
             });
 
             if (result.success && result.data) {

@@ -1,25 +1,7 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { toast } from "sonner";
-import {
-    Building,
-    User,
-    Mail,
-    Phone,
-    MapPin,
-    Calendar,
-    Globe,
-    FileText,
-    Upload,
-    CheckCircle,
-    Loader2,
-    X,
-} from "lucide-react";
 import { createAffiliation } from "@/actions/affiliation";
-import { uploadImageClient } from "@/utils/cloudinary-client";
+import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -29,10 +11,25 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+    Building,
+    Calendar,
+    CheckCircle,
+    Globe,
+    Loader2,
+    Mail,
+    MapPin,
+    Phone,
+    Upload,
+    User,
+    X
+} from "lucide-react";
 import { useState } from "react";
-import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
 
 // ── Constants ──
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
@@ -97,17 +94,17 @@ export function AffiliationForm() {
         mode: "onChange",
         defaultValues: {
             organizationName: "",
-            registrationNumber: undefined,
+            registrationNumber: "",
             establishedYear: undefined,
             organizationType: "",
             address: "",
             city: "",
             mobile: "",
             email: "",
-            website: undefined,
+            website: "",
             directorName: "",
             directorMobile: "",
-            directorEmail: undefined,
+            directorEmail: "",
             documents: undefined,
         },
     });
@@ -154,25 +151,12 @@ export function AffiliationForm() {
     const onSubmit = async (values: AffiliationFormValues) => {
         setIsSubmitting(true);
         try {
-            // Upload documents if provided
-            let documentsData;
-            if (values.documents) {
-                try {
-                    documentsData = await uploadImageClient(values.documents, "affiliations");
-                } catch (err: any) {
-                    console.error("Document upload error:", err);
-                    toast.error("Document upload failed: " + (err.message || "Unknown error"));
-                    setIsSubmitting(false);
-                    return;
-                }
-            }
-
-            // Exclude base64 string from payload
+            // Send base64 documents directly to server action
             const { documents, ...filteredValues } = values;
 
             const result = await createAffiliation({
                 ...filteredValues,
-                documents: documentsData
+                documentsBase64: documents
             });
 
             if (result.success && result.data) {
@@ -275,7 +259,8 @@ export function AffiliationForm() {
                                                 <Input 
                                                     type="number"
                                                     placeholder="YYYY" 
-                                                    {...field} 
+                                                    {...field}
+                                                    value={field.value !== undefined ? field.value : ""} 
                                                     onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
                                                     className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
                                                 />

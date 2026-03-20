@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/config/prisma";
+import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cache } from "react";
 import { cacheTag, updateTag } from "next/cache";
 
@@ -20,6 +21,7 @@ interface CreateAffiliationInput {
     directorMobile: string;
     directorEmail?: string;
     documents?: any;
+    documentsBase64?: string;
 }
 
 interface UpdateAffiliationInput {
@@ -44,9 +46,36 @@ interface UpdateAffiliationInput {
 // Create a new affiliation request
 export async function createAffiliation(data: CreateAffiliationInput) {
     try {
+        let documentsData = data.documents;
+
+        if (data.documentsBase64) {
+            const uploadRes = await uploadToCloudinary(data.documentsBase64, "affiliations");
+            documentsData = { url: uploadRes.url, public_id: uploadRes.public_id };
+        }
+
         // Generate unique affiliation number
-        const affiliationCount = await prisma.affiliation.count();
-        const affiliationNumber = `AFF-${String(affiliationCount + 1).padStart(4, '0')}-${new Date().getFullYear()}`;
+        let affiliationNumber = "";
+        let isUnique = false;
+        let attempts = 0;
+        let counter = await prisma.affiliation.count() + 1;
+
+        while (!isUnique && attempts < 100) {
+            affiliationNumber = `AFF-${String(counter).padStart(4, '0')}-${new Date().getFullYear()}`;
+            const existing = await prisma.affiliation.findUnique({
+                where: { AffiliationNumber: affiliationNumber }
+            });
+            
+            if (!existing) {
+                isUnique = true;
+            } else {
+                counter++;
+                attempts++;
+            }
+        }
+
+        if (!isUnique) {
+            throw new Error("Unable to generate unique affiliation number. Please try again.");
+        }
         
         const affiliation = await prisma.affiliation.create({
             data: {
@@ -63,7 +92,7 @@ export async function createAffiliation(data: CreateAffiliationInput) {
                 directorName: data.directorName,
                 directorMobile: data.directorMobile,
                 directorEmail: data.directorEmail,
-                documents: data.documents,
+                documents: documentsData,
             }
         });
 

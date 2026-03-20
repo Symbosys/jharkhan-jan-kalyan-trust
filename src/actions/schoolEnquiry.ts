@@ -19,15 +19,28 @@ export async function createSchoolEnquiry(data: {
     board: string;
     aadhaar: string;
     examCenterId: number;
-    // Client-side uploaded image data
-    photoData?: { url: string; public_id: string };
-    paymentData?: { url: string; public_id: string };
+    // Base64 images for server-side upload
+    photoBase64?: string;
+    paymentBase64: string;
 }) {
     const uploadedPublicIds: string[] = [];
-    if (data.photoData?.public_id) uploadedPublicIds.push(data.photoData.public_id);
-    if (data.paymentData?.public_id) uploadedPublicIds.push(data.paymentData.public_id);
 
     try {
+        // 0. Upload images on the server side First
+        let photoData;
+        if (data.photoBase64) {
+            photoData = await uploadToCloudinary(data.photoBase64, "school-enquiries");
+            uploadedPublicIds.push(photoData.public_id);
+        } else {
+            photoData = {
+                url: "https://media.istockphoto.com/id/178851574/vector/male-and-female-profile-picture.jpg?s=612x612&w=0&k=20&c=UyiKWUvzojP2EWM5l1ItQ4WKx-8ycF6joBBgqr7CRKc=",
+                public_id: `default_profile_${Math.random().toString(36).substring(2, 10)}`
+            };
+        }
+
+        const paymentData = await uploadToCloudinary(data.paymentBase64, "school-enquiries");
+        uploadedPublicIds.push(paymentData.public_id);
+
         // 1. Check if exam center has available seats
         const examCenterCount = await prisma.schoolEnquiry.count({
             where: { examCenterId: data.examCenterId }
@@ -72,8 +85,8 @@ export async function createSchoolEnquiry(data: {
                 examCenterId: data.examCenterId,
                 registrationNumber: registrationNumber!,
                 status: "PENDING" as EnquiryStatus,
-                photo: data.photoData || undefined,
-                payment: data.paymentData || undefined,
+                photo: photoData,
+                payment: paymentData,
             },
         });
 
