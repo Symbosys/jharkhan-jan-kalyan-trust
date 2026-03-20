@@ -276,7 +276,6 @@ export async function updateSchoolEnquiry(
         photo?: string; // base64
         payment?: string; // base64
         status?: EnquiryStatus;
-        isAllowedToDownloadAdminCard?: boolean;
     }
 ) {
     try {

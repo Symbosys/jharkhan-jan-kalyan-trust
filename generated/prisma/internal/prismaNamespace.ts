@@ -2056,7 +2056,6 @@ export const SchoolEnquiryScalarFieldEnum = {
   payment: 'payment',
   registrationNumber: 'registrationNumber',
   status: 'status',
-  isAllowedToDownloadAdminCard: 'isAllowedToDownloadAdminCard',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -48,7 +48,6 @@ export type SchoolEnquiryMinAggregateOutputType = {
   examCenterId: number | null
   registrationNumber: string | null
   status: $Enums.EnquiryStatus | null
-  isAllowedToDownloadAdminCard: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,7 +64,6 @@ export type SchoolEnquiryMaxAggregateOutputType = {
   examCenterId: number | null
   registrationNumber: string | null
   status: $Enums.EnquiryStatus | null
-  isAllowedToDownloadAdminCard: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -84,7 +82,6 @@ export type SchoolEnquiryCountAggregateOutputType = {
   payment: number
   registrationNumber: number
   status: number
-  isAllowedToDownloadAdminCard: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -113,7 +110,6 @@ export type SchoolEnquiryMinAggregateInputType = {
   examCenterId?: true
   registrationNumber?: true
   status?: true
-  isAllowedToDownloadAdminCard?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -130,7 +126,6 @@ export type SchoolEnquiryMaxAggregateInputType = {
   examCenterId?: true
   registrationNumber?: true
   status?: true
-  isAllowedToDownloadAdminCard?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -149,7 +144,6 @@ export type SchoolEnquiryCountAggregateInputType = {
   payment?: true
   registrationNumber?: true
   status?: true
-  isAllowedToDownloadAdminCard?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -255,7 +249,6 @@ export type SchoolEnquiryGroupByOutputType = {
   payment: runtime.JsonValue | null
   registrationNumber: string
   status: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard: boolean
   createdAt: Date
   updatedAt: Date
   _count: SchoolEnquiryCountAggregateOutputType | null
@@ -297,7 +290,6 @@ export type SchoolEnquiryWhereInput = {
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringFilter<"SchoolEnquiry"> | string
   status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFilter<"SchoolEnquiry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   examCenter?: Prisma.XOR<Prisma.ExamCenterNullableScalarRelationFilter, Prisma.ExamCenterWhereInput> | null
@@ -317,7 +309,6 @@ export type SchoolEnquiryOrderByWithRelationInput = {
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  isAllowedToDownloadAdminCard?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   examCenter?: Prisma.ExamCenterOrderByWithRelationInput
@@ -341,7 +332,6 @@ export type SchoolEnquiryWhereUniqueInput = Prisma.AtLeast<{
   photo?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFilter<"SchoolEnquiry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   examCenter?: Prisma.XOR<Prisma.ExamCenterNullableScalarRelationFilter, Prisma.ExamCenterWhereInput> | null
@@ -361,7 +351,6 @@ export type SchoolEnquiryOrderByWithAggregationInput = {
   payment?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  isAllowedToDownloadAdminCard?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolEnquiryCountOrderByAggregateInput
@@ -388,7 +377,6 @@ export type SchoolEnquiryScalarWhereWithAggregatesInput = {
   payment?: Prisma.JsonNullableWithAggregatesFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringWithAggregatesFilter<"SchoolEnquiry"> | string
   status?: Prisma.EnumEnquiryStatusWithAggregatesFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolWithAggregatesFilter<"SchoolEnquiry"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolEnquiry"> | Date | string
 }
@@ -405,7 +393,6 @@ export type SchoolEnquiryCreateInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
   status?: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   examCenter?: Prisma.ExamCenterCreateNestedOneWithoutSchoolEnquiriesInput
@@ -425,7 +412,6 @@ export type SchoolEnquiryUncheckedCreateInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
   status?: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -442,7 +428,6 @@ export type SchoolEnquiryUpdateInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   examCenter?: Prisma.ExamCenterUpdateOneWithoutSchoolEnquiriesNestedInput
@@ -462,7 +447,6 @@ export type SchoolEnquiryUncheckedUpdateInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -481,7 +465,6 @@ export type SchoolEnquiryCreateManyInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
   status?: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -498,7 +481,6 @@ export type SchoolEnquiryUpdateManyMutationInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -517,7 +499,6 @@ export type SchoolEnquiryUncheckedUpdateManyInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -542,7 +523,6 @@ export type SchoolEnquiryCountOrderByAggregateInput = {
   payment?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  isAllowedToDownloadAdminCard?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -564,7 +544,6 @@ export type SchoolEnquiryMaxOrderByAggregateInput = {
   examCenterId?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  isAllowedToDownloadAdminCard?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -581,7 +560,6 @@ export type SchoolEnquiryMinOrderByAggregateInput = {
   examCenterId?: Prisma.SortOrder
   registrationNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  isAllowedToDownloadAdminCard?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -667,7 +645,6 @@ export type SchoolEnquiryCreateWithoutExamCenterInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
   status?: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -685,7 +662,6 @@ export type SchoolEnquiryUncheckedCreateWithoutExamCenterInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
   status?: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -733,7 +709,6 @@ export type SchoolEnquiryScalarWhereInput = {
   payment?: Prisma.JsonNullableFilter<"SchoolEnquiry">
   registrationNumber?: Prisma.StringFilter<"SchoolEnquiry"> | string
   status?: Prisma.EnumEnquiryStatusFilter<"SchoolEnquiry"> | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFilter<"SchoolEnquiry"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolEnquiry"> | Date | string
 }
@@ -751,7 +726,6 @@ export type SchoolEnquiryCreateManyExamCenterInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: string
   status?: $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -768,7 +742,6 @@ export type SchoolEnquiryUpdateWithoutExamCenterInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -786,7 +759,6 @@ export type SchoolEnquiryUncheckedUpdateWithoutExamCenterInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -804,7 +776,6 @@ export type SchoolEnquiryUncheckedUpdateManyWithoutExamCenterInput = {
   payment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   registrationNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEnquiryStatusFieldUpdateOperationsInput | $Enums.EnquiryStatus
-  isAllowedToDownloadAdminCard?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -825,7 +796,6 @@ export type SchoolEnquirySelect<ExtArgs extends runtime.Types.Extensions.Interna
   payment?: boolean
   registrationNumber?: boolean
   status?: boolean
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   examCenter?: boolean | Prisma.SchoolEnquiry$examCenterArgs<ExtArgs>
@@ -847,12 +817,11 @@ export type SchoolEnquirySelectScalar = {
   payment?: boolean
   registrationNumber?: boolean
   status?: boolean
-  isAllowedToDownloadAdminCard?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "aadhaar" | "examCenterId" | "photo" | "payment" | "registrationNumber" | "status" | "isAllowedToDownloadAdminCard" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
+export type SchoolEnquiryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "mobile" | "email" | "school" | "class" | "board" | "aadhaar" | "examCenterId" | "photo" | "payment" | "registrationNumber" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolEnquiry"]>
 export type SchoolEnquiryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   examCenter?: boolean | Prisma.SchoolEnquiry$examCenterArgs<ExtArgs>
 }
@@ -876,7 +845,6 @@ export type $SchoolEnquiryPayload<ExtArgs extends runtime.Types.Extensions.Inter
     payment: runtime.JsonValue | null
     registrationNumber: string
     status: $Enums.EnquiryStatus
-    isAllowedToDownloadAdminCard: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["schoolEnquiry"]>
@@ -1262,7 +1230,6 @@ export interface SchoolEnquiryFieldRefs {
   readonly payment: Prisma.FieldRef<"SchoolEnquiry", 'Json'>
   readonly registrationNumber: Prisma.FieldRef<"SchoolEnquiry", 'String'>
   readonly status: Prisma.FieldRef<"SchoolEnquiry", 'EnquiryStatus'>
-  readonly isAllowedToDownloadAdminCard: Prisma.FieldRef<"SchoolEnquiry", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"SchoolEnquiry", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SchoolEnquiry", 'DateTime'>
 }

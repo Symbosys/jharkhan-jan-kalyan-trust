@@ -60,6 +60,7 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 const settingSchema = z.object({
     key: z
@@ -318,29 +319,60 @@ export default function SettingsPage() {
                                                 </div>
                                             </TableCell>
                                             <TableCell>
-                                                <div className="text-muted-foreground truncate max-w-[500px]" title={setting.value}>
-                                                    {setting.value}
-                                                </div>
+                                                {setting.key === 'allow_download_admit_card' ? (
+                                                    <div className="flex items-center space-x-3">
+                                                        <Switch
+                                                            id={setting.key}
+                                                            checked={setting.value === "true"}
+                                                            onCheckedChange={async (checked) => {
+                                                                const newValue = checked ? "true" : "false";
+                                                                try {
+                                                                    const res = await updateWebSetting(setting.key, newValue);
+                                                                    if (res.success) {
+                                                                        toast.success(checked ? "Card download enabled" : "Card download disabled");
+                                                                        fetchSettings();
+                                                                    } else {
+                                                                        toast.error("Failed to update setting");
+                                                                    }
+                                                                } catch (error) {
+                                                                    toast.error("An unexpected error occurred");
+                                                                }
+                                                            }}
+                                                        />
+                                                        <label
+                                                            htmlFor={setting.key}
+                                                            className={`text-sm font-medium ${setting.value === "true" ? 'text-green-600 dark:text-green-400' : 'text-slate-500'}`}
+                                                        >
+                                                            {setting.value === "true" ? "Allowed" : "Disabled"}
+                                                        </label>
+                                                    </div>
+                                                ) : (
+                                                    <div className="text-muted-foreground truncate max-w-[500px]" title={setting.value}>
+                                                        {setting.value}
+                                                    </div>
+                                                )}
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <div className="flex justify-end gap-1">
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
-                                                        onClick={() => handleEdit(setting)}
-                                                    >
-                                                        <Pencil className="h-4 w-4" />
-                                                    </Button>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50"
-                                                        onClick={() => handleDelete(setting.key)}
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                </div>
+                                                {setting.key !== 'allow_download_admit_card' && (
+                                                    <div className="flex justify-end gap-1">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                                                            onClick={() => handleEdit(setting)}
+                                                        >
+                                                            <Pencil className="h-4 w-4" />
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50"
+                                                            onClick={() => handleDelete(setting.key)}
+                                                        >
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </Button>
+                                                    </div>
+                                                )}
                                             </TableCell>
                                         </TableRow>
                                     ))}
