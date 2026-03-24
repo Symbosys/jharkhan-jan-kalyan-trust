@@ -19,7 +19,7 @@ export function AffiliationSection() {
                     <div className="space-y-8">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 border border-purple-200 shadow-lg shadow-purple-500/10">
                             <Sparkles className="h-4 w-4 text-purple-600 animate-pulse" />
-                            <span className="text-sm font-bold uppercase tracking-widest text-purple-600">Partnership Opportunity</span>
+                            <span className="text-sm font-bold uppercase tracking-widest text-purple-600">Affiliation with Our Trust</span>
                         </div>
 
                         <div className="space-y-4">

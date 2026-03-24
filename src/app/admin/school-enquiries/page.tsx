@@ -374,7 +374,7 @@ export default function SchoolEnquiriesPage() {
             {/* Enquiry Detail Dialog */}
             <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
                 <DialogContent className="sm:max-w-[700px] border-border bg-background max-h-[90vh] flex flex-col">
-                    <DialogHeader className="flex-shrink-0">
+                    <DialogHeader className="shrink-0">
                         <DialogTitle className="text-2xl font-bold font-outfit text-foreground flex items-center gap-2">
                             <GraduationCap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                             GK Competition Registration Details
@@ -385,7 +385,7 @@ export default function SchoolEnquiriesPage() {
                     </DialogHeader>
 
                     {selectedEnquiry && (
-                        <div className="flex-grow overflow-y-auto py-4 pr-2 -mr-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                        <div className="grow overflow-y-auto py-4 pr-2 -mr-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                             <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-1">
@@ -503,7 +503,7 @@ export default function SchoolEnquiriesPage() {
                         </div>
                     )}
 
-                    <DialogFooter className="mt-8 gap-3 sm:gap-0 border-t border-border pt-6 flex-shrink-0">
+                    <DialogFooter className="mt-8 gap-3 sm:gap-0 border-t border-border pt-6 shrink-0">
                         <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setIsDetailOpen(false)}>
                             Back to List
                         </Button>
