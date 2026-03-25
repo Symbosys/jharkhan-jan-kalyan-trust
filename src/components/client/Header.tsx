@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon, ShieldAlert, School, Handshake, GraduationCap } from "lucide-react";
+import { Heart, ChevronDown, Menu, X, Smartphone, Globe, Briefcase, Calendar, Image as ImageIcon, Camera, Download, RefreshCw, IdCard, UserPlus, Coins, FileText, Users, Sun, Moon, ShieldAlert, School, Handshake, GraduationCap, Building2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -62,6 +62,7 @@ export function Header() {
                 { label: "Check Exam Result", href: "/results", icon: GraduationCap },
                 { label: "Download Registration Card", href: "/download-gk-card", icon: School },
                 { label: "Request Affiliation", href: "/affiliation", icon: Handshake },
+                { label: "Our Affiliations", href: "/our-affiliation", icon: Building2 },
                 { label: "Download Affiliation Card", href: "/download-affiliation-card", icon: Download },
                 { label: "Register Your Problem", href: "/register-complaint", icon: ShieldAlert },
             ],
