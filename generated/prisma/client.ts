@@ -139,3 +139,8 @@ export type ExamCenter = Prisma.ExamCenterModel
  * 
  */
 export type Affiliation = Prisma.AffiliationModel
+/**
+ * Model ExamResult
+ * 
+ */
+export type ExamResult = Prisma.ExamResultModel

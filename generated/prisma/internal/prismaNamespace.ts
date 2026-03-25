@@ -403,7 +403,8 @@ export const ModelName = {
   MembershipRenewal: 'MembershipRenewal',
   SchoolEnquiry: 'SchoolEnquiry',
   ExamCenter: 'ExamCenter',
-  Affiliation: 'Affiliation'
+  Affiliation: 'Affiliation',
+  ExamResult: 'ExamResult'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry" | "examCenter" | "affiliation"
+    modelProps: "admin" | "sliderImage" | "activity" | "team" | "gallery" | "testimonial" | "news" | "webSetting" | "memberShipPlan" | "payment" | "memberShip" | "donar" | "event" | "eventBooking" | "registerComplaint" | "enquiry" | "membershipRenewal" | "schoolEnquiry" | "examCenter" | "affiliation" | "examResult"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1743,6 +1744,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExamResult: {
+      payload: Prisma.$ExamResultPayload<ExtArgs>
+      fields: Prisma.ExamResultFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExamResultFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExamResultFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>
+        }
+        findFirst: {
+          args: Prisma.ExamResultFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExamResultFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>
+        }
+        findMany: {
+          args: Prisma.ExamResultFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>[]
+        }
+        create: {
+          args: Prisma.ExamResultCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>
+        }
+        createMany: {
+          args: Prisma.ExamResultCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.ExamResultDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>
+        }
+        update: {
+          args: Prisma.ExamResultUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExamResultDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExamResultUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.ExamResultUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamResultPayload>
+        }
+        aggregate: {
+          args: Prisma.ExamResultAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExamResult>
+        }
+        groupBy: {
+          args: Prisma.ExamResultGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamResultGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExamResultCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamResultCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2105,6 +2172,17 @@ export const AffiliationScalarFieldEnum = {
 } as const
 
 export type AffiliationScalarFieldEnum = (typeof AffiliationScalarFieldEnum)[keyof typeof AffiliationScalarFieldEnum]
+
+
+export const ExamResultScalarFieldEnum = {
+  id: 'id',
+  marks: 'marks',
+  enquiryId: 'enquiryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamResultScalarFieldEnum = (typeof ExamResultScalarFieldEnum)[keyof typeof ExamResultScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2642,6 +2720,7 @@ export type GlobalOmitConfig = {
   schoolEnquiry?: Prisma.SchoolEnquiryOmit
   examCenter?: Prisma.ExamCenterOmit
   affiliation?: Prisma.AffiliationOmit
+  examResult?: Prisma.ExamResultOmit
 }
 
 /* Types for Logging */

@@ -70,7 +70,8 @@ export const ModelName = {
   MembershipRenewal: 'MembershipRenewal',
   SchoolEnquiry: 'SchoolEnquiry',
   ExamCenter: 'ExamCenter',
-  Affiliation: 'Affiliation'
+  Affiliation: 'Affiliation',
+  ExamResult: 'ExamResult'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,6 +413,17 @@ export const AffiliationScalarFieldEnum = {
 } as const
 
 export type AffiliationScalarFieldEnum = (typeof AffiliationScalarFieldEnum)[keyof typeof AffiliationScalarFieldEnum]
+
+
+export const ExamResultScalarFieldEnum = {
+  id: 'id',
+  marks: 'marks',
+  enquiryId: 'enquiryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExamResultScalarFieldEnum = (typeof ExamResultScalarFieldEnum)[keyof typeof ExamResultScalarFieldEnum]
 
 
 export const SortOrder = {

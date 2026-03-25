@@ -379,6 +379,8 @@ model SchoolEnquiry {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  examResult ExamResult?
 }
 
 enum EnquiryStatus {
@@ -435,4 +437,13 @@ enum AffiliationStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+model ExamResult {
+  id            Int           @id @default(autoincrement())
+  marks         Float
+  enquiryId     Int           @unique
+  schoolEnquiry SchoolEnquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }

@@ -179,7 +179,8 @@ export async function getAllSchoolEnquiries(options?: {
                             city: true,
                             state: true,
                         }
-                    }
+                    },
+                    examResult: true
                 }
             }),
             prisma.schoolEnquiry.count({ where }),
@@ -221,7 +222,8 @@ export async function getSchoolEnquiryById(id: number) {
                         mobile: true,
                         email: true,
                     }
-                }
+                },
+                examResult: true
             }
         });
     } catch (error: any) {
@@ -251,7 +253,8 @@ export async function getSchoolEnquiryByRegistrationNumber(registrationNumber: s
                         mobile: true,
                         email: true,
                     }
-                }
+                },
+                examResult: true
             }
         });
     } catch (error: any) {

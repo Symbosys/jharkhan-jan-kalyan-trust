@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteSchoolEnquiry, getAllSchoolEnquiries, updateSchoolEnquiry } from "@/actions/schoolEnquiry";
+import { upsertExamResult } from "@/actions/exam-results";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -70,6 +71,9 @@ interface SchoolEnquiry {
     } | null;
     createdAt: Date;
     updatedAt: Date;
+    examResult?: {
+        marks: number;
+    } | null;
 }
 
 export default function SchoolEnquiriesPage() {
@@ -81,6 +85,8 @@ export default function SchoolEnquiriesPage() {
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
     const [isUpdating, setIsUpdating] = useState<number | null>(null);
+    const [marks, setMarks] = useState<string>("");
+    const [isSavingMarks, setIsSavingMarks] = useState(false);
 
     const fetchEnquiries = async () => {
         setLoading(true);
@@ -126,7 +132,38 @@ export default function SchoolEnquiriesPage() {
 
     const handleViewDetail = (enquiry: SchoolEnquiry) => {
         setSelectedEnquiry(enquiry);
+        setMarks(enquiry.examResult?.marks?.toString() || "");
         setIsDetailOpen(true);
+    };
+
+    const handleSaveMarks = async () => {
+        if (!selectedEnquiry) return;
+        const marksNum = parseFloat(marks);
+        if (isNaN(marksNum)) {
+            toast.error("Please enter a valid number for marks");
+            return;
+        }
+
+        setIsSavingMarks(true);
+        try {
+            const res = await upsertExamResult(selectedEnquiry.id, marksNum);
+            if (res.success) {
+                toast.success("Marks saved successfully");
+                fetchEnquiries();
+                // Update selected enquiry in modal
+                setSelectedEnquiry({
+                    ...selectedEnquiry,
+                    examResult: { marks: marksNum }
+                });
+            } else {
+                toast.error(res.error || "Failed to save marks");
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred");
+        } finally {
+            setIsSavingMarks(null as any); // Resetting back to false requires fixing the type or just using actual boolean
+            setIsSavingMarks(false);
+        }
     };
 
     const handleStatusUpdate = async (id: number, status: 'APPROVED' | 'REJECTED') => {
@@ -226,6 +263,7 @@ export default function SchoolEnquiriesPage() {
                                         <TableHead className="w-[200px] font-semibold text-foreground">Contact Details</TableHead>
                                         <TableHead className="w-[150px] font-semibold text-foreground">School Info</TableHead>
                                         <TableHead className="w-[100px] font-semibold text-foreground">Status</TableHead>
+                                        <TableHead className="w-[100px] font-semibold text-foreground">Marks</TableHead>
                                         <TableHead className="w-[150px] font-semibold text-foreground text-right">Submitted On</TableHead>
                                         <TableHead className="w-[150px] text-right font-semibold text-foreground">Actions</TableHead>
                                     </TableRow>
@@ -292,6 +330,15 @@ export default function SchoolEnquiriesPage() {
                                                 >
                                                     {enquiry.status.toLowerCase()}
                                                 </Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                {enquiry.examResult ? (
+                                                    <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-100 dark:border-emerald-900/50">
+                                                        {enquiry.examResult.marks}
+                                                    </Badge>
+                                                ) : (
+                                                    <span className="text-xs text-muted-foreground italic">Not assigned</span>
+                                                )}
                                             </TableCell>
                                             <TableCell className="text-right">
                                                 <div className="flex flex-col items-end gap-0.5">
@@ -464,6 +511,57 @@ export default function SchoolEnquiriesPage() {
                                     )}
                                 </div>
 
+                                <div className="md:col-span-2 border-t border-border pt-6 mt-2">
+                                    <div className="flex flex-col gap-4">
+                                        <div>
+                                            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-4">
+                                                <GraduationCap className="h-4 w-4 text-emerald-500" />
+                                                Exam Result Management
+                                            </h3>
+                                            <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-border">
+                                                <div className="flex-1 max-w-[200px]">
+                                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Assign Marks</p>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder="Enter marks"
+                                                        value={marks}
+                                                        onChange={(e) => setMarks(e.target.value)}
+                                                        className="bg-background border-border"
+                                                    />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 opacity-0">Action</p>
+                                                    <Button 
+                                                        onClick={handleSaveMarks}
+                                                        disabled={isSavingMarks}
+                                                        className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                                                    >
+                                                        {isSavingMarks ? (
+                                                            <>
+                                                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                                                Saving...
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <CheckCircle className="h-4 w-4 mr-2" />
+                                                                Save Marks
+                                                            </>
+                                                        )}
+                                                    </Button>
+                                                </div>
+                                                {selectedEnquiry.examResult && (
+                                                    <div className="flex-1 text-right">
+                                                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Current Score</p>
+                                                        <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                                                            {selectedEnquiry.examResult.marks}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                             {(selectedEnquiry.photo || selectedEnquiry.payment) && (
@@ -507,46 +605,44 @@ export default function SchoolEnquiriesPage() {
                         <Button variant="outline" className="flex-1 sm:flex-none" onClick={() => setIsDetailOpen(false)}>
                             Back to List
                         </Button>
-                        {selectedEnquiry && selectedEnquiry.status === 'PENDING' && (
-                            <div className="flex gap-2 flex-1">
+                        {selectedEnquiry && (
+                            <>
+                                {selectedEnquiry.status === 'PENDING' && (
+                                    <div className="flex gap-2 flex-1">
+                                        <Button
+                                            variant="default"
+                                            className="flex-1 gap-2 bg-green-600 hover:bg-green-700"
+                                            onClick={() => {
+                                                handleStatusUpdate(selectedEnquiry.id, 'APPROVED');
+                                                setIsDetailOpen(false);
+                                            }}
+                                        >
+                                            <CheckCircle className="h-4 w-4" /> Approve
+                                        </Button>
+                                        <Button
+                                            variant="destructive"
+                                            className="flex-1 gap-2"
+                                            onClick={() => {
+                                                handleStatusUpdate(selectedEnquiry.id, 'REJECTED');
+                                                setIsDetailOpen(false);
+                                            }}
+                                        >
+                                            <XCircle className="h-4 w-4" /> Reject
+                                        </Button>
+                                    </div>
+                                )}
                                 <Button
-                                    variant="default"
-                                    className="flex-1 gap-2 bg-green-600 hover:bg-green-700"
+                                    variant="outline"
+                                    className="flex-1 sm:flex-none gap-2"
                                     onClick={() => {
-                                        if (selectedEnquiry) {
-                                            handleStatusUpdate(selectedEnquiry.id, 'APPROVED');
-                                            setIsDetailOpen(false);
-                                        }
+                                        handleDelete(selectedEnquiry.id);
+                                        setIsDetailOpen(false);
                                     }}
                                 >
-                                    <CheckCircle className="h-4 w-4" /> Approve
+                                    <Trash2 className="h-4 w-4" /> Delete Registration
                                 </Button>
-                                <Button
-                                    variant="destructive"
-                                    className="flex-1 gap-2"
-                                    onClick={() => {
-                                        if (selectedEnquiry) {
-                                            handleStatusUpdate(selectedEnquiry.id, 'REJECTED');
-                                            setIsDetailOpen(false);
-                                        }
-                                    }}
-                                >
-                                    <XCircle className="h-4 w-4" /> Reject
-                                </Button>
-                            </div>
+                            </>
                         )}
-                        <Button
-                            variant="outline"
-                            className="flex-1 sm:flex-none gap-2"
-                            onClick={() => {
-                                if (selectedEnquiry) {
-                                    handleDelete(selectedEnquiry.id);
-                                    setIsDetailOpen(false);
-                                }
-                            }}
-                        >
-                            <Trash2 className="h-4 w-4" /> Delete Registration
-                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
