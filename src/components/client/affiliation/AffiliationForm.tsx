@@ -206,7 +206,7 @@ export function AffiliationForm() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                         <h3 className="text-2xl font-black text-foreground tracking-tight mb-6">Organization Details</h3>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormField
                                 control={form.control}
@@ -217,10 +217,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Building className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="Enter organization name" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="Enter organization name"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -236,10 +236,10 @@ export function AffiliationForm() {
                                     <FormItem>
                                         <FormLabel className="font-bold">Registration Number</FormLabel>
                                         <FormControl>
-                                            <Input 
-                                                placeholder="Registration certificate number" 
-                                                {...field} 
-                                                className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                            <Input
+                                                placeholder="Registration certificate number"
+                                                {...field}
+                                                className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -256,13 +256,13 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
+                                                <Input
                                                     type="number"
-                                                    placeholder="YYYY" 
+                                                    placeholder="YYYY"
                                                     {...field}
-                                                    value={field.value !== undefined ? field.value : ""} 
+                                                    value={field.value !== undefined ? field.value : ""}
                                                     onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -278,7 +278,7 @@ export function AffiliationForm() {
                                     <FormItem>
                                         <FormLabel className="font-bold">Organization Type *</FormLabel>
                                         <FormControl>
-                                            <select 
+                                            <select
                                                 {...field}
                                                 className="w-full px-3 py-2 rounded-xl bg-white/50 dark:bg-black/20 border border-white/40 dark:border-white/10 text-foreground"
                                             >
@@ -302,10 +302,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Globe className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="https://your-organization.com" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="https://your-organization.com"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -323,10 +323,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                <Textarea 
-                                                    placeholder="Full registered address" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 min-h-20" 
+                                                <Textarea
+                                                    placeholder="Full registered address"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10 min-h-20"
                                                 />
                                             </div>
                                         </FormControl>
@@ -342,10 +342,10 @@ export function AffiliationForm() {
                                     <FormItem>
                                         <FormLabel className="font-bold">City *</FormLabel>
                                         <FormControl>
-                                            <Input 
-                                                placeholder="City" 
-                                                {...field} 
-                                                className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                            <Input
+                                                placeholder="City"
+                                                {...field}
+                                                className="rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -362,10 +362,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="9876543210" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="9876543210"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -383,10 +383,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="contact@organization.com" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="contact@organization.com"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -399,7 +399,7 @@ export function AffiliationForm() {
 
                     <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                         <h3 className="text-2xl font-black text-foreground tracking-tight mb-6">Director/Representative Details</h3>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormField
                                 control={form.control}
@@ -410,10 +410,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="Full name" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="Full name"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -431,10 +431,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="9876543210" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="9876543210"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -452,10 +452,10 @@ export function AffiliationForm() {
                                         <FormControl>
                                             <div className="relative">
                                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                                <Input 
-                                                    placeholder="director@organization.com" 
-                                                    {...field} 
-                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10" 
+                                                <Input
+                                                    placeholder="director@organization.com"
+                                                    {...field}
+                                                    className="pl-10 rounded-xl bg-white/50 dark:bg-black/20 border-white/40 dark:border-white/10"
                                                 />
                                             </div>
                                         </FormControl>
@@ -468,7 +468,7 @@ export function AffiliationForm() {
 
                     <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                         <h3 className="text-2xl font-black text-foreground tracking-tight mb-6">Supporting Documents</h3>
-                        
+
                         <FormField
                             control={form.control}
                             name="documents"
@@ -487,17 +487,17 @@ export function AffiliationForm() {
                                                         <Upload className="h-4 w-4" /> Upload registration certificate or other supporting documents (max 2 MB)
                                                     </span>
                                                 )}
-                                                <input 
-                                                    type="file" 
-                                                    className="hidden" 
-                                                    accept="image/*,application/pdf" 
-                                                    onChange={handleFileChange} 
+                                                <input
+                                                    type="file"
+                                                    className="hidden"
+                                                    accept="image/*,application/pdf"
+                                                    onChange={handleFileChange}
                                                 />
                                             </label>
                                             {field.value && (
-                                                <button 
-                                                    type="button" 
-                                                    onClick={() => form.setValue("documents", undefined, { shouldValidate: true })} 
+                                                <button
+                                                    type="button"
+                                                    onClick={() => form.setValue("documents", undefined, { shouldValidate: true })}
                                                     className="text-xs text-red-500 font-bold flex items-center gap-1 hover:underline"
                                                 >
                                                     <X className="h-3 w-3" /> Remove document

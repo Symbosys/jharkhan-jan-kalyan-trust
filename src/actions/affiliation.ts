@@ -336,31 +336,3 @@ export async function deleteAffiliation(id: number) {
         };
     }
 }
-
-// Get affiliation statistics
-export const getAffiliationStats = cache(async () => {
-    try {
-        const [total, pending, approved, rejected] = await Promise.all([
-            prisma.affiliation.count(),
-            prisma.affiliation.count({ where: { status: 'PENDING' } }),
-            prisma.affiliation.count({ where: { status: 'APPROVED' } }),
-            prisma.affiliation.count({ where: { status: 'REJECTED' } })
-        ]);
-
-        return {
-            success: true,
-            data: {
-                total,
-                pending,
-                approved,
-                rejected
-            }
-        };
-    } catch (error: any) {
-        console.error("Get affiliation stats error:", error);
-        return {
-            success: false,
-            error: error.message || "Failed to fetch affiliation statistics"
-        };
-    }
-});

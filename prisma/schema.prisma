@@ -374,7 +374,7 @@ model SchoolEnquiry {
   payment     Json?
   registrationNumber String @unique @default("NOT PROVIDED")
 
-  status      EnquiryStatus @default(PENDING)
+  status      EnquiryStatus @default(APPROVED)
   
 
   createdAt DateTime @default(now())

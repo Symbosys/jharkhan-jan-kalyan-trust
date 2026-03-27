@@ -84,7 +84,7 @@ export async function createSchoolEnquiry(data: {
                 aadhaar: data.aadhaar,
                 examCenterId: data.examCenterId,
                 registrationNumber: registrationNumber!,
-                status: "PENDING" as EnquiryStatus,
+                status: "APPROVED" as EnquiryStatus,
                 photo: photoData,
                 payment: paymentData,
             },

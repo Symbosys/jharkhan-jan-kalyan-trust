@@ -62,7 +62,7 @@ export function Header() {
                 { label: "Check Exam Result", href: "/results", icon: GraduationCap },
                 { label: "Download Registration Card", href: "/download-gk-card", icon: School },
                 { label: "Request Affiliation", href: "/affiliation", icon: Handshake },
-                { label: "Our Affiliations", href: "/our-affiliation", icon: Building2 },
+                // { label: "Our Affiliations", href: "/our-affiliation", icon: Building2 },
                 { label: "Download Affiliation Card", href: "/download-affiliation-card", icon: Download },
                 { label: "Register Your Problem", href: "/register-complaint", icon: ShieldAlert },
             ],

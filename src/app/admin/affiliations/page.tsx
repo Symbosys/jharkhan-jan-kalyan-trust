@@ -84,7 +84,7 @@ export default function AffiliationsPage() {
     const fetchAffiliations = async () => {
         setLoading(true);
         try {
-            const data = await getAllAffiliations({ 
+            const data = await getAllAffiliations({
                 search,
                 status: statusFilter !== "ALL" ? statusFilter as any : undefined
             });
@@ -173,8 +173,8 @@ export default function AffiliationsPage() {
         setIsUpdating(id);
         try {
             const res = await updateAffiliationValidity(
-                id, 
-                new Date(validFromDate), 
+                id,
+                new Date(validFromDate),
                 new Date(validTillDate)
             );
             if (res.success) {
@@ -217,7 +217,7 @@ export default function AffiliationsPage() {
                                     onChange={(e) => setSearch(e.target.value)}
                                 />
                             </div>
-                            <select 
+                            <select
                                 className="px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm"
                                 value={statusFilter}
                                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -308,10 +308,10 @@ export default function AffiliationsPage() {
                                                 <span className="text-sm font-medium text-foreground">{affiliation.city}</span>
                                             </TableCell>
                                             <TableCell>
-                                                <Badge 
+                                                <Badge
                                                     variant={
-                                                        affiliation.status === 'PENDING' ? 'secondary' : 
-                                                        affiliation.status === 'APPROVED' ? 'default' : 'destructive'
+                                                        affiliation.status === 'PENDING' ? 'secondary' :
+                                                            affiliation.status === 'APPROVED' ? 'default' : 'destructive'
                                                     }
                                                     className="capitalize"
                                                 >
@@ -411,10 +411,10 @@ export default function AffiliationsPage() {
                                     </div>
                                     <div className="space-y-1">
                                         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</p>
-                                        <Badge 
+                                        <Badge
                                             variant={
-                                                selectedAffiliation.status === 'PENDING' ? 'secondary' : 
-                                                selectedAffiliation.status === 'APPROVED' ? 'default' : 'destructive'
+                                                selectedAffiliation.status === 'PENDING' ? 'secondary' :
+                                                    selectedAffiliation.status === 'APPROVED' ? 'default' : 'destructive'
                                             }
                                             className="capitalize text-sm px-3 py-1"
                                         >
@@ -510,9 +510,9 @@ export default function AffiliationsPage() {
                                                         />
                                                     )}
                                                 </div>
-                                                <a 
-                                                    href={selectedAffiliation.documents.url} 
-                                                    target="_blank" 
+                                                <a
+                                                    href={selectedAffiliation.documents.url}
+                                                    target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-xs text-blue-600 hover:underline"
                                                 >
@@ -573,7 +573,7 @@ export default function AffiliationsPage() {
                                         )}
                                     </div>
                                 </div>
-                                
+
                                 {selectedAffiliation.status === 'APPROVED' && (
                                     <div className="space-y-4 pt-4 border-t border-border">
                                         <h4 className="font-semibold text-foreground">Update Validity Period</h4>

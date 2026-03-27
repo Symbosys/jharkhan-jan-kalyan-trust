@@ -1,19 +1,40 @@
 "use client";
 
-import { useState } from "react";
 import { getSchoolEnquiryByRegistrationNumber } from "@/actions/schoolEnquiry";
+import { getWebSettings } from "@/actions/webSetting";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2, Search, GraduationCap, ShieldCheck, User, School, Calendar, CheckCircle2 } from "lucide-react";
+import { Loader2, Search, GraduationCap, ShieldCheck, User, School, Calendar, CheckCircle2, Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import Image from "next/image";
+import { useState, useRef, useEffect } from "react";
+import { toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
+import { ResultCard } from "@/components/school-enquiry/ResultCard";
 
 export function ResultsPortal() {
     const [regNumber, setRegNumber] = useState("");
     const [participant, setParticipant] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const [downloading, setDownloading] = useState(false);
+    const [webSettings, setWebSettings] = useState<Record<string, string>>({});
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        async function fetchSettings() {
+            try {
+                const settings = await getWebSettings();
+                setWebSettings(settings);
+            } catch (error) {
+                console.error("Failed to fetch web settings:", error);
+            }
+        }
+        fetchSettings();
+    }, []);
+
+    const maxMarks = parseInt(webSettings.max_marks || "100");
 
     const handleSearch = async () => {
         if (!regNumber.trim()) {
@@ -38,6 +59,39 @@ export function ResultsPortal() {
             toast.error("An error occurred. Please try again.");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDownload = async () => {
+        if (!cardRef.current || !participant) return;
+
+        setDownloading(true);
+        const loadingToast = toast.loading("Generating your PDF result card...");
+        try {
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            const dataUrl = await toPng(cardRef.current, {
+                cacheBust: true,
+                pixelRatio: 2,
+                quality: 1
+            });
+
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: [210, 280],
+            });
+
+            pdf.addImage(dataUrl, "PNG", 0, 0, 210, 280);
+            pdf.save(`GK-Competition-Result-${participant.registrationNumber}.pdf`);
+
+            toast.success("Result card PDF downloaded!");
+        } catch (err) {
+            toast.error("Download failed. Please try again.");
+            console.error("Download error:", err);
+        } finally {
+            toast.dismiss(loadingToast);
+            setDownloading(false);
         }
     };
 
@@ -141,7 +195,7 @@ export function ResultsPortal() {
                                                 </div>
                                             </div>
                                             <div className="flex items-start gap-3">
-                                                <div className="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-100 dark:border-emerald-500/20">
+                                                <div className="h-8 w-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-100 dark:border-emerald-100/20">
                                                     <Calendar className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                                                 </div>
                                                 <div>
@@ -163,7 +217,7 @@ export function ResultsPortal() {
                                             </div>
                                             <h2 className="text-3xl font-bold text-foreground">Examination Summary</h2>
                                             <p className="text-muted-foreground leading-relaxed">
-                                                This scorecard represents your achievement in the GK Competition organized by Symbosys Jan Kalyan Trust. We appreciate your dedication and hard work.
+                                                This scorecard represents your achievement in the GK Competition organized by Jharkhand Jan Kalyan Trust. We appreciate your dedication and hard work.
                                             </p>
                                         </div>
 
@@ -175,7 +229,7 @@ export function ResultsPortal() {
                                                         <div className="text-7xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums">
                                                             {participant.examResult.marks}
                                                         </div>
-                                                        <p className="text-xs font-bold text-emerald-600/60 dark:text-emerald-400/60 mt-2">Maximum Marks: 100</p>
+                                                        <p className="text-xs font-bold text-emerald-600/60 dark:text-emerald-400/60 mt-2">Maximum Marks: {maxMarks}</p>
                                                     </div>
                                                 ) : (
                                                     <div className="text-center py-4">
@@ -191,6 +245,59 @@ export function ResultsPortal() {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Card Preview & Download */}
+                            <div className="mt-8 rounded-2xl border border-border bg-white dark:bg-white/5 p-4 md:p-6 shadow-sm">
+                                <div className="flex items-center justify-between mb-4">
+                                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                                        Offline Scorecard Preview
+                                    </span>
+                                    <Button
+                                        onClick={handleDownload}
+                                        disabled={downloading}
+                                        className="h-9 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-all text-sm gap-2"
+                                    >
+                                        {downloading ? (
+                                            <Loader2 className="animate-spin h-4 w-4" />
+                                        ) : (
+                                            <>
+                                                <Download className="w-4 h-4" />
+                                                Download Scorecard
+                                            </>
+                                        )}
+                                    </Button>
+                                </div>
+
+                                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 overflow-hidden">
+                                    <div className="overflow-x-auto overflow-y-hidden flex justify-center py-6 px-4">
+                                        <div className="bg-white rounded-lg shadow-md transform scale-[0.28] sm:scale-[0.38] md:scale-[0.48] lg:scale-[0.58] xl:scale-[0.7] origin-top shrink-0 transition-transform duration-300">
+                                            <ResultCard 
+                                                participant={participant} 
+                                                cardRef={cardRef}
+                                                maxMarks={maxMarks}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Mobile Download Button */}
+                            <div className="mt-4 sm:hidden">
+                                <Button
+                                    onClick={handleDownload}
+                                    disabled={downloading}
+                                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl transition-all gap-2"
+                                >
+                                    {downloading ? (
+                                        <Loader2 className="animate-spin h-4 w-4" />
+                                    ) : (
+                                        <>
+                                            <Download className="w-5 h-5" />
+                                            Download Result Card
+                                        </>
+                                    )}
+                                </Button>
                             </div>
 
                             {/* Footer Info */}

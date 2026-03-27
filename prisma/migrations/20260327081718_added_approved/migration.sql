@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `schoolenquiry` MODIFY `status` ENUM('PENDING', 'APPROVED', 'REJECTED') NOT NULL DEFAULT 'APPROVED';
