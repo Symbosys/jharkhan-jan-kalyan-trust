@@ -382,6 +382,7 @@ export const ExamCenterScalarFieldEnum = {
   email: 'email',
   website: 'website',
   description: 'description',
+  capacity: 'capacity',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -42,7 +42,9 @@ import {
     Trash2,
     User,
     XCircle,
-    CreditCard
+    CreditCard,
+    ChevronLeft,
+    ChevronRight
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -87,15 +89,25 @@ export default function SchoolEnquiriesPage() {
     const [isUpdating, setIsUpdating] = useState<number | null>(null);
     const [marks, setMarks] = useState<string>("");
     const [isSavingMarks, setIsSavingMarks] = useState(false);
+    
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
+    const itemsPerPage = 10;
 
     const fetchEnquiries = async () => {
         setLoading(true);
         try {
             const data = await getAllSchoolEnquiries({ 
                 search,
-                status: statusFilter !== "ALL" ? statusFilter as any : undefined
+                status: statusFilter !== "ALL" ? statusFilter as any : undefined,
+                page: currentPage,
+                limit: itemsPerPage
             });
             setEnquiries(data.enquiries as any);
+            setTotalPages(data.pagination.totalPages);
+            setTotalItems(data.pagination.total);
         } catch (error) {
             console.error("Fetch school enquiries error:", error);
             toast.error("Failed to fetch school enquiries");
@@ -105,11 +117,15 @@ export default function SchoolEnquiriesPage() {
     };
 
     useEffect(() => {
+        setCurrentPage(1);
+    }, [search, statusFilter]);
+
+    useEffect(() => {
         const timer = setTimeout(() => {
             fetchEnquiries();
         }, 500);
         return () => clearTimeout(timer);
-    }, [search, statusFilter]);
+    }, [search, statusFilter, currentPage]);
 
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure you want to delete this school enquiry?")) return;
@@ -227,7 +243,7 @@ export default function SchoolEnquiriesPage() {
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-2">
                                 <Badge variant="outline" className="px-3 py-1 bg-background font-medium text-muted-foreground border-border">
-                                    {enquiries.length} Registrations Found
+                                    {totalItems} Registrations Found
                                 </Badge>
                                 {statusFilter !== "ALL" && (
                                     <Badge variant="secondary" className="px-3 py-1 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50">
@@ -416,6 +432,65 @@ export default function SchoolEnquiriesPage() {
                         </div>
                     )}
                 </CardContent>
+                {totalPages > 1 && (
+                    <div className="border-t border-border px-6 py-4 flex items-center justify-between bg-slate-50/50 dark:bg-slate-950/50">
+                        <div className="text-sm text-muted-foreground">
+                            Showing <span className="font-medium text-foreground">{(currentPage - 1) * itemsPerPage + 1}</span> to <span className="font-medium text-foreground">{Math.min(currentPage * itemsPerPage, totalItems)}</span> of <span className="font-medium text-foreground">{totalItems}</span> results
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                                disabled={currentPage === 1 || loading}
+                                className="h-8 px-2"
+                            >
+                                <ChevronLeft className="h-4 w-4 mr-1" />
+                                Previous
+                            </Button>
+                            
+                            <div className="flex items-center gap-1">
+                                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                                    // Logic to show pages around current page
+                                    let pageNum;
+                                    if (totalPages <= 5) {
+                                        pageNum = i + 1;
+                                    } else if (currentPage <= 3) {
+                                        pageNum = i + 1;
+                                    } else if (currentPage >= totalPages - 2) {
+                                        pageNum = totalPages - 4 + i;
+                                    } else {
+                                        pageNum = currentPage - 2 + i;
+                                    }
+                                    
+                                    return (
+                                        <Button
+                                            key={pageNum}
+                                            variant={currentPage === pageNum ? "default" : "outline"}
+                                            size="sm"
+                                            onClick={() => setCurrentPage(pageNum)}
+                                            disabled={loading}
+                                            className={`h-8 w-8 p-0 ${currentPage === pageNum ? "bg-primary text-primary-foreground" : ""}`}
+                                        >
+                                            {pageNum}
+                                        </Button>
+                                    );
+                                })}
+                            </div>
+
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                                disabled={currentPage === totalPages || loading}
+                                className="h-8 px-2"
+                            >
+                                Next
+                                <ChevronRight className="h-4 w-4 ml-1" />
+                            </Button>
+                        </div>
+                    </div>
+                )}
             </Card>
 
             {/* Enquiry Detail Dialog */}

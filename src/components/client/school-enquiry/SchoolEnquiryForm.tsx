@@ -134,6 +134,7 @@ interface ExamCenter {
     city: string;
     state: string;
     availableSeats: number;
+    capacity: number;
 }
 
 export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
@@ -463,7 +464,7 @@ export function SchoolEnquiryForm({ paymentDetails }: SchoolEnquiryFormProps) {
                                         </SelectContent>
                                     </Select>
                                     <FormDescription className="text-xs">
-                                        Select the exam center where you want to appear for the GK Competition. Each center has a maximum capacity of 250 students.
+                                        Select the exam center where you want to appear for the GK Competition. Each center has its own maximum capacity.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

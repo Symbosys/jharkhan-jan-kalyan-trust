@@ -17,6 +17,7 @@ export async function createExamCenter(data: {
     email?: string;
     website?: string;
     description?: string;
+    capacity?: number;
 }) {
     try {
         const examCenter = await prisma.examCenter.create({
@@ -30,6 +31,7 @@ export async function createExamCenter(data: {
                 email: data.email,
                 website: data.website,
                 description: data.description,
+                capacity: data.capacity,
             },
         });
 
@@ -125,15 +127,15 @@ export async function getAvailableExamCenters() {
             }
         });
 
-        // Filter centers with less than 120 students
+        // Filter centers with less than their capacity
         const availableCenters = examCenters.filter(
-            center => center._count.schoolEnquiries < 120
+            center => center._count.schoolEnquiries < center.capacity
         );
 
         return {
             examCenters: availableCenters.map(center => ({
                 ...center,
-                availableSeats: 120 - center._count.schoolEnquiries
+                availableSeats: center.capacity - center._count.schoolEnquiries
             }))
         };
     } catch (error: any) {
@@ -174,8 +176,8 @@ export async function getExamCenterById(id: number) {
 
         return {
             ...examCenter,
-            availableSeats: 120 - examCenter._count.schoolEnquiries,
-            isFull: examCenter._count.schoolEnquiries >= 120
+            availableSeats: examCenter.capacity - examCenter._count.schoolEnquiries,
+            isFull: examCenter._count.schoolEnquiries >= examCenter.capacity
         };
     } catch (error: any) {
         console.error("Error fetching exam center:", error);
@@ -189,18 +191,24 @@ export async function getExamCenterById(id: number) {
 export async function checkExamCenterAvailability(id: number) {
     "use cache";
     cacheTag(`exam-center-availability-${id}`, "exam-centers");
-
     try {
+        const center = await prisma.examCenter.findUnique({
+            where: { id },
+            select: { capacity: true }
+        });
+
+        if (!center) throw new Error("Exam center not found");
+
         const count = await prisma.schoolEnquiry.count({
             where: { examCenterId: id }
         });
 
         return {
-            totalSeats: 120,
+            totalSeats: center.capacity,
             occupiedSeats: count,
-            availableSeats: 120 - count,
-            isAvailable: count < 120,
-            isFull: count >= 120
+            availableSeats: center.capacity - count,
+            isAvailable: count < center.capacity,
+            isFull: count >= center.capacity
         };
     } catch (error: any) {
         console.error("Error checking exam center availability:", error);
@@ -223,6 +231,7 @@ export async function updateExamCenter(
         email?: string;
         website?: string;
         description?: string;
+        capacity?: number;
     }
 ) {
     try {
@@ -243,6 +252,7 @@ export async function updateExamCenter(
                 email: data.email,
                 website: data.website,
                 description: data.description,
+                capacity: data.capacity,
             },
         });
 

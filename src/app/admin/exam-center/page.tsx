@@ -58,6 +58,7 @@ interface ExamCenter {
     email: string | null;
     website: string | null;
     description: string | null;
+    capacity: number;
     createdAt: Date;
     updatedAt: Date;
     _count: {
@@ -85,6 +86,7 @@ export default function ExamCenterPage() {
         email: "",
         website: "",
         description: "",
+        capacity: "500",
     });
 
     const fetchExamCenters = async () => {
@@ -118,6 +120,7 @@ export default function ExamCenterPage() {
             email: "",
             website: "",
             description: "",
+            capacity: "500",
         });
         setEditingId(null);
     };
@@ -138,6 +141,7 @@ export default function ExamCenterPage() {
             email: center.email || "",
             website: center.website || "",
             description: center.description || "",
+            capacity: center.capacity.toString(),
         });
         setEditingId(center.id);
         setIsDialogOpen(true);
@@ -158,6 +162,7 @@ export default function ExamCenterPage() {
                 email: formData.email || undefined,
                 website: formData.website || undefined,
                 description: formData.description || undefined,
+                capacity: parseInt(formData.capacity) || 500,
             };
 
             let res;
@@ -200,8 +205,8 @@ export default function ExamCenterPage() {
         }
     };
 
-    const getSeatStatus = (occupied: number) => {
-        const available = 120 - occupied;
+    const getSeatStatus = (occupied: number, capacity: number) => {
+        const available = capacity - occupied;
         if (available <= 0) {
             return { label: "Full", variant: "destructive" as const, color: "text-red-600" };
         } else if (available <= 20) {
@@ -221,7 +226,7 @@ export default function ExamCenterPage() {
                         Exam Centers
                     </h1>
                     <p className="text-muted-foreground mt-1">
-                        Manage exam centers for GK Competition. Maximum 120 students per center.
+                        Manage exam centers for GK Competition. Set custom capacity for each center.
                     </p>
                 </div>
 
@@ -254,7 +259,9 @@ export default function ExamCenterPage() {
                         <div className="flex items-center justify-between">
                             <div>
                                 <p className="text-sm font-medium text-muted-foreground">Total Capacity</p>
-                                <p className="text-3xl font-bold text-foreground">{examCenters.length * 120}</p>
+                                <p className="text-3xl font-bold text-foreground">
+                                    {examCenters.reduce((acc, center) => acc + center.capacity, 0)}
+                                </p>
                             </div>
                             <div className="h-12 w-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
                                 <Users className="h-6 w-6 text-blue-500" />
@@ -293,7 +300,7 @@ export default function ExamCenterPage() {
                             />
                         </div>
                         <Badge variant="secondary" className="px-3 py-1 bg-primary/5 text-primary border-primary/10">
-                            Max 120 students per center
+                            Custom capacity per center enabled
                         </Badge>
                     </div>
                 </CardHeader>
@@ -329,7 +336,7 @@ export default function ExamCenterPage() {
                                 </TableHeader>
                                 <TableBody>
                                     {examCenters.map((center) => {
-                                        const seatStatus = getSeatStatus(center._count.schoolEnquiries);
+                                        const seatStatus = getSeatStatus(center._count.schoolEnquiries, center.capacity);
                                         return (
                                             <TableRow key={center.id} className="hover:bg-primary/5 transition-colors">
                                                 <TableCell>
@@ -378,7 +385,7 @@ export default function ExamCenterPage() {
                                                 <TableCell className="text-center">
                                                     <div className="flex flex-col items-center gap-1">
                                                         <div className="text-sm font-semibold">
-                                                            {center._count.schoolEnquiries} / 120
+                                                            {center._count.schoolEnquiries} / {center.capacity}
                                                         </div>
                                                         <Badge 
                                                             variant={seatStatus.variant === "destructive" ? "destructive" : "secondary"}
@@ -515,6 +522,17 @@ export default function ExamCenterPage() {
                                     placeholder="e.g. www.example.com"
                                     value={formData.website}
                                     onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="capacity">Capacity *</Label>
+                                <Input
+                                    id="capacity"
+                                    type="number"
+                                    placeholder="e.g. 500"
+                                    value={formData.capacity}
+                                    onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
+                                    required
                                 />
                             </div>
                             <div className="space-y-2 md:col-span-2">

@@ -28,10 +28,12 @@ export type AggregateExamCenter = {
 
 export type ExamCenterAvgAggregateOutputType = {
   id: number | null
+  capacity: number | null
 }
 
 export type ExamCenterSumAggregateOutputType = {
   id: number | null
+  capacity: number | null
 }
 
 export type ExamCenterMinAggregateOutputType = {
@@ -45,6 +47,7 @@ export type ExamCenterMinAggregateOutputType = {
   email: string | null
   website: string | null
   description: string | null
+  capacity: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +63,7 @@ export type ExamCenterMaxAggregateOutputType = {
   email: string | null
   website: string | null
   description: string | null
+  capacity: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -75,6 +79,7 @@ export type ExamCenterCountAggregateOutputType = {
   email: number
   website: number
   description: number
+  capacity: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -83,10 +88,12 @@ export type ExamCenterCountAggregateOutputType = {
 
 export type ExamCenterAvgAggregateInputType = {
   id?: true
+  capacity?: true
 }
 
 export type ExamCenterSumAggregateInputType = {
   id?: true
+  capacity?: true
 }
 
 export type ExamCenterMinAggregateInputType = {
@@ -100,6 +107,7 @@ export type ExamCenterMinAggregateInputType = {
   email?: true
   website?: true
   description?: true
+  capacity?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -115,6 +123,7 @@ export type ExamCenterMaxAggregateInputType = {
   email?: true
   website?: true
   description?: true
+  capacity?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -130,6 +139,7 @@ export type ExamCenterCountAggregateInputType = {
   email?: true
   website?: true
   description?: true
+  capacity?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -232,6 +242,7 @@ export type ExamCenterGroupByOutputType = {
   email: string | null
   website: string | null
   description: string | null
+  capacity: number
   createdAt: Date
   updatedAt: Date
   _count: ExamCenterCountAggregateOutputType | null
@@ -270,6 +281,7 @@ export type ExamCenterWhereInput = {
   email?: Prisma.StringNullableFilter<"ExamCenter"> | string | null
   website?: Prisma.StringNullableFilter<"ExamCenter"> | string | null
   description?: Prisma.StringNullableFilter<"ExamCenter"> | string | null
+  capacity?: Prisma.IntFilter<"ExamCenter"> | number
   createdAt?: Prisma.DateTimeFilter<"ExamCenter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamCenter"> | Date | string
   schoolEnquiries?: Prisma.SchoolEnquiryListRelationFilter
@@ -286,6 +298,7 @@ export type ExamCenterOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   schoolEnquiries?: Prisma.SchoolEnquiryOrderByRelationAggregateInput
@@ -306,6 +319,7 @@ export type ExamCenterWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringNullableFilter<"ExamCenter"> | string | null
   website?: Prisma.StringNullableFilter<"ExamCenter"> | string | null
   description?: Prisma.StringNullableFilter<"ExamCenter"> | string | null
+  capacity?: Prisma.IntFilter<"ExamCenter"> | number
   createdAt?: Prisma.DateTimeFilter<"ExamCenter"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamCenter"> | Date | string
   schoolEnquiries?: Prisma.SchoolEnquiryListRelationFilter
@@ -322,6 +336,7 @@ export type ExamCenterOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  capacity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ExamCenterCountOrderByAggregateInput
@@ -345,6 +360,7 @@ export type ExamCenterScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"ExamCenter"> | string | null
   website?: Prisma.StringNullableWithAggregatesFilter<"ExamCenter"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"ExamCenter"> | string | null
+  capacity?: Prisma.IntWithAggregatesFilter<"ExamCenter"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExamCenter"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ExamCenter"> | Date | string
 }
@@ -359,6 +375,7 @@ export type ExamCenterCreateInput = {
   email?: string | null
   website?: string | null
   description?: string | null
+  capacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   schoolEnquiries?: Prisma.SchoolEnquiryCreateNestedManyWithoutExamCenterInput
@@ -375,6 +392,7 @@ export type ExamCenterUncheckedCreateInput = {
   email?: string | null
   website?: string | null
   description?: string | null
+  capacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   schoolEnquiries?: Prisma.SchoolEnquiryUncheckedCreateNestedManyWithoutExamCenterInput
@@ -390,6 +408,7 @@ export type ExamCenterUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   schoolEnquiries?: Prisma.SchoolEnquiryUpdateManyWithoutExamCenterNestedInput
@@ -406,6 +425,7 @@ export type ExamCenterUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   schoolEnquiries?: Prisma.SchoolEnquiryUncheckedUpdateManyWithoutExamCenterNestedInput
@@ -422,6 +442,7 @@ export type ExamCenterCreateManyInput = {
   email?: string | null
   website?: string | null
   description?: string | null
+  capacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -436,6 +457,7 @@ export type ExamCenterUpdateManyMutationInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -451,6 +473,7 @@ export type ExamCenterUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -477,12 +500,14 @@ export type ExamCenterCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   website?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ExamCenterAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
 }
 
 export type ExamCenterMaxOrderByAggregateInput = {
@@ -496,6 +521,7 @@ export type ExamCenterMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   website?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -511,12 +537,14 @@ export type ExamCenterMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   website?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ExamCenterSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  capacity?: Prisma.SortOrder
 }
 
 export type ExamCenterCreateNestedOneWithoutSchoolEnquiriesInput = {
@@ -545,6 +573,7 @@ export type ExamCenterCreateWithoutSchoolEnquiriesInput = {
   email?: string | null
   website?: string | null
   description?: string | null
+  capacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -560,6 +589,7 @@ export type ExamCenterUncheckedCreateWithoutSchoolEnquiriesInput = {
   email?: string | null
   website?: string | null
   description?: string | null
+  capacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -590,6 +620,7 @@ export type ExamCenterUpdateWithoutSchoolEnquiriesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -605,6 +636,7 @@ export type ExamCenterUncheckedUpdateWithoutSchoolEnquiriesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -651,6 +683,7 @@ export type ExamCenterSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   email?: boolean
   website?: boolean
   description?: boolean
+  capacity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   schoolEnquiries?: boolean | Prisma.ExamCenter$schoolEnquiriesArgs<ExtArgs>
@@ -670,11 +703,12 @@ export type ExamCenterSelectScalar = {
   email?: boolean
   website?: boolean
   description?: boolean
+  capacity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ExamCenterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "city" | "state" | "pinCode" | "mobile" | "email" | "website" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["examCenter"]>
+export type ExamCenterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "address" | "city" | "state" | "pinCode" | "mobile" | "email" | "website" | "description" | "capacity" | "createdAt" | "updatedAt", ExtArgs["result"]["examCenter"]>
 export type ExamCenterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   schoolEnquiries?: boolean | Prisma.ExamCenter$schoolEnquiriesArgs<ExtArgs>
   _count?: boolean | Prisma.ExamCenterCountOutputTypeDefaultArgs<ExtArgs>
@@ -696,6 +730,7 @@ export type $ExamCenterPayload<ExtArgs extends runtime.Types.Extensions.Internal
     email: string | null
     website: string | null
     description: string | null
+    capacity: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["examCenter"]>
@@ -1078,6 +1113,7 @@ export interface ExamCenterFieldRefs {
   readonly email: Prisma.FieldRef<"ExamCenter", 'String'>
   readonly website: Prisma.FieldRef<"ExamCenter", 'String'>
   readonly description: Prisma.FieldRef<"ExamCenter", 'String'>
+  readonly capacity: Prisma.FieldRef<"ExamCenter", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ExamCenter", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ExamCenter", 'DateTime'>
 }

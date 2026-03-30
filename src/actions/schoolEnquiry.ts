@@ -42,11 +42,18 @@ export async function createSchoolEnquiry(data: {
         uploadedPublicIds.push(paymentData.public_id);
 
         // 1. Check if exam center has available seats
+        const center = await prisma.examCenter.findUnique({
+            where: { id: data.examCenterId },
+            select: { capacity: true }
+        });
+
+        if (!center) throw new Error("Selected exam center not found.");
+
         const examCenterCount = await prisma.schoolEnquiry.count({
             where: { examCenterId: data.examCenterId }
         });
 
-        if (examCenterCount >= 250) {
+        if (examCenterCount >= center.capacity) {
             throw new Error("Selected exam center is full. Please choose another exam center.");
         }
 
@@ -287,11 +294,18 @@ export async function updateSchoolEnquiry(
 
         // Check if exam center is being changed and has available seats
         if (data.examCenterId && data.examCenterId !== existing.examCenterId) {
+            const center = await prisma.examCenter.findUnique({
+                where: { id: data.examCenterId },
+                select: { capacity: true }
+            });
+
+            if (!center) throw new Error("Selected exam center not found.");
+
             const examCenterCount = await prisma.schoolEnquiry.count({
                 where: { examCenterId: data.examCenterId }
             });
 
-            if (examCenterCount >= 500) {
+            if (examCenterCount >= center.capacity) {
                 throw new Error("Selected exam center is full. Please choose another exam center.");
             }
         }

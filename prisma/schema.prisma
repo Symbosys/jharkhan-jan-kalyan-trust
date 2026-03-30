@@ -401,6 +401,8 @@ model ExamCenter {
   website     String?
   description String?
 
+  capacity Int @default(500)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
