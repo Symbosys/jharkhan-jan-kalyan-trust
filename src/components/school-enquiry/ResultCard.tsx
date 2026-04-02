@@ -358,7 +358,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                     }}>
                         <div style={{ textAlign: "center", width: 200 }}>
                             <div style={{ height: 60, display: "flex", alignItems: "end", justifyContent: "center" }}>
-                                <img src="/signature/secretry.jpeg" alt="Controller Signature" style={{ maxHeight: "80%", opacity: 0.8, filter: "grayscale(1) contrast(1.2)" }} />
+                                <img src="/signature/authorized.jpeg" alt="Controller Signature" style={{ maxHeight: "80%", opacity: 0.8, filter: "grayscale(1) contrast(1.2)" }} />
                             </div>
                             <div style={{ borderTop: `1px solid ${borderColor}`, paddingTop: 8, fontSize: 13, fontWeight: 800, textTransform: "uppercase" }}>
                                 Authorized Signature
