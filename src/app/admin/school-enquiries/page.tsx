@@ -44,8 +44,10 @@ import {
     XCircle,
     CreditCard,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Edit
 } from "lucide-react";
+import { getAllExamCenters } from "@/actions/examCenter";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
@@ -89,6 +91,10 @@ export default function SchoolEnquiriesPage() {
     const [isUpdating, setIsUpdating] = useState<number | null>(null);
     const [marks, setMarks] = useState<string>("");
     const [isSavingMarks, setIsSavingMarks] = useState(false);
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [editForm, setEditForm] = useState<Partial<SchoolEnquiry>>({});
+    const [examCenters, setExamCenters] = useState<any[]>([]);
+    const [isUpdatingDetails, setIsUpdatingDetails] = useState(false);
     
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
@@ -115,6 +121,19 @@ export default function SchoolEnquiriesPage() {
             setLoading(false);
         }
     };
+
+    const fetchExamCenters = async () => {
+        try {
+            const res = await getAllExamCenters({ limit: 100 });
+            setExamCenters(res.examCenters);
+        } catch (error) {
+            console.error("Fetch exam centers error:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchExamCenters();
+    }, []);
 
     useEffect(() => {
         setCurrentPage(1);
@@ -198,6 +217,40 @@ export default function SchoolEnquiriesPage() {
             toast.error("An unexpected error occurred");
         } finally {
             setIsUpdating(null);
+        }
+    };
+
+    const handleEditOpen = (enquiry: SchoolEnquiry) => {
+        setEditForm({ ...enquiry });
+        setIsEditDialogOpen(true);
+    };
+
+    const handleUpdateEnquiry = async () => {
+        if (!editForm.id) return;
+        setIsUpdatingDetails(true);
+        try {
+            const res = await updateSchoolEnquiry(editForm.id, {
+                name: editForm.name,
+                mobile: editForm.mobile,
+                email: editForm.email,
+                school: editForm.school,
+                class: editForm.class,
+                board: editForm.board,
+                status: editForm.status as any,
+                examCenterId: editForm.examCenter?.id
+            });
+
+            if (res.success) {
+                toast.success("Enquiry updated successfully");
+                setIsEditDialogOpen(false);
+                fetchEnquiries();
+            } else {
+                toast.error(res.error || "Failed to update enquiry");
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred");
+        } finally {
+            setIsUpdatingDetails(false);
         }
     };
 
@@ -409,6 +462,14 @@ export default function SchoolEnquiriesPage() {
                                                         onClick={() => handleViewDetail(enquiry)}
                                                     >
                                                         <Eye className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 text-muted-foreground hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20"
+                                                        onClick={() => handleEditOpen(enquiry)}
+                                                    >
+                                                        <Edit className="h-4 w-4" />
                                                     </Button>
                                                     <Button
                                                         variant="ghost"
@@ -708,6 +769,16 @@ export default function SchoolEnquiriesPage() {
                                 )}
                                 <Button
                                     variant="outline"
+                                    className="flex-1 sm:flex-none gap-2 text-amber-600 border-amber-200 hover:bg-amber-50"
+                                    onClick={() => {
+                                        handleEditOpen(selectedEnquiry);
+                                        setIsDetailOpen(false);
+                                    }}
+                                >
+                                    <Edit className="h-4 w-4" /> Edit Details
+                                </Button>
+                                <Button
+                                    variant="outline"
                                     className="flex-1 sm:flex-none gap-2"
                                     onClick={() => {
                                         handleDelete(selectedEnquiry.id);
@@ -718,6 +789,134 @@ export default function SchoolEnquiriesPage() {
                                 </Button>
                             </>
                         )}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Edit Enquiry Dialog */}
+            <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                <DialogContent className="sm:max-w-[600px] border-border bg-background max-h-[90vh] flex flex-col">
+                    <DialogHeader>
+                        <DialogTitle className="text-2xl font-bold font-outfit text-foreground flex items-center gap-2">
+                            <Edit className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                            Update Registration Details
+                        </DialogTitle>
+                        <DialogDescription>
+                            Modify the details for registration {editForm.registrationNumber}
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="grow overflow-y-auto py-4 pr-2 -mr-2 space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Name</label>
+                                <Input 
+                                    value={editForm.name || ""} 
+                                    onChange={(e) => setEditForm({...editForm, name: e.target.value})}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Mobile</label>
+                                <Input 
+                                    value={editForm.mobile || ""} 
+                                    onChange={(e) => setEditForm({...editForm, mobile: e.target.value})}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Email</label>
+                                <Input 
+                                    value={editForm.email || ""} 
+                                    onChange={(e) => setEditForm({...editForm, email: e.target.value})}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Aadhaar</label>
+                                <Input 
+                                    value={editForm.aadhaar || ""} 
+                                    onChange={(e) => setEditForm({...editForm, aadhaar: e.target.value})}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium">School</label>
+                            <Input 
+                                value={editForm.school || ""} 
+                                onChange={(e) => setEditForm({...editForm, school: e.target.value})}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Class</label>
+                                <Input 
+                                    value={editForm.class || ""} 
+                                    onChange={(e) => setEditForm({...editForm, class: e.target.value})}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Board</label>
+                                <Input 
+                                    value={editForm.board || ""} 
+                                    onChange={(e) => setEditForm({...editForm, board: e.target.value})}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Status</label>
+                                <select 
+                                    className="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm"
+                                    value={editForm.status}
+                                    onChange={(e) => setEditForm({...editForm, status: e.target.value as any})}
+                                >
+                                    <option value="PENDING">Pending</option>
+                                    <option value="APPROVED">Approved</option>
+                                    <option value="REJECTED">Rejected</option>
+                                </select>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Exam Center</label>
+                                <select 
+                                    className="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm"
+                                    value={editForm.examCenter?.id || ""}
+                                    onChange={(e) => setEditForm({
+                                        ...editForm, 
+                                        examCenter: examCenters.find(c => c.id === parseInt(e.target.value))
+                                    })}
+                                >
+                                    <option value="">Select Center</option>
+                                    {examCenters.map(center => (
+                                        <option key={center.id} value={center.id}>
+                                            {center.name} ({center.city})
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <DialogFooter className="pt-4 border-t">
+                        <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button 
+                            onClick={handleUpdateEnquiry} 
+                            disabled={isUpdatingDetails}
+                        >
+                            {isUpdatingDetails ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                    Updating...
+                                </>
+                            ) : (
+                                "Save Changes"
+                            )}
+                        </Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
