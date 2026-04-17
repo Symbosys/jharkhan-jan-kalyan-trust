@@ -1,4 +1,5 @@
 "use client";
+import { jsPDF } from "jspdf";
 
 import { deleteSchoolEnquiry, getAllSchoolEnquiries, updateSchoolEnquiry, exportSchoolEnquiries } from "@/actions/schoolEnquiry";
 import { upsertExamResult } from "@/actions/exam-results";
@@ -102,6 +103,7 @@ export default function SchoolEnquiriesPage() {
     const [isDownloadOpen, setIsDownloadOpen] = useState(false);
     const [downloadRange, setDownloadRange] = useState({ start: 1, end: 500 });
     const [isDownloading, setIsDownloading] = useState(false);
+    const [downloadFormat, setDownloadFormat] = useState<'csv' | 'pdf'>('pdf');
     
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
@@ -286,25 +288,100 @@ export default function SchoolEnquiriesPage() {
             });
 
             if (res.success && res.data) {
-                // Generate CSV
-                const headers = ["Name", "Reg Number", "School/Institution", "Class", "Board"];
-                const csvData = res.data.map(e => [
-                    `"${e.name}"`,
-                    `"${e.registrationNumber}"`,
-                    `"${e.school}"`,
-                    `"${e.class}"`,
-                    `"${e.board}"`
-                ]);
+                if (downloadFormat === 'csv') {
+                    // Generate CSV
+                    const headers = ["Name", "Reg Number", "Signature"];
+                    const csvData = res.data.map(e => [
+                        `"${e.name}"`,
+                        `"${e.registrationNumber}"`,
+                        `""`
+                    ]);
 
-                const csvContent = [headers, ...csvData].map(e => e.join(",")).join("\n");
-                const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement("a");
-                link.setAttribute("href", url);
-                link.setAttribute("download", `registrations_${start}_to_${end}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                    const csvContent = [headers, ...csvData].map(e => e.join(",")).join("\n");
+                    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", `registrations_${start}_to_${end}.csv`);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } else {
+                    // Generate PDF
+                    const doc = new jsPDF();
+                    const pageWidth = doc.internal.pageSize.width;
+                    
+                    // Title
+                    doc.setFontSize(18);
+                    doc.setFont("helvetica", "bold");
+                    doc.text("GK COMPETITION ATTENDANCE SHEET", pageWidth / 2, 20, { align: 'center' });
+                    
+                    // Subtitle / Info
+                    doc.setFontSize(10);
+                    doc.setFont("helvetica", "normal");
+                    const dateStr = format(new Date(), "dd MMM, yyyy");
+                    doc.text(`Generated On: ${dateStr} | Range: ${start} to ${end}`, pageWidth / 2, 28, { align: 'center' });
+                    
+                    if (centerFilter !== "ALL") {
+                        const centerName = examCenters.find(c => c.id.toString() === centerFilter)?.name || "Selected Center";
+                        doc.text(`Center: ${centerName}`, pageWidth / 2, 34, { align: 'center' });
+                    }
+
+                    // Table Header
+                    const startY = 45;
+                    const rowHeight = 10;
+                    const margin = 15;
+                    const colWidths = [15, 45, 80, 40]; // S.No, Reg No, Name, Signature
+                    const colStarts = [margin, margin + 15, margin + 15 + 45, margin + 15 + 45 + 80];
+                    
+                    const drawHeader = (y: number) => {
+                        doc.setFillColor(240, 240, 240);
+                        doc.rect(margin, y - 7, pageWidth - (margin * 2), 10, 'F');
+                        doc.setFont("helvetica", "bold");
+                        doc.text("S.No", colStarts[0] + 2, y);
+                        doc.text("Reg Number", colStarts[1] + 2, y);
+                        doc.text("Participant Name", colStarts[2] + 2, y);
+                        doc.text("Signature", colStarts[3] + 2, y);
+                        doc.line(margin, y + 3, pageWidth - margin, y + 3);
+                    };
+
+                    drawHeader(startY);
+                    
+                    let currentY = startY + rowHeight;
+                    doc.setFont("helvetica", "normal");
+                    
+                    res.data.forEach((item, index) => {
+                        // Check for page break
+                        if (currentY > 280) {
+                            doc.addPage();
+                            drawHeader(20);
+                            currentY = 20 + rowHeight;
+                            doc.setFont("helvetica", "normal");
+                        }
+                        
+                        const displayIndex = start + index;
+                        doc.text(displayIndex.toString(), colStarts[0] + 5, currentY, { align: 'center' });
+                        doc.text(item.registrationNumber, colStarts[1] + 2, currentY);
+                        doc.text(item.name, colStarts[2] + 2, currentY);
+                        
+                        // Signature line/box
+                        doc.rect(colStarts[3], currentY - 7, colWidths[3], rowHeight);
+                        
+                        // Row lines for better separation
+                        doc.line(margin, currentY + 3, pageWidth - margin, currentY + 3);
+                        
+                        // Vertical lines
+                        doc.line(margin, currentY - 7, margin, currentY + 3); // Left
+                        doc.line(colStarts[1], currentY - 7, colStarts[1], currentY + 3);
+                        doc.line(colStarts[2], currentY - 7, colStarts[2], currentY + 3);
+                        doc.line(colStarts[3], currentY - 7, colStarts[3], currentY + 3);
+                        doc.line(pageWidth - margin, currentY - 7, pageWidth - margin, currentY + 3); // Right
+
+                        currentY += rowHeight;
+                    });
+
+                    doc.save(`Attendance_Sheet_${start}_to_${end}.pdf`);
+                }
                 
                 toast.success("Download started successfully");
                 setIsDownloadOpen(false);
@@ -1062,21 +1139,47 @@ export default function SchoolEnquiriesPage() {
                                 Error: Range exceeds 500 record limit.
                             </p>
                         )}
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-foreground">Download Format</label>
+                            <div className="flex gap-2">
+                                <Button
+                                    variant={downloadFormat === 'pdf' ? "default" : "outline"}
+                                    onClick={() => setDownloadFormat('pdf')}
+                                    className="flex-1 gap-2"
+                                    type="button"
+                                >
+                                    <div className={`w-3 h-3 rounded-full border ${downloadFormat === 'pdf' ? 'bg-white border-white' : 'border-muted-foreground'}`} />
+                                    PDF (Attendance)
+                                </Button>
+                                <Button
+                                    variant={downloadFormat === 'csv' ? "default" : "outline"}
+                                    onClick={() => setDownloadFormat('csv')}
+                                    className="flex-1 gap-2"
+                                    type="button"
+                                >
+                                    <div className={`w-3 h-3 rounded-full border ${downloadFormat === 'csv' ? 'bg-white border-white' : 'border-muted-foreground'}`} />
+                                    Excel (CSV)
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setIsDownloadOpen(false)}>Cancel</Button>
                         <Button 
                             onClick={handleDownload} 
                             disabled={isDownloading || (downloadRange.end - downloadRange.start + 1 > 500)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white"
+                            className="bg-blue-600 hover:bg-blue-700 text-white gap-2 min-w-[120px]"
                         >
                             {isDownloading ? (
                                 <>
-                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                    <Loader2 className="h-4 w-4 animate-spin" />
                                     Downloading...
                                 </>
                             ) : (
-                                "Export CSV"
+                                <>
+                                    {downloadFormat === 'pdf' ? <BookOpen className="h-4 w-4" /> : <Download className="h-4 w-4" />}
+                                    Download {downloadFormat === 'pdf' ? 'PDF' : 'CSV'}
+                                </>
                             )}
                         </Button>
                     </DialogFooter>
