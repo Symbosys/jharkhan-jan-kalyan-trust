@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteSchoolEnquiry, getAllSchoolEnquiries, updateSchoolEnquiry } from "@/actions/schoolEnquiry";
+import { deleteSchoolEnquiry, getAllSchoolEnquiries, updateSchoolEnquiry, exportSchoolEnquiries } from "@/actions/schoolEnquiry";
 import { upsertExamResult } from "@/actions/exam-results";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -51,6 +51,7 @@ import { getAllExamCenters } from "@/actions/examCenter";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface SchoolEnquiry {
     id: number;
@@ -85,6 +86,7 @@ export default function SchoolEnquiriesPage() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState<string>("ALL");
+    const [centerFilter, setCenterFilter] = useState<string>("ALL");
     const [selectedEnquiry, setSelectedEnquiry] = useState<SchoolEnquiry | null>(null);
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
@@ -95,6 +97,11 @@ export default function SchoolEnquiriesPage() {
     const [editForm, setEditForm] = useState<Partial<SchoolEnquiry>>({});
     const [examCenters, setExamCenters] = useState<any[]>([]);
     const [isUpdatingDetails, setIsUpdatingDetails] = useState(false);
+    
+    // Download State
+    const [isDownloadOpen, setIsDownloadOpen] = useState(false);
+    const [downloadRange, setDownloadRange] = useState({ start: 1, end: 500 });
+    const [isDownloading, setIsDownloading] = useState(false);
     
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
@@ -108,6 +115,7 @@ export default function SchoolEnquiriesPage() {
             const data = await getAllSchoolEnquiries({ 
                 search,
                 status: statusFilter !== "ALL" ? statusFilter as any : undefined,
+                centerId: centerFilter !== "ALL" ? parseInt(centerFilter) : undefined,
                 page: currentPage,
                 limit: itemsPerPage
             });
@@ -137,14 +145,14 @@ export default function SchoolEnquiriesPage() {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [search, statusFilter]);
+    }, [search, statusFilter, centerFilter]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             fetchEnquiries();
         }, 500);
         return () => clearTimeout(timer);
-    }, [search, statusFilter, currentPage]);
+    }, [search, statusFilter, centerFilter, currentPage]);
 
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure you want to delete this school enquiry?")) return;
@@ -253,6 +261,69 @@ export default function SchoolEnquiriesPage() {
             setIsUpdatingDetails(false);
         }
     };
+    
+    const handleDownload = async () => {
+        const { start, end } = downloadRange;
+        if (start < 1 || end < start) {
+            toast.error("Please enter a valid range");
+            return;
+        }
+        
+        const count = end - start + 1;
+        if (count > 500) {
+            toast.error("You can download at max 500 records at a time");
+            return;
+        }
+
+        setIsDownloading(true);
+        try {
+            const res = await exportSchoolEnquiries({
+                skip: start - 1,
+                take: count,
+                status: statusFilter !== "ALL" ? statusFilter as any : undefined,
+                centerId: centerFilter !== "ALL" ? parseInt(centerFilter) : undefined,
+                search: search || undefined
+            });
+
+            if (res.success && res.data) {
+                // Generate CSV
+                const headers = ["Reg Number", "Name", "Mobile", "Email", "School", "Class", "Board", "Status", "Center", "City", "Submitted At"];
+                const csvData = res.data.map(e => [
+                    `"${e.registrationNumber}"`,
+                    `"${e.name}"`,
+                    `"${e.mobile}"`,
+                    `"${e.email}"`,
+                    `"${e.school}"`,
+                    `"${e.class}"`,
+                    `"${e.board}"`,
+                    `"${e.status}"`,
+                    `"${e.examCenter?.name || "N/A"}"`,
+                    `"${e.examCenter?.city || "N/A"}"`,
+                    `"${format(new Date(e.createdAt), "yyyy-MM-dd HH:mm:ss")}"`
+                ]);
+
+                const csvContent = [headers, ...csvData].map(e => e.join(",")).join("\n");
+                const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", `registrations_${start}_to_${end}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                toast.success("Download started successfully");
+                setIsDownloadOpen(false);
+            } else {
+                toast.error(res.error || "Failed to export data");
+            }
+        } catch (error) {
+            console.error("Download error:", error);
+            toast.error("An unexpected error occurred during download");
+        } finally {
+            setIsDownloading(false);
+        }
+    };
 
 
 
@@ -267,6 +338,13 @@ export default function SchoolEnquiriesPage() {
                         Manage GK competition registrations and participant information.
                     </p>
                 </div>
+                <Button 
+                    onClick={() => setIsDownloadOpen(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white gap-2 h-11 px-6 rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all active:scale-95"
+                >
+                    <Download className="h-5 w-5" />
+                    Download CSV
+                </Button>
             </div>
 
             <Card className="border-border shadow-sm overflow-hidden bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
@@ -292,6 +370,18 @@ export default function SchoolEnquiriesPage() {
                                 <option value="APPROVED">Approved</option>
                                 <option value="REJECTED">Rejected</option>
                             </select>
+                            <select 
+                                className="px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm flex-1 min-w-[200px]"
+                                value={centerFilter}
+                                onChange={(e) => setCenterFilter(e.target.value)}
+                            >
+                                <option value="ALL">All Centers</option>
+                                {examCenters.map((center) => (
+                                    <option key={center.id} value={center.id}>
+                                        {center.name} - {center.city}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-2">
@@ -301,6 +391,11 @@ export default function SchoolEnquiriesPage() {
                                 {statusFilter !== "ALL" && (
                                     <Badge variant="secondary" className="px-3 py-1 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50">
                                         {statusFilter} Only
+                                    </Badge>
+                                )}
+                                {centerFilter !== "ALL" && (
+                                    <Badge variant="secondary" className="px-3 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-100 dark:border-amber-900/50">
+                                        {examCenters.find(c => c.id.toString() === centerFilter)?.name || "Center"} Filtered
                                     </Badge>
                                 )}
                             </div>
@@ -323,8 +418,17 @@ export default function SchoolEnquiriesPage() {
                             </p>
                         </div>
                     ) : (
-                        <div className="overflow-x-auto">
-                            <Table>
+                        <div className="overflow-x-auto relative">
+                            {/* Loading Overlay for Filtering/Searching */}
+                            {loading && enquiries.length > 0 && (
+                                <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 dark:bg-slate-950/60 backdrop-blur-[1px] transition-all duration-300">
+                                    <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-border/50">
+                                        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                                        <p className="text-sm font-semibold text-foreground animate-pulse">Updating Results...</p>
+                                    </div>
+                                </div>
+                            )}
+                            <Table className={cn(loading && "opacity-40 transition-opacity duration-300")}>
                                 <TableHeader>
                                     <TableRow className="bg-muted/50 hover:bg-muted/50 border-border">
                                         <TableHead className="w-[150px] font-semibold text-foreground">Reg Number</TableHead>
@@ -915,6 +1019,70 @@ export default function SchoolEnquiriesPage() {
                                 </>
                             ) : (
                                 "Save Changes"
+                            )}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+            {/* Download Range Dialog */}
+            <Dialog open={isDownloadOpen} onOpenChange={setIsDownloadOpen}>
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <Download className="h-5 w-5 text-blue-600" />
+                            Download Data Range
+                        </DialogTitle>
+                        <DialogDescription>
+                            Specify the range of registrations you want to download as CSV. You can download at max 500 records at a time.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">Start From (Record #)</label>
+                                <Input 
+                                    type="number" 
+                                    min={1}
+                                    value={downloadRange.start}
+                                    onChange={(e) => setDownloadRange({ ...downloadRange, start: parseInt(e.target.value) || 1 })}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium">End At (Record #)</label>
+                                <Input 
+                                    type="number" 
+                                    min={1}
+                                    value={downloadRange.end}
+                                    onChange={(e) => setDownloadRange({ ...downloadRange, end: parseInt(e.target.value) || 1 })}
+                                />
+                            </div>
+                        </div>
+                        <div className="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-100 dark:border-blue-900/50">
+                            <p className="text-xs text-blue-700 dark:text-blue-300 flex items-center gap-2">
+                                <Search className="h-3 w-3" />
+                                Current filters (Status: {statusFilter}, Center: {centerFilter !== "ALL" ? "Filtered" : "All"}) will be applied to the export.
+                            </p>
+                        </div>
+                        {downloadRange.end - downloadRange.start + 1 > 500 && (
+                            <p className="text-xs text-red-500 font-medium">
+                                Error: Range exceeds 500 record limit.
+                            </p>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setIsDownloadOpen(false)}>Cancel</Button>
+                        <Button 
+                            onClick={handleDownload} 
+                            disabled={isDownloading || (downloadRange.end - downloadRange.start + 1 > 500)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                            {isDownloading ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                    Downloading...
+                                </>
+                            ) : (
+                                "Export CSV"
                             )}
                         </Button>
                     </DialogFooter>

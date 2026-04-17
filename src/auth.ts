@@ -52,5 +52,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }
         })
     ],
-    secret: process.env.AUTH_SECRET,
+    secret: process.env.AUTH_SECRET || "development_fallback_secret_1234567890_replace_in_production",
 });

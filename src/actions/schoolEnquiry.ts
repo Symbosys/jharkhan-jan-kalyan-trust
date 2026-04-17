@@ -137,6 +137,7 @@ export async function getAllSchoolEnquiries(options?: {
     startDate?: Date;
     endDate?: Date;
     status?: EnquiryStatus;
+    centerId?: number;
     search?: string;
 }) {
     "use cache";
@@ -154,6 +155,9 @@ export async function getAllSchoolEnquiries(options?: {
         if (options.startDate) where.createdAt.gte = new Date(options.startDate);
         if (options.endDate) where.createdAt.lte = new Date(options.endDate);
     }
+
+    // Center Filter
+    if (options?.centerId) where.examCenterId = options.centerId;
 
     // Status Filter
     if (options?.status) where.status = options.status;
@@ -377,6 +381,59 @@ export async function deleteSchoolEnquiry(id: number) {
         return { success: true };
     } catch (error: any) {
         console.error("Error deleting school enquiry:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Export School Enquiries for CSV within a range
+ */
+export async function exportSchoolEnquiries(options: {
+    skip: number;
+    take: number;
+    status?: EnquiryStatus;
+    centerId?: number;
+    search?: string;
+}) {
+    const where: Prisma.SchoolEnquiryWhereInput = { AND: [] };
+
+    // Center Filter
+    if (options.centerId) where.examCenterId = options.centerId;
+
+    // Status Filter
+    if (options.status) where.status = options.status;
+
+    // Multi-field Search
+    if (options.search) {
+        where.OR = [
+            { name: { contains: options.search } },
+            { mobile: { contains: options.search } },
+            { email: { contains: options.search } },
+            { school: { contains: options.search } },
+            { registrationNumber: { contains: options.search } },
+        ];
+    }
+
+    try {
+        const enquiries = await prisma.schoolEnquiry.findMany({
+            where,
+            skip: options.skip,
+            take: options.take,
+            orderBy: { createdAt: "desc" },
+            include: {
+                examCenter: {
+                    select: {
+                        name: true,
+                        city: true,
+                    }
+                },
+                examResult: true
+            }
+        });
+
+        return { success: true, data: enquiries };
+    } catch (error: any) {
+        console.error("Error exporting school enquiries:", error);
         return { success: false, error: error.message };
     }
 }

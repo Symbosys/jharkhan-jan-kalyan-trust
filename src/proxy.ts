@@ -17,9 +17,10 @@ export function proxy(request: NextRequest) {
     }
 
     // Already logged in → redirect away from login page to admin
-    if (isLoginRoute && sessionCookie) {
-        return NextResponse.redirect(new URL("/admin", request.url));
-    }
+    // Removed to prevent infinite loop when session cookie exists but is invalid (e.g., missing AUTH_SECRET)
+    // if (isLoginRoute && sessionCookie) {
+    //     return NextResponse.redirect(new URL("/admin", request.url));
+    // }
 
     return NextResponse.next();
 }
