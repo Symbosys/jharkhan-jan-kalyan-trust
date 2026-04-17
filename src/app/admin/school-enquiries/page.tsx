@@ -287,19 +287,13 @@ export default function SchoolEnquiriesPage() {
 
             if (res.success && res.data) {
                 // Generate CSV
-                const headers = ["Reg Number", "Name", "Mobile", "Email", "School", "Class", "Board", "Status", "Center", "City", "Submitted At"];
+                const headers = ["Name", "Reg Number", "School/Institution", "Class", "Board"];
                 const csvData = res.data.map(e => [
-                    `"${e.registrationNumber}"`,
                     `"${e.name}"`,
-                    `"${e.mobile}"`,
-                    `"${e.email}"`,
+                    `"${e.registrationNumber}"`,
                     `"${e.school}"`,
                     `"${e.class}"`,
-                    `"${e.board}"`,
-                    `"${e.status}"`,
-                    `"${e.examCenter?.name || "N/A"}"`,
-                    `"${e.examCenter?.city || "N/A"}"`,
-                    `"${format(new Date(e.createdAt), "yyyy-MM-dd HH:mm:ss")}"`
+                    `"${e.board}"`
                 ]);
 
                 const csvContent = [headers, ...csvData].map(e => e.join(",")).join("\n");
