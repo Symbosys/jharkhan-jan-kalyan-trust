@@ -326,26 +326,41 @@ export default function SchoolEnquiriesPage() {
                     const dateStr = format(new Date(), "dd MMM, yyyy");
                     doc.text(`Generated On: ${dateStr} | Range: ${start} to ${end}`, pageWidth / 2, 28, { align: 'center' });
                     
+                    let infoLine2 = "";
                     if (centerFilter !== "ALL") {
                         const centerName = examCenters.find(c => c.id.toString() === centerFilter)?.name || "Selected Center";
-                        doc.text(`Center: ${centerName}`, pageWidth / 2, 34, { align: 'center' });
+                        infoLine2 += `Center: ${centerName}`;
+                    }
+                    if (levelFilter !== "ALL") {
+                        if (infoLine2) infoLine2 += " | ";
+                        infoLine2 += `Level: ${levelFilter}`;
+                    }
+                    if (infoLine2) {
+                        doc.text(infoLine2, pageWidth / 2, 34, { align: 'center' });
                     }
 
                     // Table Header
                     const startY = 45;
                     const rowHeight = 10;
                     const margin = 15;
-                    const colWidths = [15, 45, 80, 40]; // S.No, Reg No, Name, Signature
-                    const colStarts = [margin, margin + 15, margin + 15 + 45, margin + 15 + 45 + 80];
+                    const colWidths = [12, 38, 70, 20, 40]; // S.No, Reg No, Name, Class, Signature
+                    const colStarts = [
+                        margin, 
+                        margin + colWidths[0], 
+                        margin + colWidths[0] + colWidths[1], 
+                        margin + colWidths[0] + colWidths[1] + colWidths[2],
+                        margin + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3]
+                    ];
                     
                     const drawHeader = (y: number) => {
                         doc.setFillColor(240, 240, 240);
                         doc.rect(margin, y - 7, pageWidth - (margin * 2), 10, 'F');
                         doc.setFont("helvetica", "bold");
-                        doc.text("S.No", colStarts[0] + 2, y);
+                        doc.text("S.No", colStarts[0] + 1, y);
                         doc.text("Reg Number", colStarts[1] + 2, y);
                         doc.text("Participant Name", colStarts[2] + 2, y);
-                        doc.text("Signature", colStarts[3] + 2, y);
+                        doc.text("Class", colStarts[3] + 2, y);
+                        doc.text("Signature", colStarts[4] + 2, y);
                         doc.line(margin, y + 3, pageWidth - margin, y + 3);
                     };
 
@@ -364,12 +379,13 @@ export default function SchoolEnquiriesPage() {
                         }
                         
                         const displayIndex = start + index;
-                        doc.text(displayIndex.toString(), colStarts[0] + 5, currentY, { align: 'center' });
+                        doc.text(displayIndex.toString(), colStarts[0] + colWidths[0]/2, currentY, { align: 'center' });
                         doc.text(item.registrationNumber, colStarts[1] + 2, currentY);
                         doc.text(item.name, colStarts[2] + 2, currentY);
+                        doc.text(item.class, colStarts[3] + colWidths[3]/2, currentY, { align: 'center' });
                         
                         // Signature line/box
-                        doc.rect(colStarts[3], currentY - 7, colWidths[3], rowHeight);
+                        doc.rect(colStarts[4], currentY - 7, colWidths[4], rowHeight);
                         
                         // Row lines for better separation
                         doc.line(margin, currentY + 3, pageWidth - margin, currentY + 3);
@@ -379,6 +395,7 @@ export default function SchoolEnquiriesPage() {
                         doc.line(colStarts[1], currentY - 7, colStarts[1], currentY + 3);
                         doc.line(colStarts[2], currentY - 7, colStarts[2], currentY + 3);
                         doc.line(colStarts[3], currentY - 7, colStarts[3], currentY + 3);
+                        doc.line(colStarts[4], currentY - 7, colStarts[4], currentY + 3);
                         doc.line(pageWidth - margin, currentY - 7, pageWidth - margin, currentY + 3); // Right
 
                         currentY += rowHeight;
