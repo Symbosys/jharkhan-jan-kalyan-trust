@@ -151,6 +151,15 @@ export const RenewalStatus = {
 export type RenewalStatus = (typeof RenewalStatus)[keyof typeof RenewalStatus]
 
 
+export const Level = {
+  ONE: 'ONE',
+  TWO: 'TWO',
+  THREE: 'THREE'
+} as const
+
+export type Level = (typeof Level)[keyof typeof Level]
+
+
 export const EnquiryStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',

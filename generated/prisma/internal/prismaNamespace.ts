@@ -2123,6 +2123,7 @@ export const SchoolEnquiryScalarFieldEnum = {
   payment: 'payment',
   registrationNumber: 'registrationNumber',
   status: 'status',
+  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2590,6 +2591,13 @@ export type EnumRenewalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'EnquiryStatus'
  */
 export type EnumEnquiryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnquiryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'Level'
+ */
+export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level'>
     
 
 

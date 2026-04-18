@@ -533,6 +533,13 @@ export type EnumEnquiryStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel> | $Enums.EnquiryStatus
 }
 
+export type EnumLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[]
+  notIn?: $Enums.Level[]
+  not?: Prisma.NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+}
+
 export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | null
@@ -557,6 +564,16 @@ export type EnumEnquiryStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
+}
+
+export type EnumLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[]
+  notIn?: $Enums.Level[]
+  not?: Prisma.NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLevelFilter<$PrismaModel>
 }
 
 export type EnumAffiliationStatusFilter<$PrismaModel = never> = {
@@ -1074,6 +1091,13 @@ export type NestedEnumEnquiryStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel> | $Enums.EnquiryStatus
 }
 
+export type NestedEnumLevelFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[]
+  notIn?: $Enums.Level[]
+  not?: Prisma.NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+}
+
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | null
@@ -1109,6 +1133,16 @@ export type NestedEnumEnquiryStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEnquiryStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLevelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.Level | Prisma.EnumLevelFieldRefInput<$PrismaModel>
+  in?: $Enums.Level[]
+  notIn?: $Enums.Level[]
+  not?: Prisma.NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLevelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLevelFilter<$PrismaModel>
 }
 
 export type NestedEnumAffiliationStatusFilter<$PrismaModel = never> = {

@@ -3,9 +3,20 @@
 import { prisma } from "@/config/prisma";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/config/cloudinary";
 import { cacheTag, updateTag } from "next/cache";
-import { Prisma, EnquiryStatus } from "../../generated/prisma/client";
+import { Prisma, EnquiryStatus, Level } from "../../generated/prisma/client";
 import { sendEmail } from "@/config/email";
 import { schoolEnquiryEmailTemplate } from "@/constants/school-enquiry-email";
+
+/**
+ * Determine Level based on Class
+ */
+function getLevelForClass(className: string): Level {
+    const classNum = parseInt(className);
+    if (classNum >= 1 && classNum <= 4) return "ONE";
+    if (classNum >= 5 && classNum <= 7) return "TWO";
+    if (classNum >= 8 && classNum <= 10) return "THREE";
+    return "ONE"; // Default fallback
+}
 
 /**
  * Create a new School Enquiry
@@ -87,6 +98,7 @@ export async function createSchoolEnquiry(data: {
                 email: data.email,
                 school: data.school,
                 class: data.class,
+                level: getLevelForClass(data.class),
                 board: data.board,
                 aadhaar: data.aadhaar,
                 examCenterId: data.examCenterId,
@@ -138,6 +150,7 @@ export async function getAllSchoolEnquiries(options?: {
     endDate?: Date;
     status?: EnquiryStatus;
     centerId?: number;
+    level?: Level;
     search?: string;
 }) {
     "use cache";
@@ -161,6 +174,9 @@ export async function getAllSchoolEnquiries(options?: {
 
     // Status Filter
     if (options?.status) where.status = options.status;
+
+    // Level Filter
+    if (options?.level) where.level = options.level;
 
     // Multi-field Search (including registrationNumber)
     if (options?.search) {
@@ -316,6 +332,11 @@ export async function updateSchoolEnquiry(
 
         const updateData: any = { ...data };
 
+        // Handle Level Update if class changes
+        if (data.class) {
+            updateData.level = getLevelForClass(data.class);
+        }
+
         // Handle Status Update
         if (data.status) {
             updateData.status = data.status;
@@ -393,6 +414,7 @@ export async function exportSchoolEnquiries(options: {
     take: number;
     status?: EnquiryStatus;
     centerId?: number;
+    level?: Level;
     search?: string;
 }) {
     const where: Prisma.SchoolEnquiryWhereInput = { AND: [] };
@@ -402,6 +424,9 @@ export async function exportSchoolEnquiries(options: {
 
     // Status Filter
     if (options.status) where.status = options.status;
+
+    // Level Filter
+    if (options.level) where.level = options.level;
 
     // Multi-field Search
     if (options.search) {

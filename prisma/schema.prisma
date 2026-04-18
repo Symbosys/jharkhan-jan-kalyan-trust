@@ -375,12 +375,19 @@ model SchoolEnquiry {
   registrationNumber String @unique @default("NOT PROVIDED")
 
   status      EnquiryStatus @default(APPROVED)
+  level       Level @default(ONE)
   
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   examResult ExamResult?
+}
+
+enum Level {
+  ONE
+  TWO
+  THREE
 }
 
 enum EnquiryStatus {

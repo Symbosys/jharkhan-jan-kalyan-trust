@@ -65,6 +65,7 @@ interface SchoolEnquiry {
     aadhaar: string;
     registrationNumber: string;
     status: 'PENDING' | 'APPROVED' | 'REJECTED';
+    level: 'ONE' | 'TWO' | 'THREE';
     photo: { url: string; public_id: string } | null;
     payment: { url: string; public_id: string } | null;
     examCenter?: {
@@ -88,6 +89,7 @@ export default function SchoolEnquiriesPage() {
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState<string>("ALL");
     const [centerFilter, setCenterFilter] = useState<string>("ALL");
+    const [levelFilter, setLevelFilter] = useState<string>("ALL");
     const [selectedEnquiry, setSelectedEnquiry] = useState<SchoolEnquiry | null>(null);
     const [isDetailOpen, setIsDetailOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
@@ -118,6 +120,7 @@ export default function SchoolEnquiriesPage() {
                 search,
                 status: statusFilter !== "ALL" ? statusFilter as any : undefined,
                 centerId: centerFilter !== "ALL" ? parseInt(centerFilter) : undefined,
+                level: levelFilter !== "ALL" ? levelFilter as any : undefined,
                 page: currentPage,
                 limit: itemsPerPage
             });
@@ -147,14 +150,14 @@ export default function SchoolEnquiriesPage() {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [search, statusFilter, centerFilter]);
+    }, [search, statusFilter, centerFilter, levelFilter]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             fetchEnquiries();
         }, 500);
         return () => clearTimeout(timer);
-    }, [search, statusFilter, centerFilter, currentPage]);
+    }, [search, statusFilter, centerFilter, levelFilter, currentPage]);
 
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure you want to delete this school enquiry?")) return;
@@ -284,6 +287,7 @@ export default function SchoolEnquiriesPage() {
                 take: count,
                 status: statusFilter !== "ALL" ? statusFilter as any : undefined,
                 centerId: centerFilter !== "ALL" ? parseInt(centerFilter) : undefined,
+                level: levelFilter !== "ALL" ? levelFilter as any : undefined,
                 search: search || undefined
             });
 
@@ -453,6 +457,16 @@ export default function SchoolEnquiriesPage() {
                                     </option>
                                 ))}
                             </select>
+                            <select 
+                                className="px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm"
+                                value={levelFilter}
+                                onChange={(e) => setLevelFilter(e.target.value)}
+                            >
+                                <option value="ALL">All Levels</option>
+                                <option value="ONE">Level ONE</option>
+                                <option value="TWO">Level TWO</option>
+                                <option value="THREE">Level THREE</option>
+                            </select>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="flex items-center gap-2">
@@ -467,6 +481,11 @@ export default function SchoolEnquiriesPage() {
                                 {centerFilter !== "ALL" && (
                                     <Badge variant="secondary" className="px-3 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-100 dark:border-amber-900/50">
                                         {examCenters.find(c => c.id.toString() === centerFilter)?.name || "Center"} Filtered
+                                    </Badge>
+                                )}
+                                {levelFilter !== "ALL" && (
+                                    <Badge variant="secondary" className="px-3 py-1 bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-100 dark:border-purple-900/50">
+                                        Level {levelFilter}
                                     </Badge>
                                 )}
                             </div>
@@ -506,6 +525,7 @@ export default function SchoolEnquiriesPage() {
                                         <TableHead className="w-[200px] font-semibold text-foreground">Participant</TableHead>
                                         <TableHead className="w-[200px] font-semibold text-foreground">Contact Details</TableHead>
                                         <TableHead className="w-[150px] font-semibold text-foreground">School Info</TableHead>
+                                        <TableHead className="w-[100px] font-semibold text-foreground">Level</TableHead>
                                         <TableHead className="w-[100px] font-semibold text-foreground">Status</TableHead>
                                         <TableHead className="w-[100px] font-semibold text-foreground">Marks</TableHead>
                                         <TableHead className="w-[150px] font-semibold text-foreground text-right">Submitted On</TableHead>
@@ -563,6 +583,16 @@ export default function SchoolEnquiriesPage() {
                                                         </Badge>
                                                     </div>
                                                 </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="outline" className={cn(
+                                                    "font-bold",
+                                                    enquiry.level === 'ONE' ? "text-blue-600 border-blue-200 bg-blue-50" :
+                                                    enquiry.level === 'TWO' ? "text-purple-600 border-purple-200 bg-purple-50" :
+                                                    "text-amber-600 border-amber-200 bg-amber-50"
+                                                )}>
+                                                    Level {enquiry.level}
+                                                </Badge>
                                             </TableCell>
                                             <TableCell>
                                                 <Badge 
@@ -799,6 +829,16 @@ export default function SchoolEnquiriesPage() {
                                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Class</p>
                                     <Badge className="bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-100 dark:border-blue-900/50">
                                         <BookOpen className="h-3 w-3 mr-1.5" /> Class {selectedEnquiry.class}
+                                    </Badge>
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Level</p>
+                                    <Badge className={cn(
+                                        selectedEnquiry.level === 'ONE' ? "bg-blue-50 text-blue-700 border-blue-100" :
+                                        selectedEnquiry.level === 'TWO' ? "bg-purple-50 text-purple-700 border-purple-100" :
+                                        "bg-amber-50 text-amber-700 border-amber-100"
+                                    )}>
+                                        Level {selectedEnquiry.level}
                                     </Badge>
                                 </div>
                                 <div className="space-y-1">
