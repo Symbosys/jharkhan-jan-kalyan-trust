@@ -80,7 +80,7 @@ export function AffiliationSection() {
                                     </div>
                                 </div>
 
-                                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+                                <div className="h-px bg-linear-to-r from-transparent via-border to-transparent" />
 
                                 {/* Benefits Section */}
                                 <div className="space-y-4">
@@ -104,17 +104,17 @@ export function AffiliationSection() {
 
                                 {/* Stats */}
                                 <div className="grid grid-cols-3 gap-4">
-                                    <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-blue-50 dark:from-slate-700 dark:to-slate-800 border border-purple-100 dark:border-slate-600">
+                                    <div className="text-center p-4 rounded-2xl bg-linear-to-br from-purple-50 to-blue-50 dark:from-slate-700 dark:to-slate-800 border border-purple-100 dark:border-slate-600">
                                         <Users className="h-6 w-6 text-purple-600 mx-auto mb-2" />
                                         <p className="text-2xl font-black text-purple-600">50+</p>
                                         <p className="text-xs font-bold text-muted-foreground uppercase">Partners</p>
                                     </div>
-                                    <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-700 dark:to-slate-800 border border-blue-100 dark:border-slate-600">
+                                    <div className="text-center p-4 rounded-2xl bg-linear-to-br from-blue-50 to-purple-50 dark:from-slate-700 dark:to-slate-800 border border-blue-100 dark:border-slate-600">
                                         <Target className="h-6 w-6 text-blue-600 mx-auto mb-2" />
                                         <p className="text-2xl font-black text-blue-600">100%</p>
                                         <p className="text-xs font-bold text-muted-foreground uppercase">Support</p>
                                     </div>
-                                    <div className="text-center p-4 rounded-2xl bg-gradient-to-br from-purple-50 to-blue-50 dark:from-slate-700 dark:to-slate-800 border border-purple-100 dark:border-slate-600">
+                                    <div className="text-center p-4 rounded-2xl bg-linear-to-br from-purple-50 to-blue-50 dark:from-slate-700 dark:to-slate-800 border border-purple-100 dark:border-slate-600">
                                         <Award className="h-6 w-6 text-purple-600 mx-auto mb-2" />
                                         <p className="text-2xl font-black text-purple-600">Free</p>
                                         <p className="text-xs font-bold text-muted-foreground uppercase">Registration</p>
@@ -130,7 +130,7 @@ export function AffiliationSection() {
                         </div>
 
                         {/* Floating Badge */}
-                        <div className="absolute -top-4 -left-4 bg-gradient-to-br from-purple-600 to-blue-600 text-white px-6 py-3 rounded-2xl shadow-xl shadow-purple-500/30 transform -rotate-6">
+                        <div className="absolute -top-4 -left-4 bg-linear-to-br from-purple-600 to-blue-600 text-white px-6 py-3 rounded-2xl shadow-xl shadow-purple-500/30 transform -rotate-6">
                             <p className="text-xs font-bold uppercase tracking-wider">Join Our Network</p>
                         </div>
                     </div>
