@@ -4,12 +4,12 @@ import { Handshake, ArrowRight, Sparkles, CheckCircle, Users, Target, Award } fr
 
 export function AffiliationSection() {
     return (
-        <section className="py-24 bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
+        <section className="py-24 bg-linear-to-br from-purple-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 w-72 h-72 bg-purple-400/10 rounded-full blur-3xl animate-pulse" />
                 <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl animate-pulse delay-1000" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
             </div>
 
             <div className="container mx-auto px-6 lg:px-8 relative z-10">
@@ -26,7 +26,7 @@ export function AffiliationSection() {
                             <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground tracking-tighter leading-[1.1]">
                                 Request{" "}
                                 <span className="relative inline-block">
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600">
+                                    <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 via-blue-600 to-purple-600">
                                         Affiliation
                                     </span>
                                     <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
@@ -50,7 +50,7 @@ export function AffiliationSection() {
                             <Link href="/affiliation">
                                 <Button
                                     size="lg"
-                                    className="h-14 px-8 text-lg font-bold rounded-2xl shadow-xl shadow-purple-500/25 hover:scale-105 transition-all duration-300 gap-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                                    className="h-14 px-8 text-lg font-bold rounded-2xl shadow-xl shadow-purple-500/25 hover:scale-105 transition-all duration-300 gap-2 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
                                 >
                                     <Handshake className="h-5 w-5" />
                                     Request Affiliation
@@ -62,12 +62,12 @@ export function AffiliationSection() {
 
                     {/* Right Column - Visual */}
                     <div className="relative">
-                        <div className="relative bg-gradient-to-br from-white to-purple-50 dark:from-slate-800 dark:to-slate-900 rounded-[2.5rem] p-8 shadow-2xl shadow-purple-500/20 border border-border/50">
+                        <div className="relative bg-linear-to-br from-white to-purple-50 dark:from-slate-800 dark:to-slate-900 rounded-[2.5rem] p-8 shadow-2xl shadow-purple-500/20 border border-border/50">
                             <div className="relative space-y-6">
                                 {/* Header */}
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                                        <div className="h-14 w-14 rounded-2xl bg-linear-to-br from-purple-600 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
                                             <Handshake className="h-7 w-7 text-white" />
                                         </div>
                                         <div>
