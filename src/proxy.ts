@@ -25,8 +25,6 @@
 //     return NextResponse.next();
 // }
 
-
-
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -66,7 +64,7 @@ export function proxy(req: NextRequest) {
       {
         status: 503,
         headers: { "content-type": "text/html" },
-      }
+      },
     );
   }
 
