@@ -183,7 +183,7 @@ export function RegistrationCardPortal() {
             </section>
 
             {/* ── Results Section ── */}
-            <section className="relative px-6 pb-20 min-h-[400px]">
+            <section className="relative px-6 pb-20 min-h-100">
                 <div className="container mx-auto max-w-5xl">
                     {participant ? (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
