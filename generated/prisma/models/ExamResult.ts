@@ -29,18 +29,34 @@ export type AggregateExamResult = {
 export type ExamResultAvgAggregateOutputType = {
   id: number | null
   marks: number | null
+  correctAnswers: number | null
+  wrongAnswers: number | null
+  negativeMarks: number | null
+  finalMarks: number | null
+  percentage: number | null
   enquiryId: number | null
 }
 
 export type ExamResultSumAggregateOutputType = {
   id: number | null
   marks: number | null
+  correctAnswers: number | null
+  wrongAnswers: number | null
+  negativeMarks: number | null
+  finalMarks: number | null
+  percentage: number | null
   enquiryId: number | null
 }
 
 export type ExamResultMinAggregateOutputType = {
   id: number | null
   marks: number | null
+  correctAnswers: number | null
+  wrongAnswers: number | null
+  negativeMarks: number | null
+  finalMarks: number | null
+  percentage: number | null
+  result: $Enums.ResultStatus | null
   enquiryId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +65,12 @@ export type ExamResultMinAggregateOutputType = {
 export type ExamResultMaxAggregateOutputType = {
   id: number | null
   marks: number | null
+  correctAnswers: number | null
+  wrongAnswers: number | null
+  negativeMarks: number | null
+  finalMarks: number | null
+  percentage: number | null
+  result: $Enums.ResultStatus | null
   enquiryId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,6 +79,12 @@ export type ExamResultMaxAggregateOutputType = {
 export type ExamResultCountAggregateOutputType = {
   id: number
   marks: number
+  correctAnswers: number
+  wrongAnswers: number
+  negativeMarks: number
+  finalMarks: number
+  percentage: number
+  result: number
   enquiryId: number
   createdAt: number
   updatedAt: number
@@ -67,18 +95,34 @@ export type ExamResultCountAggregateOutputType = {
 export type ExamResultAvgAggregateInputType = {
   id?: true
   marks?: true
+  correctAnswers?: true
+  wrongAnswers?: true
+  negativeMarks?: true
+  finalMarks?: true
+  percentage?: true
   enquiryId?: true
 }
 
 export type ExamResultSumAggregateInputType = {
   id?: true
   marks?: true
+  correctAnswers?: true
+  wrongAnswers?: true
+  negativeMarks?: true
+  finalMarks?: true
+  percentage?: true
   enquiryId?: true
 }
 
 export type ExamResultMinAggregateInputType = {
   id?: true
   marks?: true
+  correctAnswers?: true
+  wrongAnswers?: true
+  negativeMarks?: true
+  finalMarks?: true
+  percentage?: true
+  result?: true
   enquiryId?: true
   createdAt?: true
   updatedAt?: true
@@ -87,6 +131,12 @@ export type ExamResultMinAggregateInputType = {
 export type ExamResultMaxAggregateInputType = {
   id?: true
   marks?: true
+  correctAnswers?: true
+  wrongAnswers?: true
+  negativeMarks?: true
+  finalMarks?: true
+  percentage?: true
+  result?: true
   enquiryId?: true
   createdAt?: true
   updatedAt?: true
@@ -95,6 +145,12 @@ export type ExamResultMaxAggregateInputType = {
 export type ExamResultCountAggregateInputType = {
   id?: true
   marks?: true
+  correctAnswers?: true
+  wrongAnswers?: true
+  negativeMarks?: true
+  finalMarks?: true
+  percentage?: true
+  result?: true
   enquiryId?: true
   createdAt?: true
   updatedAt?: true
@@ -190,6 +246,12 @@ export type ExamResultGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type ExamResultGroupByOutputType = {
   id: number
   marks: number
+  correctAnswers: number | null
+  wrongAnswers: number | null
+  negativeMarks: number | null
+  finalMarks: number | null
+  percentage: number | null
+  result: $Enums.ResultStatus | null
   enquiryId: number
   createdAt: Date
   updatedAt: Date
@@ -221,6 +283,12 @@ export type ExamResultWhereInput = {
   NOT?: Prisma.ExamResultWhereInput | Prisma.ExamResultWhereInput[]
   id?: Prisma.IntFilter<"ExamResult"> | number
   marks?: Prisma.FloatFilter<"ExamResult"> | number
+  correctAnswers?: Prisma.IntNullableFilter<"ExamResult"> | number | null
+  wrongAnswers?: Prisma.IntNullableFilter<"ExamResult"> | number | null
+  negativeMarks?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
+  finalMarks?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
+  percentage?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
+  result?: Prisma.EnumResultStatusNullableFilter<"ExamResult"> | $Enums.ResultStatus | null
   enquiryId?: Prisma.IntFilter<"ExamResult"> | number
   createdAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
@@ -230,6 +298,12 @@ export type ExamResultWhereInput = {
 export type ExamResultOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrderInput | Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrderInput | Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  finalMarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentage?: Prisma.SortOrderInput | Prisma.SortOrder
+  result?: Prisma.SortOrderInput | Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -243,6 +317,12 @@ export type ExamResultWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ExamResultWhereInput[]
   NOT?: Prisma.ExamResultWhereInput | Prisma.ExamResultWhereInput[]
   marks?: Prisma.FloatFilter<"ExamResult"> | number
+  correctAnswers?: Prisma.IntNullableFilter<"ExamResult"> | number | null
+  wrongAnswers?: Prisma.IntNullableFilter<"ExamResult"> | number | null
+  negativeMarks?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
+  finalMarks?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
+  percentage?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
+  result?: Prisma.EnumResultStatusNullableFilter<"ExamResult"> | $Enums.ResultStatus | null
   createdAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
   schoolEnquiry?: Prisma.XOR<Prisma.SchoolEnquiryScalarRelationFilter, Prisma.SchoolEnquiryWhereInput>
@@ -251,6 +331,12 @@ export type ExamResultWhereUniqueInput = Prisma.AtLeast<{
 export type ExamResultOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrderInput | Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrderInput | Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  finalMarks?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentage?: Prisma.SortOrderInput | Prisma.SortOrder
+  result?: Prisma.SortOrderInput | Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -267,6 +353,12 @@ export type ExamResultScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ExamResultScalarWhereWithAggregatesInput | Prisma.ExamResultScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"ExamResult"> | number
   marks?: Prisma.FloatWithAggregatesFilter<"ExamResult"> | number
+  correctAnswers?: Prisma.IntNullableWithAggregatesFilter<"ExamResult"> | number | null
+  wrongAnswers?: Prisma.IntNullableWithAggregatesFilter<"ExamResult"> | number | null
+  negativeMarks?: Prisma.FloatNullableWithAggregatesFilter<"ExamResult"> | number | null
+  finalMarks?: Prisma.FloatNullableWithAggregatesFilter<"ExamResult"> | number | null
+  percentage?: Prisma.FloatNullableWithAggregatesFilter<"ExamResult"> | number | null
+  result?: Prisma.EnumResultStatusNullableWithAggregatesFilter<"ExamResult"> | $Enums.ResultStatus | null
   enquiryId?: Prisma.IntWithAggregatesFilter<"ExamResult"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExamResult"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ExamResult"> | Date | string
@@ -274,6 +366,12 @@ export type ExamResultScalarWhereWithAggregatesInput = {
 
 export type ExamResultCreateInput = {
   marks: number
+  correctAnswers?: number | null
+  wrongAnswers?: number | null
+  negativeMarks?: number | null
+  finalMarks?: number | null
+  percentage?: number | null
+  result?: $Enums.ResultStatus | null
   createdAt?: Date | string
   updatedAt?: Date | string
   schoolEnquiry: Prisma.SchoolEnquiryCreateNestedOneWithoutExamResultInput
@@ -282,6 +380,12 @@ export type ExamResultCreateInput = {
 export type ExamResultUncheckedCreateInput = {
   id?: number
   marks: number
+  correctAnswers?: number | null
+  wrongAnswers?: number | null
+  negativeMarks?: number | null
+  finalMarks?: number | null
+  percentage?: number | null
+  result?: $Enums.ResultStatus | null
   enquiryId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -289,6 +393,12 @@ export type ExamResultUncheckedCreateInput = {
 
 export type ExamResultUpdateInput = {
   marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  wrongAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  negativeMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   schoolEnquiry?: Prisma.SchoolEnquiryUpdateOneRequiredWithoutExamResultNestedInput
@@ -297,6 +407,12 @@ export type ExamResultUpdateInput = {
 export type ExamResultUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  wrongAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  negativeMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
   enquiryId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -305,6 +421,12 @@ export type ExamResultUncheckedUpdateInput = {
 export type ExamResultCreateManyInput = {
   id?: number
   marks: number
+  correctAnswers?: number | null
+  wrongAnswers?: number | null
+  negativeMarks?: number | null
+  finalMarks?: number | null
+  percentage?: number | null
+  result?: $Enums.ResultStatus | null
   enquiryId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -312,6 +434,12 @@ export type ExamResultCreateManyInput = {
 
 export type ExamResultUpdateManyMutationInput = {
   marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  wrongAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  negativeMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -319,6 +447,12 @@ export type ExamResultUpdateManyMutationInput = {
 export type ExamResultUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  wrongAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  negativeMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
   enquiryId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -332,6 +466,12 @@ export type ExamResultNullableScalarRelationFilter = {
 export type ExamResultCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrder
+  finalMarks?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
+  result?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -340,12 +480,23 @@ export type ExamResultCountOrderByAggregateInput = {
 export type ExamResultAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrder
+  finalMarks?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
 }
 
 export type ExamResultMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrder
+  finalMarks?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
+  result?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -354,6 +505,12 @@ export type ExamResultMaxOrderByAggregateInput = {
 export type ExamResultMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrder
+  finalMarks?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
+  result?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -362,6 +519,11 @@ export type ExamResultMinOrderByAggregateInput = {
 export type ExamResultSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   marks?: Prisma.SortOrder
+  correctAnswers?: Prisma.SortOrder
+  wrongAnswers?: Prisma.SortOrder
+  negativeMarks?: Prisma.SortOrder
+  finalMarks?: Prisma.SortOrder
+  percentage?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
 }
 
@@ -405,8 +567,26 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableEnumResultStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ResultStatus | null
+}
+
 export type ExamResultCreateWithoutSchoolEnquiryInput = {
   marks: number
+  correctAnswers?: number | null
+  wrongAnswers?: number | null
+  negativeMarks?: number | null
+  finalMarks?: number | null
+  percentage?: number | null
+  result?: $Enums.ResultStatus | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -414,6 +594,12 @@ export type ExamResultCreateWithoutSchoolEnquiryInput = {
 export type ExamResultUncheckedCreateWithoutSchoolEnquiryInput = {
   id?: number
   marks: number
+  correctAnswers?: number | null
+  wrongAnswers?: number | null
+  negativeMarks?: number | null
+  finalMarks?: number | null
+  percentage?: number | null
+  result?: $Enums.ResultStatus | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -436,6 +622,12 @@ export type ExamResultUpdateToOneWithWhereWithoutSchoolEnquiryInput = {
 
 export type ExamResultUpdateWithoutSchoolEnquiryInput = {
   marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  wrongAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  negativeMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -443,6 +635,12 @@ export type ExamResultUpdateWithoutSchoolEnquiryInput = {
 export type ExamResultUncheckedUpdateWithoutSchoolEnquiryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  correctAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  wrongAnswers?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  negativeMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -452,6 +650,12 @@ export type ExamResultUncheckedUpdateWithoutSchoolEnquiryInput = {
 export type ExamResultSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   marks?: boolean
+  correctAnswers?: boolean
+  wrongAnswers?: boolean
+  negativeMarks?: boolean
+  finalMarks?: boolean
+  percentage?: boolean
+  result?: boolean
   enquiryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -463,12 +667,18 @@ export type ExamResultSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type ExamResultSelectScalar = {
   id?: boolean
   marks?: boolean
+  correctAnswers?: boolean
+  wrongAnswers?: boolean
+  negativeMarks?: boolean
+  finalMarks?: boolean
+  percentage?: boolean
+  result?: boolean
   enquiryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ExamResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "marks" | "enquiryId" | "createdAt" | "updatedAt", ExtArgs["result"]["examResult"]>
+export type ExamResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "marks" | "correctAnswers" | "wrongAnswers" | "negativeMarks" | "finalMarks" | "percentage" | "result" | "enquiryId" | "createdAt" | "updatedAt", ExtArgs["result"]["examResult"]>
 export type ExamResultInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   schoolEnquiry?: boolean | Prisma.SchoolEnquiryDefaultArgs<ExtArgs>
 }
@@ -481,6 +691,12 @@ export type $ExamResultPayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     marks: number
+    correctAnswers: number | null
+    wrongAnswers: number | null
+    negativeMarks: number | null
+    finalMarks: number | null
+    percentage: number | null
+    result: $Enums.ResultStatus | null
     enquiryId: number
     createdAt: Date
     updatedAt: Date
@@ -856,6 +1072,12 @@ export interface Prisma__ExamResultClient<T, Null = never, ExtArgs extends runti
 export interface ExamResultFieldRefs {
   readonly id: Prisma.FieldRef<"ExamResult", 'Int'>
   readonly marks: Prisma.FieldRef<"ExamResult", 'Float'>
+  readonly correctAnswers: Prisma.FieldRef<"ExamResult", 'Int'>
+  readonly wrongAnswers: Prisma.FieldRef<"ExamResult", 'Int'>
+  readonly negativeMarks: Prisma.FieldRef<"ExamResult", 'Float'>
+  readonly finalMarks: Prisma.FieldRef<"ExamResult", 'Float'>
+  readonly percentage: Prisma.FieldRef<"ExamResult", 'Float'>
+  readonly result: Prisma.FieldRef<"ExamResult", 'ResultStatus'>
   readonly enquiryId: Prisma.FieldRef<"ExamResult", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ExamResult", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ExamResult", 'DateTime'>

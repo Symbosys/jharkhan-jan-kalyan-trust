@@ -176,3 +176,11 @@ export const AffiliationStatus = {
 } as const
 
 export type AffiliationStatus = (typeof AffiliationStatus)[keyof typeof AffiliationStatus]
+
+
+export const ResultStatus = {
+  PASS: 'PASS',
+  FAIL: 'FAIL'
+} as const
+
+export type ResultStatus = (typeof ResultStatus)[keyof typeof ResultStatus]

@@ -2179,6 +2179,12 @@ export type AffiliationScalarFieldEnum = (typeof AffiliationScalarFieldEnum)[key
 export const ExamResultScalarFieldEnum = {
   id: 'id',
   marks: 'marks',
+  correctAnswers: 'correctAnswers',
+  wrongAnswers: 'wrongAnswers',
+  negativeMarks: 'negativeMarks',
+  finalMarks: 'finalMarks',
+  percentage: 'percentage',
+  result: 'result',
   enquiryId: 'enquiryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2612,6 +2618,13 @@ export type EnumAffiliationStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'ResultStatus'
+ */
+export type EnumResultStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResultStatus'>
     
 
 /**

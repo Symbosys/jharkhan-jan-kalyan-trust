@@ -13,6 +13,12 @@ interface ResultCardProps {
         photo: { url: string; public_id: string } | null;
         examResult?: {
             marks: number;
+            correctAnswers?: number | null;
+            wrongAnswers?: number | null;
+            negativeMarks?: number | null;
+            finalMarks?: number | null;
+            percentage?: number | null;
+            result?: 'PASS' | 'FAIL' | null;
         } | null;
     };
     cardRef: React.RefObject<HTMLDivElement | null>;
@@ -35,8 +41,10 @@ export const ResultCard: React.FC<ResultCardProps> = ({
     const labelBg = "#f8fafc";
     const fontFamily = "'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
 
-    const marks = participant.examResult?.marks ?? 0;
-    const percentage = (marks / maxMarks) * 100;
+    const examResult = participant.examResult;
+    const marks = examResult?.marks ?? 0;
+    const percentage = examResult?.percentage ?? ((marks / maxMarks) * 100);
+    const resultStatus = examResult?.result ?? (marks >= (maxMarks * 0.33) ? "PASS" : "FAIL");
 
     return (
         <div
@@ -291,7 +299,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             <tr style={{ backgroundColor: headerBg, color: "#ffffff" }}>
                                 <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "left" }}>Subject</th>
                                 <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Max Marks</th>
-                                <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Marks Obtained</th>
+                                <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Total Question</th>
                                 <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Status</th>
                             </tr>
                         </thead>
@@ -307,24 +315,54 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                                         <span style={{
                                             padding: "4px 12px",
                                             borderRadius: "12px",
-                                            backgroundColor: marks >= (maxMarks * 0.33) ? "#dcfce7" : "#fee2e2",
-                                            color: marks >= (maxMarks * 0.33) ? "#166534" : "#991b1b",
+                                            backgroundColor: resultStatus === "PASS" ? "#dcfce7" : "#fee2e2",
+                                            color: resultStatus === "PASS" ? "#166534" : "#991b1b",
                                             fontWeight: 700,
                                             fontSize: 12,
                                         }}>
-                                            {marks >= (maxMarks * 0.33) ? "PASSED" : "FAILED"}
+                                            {resultStatus === "PASS" ? "PASSED" : "FAILED"}
                                         </span>
                                     ) : (
                                         "—"
                                     )}
                                 </td>
                             </tr>
-                            {/* Empty total row for aesthetic */}
+                            {examResult && typeof examResult.correctAnswers === 'number' && (
+                                <tr style={{ backgroundColor: "#fdfdfd" }}>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, fontSize: 13, color: "#475569" }}>• Correct Answers Count</td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 14, fontWeight: 700, color: "#16a34a" }}>
+                                        {examResult.correctAnswers}
+                                    </td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                                </tr>
+                            )}
+                            {examResult && typeof examResult.wrongAnswers === 'number' && (
+                                <tr style={{ backgroundColor: "#fdfdfd" }}>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, fontSize: 13, color: "#475569" }}>• Wrong Answers Count</td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 14, fontWeight: 700, color: "#dc2626" }}>
+                                        {examResult.wrongAnswers}
+                                    </td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                                </tr>
+                            )}
+                            {examResult && typeof examResult.negativeMarks === 'number' && (
+                                <tr style={{ backgroundColor: "#fdfdfd" }}>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, fontSize: 13, color: "#475569" }}>• Negative Marks Penalty</td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 14, fontWeight: 700, color: "#ea580c" }}>
+                                        -{examResult.negativeMarks}
+                                    </td>
+                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                                </tr>
+                            )}
+                            {/* Grand total row */}
                             <tr style={{ backgroundColor: labelBg }}>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, fontWeight: 800 }}>GRAND TOTAL</td>
+                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, fontWeight: 800 }}>GRAND TOTAL / FINAL MARKS</td>
                                 <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800 }}>{maxMarks}</td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800, fontSize: 24 }}>
-                                    {participant.examResult ? participant.examResult.marks : "—"}
+                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800, fontSize: 24, color: "#0f766e" }}>
+                                    {participant.examResult ? (examResult?.finalMarks !== null && examResult?.finalMarks !== undefined ? examResult.finalMarks : participant.examResult.marks) : "—"}
                                 </td>
                                 <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800 }}>
                                     {participant.examResult ? `${percentage.toFixed(2)}%` : "—"}

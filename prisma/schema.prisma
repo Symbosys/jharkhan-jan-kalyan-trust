@@ -448,11 +448,22 @@ enum AffiliationStatus {
   REJECTED
 }
 
+enum ResultStatus {
+  PASS
+  FAIL
+}
+
 model ExamResult {
-  id            Int           @id @default(autoincrement())
-  marks         Float
-  enquiryId     Int           @unique
-  schoolEnquiry SchoolEnquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id             Int           @id @default(autoincrement())
+  marks          Float
+  correctAnswers Int?
+  wrongAnswers   Int?
+  negativeMarks  Float?
+  finalMarks     Float?
+  percentage     Float?
+  result         ResultStatus?
+  enquiryId      Int           @unique
+  schoolEnquiry  SchoolEnquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 }

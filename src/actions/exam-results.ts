@@ -2,18 +2,42 @@
 
 import { prisma } from "@/config/prisma";
 import { revalidatePath, updateTag } from "next/cache";
+import { ResultStatus } from "../../generated/prisma/client";
 
 /**
  * Upsert Exam Result for a School Enquiry
  */
-export async function upsertExamResult(enquiryId: number, marks: number) {
+export async function upsertExamResult(
+    enquiryId: number,
+    marks: number,
+    correctAnswers?: number | null,
+    wrongAnswers?: number | null,
+    negativeMarks?: number | null,
+    finalMarks?: number | null,
+    percentage?: number | null,
+    resultStatus?: ResultStatus | null
+) {
     try {
         const result = await prisma.examResult.upsert({
             where: { enquiryId },
-            update: { marks },
+            update: {
+                marks,
+                correctAnswers,
+                wrongAnswers,
+                negativeMarks,
+                finalMarks,
+                percentage,
+                result: resultStatus
+            },
             create: {
                 enquiryId,
-                marks
+                marks,
+                correctAnswers,
+                wrongAnswers,
+                negativeMarks,
+                finalMarks,
+                percentage,
+                result: resultStatus
             }
         });
 

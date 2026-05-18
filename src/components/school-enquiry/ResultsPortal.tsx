@@ -227,7 +227,7 @@ export function ResultsPortal() {
                                                 {participant.examResult ? (
                                                     <div className="text-center">
                                                         <div className="text-7xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums">
-                                                            {participant.examResult.marks}
+                                                            {participant.examResult.finalMarks}
                                                         </div>
                                                         <p className="text-xs font-bold text-emerald-600/60 dark:text-emerald-400/60 mt-2">Maximum Marks: {maxMarks}</p>
                                                     </div>

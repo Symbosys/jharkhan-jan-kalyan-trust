@@ -420,6 +420,12 @@ export type AffiliationScalarFieldEnum = (typeof AffiliationScalarFieldEnum)[key
 export const ExamResultScalarFieldEnum = {
   id: 'id',
   marks: 'marks',
+  correctAnswers: 'correctAnswers',
+  wrongAnswers: 'wrongAnswers',
+  negativeMarks: 'negativeMarks',
+  finalMarks: 'finalMarks',
+  percentage: 'percentage',
+  result: 'result',
   enquiryId: 'enquiryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
