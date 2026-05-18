@@ -462,6 +462,8 @@ model ExamResult {
   finalMarks     Float?
   percentage     Float?
   result         ResultStatus?
+  rank           Int?
+
   enquiryId      Int           @unique
   schoolEnquiry  SchoolEnquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
   createdAt      DateTime      @default(now())

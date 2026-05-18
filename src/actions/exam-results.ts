@@ -15,7 +15,8 @@ export async function upsertExamResult(
     negativeMarks?: number | null,
     finalMarks?: number | null,
     percentage?: number | null,
-    resultStatus?: ResultStatus | null
+    resultStatus?: ResultStatus | null,
+    rank?: number | null
 ) {
     try {
         const result = await prisma.examResult.upsert({
@@ -27,7 +28,8 @@ export async function upsertExamResult(
                 negativeMarks,
                 finalMarks,
                 percentage,
-                result: resultStatus
+                result: resultStatus,
+                rank
             },
             create: {
                 enquiryId,
@@ -37,7 +39,8 @@ export async function upsertExamResult(
                 negativeMarks,
                 finalMarks,
                 percentage,
-                result: resultStatus
+                result: resultStatus,
+                rank
             }
         });
 

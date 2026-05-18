@@ -34,6 +34,7 @@ export type ExamResultAvgAggregateOutputType = {
   negativeMarks: number | null
   finalMarks: number | null
   percentage: number | null
+  rank: number | null
   enquiryId: number | null
 }
 
@@ -45,6 +46,7 @@ export type ExamResultSumAggregateOutputType = {
   negativeMarks: number | null
   finalMarks: number | null
   percentage: number | null
+  rank: number | null
   enquiryId: number | null
 }
 
@@ -57,6 +59,7 @@ export type ExamResultMinAggregateOutputType = {
   finalMarks: number | null
   percentage: number | null
   result: $Enums.ResultStatus | null
+  rank: number | null
   enquiryId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -71,6 +74,7 @@ export type ExamResultMaxAggregateOutputType = {
   finalMarks: number | null
   percentage: number | null
   result: $Enums.ResultStatus | null
+  rank: number | null
   enquiryId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -85,6 +89,7 @@ export type ExamResultCountAggregateOutputType = {
   finalMarks: number
   percentage: number
   result: number
+  rank: number
   enquiryId: number
   createdAt: number
   updatedAt: number
@@ -100,6 +105,7 @@ export type ExamResultAvgAggregateInputType = {
   negativeMarks?: true
   finalMarks?: true
   percentage?: true
+  rank?: true
   enquiryId?: true
 }
 
@@ -111,6 +117,7 @@ export type ExamResultSumAggregateInputType = {
   negativeMarks?: true
   finalMarks?: true
   percentage?: true
+  rank?: true
   enquiryId?: true
 }
 
@@ -123,6 +130,7 @@ export type ExamResultMinAggregateInputType = {
   finalMarks?: true
   percentage?: true
   result?: true
+  rank?: true
   enquiryId?: true
   createdAt?: true
   updatedAt?: true
@@ -137,6 +145,7 @@ export type ExamResultMaxAggregateInputType = {
   finalMarks?: true
   percentage?: true
   result?: true
+  rank?: true
   enquiryId?: true
   createdAt?: true
   updatedAt?: true
@@ -151,6 +160,7 @@ export type ExamResultCountAggregateInputType = {
   finalMarks?: true
   percentage?: true
   result?: true
+  rank?: true
   enquiryId?: true
   createdAt?: true
   updatedAt?: true
@@ -252,6 +262,7 @@ export type ExamResultGroupByOutputType = {
   finalMarks: number | null
   percentage: number | null
   result: $Enums.ResultStatus | null
+  rank: number | null
   enquiryId: number
   createdAt: Date
   updatedAt: Date
@@ -289,6 +300,7 @@ export type ExamResultWhereInput = {
   finalMarks?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
   percentage?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
   result?: Prisma.EnumResultStatusNullableFilter<"ExamResult"> | $Enums.ResultStatus | null
+  rank?: Prisma.IntNullableFilter<"ExamResult"> | number | null
   enquiryId?: Prisma.IntFilter<"ExamResult"> | number
   createdAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
@@ -304,6 +316,7 @@ export type ExamResultOrderByWithRelationInput = {
   finalMarks?: Prisma.SortOrderInput | Prisma.SortOrder
   percentage?: Prisma.SortOrderInput | Prisma.SortOrder
   result?: Prisma.SortOrderInput | Prisma.SortOrder
+  rank?: Prisma.SortOrderInput | Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -323,6 +336,7 @@ export type ExamResultWhereUniqueInput = Prisma.AtLeast<{
   finalMarks?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
   percentage?: Prisma.FloatNullableFilter<"ExamResult"> | number | null
   result?: Prisma.EnumResultStatusNullableFilter<"ExamResult"> | $Enums.ResultStatus | null
+  rank?: Prisma.IntNullableFilter<"ExamResult"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ExamResult"> | Date | string
   schoolEnquiry?: Prisma.XOR<Prisma.SchoolEnquiryScalarRelationFilter, Prisma.SchoolEnquiryWhereInput>
@@ -337,6 +351,7 @@ export type ExamResultOrderByWithAggregationInput = {
   finalMarks?: Prisma.SortOrderInput | Prisma.SortOrder
   percentage?: Prisma.SortOrderInput | Prisma.SortOrder
   result?: Prisma.SortOrderInput | Prisma.SortOrder
+  rank?: Prisma.SortOrderInput | Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -359,6 +374,7 @@ export type ExamResultScalarWhereWithAggregatesInput = {
   finalMarks?: Prisma.FloatNullableWithAggregatesFilter<"ExamResult"> | number | null
   percentage?: Prisma.FloatNullableWithAggregatesFilter<"ExamResult"> | number | null
   result?: Prisma.EnumResultStatusNullableWithAggregatesFilter<"ExamResult"> | $Enums.ResultStatus | null
+  rank?: Prisma.IntNullableWithAggregatesFilter<"ExamResult"> | number | null
   enquiryId?: Prisma.IntWithAggregatesFilter<"ExamResult"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ExamResult"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ExamResult"> | Date | string
@@ -372,6 +388,7 @@ export type ExamResultCreateInput = {
   finalMarks?: number | null
   percentage?: number | null
   result?: $Enums.ResultStatus | null
+  rank?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   schoolEnquiry: Prisma.SchoolEnquiryCreateNestedOneWithoutExamResultInput
@@ -386,6 +403,7 @@ export type ExamResultUncheckedCreateInput = {
   finalMarks?: number | null
   percentage?: number | null
   result?: $Enums.ResultStatus | null
+  rank?: number | null
   enquiryId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -399,6 +417,7 @@ export type ExamResultUpdateInput = {
   finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   schoolEnquiry?: Prisma.SchoolEnquiryUpdateOneRequiredWithoutExamResultNestedInput
@@ -413,6 +432,7 @@ export type ExamResultUncheckedUpdateInput = {
   finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enquiryId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -427,6 +447,7 @@ export type ExamResultCreateManyInput = {
   finalMarks?: number | null
   percentage?: number | null
   result?: $Enums.ResultStatus | null
+  rank?: number | null
   enquiryId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -440,6 +461,7 @@ export type ExamResultUpdateManyMutationInput = {
   finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +475,7 @@ export type ExamResultUncheckedUpdateManyInput = {
   finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   enquiryId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -472,6 +495,7 @@ export type ExamResultCountOrderByAggregateInput = {
   finalMarks?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  rank?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -485,6 +509,7 @@ export type ExamResultAvgOrderByAggregateInput = {
   negativeMarks?: Prisma.SortOrder
   finalMarks?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
+  rank?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
 }
 
@@ -497,6 +522,7 @@ export type ExamResultMaxOrderByAggregateInput = {
   finalMarks?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  rank?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -511,6 +537,7 @@ export type ExamResultMinOrderByAggregateInput = {
   finalMarks?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
   result?: Prisma.SortOrder
+  rank?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -524,6 +551,7 @@ export type ExamResultSumOrderByAggregateInput = {
   negativeMarks?: Prisma.SortOrder
   finalMarks?: Prisma.SortOrder
   percentage?: Prisma.SortOrder
+  rank?: Prisma.SortOrder
   enquiryId?: Prisma.SortOrder
 }
 
@@ -587,6 +615,7 @@ export type ExamResultCreateWithoutSchoolEnquiryInput = {
   finalMarks?: number | null
   percentage?: number | null
   result?: $Enums.ResultStatus | null
+  rank?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -600,6 +629,7 @@ export type ExamResultUncheckedCreateWithoutSchoolEnquiryInput = {
   finalMarks?: number | null
   percentage?: number | null
   result?: $Enums.ResultStatus | null
+  rank?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -628,6 +658,7 @@ export type ExamResultUpdateWithoutSchoolEnquiryInput = {
   finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -641,6 +672,7 @@ export type ExamResultUncheckedUpdateWithoutSchoolEnquiryInput = {
   finalMarks?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentage?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   result?: Prisma.NullableEnumResultStatusFieldUpdateOperationsInput | $Enums.ResultStatus | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -656,6 +688,7 @@ export type ExamResultSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   finalMarks?: boolean
   percentage?: boolean
   result?: boolean
+  rank?: boolean
   enquiryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -673,12 +706,13 @@ export type ExamResultSelectScalar = {
   finalMarks?: boolean
   percentage?: boolean
   result?: boolean
+  rank?: boolean
   enquiryId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ExamResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "marks" | "correctAnswers" | "wrongAnswers" | "negativeMarks" | "finalMarks" | "percentage" | "result" | "enquiryId" | "createdAt" | "updatedAt", ExtArgs["result"]["examResult"]>
+export type ExamResultOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "marks" | "correctAnswers" | "wrongAnswers" | "negativeMarks" | "finalMarks" | "percentage" | "result" | "rank" | "enquiryId" | "createdAt" | "updatedAt", ExtArgs["result"]["examResult"]>
 export type ExamResultInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   schoolEnquiry?: boolean | Prisma.SchoolEnquiryDefaultArgs<ExtArgs>
 }
@@ -697,6 +731,7 @@ export type $ExamResultPayload<ExtArgs extends runtime.Types.Extensions.Internal
     finalMarks: number | null
     percentage: number | null
     result: $Enums.ResultStatus | null
+    rank: number | null
     enquiryId: number
     createdAt: Date
     updatedAt: Date
@@ -1078,6 +1113,7 @@ export interface ExamResultFieldRefs {
   readonly finalMarks: Prisma.FieldRef<"ExamResult", 'Float'>
   readonly percentage: Prisma.FieldRef<"ExamResult", 'Float'>
   readonly result: Prisma.FieldRef<"ExamResult", 'ResultStatus'>
+  readonly rank: Prisma.FieldRef<"ExamResult", 'Int'>
   readonly enquiryId: Prisma.FieldRef<"ExamResult", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ExamResult", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ExamResult", 'DateTime'>

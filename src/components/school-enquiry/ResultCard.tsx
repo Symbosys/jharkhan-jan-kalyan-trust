@@ -19,6 +19,7 @@ interface ResultCardProps {
             finalMarks?: number | null;
             percentage?: number | null;
             result?: 'PASS' | 'FAIL' | null;
+            rank?: number | null;
         } | null;
     };
     cardRef: React.RefObject<HTMLDivElement | null>;
@@ -181,44 +182,48 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                 }}>
                     {/* Left: Details */}
                     <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                        {[
-                            { label: "Candidate Name", value: participant.name },
-                            { label: "Registration No.", value: participant.registrationNumber, highlight: true },
-                            { label: "Institution/School", value: participant.school },
-                            { label: "Class & Board", value: `Class ${participant.class} (${participant.board})` },
-                        ].map((item, idx) => (
-                            <div key={idx} style={{
-                                display: "flex",
-                                borderBottom: idx === 3 ? "none" : `1px solid ${borderColor}`,
-                                minHeight: 48,
-                            }}>
-                                <div style={{
-                                    width: 180,
-                                    backgroundColor: labelBg,
+                        {(() => {
+                            const details = [
+                                { label: "Candidate Name", value: participant.name },
+                                { label: "Registration No.", value: participant.registrationNumber, highlight: true },
+                                ...(examResult?.rank ? [{ label: "Rank Secured", value: `#${examResult.rank}`, highlight: true, isRank: true }] : []),
+                                { label: "Institution/School", value: participant.school },
+                                { label: "Class & Board", value: `Class ${participant.class} (${participant.board})` },
+                            ];
+                            return details.map((item, idx) => (
+                                <div key={idx} style={{
                                     display: "flex",
-                                    alignItems: "center",
-                                    padding: "8px 14px",
-                                    borderRight: `1px solid ${borderColor}`,
-                                    fontWeight: 700,
-                                    fontSize: 14,
-                                    color: "#334155",
-                                    textTransform: "uppercase",
+                                    borderBottom: idx === details.length - 1 ? "none" : `1px solid ${borderColor}`,
+                                    minHeight: 48,
                                 }}>
-                                    {item.label}
+                                    <div style={{
+                                        width: 180,
+                                        backgroundColor: labelBg,
+                                        display: "flex",
+                                        alignItems: "center",
+                                        padding: "8px 14px",
+                                        borderRight: `1px solid ${borderColor}`,
+                                        fontWeight: 700,
+                                        fontSize: 14,
+                                        color: "#334155",
+                                        textTransform: "uppercase",
+                                    }}>
+                                        {item.label}
+                                    </div>
+                                    <div style={{
+                                        flex: 1,
+                                        display: "flex",
+                                        alignItems: "center",
+                                        padding: "8px 14px",
+                                        fontSize: 16,
+                                        fontWeight: item.highlight ? 800 : 600,
+                                        color: item.isRank ? "#d97706" : (item.highlight ? "#059669" : "#0f172a"),
+                                    }}>
+                                        {item.value}
+                                    </div>
                                 </div>
-                                <div style={{
-                                    flex: 1,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    padding: "8px 14px",
-                                    fontSize: 16,
-                                    fontWeight: item.highlight ? 800 : 600,
-                                    color: item.highlight ? "#059669" : "#0f172a",
-                                }}>
-                                    {item.value}
-                                </div>
-                            </div>
-                        ))}
+                            ));
+                        })()}
                     </div>
 
                     {/* Right: Photo */}

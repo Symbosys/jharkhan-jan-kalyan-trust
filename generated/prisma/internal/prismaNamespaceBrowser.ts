@@ -426,6 +426,7 @@ export const ExamResultScalarFieldEnum = {
   finalMarks: 'finalMarks',
   percentage: 'percentage',
   result: 'result',
+  rank: 'rank',
   enquiryId: 'enquiryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
