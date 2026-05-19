@@ -526,12 +526,12 @@ export default function SchoolEnquiriesPage() {
       <Card className="border-border shadow-sm overflow-hidden bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
         <CardHeader className="border-b border-border bg-slate-50/50 dark:bg-slate-950/50">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-              <div className="relative flex-1">
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-4xl flex-wrap">
+              <div className="relative w-full sm:w-80">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search by name, email, reg number..."
-                  className="pl-9 bg-background border-border"
+                  className="pl-9 bg-background border-border w-full"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -1579,6 +1579,7 @@ export default function SchoolEnquiriesPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Name</label>
                 <Input
+                  className="w-full"
                   value={editForm.name || ""}
                   onChange={(e) =>
                     setEditForm({ ...editForm, name: e.target.value })
