@@ -462,3 +462,64 @@ export async function exportSchoolEnquiries(options: {
         return { success: false, error: error.message };
     }
 }
+
+/**
+ * Export School Results ordered by finalMarks
+ */
+export async function exportSchoolResults(options: {
+    skip: number;
+    take: number;
+    status?: EnquiryStatus;
+    centerId?: number;
+    level?: Level;
+    search?: string;
+}) {
+    const where: Prisma.SchoolEnquiryWhereInput = { AND: [] };
+
+    // Center Filter
+    if (options.centerId) where.examCenterId = options.centerId;
+
+    // Status Filter
+    if (options.status) where.status = options.status;
+
+    // Level Filter
+    if (options.level) where.level = options.level;
+
+    // Multi-field Search
+    if (options.search) {
+        where.OR = [
+            { name: { contains: options.search } },
+            { mobile: { contains: options.search } },
+            { email: { contains: options.search } },
+            { school: { contains: options.search } },
+            { registrationNumber: { contains: options.search } },
+        ];
+    }
+
+    try {
+        const enquiries = await prisma.schoolEnquiry.findMany({
+            where,
+            skip: options.skip,
+            take: options.take,
+            orderBy: {
+                examResult: {
+                    finalMarks: "desc"
+                }
+            },
+            include: {
+                examCenter: {
+                    select: {
+                        name: true,
+                        city: true,
+                    }
+                },
+                examResult: true
+            }
+        });
+
+        return { success: true, data: enquiries };
+    } catch (error: any) {
+        console.error("Error exporting school results:", error);
+        return { success: false, error: error.message };
+    }
+}

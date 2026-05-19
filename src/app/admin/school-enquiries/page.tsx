@@ -6,6 +6,7 @@ import {
   getAllSchoolEnquiries,
   updateSchoolEnquiry,
   exportSchoolEnquiries,
+  exportSchoolResults,
 } from "@/actions/schoolEnquiry";
 import { upsertExamResult } from "@/actions/exam-results";
 import { Badge } from "@/components/ui/badge";
@@ -121,6 +122,12 @@ export default function SchoolEnquiriesPage() {
   const [downloadRange, setDownloadRange] = useState({ start: 1, end: 500 });
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadFormat, setDownloadFormat] = useState<"csv" | "pdf">("pdf");
+
+  // Download Results State
+  const [isDownloadResultsOpen, setIsDownloadResultsOpen] = useState(false);
+  const [downloadResultsRange, setDownloadResultsRange] = useState({ start: 1, end: 500 });
+  const [isDownloadingResults, setIsDownloadingResults] = useState(false);
+  const [downloadResultsFormat, setDownloadResultsFormat] = useState<"csv" | "pdf">("pdf");
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -498,6 +505,200 @@ export default function SchoolEnquiriesPage() {
     }
   };
 
+  const handleDownloadResults = async () => {
+    const { start, end } = downloadResultsRange;
+    if (start < 1 || end < start) {
+      toast.error("Please enter a valid range");
+      return;
+    }
+
+    const count = end - start + 1;
+    if (count > 500) {
+      toast.error("You can download at max 500 records at a time");
+      return;
+    }
+
+    setIsDownloadingResults(true);
+    try {
+      const res = await exportSchoolResults({
+        skip: start - 1,
+        take: count,
+        status: statusFilter !== "ALL" ? (statusFilter as any) : undefined,
+        centerId: centerFilter !== "ALL" ? parseInt(centerFilter) : undefined,
+        level: levelFilter !== "ALL" ? (levelFilter as any) : undefined,
+        search: search || undefined,
+      });
+
+      if (res.success && res.data) {
+        if (downloadResultsFormat === "csv") {
+          // Generate CSV
+          const headers = ["Rank", "Name", "Reg Number", "School", "Class", "Marks", "Correct", "Wrong", "Final Marks", "Percentage", "Result"];
+          const csvData = res.data.map((e: any, index: number) => [
+            start + index,
+            `"${e.name}"`,
+            `"${e.registrationNumber}"`,
+            `"${e.school}"`,
+            `"${e.class}"`,
+            e.examResult?.marks ?? "",
+            e.examResult?.correctAnswers ?? "",
+            e.examResult?.wrongAnswers ?? "",
+            e.examResult?.finalMarks ?? "",
+            e.examResult?.percentage ? `${e.examResult.percentage}%` : "",
+            `"${e.examResult?.result ?? ""}"`
+          ]);
+
+          const csvContent = [headers, ...csvData]
+            .map((e) => e.join(","))
+            .join("\n");
+          const blob = new Blob([csvContent], {
+            type: "text/csv;charset=utf-8;",
+          });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.setAttribute("href", url);
+          link.setAttribute("download", `results_${start}_to_${end}.csv`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          // Generate PDF
+          const doc = new jsPDF();
+          const pageWidth = doc.internal.pageSize.width;
+
+          // Title
+          doc.setFontSize(18);
+          doc.setFont("helvetica", "bold");
+          doc.text("GK COMPETITION RESULTS", pageWidth / 2, 20, {
+            align: "center",
+          });
+
+          // Subtitle / Info
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+          const dateStr = format(new Date(), "dd MMM, yyyy");
+          doc.text(
+            `Generated On: ${dateStr} | Range: ${start} to ${end} (Rank-wise)`,
+            pageWidth / 2,
+            28,
+            { align: "center" },
+          );
+
+          let infoLine2 = "";
+          if (centerFilter !== "ALL") {
+            const centerName =
+              examCenters.find((c) => c.id.toString() === centerFilter)?.name ||
+              "Selected Center";
+            infoLine2 += `Center: ${centerName}`;
+          }
+          if (levelFilter !== "ALL") {
+            if (infoLine2) infoLine2 += " | ";
+            infoLine2 += `Level: ${levelFilter}`;
+          }
+          if (infoLine2) {
+            doc.text(infoLine2, pageWidth / 2, 34, { align: "center" });
+          }
+
+          // Table Header
+          const startY = 45;
+          const rowHeight = 10;
+          const margin = 10;
+          const colWidths = [12, 25, 45, 15, 20, 20, 25, 28]; // Rank, Reg No, Name, Class, Marks, Correct, Final, Result
+          const colStarts = [
+            margin,
+            margin + colWidths[0],
+            margin + colWidths[0] + colWidths[1],
+            margin + colWidths[0] + colWidths[1] + colWidths[2],
+            margin + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3],
+            margin + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4],
+            margin + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5],
+            margin + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5] + colWidths[6],
+            margin + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4] + colWidths[5] + colWidths[6] + colWidths[7],
+          ];
+
+          const drawHeader = (y: number) => {
+            doc.setFillColor(240, 240, 240);
+            doc.rect(margin, y - 7, pageWidth - margin * 2, 10, "F");
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(9);
+            doc.text("Rank", colStarts[0] + 1, y);
+            doc.text("Reg Number", colStarts[1] + 1, y);
+            doc.text("Name", colStarts[2] + 1, y);
+            doc.text("Class", colStarts[3] + 1, y);
+            doc.text("Total", colStarts[4] + 1, y);
+            doc.text("Correct", colStarts[5] + 1, y);
+            doc.text("Final", colStarts[6] + 1, y);
+            doc.text("Result", colStarts[7] + 1, y);
+            doc.line(margin, y + 3, pageWidth - margin, y + 3);
+          };
+
+          drawHeader(startY);
+
+          let currentY = startY + rowHeight;
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(8);
+
+          res.data.forEach((item: any, index: number) => {
+            // Check for page break
+            if (currentY > 280) {
+              doc.addPage();
+              drawHeader(20);
+              currentY = 20 + rowHeight;
+              doc.setFont("helvetica", "normal");
+              doc.setFontSize(8);
+            }
+
+            const displayRank = start + index;
+            doc.text(
+              displayRank.toString(),
+              colStarts[0] + colWidths[0] / 2,
+              currentY,
+              { align: "center" },
+            );
+            doc.text(item.registrationNumber, colStarts[1] + 1, currentY);
+            
+            // Truncate name if too long
+            const name = item.name.length > 25 ? item.name.substring(0, 22) + "..." : item.name;
+            doc.text(name, colStarts[2] + 1, currentY);
+            
+            doc.text(item.class, colStarts[3] + colWidths[3] / 2, currentY, {
+              align: "center",
+            });
+            doc.text(item.examResult?.marks?.toString() || "-", colStarts[4] + colWidths[4] / 2, currentY, { align: "center" });
+            doc.text(item.examResult?.correctAnswers?.toString() || "-", colStarts[5] + colWidths[5] / 2, currentY, { align: "center" });
+            
+            doc.setFont("helvetica", "bold");
+            doc.text(item.examResult?.finalMarks?.toString() || "-", colStarts[6] + colWidths[6] / 2, currentY, { align: "center" });
+            doc.setFont("helvetica", "normal");
+            
+            doc.text(item.examResult?.result || "-", colStarts[7] + colWidths[7] / 2, currentY, { align: "center" });
+
+            // Row lines for better separation
+            doc.line(margin, currentY + 3, pageWidth - margin, currentY + 3);
+
+            // Vertical lines
+            for (let i = 0; i < colStarts.length; i++) {
+                doc.line(colStarts[i], currentY - 7, colStarts[i], currentY + 3);
+            }
+
+            currentY += rowHeight;
+          });
+
+          doc.save(`Results_${start}_to_${end}.pdf`);
+        }
+
+        toast.success("Result Download started successfully");
+        setIsDownloadResultsOpen(false);
+      } else {
+        toast.error(res.error || "Failed to export data");
+      }
+    } catch (error) {
+      console.error("Download error:", error);
+      toast.error("An unexpected error occurred during download");
+    } finally {
+      setIsDownloadingResults(false);
+    }
+  };
+
   return (
     <div className="p-6 max-w-[1400px] mx-auto space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -509,13 +710,22 @@ export default function SchoolEnquiriesPage() {
             Manage GK competition registrations and participant information.
           </p>
         </div>
-        <Button
-          onClick={() => setIsDownloadOpen(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white gap-2 h-11 px-6 rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all active:scale-95"
-        >
-          <Download className="h-5 w-5" />
-          Download CSV
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => setIsDownloadResultsOpen(true)}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white gap-2 h-11 px-6 rounded-xl shadow-lg shadow-emerald-200 dark:shadow-none transition-all active:scale-95"
+          >
+            <Download className="h-5 w-5" />
+            Download Result
+          </Button>
+          <Button
+            onClick={() => setIsDownloadOpen(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white gap-2 h-11 px-6 rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all active:scale-95"
+          >
+            <Download className="h-5 w-5" />
+            Download CSV
+          </Button>
+        </div>
       </div>
 
       <Card className="border-border shadow-sm overflow-hidden bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
@@ -1785,6 +1995,128 @@ export default function SchoolEnquiriesPage() {
                     <Download className="h-4 w-4" />
                   )}
                   Download {downloadFormat === "pdf" ? "PDF" : "CSV"}
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Download Results Range Dialog */}
+      <Dialog open={isDownloadResultsOpen} onOpenChange={setIsDownloadResultsOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Download className="h-5 w-5 text-emerald-600" />
+              Download Results
+            </DialogTitle>
+            <DialogDescription>
+              Specify the rank range of results you want to download.
+              The results will be ordered highest to lowest by Final Marks.
+              You can download at max 500 records at a time.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  Start Rank
+                </label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={downloadResultsRange.start}
+                  onChange={(e) =>
+                    setDownloadResultsRange({
+                      ...downloadResultsRange,
+                      start: parseInt(e.target.value) || 1,
+                    })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">End Rank</label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={downloadResultsRange.end}
+                  onChange={(e) =>
+                    setDownloadResultsRange({
+                      ...downloadResultsRange,
+                      end: parseInt(e.target.value) || 1,
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-lg border border-emerald-100 dark:border-emerald-900/50">
+              <p className="text-xs text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
+                <Search className="h-3 w-3" />
+                Current filters (Status: {statusFilter}, Center:{" "}
+                {centerFilter !== "ALL" ? "Filtered" : "All"}) will be applied
+                to the export.
+              </p>
+            </div>
+            {downloadResultsRange.end - downloadResultsRange.start + 1 > 500 && (
+              <p className="text-xs text-red-500 font-medium">
+                Error: Range exceeds 500 record limit.
+              </p>
+            )}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground">
+                Download Format
+              </label>
+              <div className="flex gap-2">
+                <Button
+                  variant={downloadResultsFormat === "pdf" ? "default" : "outline"}
+                  onClick={() => setDownloadResultsFormat("pdf")}
+                  className="flex-1 gap-2"
+                  type="button"
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full border ${downloadResultsFormat === "pdf" ? "bg-white border-white" : "border-muted-foreground"}`}
+                  />
+                  PDF
+                </Button>
+                <Button
+                  variant={downloadResultsFormat === "csv" ? "default" : "outline"}
+                  onClick={() => setDownloadResultsFormat("csv")}
+                  className="flex-1 gap-2"
+                  type="button"
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full border ${downloadResultsFormat === "csv" ? "bg-white border-white" : "border-muted-foreground"}`}
+                  />
+                  Excel (CSV)
+                </Button>
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDownloadResultsOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDownloadResults}
+              disabled={
+                isDownloadingResults ||
+                downloadResultsRange.end - downloadResultsRange.start + 1 > 500
+              }
+              className="bg-emerald-600 hover:bg-emerald-700 text-white gap-2 min-w-[120px]"
+            >
+              {isDownloadingResults ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Downloading...
+                </>
+              ) : (
+                <>
+                  {downloadResultsFormat === "pdf" ? (
+                    <BookOpen className="h-4 w-4" />
+                  ) : (
+                    <Download className="h-4 w-4" />
+                  )}
+                  Download {downloadResultsFormat === "pdf" ? "PDF" : "CSV"}
                 </>
               )}
             </Button>
