@@ -19,7 +19,6 @@ interface ResultCardProps {
             finalMarks?: number | null;
             percentage?: number | null;
             result?: 'PASS' | 'FAIL' | null;
-            rank?: number | null;
         } | null;
     };
     cardRef: React.RefObject<HTMLDivElement | null>;
@@ -69,7 +68,23 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                 minHeight: 1170,
                 display: "flex",
                 flexDirection: "column",
+                position: "relative",
             }}>
+                {/* Watermark Background */}
+                <div style={{
+                    position: "absolute",
+                    top: "55%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: 320,
+                    height: 320,
+                    opacity: 0.04,
+                    backgroundImage: "url('/logo/logo.jpeg')",
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    pointerEvents: "none",
+                }} />
 
                 {/* ===== HEADER SECTION ===== */}
                 <div style={{
@@ -79,6 +94,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                     padding: "20px 25px",
                     borderBottom: `2px solid ${borderColor}`,
                     minHeight: 120,
+                    zIndex: 1,
                 }}>
                     {/* Organization Logo */}
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -179,6 +195,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                 <div style={{
                     display: "flex",
                     borderBottom: `2px solid ${borderColor}`,
+                    zIndex: 1,
                 }}>
                     {/* Left: Details */}
                     <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
@@ -186,10 +203,15 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                             const details = [
                                 { label: "Candidate Name", value: participant.name },
                                 { label: "Registration No.", value: participant.registrationNumber, highlight: true },
-                                ...(examResult?.rank ? [{ label: "Rank Secured", value: `#${examResult.rank}`, highlight: true, isRank: true }] : []),
                                 { label: "Institution/School", value: participant.school },
-                                { label: "Class & Board", value: `Class ${participant.class} (${participant.board})` },
-                            ];
+                                { 
+                                    label: "Class & Board", 
+                                    value: participant.class && participant.board 
+                                        ? `Class ${participant.class} (${participant.board})` 
+                                        : (participant.class ? `Class ${participant.class}` : (participant.board ? participant.board : "")) 
+                                },
+                            ].filter(item => item.value && String(item.value).trim() !== "");
+
                             return details.map((item, idx) => (
                                 <div key={idx} style={{
                                     display: "flex",
@@ -217,7 +239,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                                         padding: "8px 14px",
                                         fontSize: 16,
                                         fontWeight: item.highlight ? 800 : 600,
-                                        color: item.isRank ? "#d97706" : (item.highlight ? "#059669" : "#0f172a"),
+                                        color: item.highlight ? "#059669" : "#0f172a",
                                     }}>
                                         {item.value}
                                     </div>
@@ -277,104 +299,133 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                 </div>
 
                 {/* ===== RESULTS TABLE SECTION ===== */}
-                <div style={{ padding: "40px 25px", flex: 1 }}>
-                    <div style={{
-                        textAlign: "center",
-                        marginBottom: 30,
-                    }}>
-                        <span style={{
-                            fontSize: 20,
-                            fontWeight: 800,
-                            color: "#0f172a",
-                            textTransform: "uppercase",
-                            letterSpacing: "4px",
-                            borderBottom: `2px solid ${headerBg}`,
-                            paddingBottom: 4,
+                <div style={{ 
+                    padding: "30px 25px 40px 25px", 
+                    flex: 1, 
+                    display: "flex", 
+                    flexDirection: "column", 
+                    justifyContent: "space-between",
+                    zIndex: 1,
+                }}>
+                    <div>
+                        <div style={{
+                            textAlign: "center",
+                            marginBottom: 25,
                         }}>
-                            Performance Analysis
-                        </span>
-                    </div>
+                            <span style={{
+                                fontSize: 20,
+                                fontWeight: 800,
+                                color: "#0f172a",
+                                textTransform: "uppercase",
+                                letterSpacing: "4px",
+                                borderBottom: `2px solid ${headerBg}`,
+                                paddingBottom: 4,
+                            }}>
+                                Performance Analysis
+                            </span>
+                        </div>
 
-                    <table style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        marginBottom: 40,
-                    }}>
-                        <thead>
-                            <tr style={{ backgroundColor: headerBg, color: "#ffffff" }}>
-                                <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "left" }}>Subject</th>
-                                <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Max Marks</th>
-                                <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Total Question</th>
-                                <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, fontWeight: 600 }}>General Knowledge Competition</td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center" }}>{maxMarks}</td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 20, fontWeight: 800, color: "#059669" }}>
-                                    {participant.examResult ? participant.examResult.marks : "AWAITED"}
-                                </td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center" }}>
-                                    {participant.examResult ? (
-                                        <span style={{
-                                            padding: "4px 12px",
-                                            borderRadius: "12px",
-                                            backgroundColor: resultStatus === "PASS" ? "#dcfce7" : "#fee2e2",
-                                            color: resultStatus === "PASS" ? "#166534" : "#991b1b",
-                                            fontWeight: 700,
-                                            fontSize: 12,
-                                        }}>
-                                            {resultStatus === "PASS" ? "PASSED" : "FAILED"}
-                                        </span>
-                                    ) : (
-                                        "—"
-                                    )}
-                                </td>
-                            </tr>
-                            {examResult && typeof examResult.correctAnswers === 'number' && (
-                                <tr style={{ backgroundColor: "#fdfdfd" }}>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, fontSize: 13, color: "#475569" }}>• Correct Answers Count</td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 14, fontWeight: 700, color: "#16a34a" }}>
-                                        {examResult.correctAnswers}
-                                    </td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
+                        <table style={{
+                            width: "100%",
+                            borderCollapse: "collapse",
+                            marginBottom: 25,
+                        }}>
+                            <thead>
+                                <tr style={{ backgroundColor: headerBg, color: "#ffffff" }}>
+                                    <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "left" }}>Subject</th>
+                                    <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Max Marks</th>
+                                    <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Marks Obtained</th>
+                                    <th style={{ padding: "12px", border: `1px solid ${borderColor}`, textAlign: "center" }}>Status</th>
                                 </tr>
-                            )}
-                            {examResult && typeof examResult.wrongAnswers === 'number' && (
-                                <tr style={{ backgroundColor: "#fdfdfd" }}>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, fontSize: 13, color: "#475569" }}>• Wrong Answers Count</td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 14, fontWeight: 700, color: "#dc2626" }}>
-                                        {examResult.wrongAnswers}
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, fontWeight: 600 }}>General Knowledge Competition</td>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center" }}>{maxMarks}</td>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 20, fontWeight: 800, color: "#059669" }}>
+                                        {participant.examResult?.finalMarks ? participant.examResult.finalMarks : "AWAITED"}
                                     </td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
-                                </tr>
-                            )}
-                            {examResult && typeof examResult.negativeMarks === 'number' && (
-                                <tr style={{ backgroundColor: "#fdfdfd" }}>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, fontSize: 13, color: "#475569" }}>• Negative Marks Penalty</td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 14, fontWeight: 700, color: "#ea580c" }}>
-                                        -{examResult.negativeMarks}
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center" }}>
+                                        {participant.examResult ? (
+                                            <span style={{
+                                                padding: "4px 12px",
+                                                borderRadius: "12px",
+                                                backgroundColor: resultStatus === "PASS" ? "#dcfce7" : "#fee2e2",
+                                                color: resultStatus === "PASS" ? "#166534" : "#991b1b",
+                                                fontWeight: 700,
+                                                fontSize: 12,
+                                            }}>
+                                                {resultStatus === "PASS" ? "PASSED" : "FAILED"}
+                                            </span>
+                                        ) : (
+                                            "—"
+                                        )}
                                     </td>
-                                    <td style={{ padding: "12px 15px", border: `1px solid ${borderColor}`, textAlign: "center", fontSize: 13, color: "#475569" }}>—</td>
                                 </tr>
-                            )}
-                            {/* Grand total row */}
-                            <tr style={{ backgroundColor: labelBg }}>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, fontWeight: 800 }}>GRAND TOTAL / FINAL MARKS</td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800 }}>{maxMarks}</td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800, fontSize: 24, color: "#0f766e" }}>
-                                    {participant.examResult ? (examResult?.finalMarks !== null && examResult?.finalMarks !== undefined ? examResult.finalMarks : participant.examResult.marks) : "—"}
-                                </td>
-                                <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800 }}>
-                                    {participant.examResult ? `${percentage.toFixed(2)}%` : "—"}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                {/* Grand total row */}
+                                <tr style={{ backgroundColor: labelBg }}>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, fontWeight: 800 }}>GRAND TOTAL / FINAL MARKS</td>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800 }}>{maxMarks}</td>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800, fontSize: 24, color: "#0f766e" }}>
+                                        {participant.examResult ? (examResult?.finalMarks !== null && examResult?.finalMarks !== undefined ? examResult.finalMarks : participant.examResult.marks) : "—"}
+                                    </td>
+                                    <td style={{ padding: "15px", border: `1px solid ${borderColor}`, textAlign: "center", fontWeight: 800 }}>
+                                        {participant.examResult ? `${percentage.toFixed(2)}%` : "—"}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        {/* Breakdown Cards */}
+                        {examResult && (typeof examResult.correctAnswers === 'number' || typeof examResult.wrongAnswers === 'number' || typeof examResult.negativeMarks === 'number') && (
+                            <div style={{
+                                display: "flex",
+                                gap: 15,
+                                marginBottom: 25,
+                                justifyContent: "space-between"
+                            }}>
+                                {typeof examResult.correctAnswers === 'number' && (
+                                    <div style={{
+                                        flex: 1,
+                                        backgroundColor: "#f0fdf4",
+                                        border: "1px solid #bbf7d0",
+                                        padding: "12px",
+                                        borderRadius: "8px",
+                                        textAlign: "center"
+                                    }}>
+                                        <p style={{ margin: "0 0 4px 0", fontSize: 11, color: "#166534", fontWeight: 700, textTransform: "uppercase" }}>Correct Answers</p>
+                                        <p style={{ margin: 0, fontSize: 18, fontWeight: 800, color: "#15803d" }}>{examResult.correctAnswers}</p>
+                                    </div>
+                                )}
+                                {typeof examResult.wrongAnswers === 'number' && (
+                                    <div style={{
+                                        flex: 1,
+                                        backgroundColor: "#fef2f2",
+                                        border: "1px solid #fecaca",
+                                        padding: "12px",
+                                        borderRadius: "8px",
+                                        textAlign: "center"
+                                    }}>
+                                        <p style={{ margin: "0 0 4px 0", fontSize: 11, color: "#991b1b", fontWeight: 700, textTransform: "uppercase" }}>Wrong Answers</p>
+                                        <p style={{ margin: 0, fontSize: 18, fontWeight: 800, color: "#b91c1c" }}>{examResult.wrongAnswers}</p>
+                                    </div>
+                                )}
+                                {typeof examResult.negativeMarks === 'number' && (
+                                    <div style={{
+                                        flex: 1,
+                                        backgroundColor: "#fff7ed",
+                                        border: "1px solid #ffedd5",
+                                        padding: "12px",
+                                        borderRadius: "8px",
+                                        textAlign: "center"
+                                    }}>
+                                        <p style={{ margin: "0 0 4px 0", fontSize: 11, color: "#9a3412", fontWeight: 700, textTransform: "uppercase" }}>Negative Penalty</p>
+                                        <p style={{ margin: 0, fontSize: 18, fontWeight: 800, color: "#c2410c" }}>-{examResult.negativeMarks}</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
 
                     {/* Summary Info */}
                     <div style={{
@@ -382,9 +433,9 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                         border: "1px solid #bbf7d0",
                         padding: "20px",
                         borderRadius: "12px",
-                        marginBottom: 40,
+                        marginBottom: 20,
                     }}>
-                        <h4 style={{ margin: "0 0 10px 0", color: "#166534", fontSize: 16 }}>Performance Summary</h4>
+                        <h4 style={{ margin: "0 0 8px 0", color: "#166534", fontSize: 15 }}>Performance Summary</h4>
                         <p style={{ margin: 0, fontSize: 13, color: "#166534", lineHeight: 1.6 }}>
                             This scorecard is issued for the participation in the GK Competition 2026. 
                             The result is based on the evaluation of the response sheet submitted by the candidate. 
@@ -394,10 +445,9 @@ export const ResultCard: React.FC<ResultCardProps> = ({
 
                     {/* Signatures */}
                     <div style={{
-                        marginTop: 60,
                         display: "flex",
                         justifyContent: "flex-end",
-                        padding: "0 40px",
+                        padding: "0 40px 10px 0",
                     }}>
                         <div style={{ textAlign: "center", width: 200 }}>
                             <div style={{ height: 60, display: "flex", alignItems: "end", justifyContent: "center" }}>
@@ -416,6 +466,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
                     padding: "15px 25px",
                     borderTop: `2px solid ${borderColor}`,
                     textAlign: "center",
+                    zIndex: 1,
                 }}>
                     <p style={{ margin: 0, fontSize: 11, color: "#64748b", fontStyle: "italic" }}>
                         This is a system-generated result card. Verification can be done online at the official trust portal.

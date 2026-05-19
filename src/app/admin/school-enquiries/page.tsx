@@ -87,7 +87,6 @@ interface SchoolEnquiry {
     finalMarks?: number | null;
     percentage?: number | null;
     result?: "PASS" | "FAIL" | null;
-    rank?: number | null;
   } | null;
 }
 
@@ -111,7 +110,6 @@ export default function SchoolEnquiriesPage() {
   const [finalMarks, setFinalMarks] = useState<string>("");
   const [percentage, setPercentage] = useState<string>("");
   const [resultStatus, setResultStatus] = useState<string>("PASS");
-  const [rank, setRank] = useState<string>("");
   const [isSavingMarks, setIsSavingMarks] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editForm, setEditForm] = useState<Partial<SchoolEnquiry>>({});
@@ -205,7 +203,6 @@ export default function SchoolEnquiriesPage() {
     setFinalMarks(enquiry.examResult?.finalMarks?.toString() || "");
     setPercentage(enquiry.examResult?.percentage?.toString() || "");
     setResultStatus(enquiry.examResult?.result || "PASS");
-    setRank(enquiry.examResult?.rank?.toString() || "");
     setIsDetailOpen(true);
   };
 
@@ -223,7 +220,6 @@ export default function SchoolEnquiriesPage() {
     const finalNum = finalMarks ? parseFloat(finalMarks) : null;
     const pctNum = percentage ? parseFloat(percentage) : null;
     const resStatus = resultStatus as "PASS" | "FAIL" | null;
-    const rankNum = rank ? parseInt(rank) : null;
 
     setIsSavingMarks(true);
     try {
@@ -236,7 +232,7 @@ export default function SchoolEnquiriesPage() {
         finalNum,
         pctNum,
         resStatus,
-        rankNum,
+        null,
       );
       if (res.success) {
         toast.success("Result saved successfully");
@@ -252,7 +248,6 @@ export default function SchoolEnquiriesPage() {
             finalMarks: finalNum,
             percentage: pctNum,
             result: resStatus,
-            rank: rankNum,
           },
         });
       } else {
@@ -780,14 +775,6 @@ export default function SchoolEnquiriesPage() {
                             >
                               Final: {enquiry.examResult.finalMarks}
                             </Badge>
-                            {enquiry.examResult.rank !== null && enquiry.examResult.rank !== undefined && (
-                              <Badge
-                                variant="outline"
-                                className="bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border-amber-100 dark:border-amber-900/50 font-bold"
-                              >
-                                Rank: #{enquiry.examResult.rank}
-                              </Badge>
-                            )}
                           </div>
                         ) : (
                           <span className="text-xs text-muted-foreground italic">
@@ -1296,18 +1283,6 @@ export default function SchoolEnquiriesPage() {
                                 <option value="FAIL">FAIL</option>
                               </select>
                             </div>
-                            <div>
-                              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                                Rank
-                              </p>
-                              <Input
-                                type="number"
-                                placeholder="Rank (e.g. 1)"
-                                value={rank}
-                                onChange={(e) => setRank(e.target.value)}
-                                className="bg-background border-border text-sm"
-                              />
-                            </div>
                           </div>
 
                           {selectedEnquiry.examResult && (
@@ -1416,19 +1391,6 @@ export default function SchoolEnquiriesPage() {
                                     </Badge>
                                   </div>
                                 )}
-                                {selectedEnquiry.examResult.rank !==
-                                  null &&
-                                  selectedEnquiry.examResult.rank !==
-                                    undefined && (
-                                    <div>
-                                      <span className="text-muted-foreground block font-medium">
-                                        Rank:
-                                      </span>
-                                      <span className="text-sm text-amber-600 dark:text-amber-400 font-bold">
-                                        #{selectedEnquiry.examResult.rank}
-                                      </span>
-                                    </div>
-                                  )}
                               </div>
                             </div>
                           )}
